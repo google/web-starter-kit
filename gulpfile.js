@@ -14,7 +14,7 @@ gulp.task('styles', function () {
         }))
         .pipe($.autoprefixer('last 1 version'))
         .pipe(gulp.dest('.tmp/styles'))
-        .pipe(reload({stream:true}))
+        .pipe(reload({stream: true}))
         .pipe($.size());
 });
 
@@ -22,7 +22,7 @@ gulp.task('scripts', function () {
     return gulp.src('app/scripts/**/*.js')
         .pipe($.jshint())
         .pipe($.jshint.reporter($.jshintStylish))
-        .pipe(reload({stream:true, once:true}))
+        .pipe(reload({stream: true, once: true}))
         .pipe($.size());
 });
 
@@ -52,7 +52,7 @@ gulp.task('images', function () {
             interlaced: true
         })))
         .pipe(gulp.dest('dist/images'))
-        .pipe(reload({stream:true, once:true}))
+        .pipe(reload({stream: true, once: true}))
         .pipe($.size());
 });
 
@@ -82,7 +82,7 @@ gulp.task('serve', ['styles'], function () {
         },
         debugInfo: false,
         open: false,
-        host: "localhost"
+        host: 'localhost'
     }, function (err, bs) {
         require('opn')(bs.options.url);
         console.log('Started web server on ' + bs.options.url);
