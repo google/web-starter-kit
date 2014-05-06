@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
+var browserSync = require('browser-sync');
 
 // load plugins
 var $ = require('gulp-load-plugins')();
@@ -51,6 +52,14 @@ gulp.task('images', function () {
         .pipe($.size());
 });
 
+gulp.task('browser-sync', function() {  
+    browserSync.init(["app/styles/*.css", "app/scripts/*.js"], {
+        server: {
+            baseDir: "./"
+        }
+    });
+});
+
 gulp.task('fonts', function () {
     return $.bowerFiles()
         .pipe($.filter('**/*.{eot,svg,ttf,woff}'))
@@ -63,7 +72,9 @@ gulp.task('clean', function () {
     return gulp.src(['.tmp', 'dist'], { read: false }).pipe($.clean());
 });
 
-gulp.task('build', ['html', 'images', 'fonts']);
+gulp.task('build', ['html', 'images', 'fonts'], function (){
+    gulp.start('browserSync', 'watch');
+});
 
 gulp.task('default', ['clean'], function () {
     gulp.start('build');
@@ -88,7 +99,7 @@ gulp.task('serve', ['connect', 'styles'], function () {
     require('opn')('http://localhost:9000');
 });
 
-gulp.task('watch', ['connect', 'serve'], function () {
+gulp.task('watch', ['browser-sync','connect', 'serve'], function () {
     var server = $.livereload();
 
     // watch for changes
