@@ -63,7 +63,7 @@ gulp.task('fonts', function () {
 });
 
 gulp.task('pagespeed', function () {
-    opn('https://developers.google.com/speed/pagespeed/insights/?url=' + hostedUrl);
+    opn('https://developers.google.com/speed/pagespeed/insights/?url=' + encodeURIComponent(hostedUrl));
 });
 
 gulp.task('clean', function () {
