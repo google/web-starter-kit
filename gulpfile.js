@@ -5,6 +5,9 @@ var gulp = require('gulp');
 // load plugins
 var $ = require('gulp-load-plugins')();
 
+// hosted URL for your page
+var hostedUrl = '';
+
 gulp.task('styles', function () {
     return gulp.src('app/styles/main.scss')
         .pipe($.rubySass({
@@ -57,6 +60,10 @@ gulp.task('fonts', function () {
         .pipe($.flatten())
         .pipe(gulp.dest('dist/fonts'))
         .pipe($.size());
+});
+
+gulp.task('pagespeed', function () {
+    opn('https://developers.google.com/speed/pagespeed/insights/?url=' + hostedUrl);
 });
 
 gulp.task('clean', function () {
