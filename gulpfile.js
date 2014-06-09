@@ -25,6 +25,9 @@ var browserSync = require('browser-sync');
 var pagespeed = require('psi');
 var reload = browserSync.reload;
 
+// Your HTML files
+var HTML_FILES = ['app/index.html'];
+
 // public URL for your website
 var PUBLIC_URL = 'https://example.com';
 
@@ -46,10 +49,11 @@ gulp.task('jshint', function () {
 });
 
 gulp.task('html', ['styles'], function () {
-    return gulp.src('app/**/*.html')
+    return gulp.src(HTML_FILES)
         .pipe($.useref.assets())
         .pipe($.if('*.js', $.uglify()))
         .pipe($.if('*.css', $.csso()))
+        .pipe($.if('*.css', $.uncss({ html: HTML_FILES })))
         .pipe($.useref.restore())
         .pipe($.useref())
         .pipe(gulp.dest('dist'))
@@ -88,7 +92,7 @@ gulp.task('serve', ['styles'], function () {
 });
 
 gulp.task('watch', ['serve'], function () {
-    gulp.watch(['app/*.html'], reload);
+    gulp.watch([HTML_FILES], reload);
     gulp.watch(['app/styles/**/*.{css,scss}'], ['styles']);
     gulp.watch(['app/scripts/**/*.js'], ['jshint']);
     gulp.watch(['app/images/**/*'], ['images']);
