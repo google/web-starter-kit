@@ -131,13 +131,10 @@ gulp.task('serve', function () {
     gulp.watch(['app/images/**/*'], ['images']);
 });
 
-// Build Production Files
-gulp.task('build', ['clean'], function (cb) {
+// Build Production Files, the Default Task
+gulp.task('default', ['clean'], function (cb) {
     runSequence('styles', ['jshint', 'html', 'images'], cb);
 });
-
-// Default Task
-gulp.task('default', ['clean', 'build']);
 
 // Run PageSpeed Insights
 // Update `url` below to the public URL for your site
