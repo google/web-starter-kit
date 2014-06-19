@@ -132,14 +132,12 @@ gulp.task('serve', function () {
 });
 
 // Build Production Files
-gulp.task('build', function (cb) {
+gulp.task('build', ['clean'], function (cb) {
     runSequence('styles', ['jshint', 'html', 'images'], cb);
 });
 
 // Default Task
-gulp.task('default', ['clean'], function (cb) {
-    gulp.start('build', cb);
-});
+gulp.task('default', ['clean', 'build']);
 
 // Run PageSpeed Insights
 // Update `url` below to the public URL for your site
