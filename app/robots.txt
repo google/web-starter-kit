@@ -1,3 +1,4 @@
-# robotstxt.org/
+# /robots.txt (see http://www.robotstxt.org/robotstxt.html)
 
 User-agent: *
+Disallow:
