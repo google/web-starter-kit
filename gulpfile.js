@@ -29,16 +29,49 @@ var pagespeed = require('psi');
 var reload = browserSync.reload;
 
 // Lint JavaScript
-gulp.task('jshint', function () {
+gulp.task('jshint', jshint);
+
+// Optimize Images
+gulp.task('images', images);
+
+// Automatically Prefix CSS
+gulp.task('styles:css', stylesCSS);
+
+// Compile Sass For Style Guide Components (app/styles/components)
+gulp.task('styles:components', stylesComponents);
+
+// Compile Any Other Sass Files You Added (app/styles)
+gulp.task('styles:scss', stylesSCSS);
+
+// Output Final CSS Styles
+gulp.task('styles', ['styles:components', 'styles:scss', 'styles:css']);
+
+// Scan Your HTML For Assets & Optimize Them
+gulp.task('html', html);
+
+// Clean Output Directory
+gulp.task('clean', clean);
+
+// Watch Files For Changes & Reload
+gulp.task('serve', serve);
+
+// Build Production Files, the Default Task
+gulp.task('default', ['clean'], defaultTask);
+
+// Run PageSpeed Insights
+// Update `url` below to the public URL for your site
+gulp.task('pagespeed', pagespeedTask);
+
+function jshint() {} {
     return gulp.src('app/scripts/**/*.js')
         .pipe($.jshint())
         .pipe($.jshint.reporter('jshint-stylish'))
         .pipe($.jshint.reporter('fail'))
         .pipe(reload({stream: true, once: true}));
-});
+}
 
-// Optimize Images
-gulp.task('images', function () {
+
+function images () {
     return gulp.src('app/images/**/*')
         .pipe($.cache($.imagemin({
             progressive: true,
@@ -47,19 +80,19 @@ gulp.task('images', function () {
         .pipe(gulp.dest('dist/images'))
         .pipe(reload({stream: true, once: true}))
         .pipe($.size({title: 'images'}));
-});
+}
 
-// Automatically Prefix CSS
-gulp.task('styles:css', function () {
+
+function stylesCSS() {
     return gulp.src('app/styles/**/*.css')
         .pipe($.autoprefixer('last 1 version'))
         .pipe(gulp.dest('app/styles'))
         .pipe(reload({stream: true}))
         .pipe($.size({title: 'styles:css'}));
-});
+}
 
-// Compile Sass For Style Guide Components (app/styles/components)
-gulp.task('styles:components', function () {
+
+function stylesComponents() {
     return gulp.src('app/styles/components/components.scss')
         .pipe($.rubySass({
             style: 'expanded',
@@ -69,10 +102,10 @@ gulp.task('styles:components', function () {
         .pipe($.autoprefixer('last 1 version'))
         .pipe(gulp.dest('app/styles/components'))
         .pipe($.size({title: 'styles:components'}));
-});
+}
 
-// Compile Any Other Sass Files You Added (app/styles)
-gulp.task('styles:scss', function () {
+
+function stylesSCSS() {
     return gulp.src(['app/styles/**/*.scss', '!app/styles/components/components.scss'])
         .pipe($.rubySass({
             style: 'expanded',
@@ -82,13 +115,10 @@ gulp.task('styles:scss', function () {
         .pipe($.autoprefixer('last 1 version'))
         .pipe(gulp.dest('.tmp/styles'))
         .pipe($.size({title: 'styles:scss'}));
-});
+}
 
-// Output Final CSS Styles
-gulp.task('styles', ['styles:components', 'styles:scss', 'styles:css']);
 
-// Scan Your HTML For Assets & Optimize Them
-gulp.task('html', function () {
+function html() {
     return gulp.src('app/**/*.html')
         .pipe($.useref.assets({searchPath: '{.tmp,app}'}))
         // Concatenate And Minify JavaScript
@@ -108,15 +138,15 @@ gulp.task('html', function () {
         // Output Files
         .pipe(gulp.dest('dist'))
         .pipe($.size({title: 'html'}));
-});
+}
 
-// Clean Output Directory
-gulp.task('clean', function (cb) {
+
+function clean(cb) {
     rimraf('dist', rimraf.bind({}, '.tmp', cb));
-});
+}
 
-// Watch Files For Changes & Reload
-gulp.task('serve', function () {
+
+function serve() {
     browserSync.init(null, {
         server: {
             baseDir: ['app', '.tmp']
@@ -129,20 +159,21 @@ gulp.task('serve', function () {
     gulp.watch(['.tmp/styles/**/*.css'], reload);
     gulp.watch(['app/scripts/**/*.js'], ['jshint']);
     gulp.watch(['app/images/**/*'], ['images']);
-});
+}
 
-// Build Production Files, the Default Task
-gulp.task('default', ['clean'], function (cb) {
+
+function defaultTask(cb) {
     runSequence('styles', ['jshint', 'html', 'images'], cb);
-});
+}
 
-// Run PageSpeed Insights
-// Update `url` below to the public URL for your site
-gulp.task('pagespeed', pagespeed.bind(null, {
-    // By default, we use the PageSpeed Insights
-    // free (no API key) tier. You can use a Google
-    // Developer API key if you have one. See
-    // http://goo.gl/RkN0vE for info key: 'YOUR_API_KEY'
-    url: 'https://example.com',
-    strategy: 'mobile'
-}));
+
+function pagespeedTask() {
+    pagespeed.bind(null, {
+        // By default, we use the PageSpeed Insights
+        // free (no API key) tier. You can use a Google
+        // Developer API key if you have one. See
+        // http://goo.gl/RkN0vE for info key: 'YOUR_API_KEY'
+        url: 'https://example.com',
+        strategy: 'mobile'
+    });
+}
