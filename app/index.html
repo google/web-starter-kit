@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html xmlns:fb="http://ogp.me/ns/fb#">
     <head>
         <meta charset="utf-8">
         <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
@@ -36,6 +36,67 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name="apple-mobile-web-app-title" content="">
         -->
+
+        <!-- SEO: Set Robots access -->
+        <meta name="robots" content="noodp">
+        <meta name="googlebot" content="all, index, follow">
+        <meta name="robots" content="all, index, follow">
+        <meta name="msnbot" content="all, index, follow">
+
+        <!-- Publisher ownership: change xxxx to your Google+ URL -->
+        <!--
+        Example URL with ID: https://plus.google.com/1234567890
+        Example URL with username: https://plus.google.com/+UserName
+        OR https://google.com/+UserName
+        -->
+        <link rel="publisher" href="XXXX">
+
+        <!-- Facebook Open Graph tags 
+        - Requires an absolute URL to image file. Change 'http://example.com' to your app domain
+        -->
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Web Starter Kit">
+        <meta property="og:url" content="http://example.com/">
+        <meta property="og:description" content="A front-end template that helps you build fast, modern mobile web apps.">
+        <meta property="og:image" content="http://example.com/images/thumbnail-1024x1024.png">
+
+        <!-- Twitter Summary card 
+        - Requires a domain approval from https://dev.twitter.com/docs/cards/validation/validator
+        - Requires an absolute URL to image file. Change 'http://example.com' to your app domain
+        -->
+        <meta name="twitter:card" content="summary">
+        <!-- Change xxxx to twitter username without @ sign -->
+        <meta name="twitter:site" content="XXXX">
+        <meta name="twitter:creator" content="XXXX">        
+        <meta name="twitter:title" content="Web Starter Kit">
+        <meta name="twitter:description" content="A front-end template that helps you build fast, modern mobile web apps.">
+        <meta name="twitter:domain" content="http://example.com">
+        <meta name="twitter:image:src" content="http://example.com/images/thumbnail-1024x1024.png">
+
+        <!-- Twitter Card Mobile App integration (Optional) -->
+        <!-- Delete this block if not required/applicable
+        <meta name="twitter:app:name:iphone" content="Web Starter Kit">
+        <meta name="twitter:app:name:ipad" content="Web Starter Kit">
+        <meta name="twitter:app:name:googleplay" content="Web Starter Kit">
+
+        // Change XXX with your app prefixes
+        <meta name="twitter:app:url:iphone" content="XXX://exmaple-destination">
+        <meta name="twitter:app:url:ipad" content="XXX://exmaple-destination">
+        <meta name="twitter:app:url:googleplay" content="http://example.com/exmaple-destination">
+        
+        // Change XXXX with Apple app ID
+        <meta name="twitter:app:id:iphone" content="idXXXX">
+        <meta name="twitter:app:id:ipad" content="idXXXX">
+
+        // Change XXXX with Android app ID i.e. com.example.android
+        <meta name="twitter:app:id:googleplay" content="XXXX">
+        -->
+
+        <!-- Favicon 
+        - http://www.jonathantneal.com/blog/understand-the-favicon/
+        -->
+        <!--[if !IE]> <link rel="icon" href="images/favicon.png"> <![endif]-->
+        <!--[if IE]> <link rel="shortcut icon" href="images/favicon.ico"> <![endif]-->
 
         <!-- build:css styles/components/main.min.css -->
         <link rel="stylesheet" href="styles/h5bp.css">
