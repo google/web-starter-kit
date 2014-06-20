@@ -21,7 +21,8 @@
     "psi": "^0.0.4",
     "rimraf": "^2.2.8",
     "run-sequence": "^0.3.6",
-    "gulp-replace": "^0.3.0"
+    "gulp-replace": "^0.3.0",
+    "pako": "~0.2.3"
   },
   "engines": {
     "node": ">=0.10.0"
