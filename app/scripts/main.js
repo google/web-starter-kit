@@ -34,6 +34,8 @@
         navdrawerContainer.classList.toggle('open');
     }
 
+    main.addEventListener('MSPointerDown', closeMenu);
+    main.addEventListener('pointerdown', closeMenu);
     main.addEventListener('ontouchstart', closeMenu);
     main.addEventListener('click', closeMenu);
     menuBtn.addEventListener('click', toggleMenu);
