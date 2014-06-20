@@ -39,6 +39,9 @@
     menuBtn.addEventListener('click', toggleMenu);
     navdrawerContainer.addEventListener('click', function (event) {
         if (event.target.nodeName === 'A' || event.target.nodeName === 'LI') {
+            if (event.type !== 'click') {
+                event.preventDefault();
+            }
             closeMenu();
         }
     });
