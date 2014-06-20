@@ -19,10 +19,14 @@
 (function () {
     'use strict';
 
-    var navdrawerContainer = document.querySelector('.navdrawer-container');
-    var appbarElement = document.querySelector('.app-bar');
-    var menuBtn = document.querySelector('.menu');
-    var main = document.querySelector('main');
+    var querySelector = function (selector) {
+        return document.querySelector(selector);
+    };
+
+    var navdrawerContainer = querySelector('.navdrawer-container');
+    var appbarElement = querySelector('.app-bar');
+    var menuBtn = querySelector('.menu');
+    var main = querySelector('main');
 
     function closeMenu() {
         appbarElement.classList.remove('open');
