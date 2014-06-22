@@ -1,4 +1,20 @@
-node_modules
-.sass-cache
+# Generated
 dist
+
+# Dependencies
+node_modules
+
+# Temp
+.sass-cache
 .tmp
+
+# Editor
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
