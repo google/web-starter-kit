@@ -1,6 +1,6 @@
 /**
 *
-* Main Stylesheet
+* Main Stylesheet For Visual Style Guide
 *
 **/
 @import url("//fonts.googleapis.com/css?family=Roboto+Condensed:400,300,700,900");
@@ -390,7 +390,7 @@ blockquote {
 * Global
 *
 **/
-* {
+*, *:before, *:after {
   -ms-box-sizing: border-box;
   box-sizing: border-box;
 }
@@ -545,7 +545,7 @@ pre {
 @font-face {
   font-family: "icons";
   src: url("../../images/icons/icons.eot");
-  src: url("../../images/icons/icons.eot?#iefix") format("embedded-opentype"), url("../../images/icons/icons.woff") format("woff"), url("../../images/icons/icons.ttf") format("truetype"), url("../../images/icons/icons.svg?#icons") format("svg");
+  src: url("../../images/icons/icons.eot?#iefix") format("embedded-opentype"), url("../../images/icons/icons.woff2") format("woff2"), url("../../images/icons/icons.woff") format("woff"), url("../../images/icons/icons.ttf") format("truetype"), url("../../images/icons/icons.svg?#icons") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -1136,12 +1136,12 @@ pre {
 .articles-section {
   background: #f0f0f0;
   text-align: center;
+  padding: 26px 0 104px;
 }
 
 .articles-count {
   color: #3372df;
   font-family: "Roboto Condensed", Helvetica, sans-serif;
-  margin-top: -52px;
   font-weight: 400;
 }
 
@@ -1678,6 +1678,10 @@ pre {
     margin-right: 0;
   }
 
+  .g-medium--last + .g-medium--half {
+    clear: left;
+  }
+
   .g--pull-half {
     margin-right: 52.25%;
   }
@@ -2060,10 +2064,7 @@ ol > li:nth-child(10n) ~ li:before, ol > li:nth-child(10n):before {
   content: counter(list);
 }
 
-ul ol {
-  padding-top: 0;
-}
-
+ul ol,
 ol ul {
   padding-top: 0;
 }

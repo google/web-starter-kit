@@ -1,30 +1,16 @@
-# Google Web Starter Kit
-
-> A starting point for multi-device web development
+# [![Web Starter Kit](https://cloud.githubusercontent.com/assets/170270/3343034/ceef6e92-f899-11e3-96b9-5d9d69d97a00.png)](https://github.com/google/web-starter-kit/releases)
 
 
 ## Overview
 
 [Web Starter Kit](http://developers.google.com/web/starter-kit) is a starting point for multi-screen web development. It encompasses opinionated recommendations on boilerplate and tooling for building an experience that works great across multiple devices. We help you stay productive and aligned with the best practices outlined in Google's [Web Fundamentals](http://developers.google.com/web/fundamentals).
 
-## Features
+[![](https://cloud.githubusercontent.com/assets/170270/3343033/ceee251e-f899-11e3-9dd9-e313cf2522ec.png)](https://developers.google.com/web/starter-kit/ 'Features')
 
-* Mobile-optimized HTML boilerplate
-* Responsive multi-device layout
-* Visual component style guide
-* [gulp.js](http://gulpjs.com) build tooling *(optional)*
-  * LiveReload
-  * Cross-device synchronization of clicks, scrolls, navigation, and form-filling (thanks to [BrowserSync](http://browsersync.io/))
-  * Image optimization
-  * JavaScript minification and optimization
-  * CSS minification and optimization
-  * HTML minification
-  * PageSpeed Insights performance reporting
-  * CSS auto-prefixing
 
 ## Quickstart
 
-[Download](https://github.com/google/web-starter-kit/releases/tag/v0.2.0-beta) the kit or clone this repository and build on what we include in the `app` directory.
+[Download](https://github.com/google/web-starter-kit/releases) the kit or clone this repository and build on what we include in the `app` directory.
 
 We provide 2 HTML starting points, from which you can choose:
 
@@ -119,7 +105,7 @@ If you find yourself running into issues during installation or running the tool
 
 ## A Boilerplate-only Option
 
-If you would prefer not to use any of our tooling, delete the following files from the project: `package.json`, `gulpfile.js`, `.jshintrc`. You can now safely use the boilerplate with an alternative build-system or no build-system at all if you choose.
+If you would prefer not to use any of our tooling, delete the following files from the project: `package.json`, `gulpfile.js`, `.jshintrc` and `.travis.yml`. You can now safely use the boilerplate with an alternative build-system or no build-system at all if you choose.
 
 ## Inspiration
 
@@ -127,7 +113,7 @@ Web Starter Kit is inspired by [Mobile HTML5 Boilerplate](http://html5boilerplat
 
 ## Contributing
 
-Contributions, questions and comments are all welcome and encouraged. For code contributions to Web Starter Kit, please see our [Contribution guide](https://github.com/google/web-starter-kit/wiki/Contributing) before submitting a patch. For issues or patches related to the [homepage](https://developers.google.com/web/starter-kit/), please file an issue over on [Web Fundamentals](https://github.com/google/WebFundamentals/issues/new).
+Contributions, questions and comments are all welcome and encouraged. For code contributions to Web Starter Kit, please see our [Contribution guide](CONTRIBUTING.md) before submitting a pull request. [Website](https://developers.google.com/web/starter-kit/) related issues should be filed on the [Web Fundamentals](https://github.com/google/WebFundamentals/issues/new) issue tracker.
 
 ## License
 
