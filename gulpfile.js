@@ -27,18 +27,14 @@ var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
 var pagespeed = require('psi');
 var reload = browserSync.reload;
-
-// Helper Function -- Checks If A Given Object Is Empty
-function isEmpty(obj) {
-  return (Object.getOwnPropertyNames(obj).length === 0);
-}
+var bs; // reference to the running instance of browserSync
 
 // Lint JavaScript
 gulp.task('jshint', function () {
   return gulp.src('app/scripts/**/*.js')
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
-    .pipe($.if(isEmpty(browserSync.emitter._events), $.jshint.reporter('fail')))
+    .pipe($.if(!bs.active, $.jshint.reporter('fail')))
     .pipe(reload({stream: true}));
 });
 
@@ -120,12 +116,14 @@ gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 // Watch Files For Changes & Reload
 gulp.task('serve', function () {
-  browserSync.init({
+  bs = browserSync.init({
     server: {
       baseDir: ['app', '.tmp']
     },
     notify: false
   });
+
+  console.log(bs);
 
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/styles/**/*.{css,scss}'], ['styles']);
