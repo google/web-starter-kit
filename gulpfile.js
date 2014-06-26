@@ -28,12 +28,20 @@ var browserSync = require('browser-sync');
 var pagespeed = require('psi');
 var reload = browserSync.reload;
 
+// Helper Function -- callback to handle emitted errors
+function errorHandler(err) {
+    $.util.beep();
+    $.util.log(err.message);
+    process.exit(1);
+}
+
 // Lint JavaScript
 gulp.task('jshint', function () {
   return gulp.src('app/scripts/**/*.js')
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
-    .pipe($.if(!browserSync.active, $.jshint.reporter('fail')))
+    .pipe($.if(!browserSync.active, $.jshint.reporter('fail'))
+        .on('error', errorHandler))
     .pipe(reload({stream: true}));
 });
 
