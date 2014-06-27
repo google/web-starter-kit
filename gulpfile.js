@@ -31,10 +31,10 @@ var reload = browserSync.reload;
 // Lint JavaScript
 gulp.task('jshint', function () {
   return gulp.src('app/scripts/**/*.js')
+    .pipe(reload({stream: true, once: true}))
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
-    .pipe($.jshint.reporter('fail'))
-    .pipe(reload({stream: true}));
+    .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
 });
 
 // Optimize Images
@@ -115,16 +115,16 @@ gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 // Watch Files For Changes & Reload
 gulp.task('serve', function () {
-  browserSync.init({
+  browserSync({
+    notify: false,
     server: {
-      baseDir: ['app', '.tmp']
-    },
-    notify: false
+      baseDir: ['.tmp', 'app']
+    }
   });
 
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/styles/**/*.{css,scss}'], ['styles']);
-  gulp.watch(['.tmp/styles/**/*.css'], reload);
+  gulp.watch(['.tmp/styles/**/*.css'], function (e) { reload(e.path); });
   gulp.watch(['app/scripts/**/*.js'], ['jshint']);
   gulp.watch(['app/images/**/*'], ['images']);
 });
