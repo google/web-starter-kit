@@ -21,7 +21,8 @@
     "jshint-stylish": "^0.2.0",
     "opn": "^0.1.1",
     "psi": "^0.0.4",
-    "run-sequence": "^0.3.6"
+    "run-sequence": "^0.3.6",
+    "uglify-save-license": "^0.4.1"
   },
   "engines": {
     "node": ">=0.10.0"

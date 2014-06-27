@@ -27,6 +27,7 @@ var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
 var pagespeed = require('psi');
 var reload = browserSync.reload;
+var saveLicense = require('uglify-save-license');
 
 // Lint JavaScript
 gulp.task('jshint', function () {
@@ -91,7 +92,7 @@ gulp.task('html', function () {
   return gulp.src('app/**/*.html')
     .pipe($.useref.assets({searchPath: '{.tmp,app}'}))
     // Concatenate And Minify JavaScript
-    .pipe($.if('*.js', $.uglify()))
+    .pipe($.if('*.js', $.uglify({ preserveComments: saveLicense })))
     // Concatenate And Minify Styles
     .pipe($.if('*.css', $.csso()))
     // Remove Any Unused CSS
