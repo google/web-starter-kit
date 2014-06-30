@@ -23,7 +23,8 @@
     "opn": "^0.1.2",
     "psi": "^0.0.4",
     "require-dir": "^0.1.0",
-    "run-sequence": "^0.3.6"
+    "run-sequence": "^0.3.6",
+    "gulp-serve": "^0.2.0"
   },
   "engines": {
     "node": ">=0.10.0"
