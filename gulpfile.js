@@ -136,7 +136,13 @@ gulp.task('serve', function () {
 });
 
 // Build and serve the output from the dist build
-gulp.task('serve:dist', ['default'], $.serve('dist'));
+gulp.task('serve:dist', ['default'], function() {
+  browserSync.init(null, {
+    server: {
+      baseDir: "./dist/"
+    }
+  });
+});
 
 // Build Production Files, the Default Task
 gulp.task('default', ['clean'], function (cb) {
