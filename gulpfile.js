@@ -31,10 +31,10 @@ var reload = browserSync.reload;
 // Lint JavaScript
 gulp.task('jshint', function () {
   return gulp.src('app/scripts/**/*.js')
+    .pipe(reload({stream: true, once: true}))
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
-    .pipe($.jshint.reporter('fail'))
-    .pipe(reload({stream: true}));
+    .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
 });
 
 // Optimize Images
@@ -45,16 +45,22 @@ gulp.task('images', function () {
       interlaced: true
     })))
     .pipe(gulp.dest('dist/images'))
-    .pipe(reload({stream: true, once: true}))
     .pipe($.size({title: 'images'}));
+});
+
+// Copy All Files At The Root Level (app)
+gulp.task('copy', function() {
+  return gulp.src(['app/*', '!app/*.html'])
+    .pipe(gulp.dest('dist'))
+    .pipe($.size({title: 'copy'}));
 });
 
 // Automatically Prefix CSS
 gulp.task('styles:css', function () {
   return gulp.src('app/styles/**/*.css')
+    .pipe($.changed('app/styles'))
     .pipe($.autoprefixer('last 1 version'))
     .pipe(gulp.dest('app/styles'))
-    .pipe(reload({stream: true}))
     .pipe($.size({title: 'styles:css'}));
 });
 
@@ -92,13 +98,23 @@ gulp.task('html', function () {
   return gulp.src('app/**/*.html')
     .pipe($.useref.assets({searchPath: '{.tmp,app}'}))
     // Concatenate And Minify JavaScript
-    .pipe($.if('*.js', $.uglify()))
+    .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
     // Concatenate And Minify Styles
     .pipe($.if('*.css', $.csso()))
     // Remove Any Unused CSS
     // Note: If not using the Style Guide, you can delete it from
     // the next line to only include styles your project uses.
-    .pipe($.if('*.css', $.uncss({ html: ['app/index.html','app/styleguide/index.html'] })))
+    .pipe($.if('*.css', $.uncss({
+      html: [
+        'app/index.html',
+        'app/styleguide/index.html'
+      ],
+      // CSS Selectors for UnCSS to ignore
+      ignore: [
+        '.navdrawer-container.open',
+        /.app-bar.open/
+      ]
+    })))
     .pipe($.useref.restore())
     .pipe($.useref())
     // Update Production Style Guide Paths
@@ -115,23 +131,23 @@ gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 // Watch Files For Changes & Reload
 gulp.task('serve', function () {
-  browserSync.init({
+  browserSync({
+    notify: false,
     server: {
-      baseDir: ['app', '.tmp']
-    },
-    notify: false
+      baseDir: ['.tmp', 'app']
+    }
   });
 
   gulp.watch(['app/**/*.html'], reload);
-  gulp.watch(['app/styles/**/*.{css,scss}'], ['styles']);
-  gulp.watch(['.tmp/styles/**/*.css'], reload);
+  gulp.watch(['app/styles/**/*.scss'], ['styles:components', 'styles:scss']);
+  gulp.watch(['{.tmp,app}/styles/**/*.css'], ['styles:css', reload]);
   gulp.watch(['app/scripts/**/*.js'], ['jshint']);
-  gulp.watch(['app/images/**/*'], ['images']);
+  gulp.watch(['app/images/**/*'], reload);
 });
 
 // Build Production Files, the Default Task
 gulp.task('default', ['clean'], function (cb) {
-  runSequence('styles', ['jshint', 'html', 'images'], cb);
+  runSequence('styles', ['jshint', 'html', 'images', 'copy'], cb);
 });
 
 // Run PageSpeed Insights
@@ -144,3 +160,6 @@ gulp.task('pagespeed', pagespeed.bind(null, {
   url: 'https://example.com',
   strategy: 'mobile'
 }));
+
+// Load custom tasks from the `tasks` directory
+try { require('require-dir')('tasks'); } catch (err) {}
