@@ -19,6 +19,7 @@
     "gulp-uglify": "^0.3.1",
     "gulp-uncss": "^0.4.4",
     "gulp-useref": "^0.4.4",
+    "gulp-stylus": "^1.0.2",
     "jshint-stylish": "^0.2.0",
     "opn": "^0.1.2",
     "psi": "^0.0.4",
