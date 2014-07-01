@@ -27,6 +27,7 @@ var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
 var pagespeed = require('psi');
 var reload = browserSync.reload;
+var stylus = require('gulp-stylus');
 
 // Lint JavaScript
 gulp.task('jshint', function () {
@@ -90,8 +91,17 @@ gulp.task('styles:scss', function () {
     .pipe($.size({title: 'styles:scss'}));
 });
 
+// Compile Any Stylus Files You Added (app/styles)
+gulp.task('styles:styl', function () {
+  return gulp.src('app/styles/**/*.styl')
+    .pipe(stylus())
+    .pipe($.autoprefixer('last 1 version'))
+    .pipe(gulp.dest('.tmp/styles'))
+    .pipe($.size({title: 'styles:styl'}));
+});
+
 // Output Final CSS Styles
-gulp.task('styles', ['styles:components', 'styles:scss', 'styles:css']);
+gulp.task('styles', ['styles:components', 'styles:scss', 'styles:styl', 'styles:css']);
 
 // Scan Your HTML For Assets & Optimize Them
 gulp.task('html', function () {
@@ -140,6 +150,7 @@ gulp.task('serve', function () {
 
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/styles/**/*.scss'], ['styles:components', 'styles:scss']);
+  gulp.watch(['app/styles/**/*.styl'], ['styles:styl']);
   gulp.watch(['{.tmp,app}/styles/**/*.css'], ['styles:css', reload]);
   gulp.watch(['app/scripts/**/*.js'], ['jshint']);
   gulp.watch(['app/images/**/*'], reload);
