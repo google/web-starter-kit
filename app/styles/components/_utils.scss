@@ -88,13 +88,6 @@
 
 /*==========  MIXINS  ==========*/
 
-  @mixin prefixr($property, $value...) {
-    -webkit-#{$property}: $value;
-       -moz-#{$property}: $value;
-        -ms-#{$property}: $value;
-            #{$property}: $value;
-  }
-
   @mixin media-query($media-query) {
     @if $media-query == small {
       @media only screen and (max-width:$medium - 1) { @content; }
@@ -126,7 +119,7 @@
 
   // Mixin to constrain elements
   @mixin container($isRelative: false) {
-    @include prefixr(box-sizing, content-box);
+    box-sizing: content-box;
 
     @if $isRelative {
       position: relative;
@@ -176,7 +169,7 @@
       background-image: -ms-linear-gradient(top, rgba(0,0,0,0) 95%,rgba(0,0,0,0.15) 100%);
       background-image: linear-gradient(top, rgba(0,0,0,0.15) 95%,rgba(0,0,0,0.15) 100%);
 
-      @include prefixr(background-size, 100% 26px);
+      background-size: 100% 26px;
     }
 
     &.debug::after {
