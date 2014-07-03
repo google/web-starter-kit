@@ -420,10 +420,3 @@
       margin-right: $wideGutterWidth;
     }
   }
-
-  // Mixin for flexbox
-  @mixin flexbox {
-    display: -moz-box;
-    display: -webkit-flex;
-    display: flex;
-  }
