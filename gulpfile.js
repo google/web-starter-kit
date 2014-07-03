@@ -88,6 +88,9 @@ gulp.task('styles:scss', function () {
       precision: 10,
       loadPath: ['app/styles']
     }))
+    .on('error', function (err) {
+      console.log(err);
+    })
     .pipe($.autoprefixer('last 1 version'))
     .pipe(gulp.dest('.tmp/styles'))
     .pipe($.size({title: 'styles:scss'}));
