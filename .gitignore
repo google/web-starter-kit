@@ -2,3 +2,9 @@ node_modules
 .sass-cache
 dist
 .tmp
+
+## WebStrom
+.idea/
+*.ipr
+*.iws
+*.iml
