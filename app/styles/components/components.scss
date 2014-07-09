@@ -9,40 +9,35 @@
 @import "./../../styleguide/styles/_dimens";
 @import "./../../styleguide/styles/_animations";
 
+// Icons - Leave it here to otherfiles can extend if needed
+@import "./../../styleguide/styles/_icons";
+
 @import "./../../styleguide/styles/_mediaqueries";
 @import "./../../styleguide/styles/_typography";
-
-@import "_utils";
-@import "_normalize";
-@import "_global";
-
-// Icons - Leave it here to otherfiles can extend if needed
-@import "_components/_icons";
+@import "./../../styleguide/styles/_button";
+@import "./../../styleguide/styles/_list";
+@import "./../../styleguide/styles/_link";
+@import "./../../styleguide/styles/_table";
+@import "./../../styleguide/styles/_grid";
+@import "./../../styleguide/styles/_media";
 
 // Modules
-@import "_modules/_summary-header";
-@import "_modules/_page-header";
-@import "_modules/_quote";
-@import "_modules/_highlight";
+@import "./../../styleguide/styles/modules/_breadcrumb";
+@import "./../../styleguide/styles/modules/_page-header";
+@import "./../../styleguide/styles/modules/_quote";
+@import "./../../styleguide/styles/modules/_icon-circle";
 
-// Components
-@import "_components/_grid";
-@import "_components/_button";
-@import "_components/_list";
-@import "_components/_link";
-@import "_components/_table";
-@import "_components/_media";
-@import "_components/_breadcrumb";
-@import "_components/_subsection-title";
-@import "_components/_articles-list";
-@import "_components/_icon-circle";
+// Code Highlighting - Include?
+@import "./../../styleguide/styles/modules/_highlight";
+
+@import "_global";
+@import "_normalize";
 
 // Themed styles
 @import "_themed";
 
 // Pages
 @import "_pages/_styleguide";
-@import "_pages/_page-resources";
 
 // Make sure this is last to override anything else :)
 @import "_helper";

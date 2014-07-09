@@ -1,0 +1,33 @@
+// Defining colors
+  $colorBlue: #3372df !default;
+  $colorBlueSecondary: lighten($colorBlue, 30%) !default;
+  $colorGreen: #0f9d58 !default;
+  $colorGreenSecondary: lighten($colorGreen, 30%) !default;
+  $colorRed: #cb4437 !default;
+  $colorRedSecondary: lighten($colorRed, 30%) !default;
+  $colorYellow: #f4b400 !default;
+  $colorYellowSecondary: lighten($colorYellow, 20%) !default;
+
+  $colorRemember: #09829a !default;
+  $colorLearning: #da2e75 !default;
+
+  $colorGrayBackground: #f0f0f0 !default;
+  $colorGrayKeyline: #e0e0e0 !default;
+  $colorGray: #737373 !default;
+  $colorGrayLight: #eeeeee !default;
+  $colorGrayDark: #404040 !default;
+
+  $colorText: $colorGrayDark !default;
+  $colorHighlight: $colorBlue !default;
+  $colorWarning: $colorYellowSecondary !default;
+  $colorMuted: $colorGray !default;
+  $colorDanger: $colorRed !default;
+
+  $colorLayouts: #297ea9 !default;
+  $colorLayoutsSecondary: lighten($colorLayouts, 30%) !default;
+  $colorUser: #2c8566 !default;
+  $colorUserSecondary: lighten($colorUser, 30%) !default;
+  $colorMedia: #cf423a !default;
+  $colorMediaSecondary: lighten($colorMedia, 30%) !default;
+  $colorPerformance: #7b5294 !default;
+  $colorPerformanceSecondary: lighten($colorPerformance, 30%) !default;

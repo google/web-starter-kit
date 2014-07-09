@@ -4,6 +4,74 @@
 *
 **/
 
+// Grid CSS rules
+@mixin rule--col($mediaQuery) {
+  @if $mediaQuery == medium {
+    float: left;
+    margin-right: $mediumGutterWidth;
+  }
+
+  @if $mediaQuery == wide {
+    float: left;
+    margin-right: $wideGutterWidth;
+  }
+}
+
+// Mixin to constrain elements
+@mixin container($isRelative: false) {
+  box-sizing: content-box;
+
+  @if $isRelative {
+    position: relative;
+  }
+
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-left: auto;
+  margin-right: auto;
+
+
+  @include mq-medium {
+    padding-left: 4.8%;
+    padding-right: 4.8%;
+    max-width: $mediumContainer;
+  }
+
+  @include mq-wide {
+    padding-left: 4.4%;
+    padding-right: 4.4%;
+    max-width: $wideContainer;
+  }
+}
+
+
+
+// Mixin to show a baseline grid
+// only visible when body has 'debug' class
+@mixin baseline-grid() {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    z-index: 9;
+
+    display: none;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0.15) 95%,rgba(0,0,0,0.15) 100%);
+
+    background-size: 100% 26px;
+  }
+
+  &.debug::after {
+    display: block;
+    pointer-events: none;
+  }
+}
 
 @include mq-medium-only {
   // Generating grid classes for medium view
