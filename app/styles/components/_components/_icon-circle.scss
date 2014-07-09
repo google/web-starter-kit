@@ -33,7 +33,7 @@
     font-size: $fontLarge;
     font-weight: 700;
 
-    @include medium {
+    @include mq-medium {
       font-size: $fontXLarge;
     }
   }
@@ -48,12 +48,12 @@
   i {
     font-size: $fontLarge;
 
-    @include medium {
+    @include mq-medium {
       font-size: $fontXLarge;
     }
   }
 
-  @include medium {
+  @include mq-medium {
     padding: ($lineHeight + $lineHeight/2) - 2;
     border: 2px solid #ffffff;
 
@@ -87,7 +87,7 @@
   padding: $lineHeight/2;
   margin: 0 auto;
 
-  @include medium {
+  @include mq-medium {
     padding: 22px; // Breaks baseline grid
     margin-top: 4px; // Adds margin top/bottom to fix baseline grid ;)
     margin-bottom: 4px; // Adds margin top/bottom to fix baseline grid ;)
@@ -103,7 +103,7 @@
     color: #ffffff;
     font-size: $fontBase;
 
-    @include medium {
+    @include mq-medium {
       font-size: $fontLarge;
     }
   }

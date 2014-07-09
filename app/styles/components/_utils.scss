@@ -6,77 +6,15 @@
 
 /*==========  VARIABLES  ==========*/
 
-  // Defining breakpoints
-  $medium: 620px !default;
-  $wide: 800px !default;
-  $huge: 1600px !default;
-  $mediumContainer: 688px !default;
-  $wideContainer: 864px !default;
 
-  // Defining grid sizes
-  $mediumColCount: 3 !default;
-  $mediumColWidth: 30.3% !default;
-  $mediumGutterWidth: 4.5% !default;
-  $wideColCount: 4 !default;
-  $wideColWidth: 22.2% !default;
-  $wideGutterWidth: 3.7% !default;
 
-  // Defining colors
-  $colorBlue: #3372df !default;
-  $colorBlueSecondary: lighten($colorBlue, 30%) !default;
-  $colorGreen: #0f9d58 !default;
-  $colorGreenSecondary: lighten($colorGreen, 30%) !default;
-  $colorRed: #cb4437 !default;
-  $colorRedSecondary: lighten($colorRed, 30%) !default;
-  $colorYellow: #f4b400 !default;
-  $colorYellowSecondary: lighten($colorYellow, 20%) !default;
+  
 
-  $colorRemember: #09829a !default;
-  $colorLearning: #da2e75 !default;
+  
 
-  $colorGrayBackground: #f0f0f0 !default;
-  $colorGrayKeyline: #e0e0e0 !default;
-  $colorGray: #737373 !default;
-  $colorGrayLight: #eeeeee !default;
-  $colorGrayDark: #404040 !default;
 
-  $colorText: $colorGrayDark !default;
-  $colorHighlight: $colorBlue !default;
-  $colorWarning: $colorYellowSecondary !default;
-  $colorMuted: $colorGray !default;
-  $colorDanger: $colorRed !default;
 
-  $colorLayouts: #297ea9 !default;
-  $colorLayoutsSecondary: lighten($colorLayouts, 30%) !default;
-  $colorUser: #2c8566 !default;
-  $colorUserSecondary: lighten($colorUser, 30%) !default;
-  $colorMedia: #cf423a !default;
-  $colorMediaSecondary: lighten($colorMedia, 30%) !default;
-  $colorPerformance: #7b5294 !default;
-  $colorPerformanceSecondary: lighten($colorPerformance, 30%) !default;
 
-  // Defining font family
-  $fontDefault: Helvetica, Arial, sans-serif !default;
-  $fontHighlight: "Roboto Condensed", Helvetica, sans-serif !default;
-  $fontIcon: "icons" !default;
-
-  // Defining font sizes
-  $fontSmall: 13px !default;
-  $fontBase: 16px  !default;
-  $fontMedium: 20px !default;
-  $fontLarge: 26px !default;
-  $fontXLarge: 42px !default;
-  $fontXXLarge: 68px !default;
-  $fontHuge: 110px !default;
-
-  // Defining baseline line height
-  $lineHeight: 26px !default;
-
-  // Defining animation easings
-  $animationEasing: cubic-bezier(0.455, 0.030, 0.515, 0.955) !default;
-
-  // Defining sidebar stuff
-  $sidebarWidth: 280px !default;
 
 
 /*==========  FUNCTIONS  ==========*/
@@ -88,34 +26,7 @@
 
 /*==========  MIXINS  ==========*/
 
-  @mixin media-query($media-query) {
-    @if $media-query == small {
-      @media only screen and (max-width:$medium - 1) { @content; }
-    }
-
-    @if $media-query == medium {
-      @media only screen and (min-width:$medium) { @content; }
-    }
-
-    @if $media-query == medium-only {
-      @media only screen and (min-width:$medium) and (max-width: $wide - 1) { @content; }
-    }
-
-    @if $media-query == wide {
-      @media only screen and (min-width:$wide) { @content; }
-    }
-
-    @if $media-query == huge {
-      @media only screen and (min-width:$huge) { @content; }
-    }
-  }
-
-  // Just some helpers...
-  @mixin small-only { @include media-query(small) { @content }; }
-  @mixin medium { @include media-query(medium) { @content }; }
-  @mixin medium-only { @include media-query(medium-only) { @content }; }
-  @mixin wide { @include media-query(wide) { @content }; }
-  @mixin huge { @include media-query(huge) { @content }; }
+  
 
   // Mixin to constrain elements
   @mixin container($isRelative: false) {
@@ -131,13 +42,13 @@
     margin-right: auto;
 
 
-    @include medium {
+    @include mq-medium {
       padding-left: 4.8%;
       padding-right: 4.8%;
       max-width: $mediumContainer;
     }
 
-    @include wide {
+    @include mq-wide {
       padding-left: 4.4%;
       padding-right: 4.4%;
       max-width: $wideContainer;
@@ -174,16 +85,16 @@
   }
 
   // Mixins simply to store CSS rules
-  @mixin rule--small {
+  /**@mixin rule--small {
     font-size: $fontSmall;
-    line-height: 2.0000em; /* 26px */
+    line-height: 2.0000em;
     padding-top: 2.0000em;
     padding-bottom: 0;
   }
 
   @mixin rule--base {
     font-size: $fontBase;
-    line-height: 1.6250em; /* 26px */
+    line-height: 1.6250em;
     padding-top: 1.6250em;
     padding-bottom: 0;
   }
@@ -191,7 +102,7 @@
   @mixin rule--medium {
     font-size: $fontMedium;
     font-weight: 300;
-    line-height: 1.3000em; /* 26px */
+    line-height: 1.3000em;
     padding-top: 1.3000em;
     padding-bottom: 0;
   }
@@ -200,7 +111,7 @@
     font-family: $fontHighlight;
     font-size: $fontLarge;
     font-weight: 300;
-    line-height: 1.0000em; /* 26px */
+    line-height: 1.0000em;
     padding-top: 1.0000em;
     padding-bottom: 0;
   }
@@ -209,7 +120,7 @@
     font-family: $fontHighlight;
     font-size: $fontXLarge;
     font-weight: 300;
-    line-height: 1.2381em; /* 52px */
+    line-height: 1.2381em;
     padding-top: 0.6190em;
     padding-bottom: 0;
   }
@@ -218,7 +129,7 @@
     font-family: $fontHighlight;
     font-size: $fontXXLarge;
     font-weight: 300;
-    line-height: 1.1471em; /* 78px */
+    line-height: 1.1471em;
     padding-top: 0.3824em;
     padding-bottom: 0;
   }
@@ -227,81 +138,10 @@
     font-family: $fontHighlight;
     font-size: $fontHuge;
     font-weight: 300;
-    line-height: 1.19em; /* 130px */
+    line-height: 1.19em;
     padding-top: 0.2364em;
     padding-bottom: 0;
-  }
-
-
-
-  // Mixins to determine which rule to use at which breakpoint
-  @mixin type--small($isFromMixin: false) {
-    @include rule--small;
-  }
-
-  @mixin type--base($isFromMixin: false) {
-    @include rule--base;
-  }
-
-  @mixin type--medium($isFromMixin: false) {
-    @if $isFromMixin == false {
-      @include type--base(true);
-      @include wide {
-        @include rule--medium;
-      }
-    }
-    @else {
-      @include rule--medium;
-    }
-  }
-
-  @mixin type--large($isFromMixin: false) {
-    @if $isFromMixin == false {
-      @include type--medium(true);
-      @include wide {
-        @include rule--large;
-      }
-    }
-    @else {
-      @include rule--large;
-    }
-  }
-
-  @mixin type--xlarge($isFromMixin: false) {
-    @if $isFromMixin == false {
-      @include type--large(true);
-      @include wide {
-        @include rule--xlarge;
-      }
-    }
-    @else {
-      @include rule--xlarge;
-    }
-  }
-
-  @mixin type--xxlarge($isFromMixin: false) {
-    @if $isFromMixin == false {
-      @include type--xlarge(true);
-      @include wide {
-        @include rule--xxlarge;
-      }
-    }
-    @else {
-      @include rule--xxlarge;
-    }
-  }
-
-  @mixin type--huge($isFromMixin: false) {
-    @if $isFromMixin == false {
-      @include type--xxlarge(true);
-      @include wide {
-        @include rule--huge;
-      }
-    }
-    @else {
-      @include rule--huge;
-    }
-  }
+  }**/
 
 
   // LISTS
@@ -371,7 +211,7 @@
     &::before {
       display: none;
 
-      @include medium {
+      @include mq-medium {
         display: block;
         position: absolute;
         top: 106px;
@@ -391,7 +231,7 @@
         left: $horizontalOffset;
       }
 
-      @include wide {
+      @media only screen and (min-width:$wide) {
         top: 134px;
         width: $wideColWidth;
         font-size: $fontSize + 50;

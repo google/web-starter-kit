@@ -9,7 +9,7 @@ ol {
   list-style: none;
   margin: 0;
 
-  @include small-only {
+  @include mq-small-only {
     padding-left: 0;
   }
 }
@@ -142,7 +142,7 @@ ol.list-links {
 .list-small {
 
   li {
-    @include medium {
+    @include mq-medium {
       @include type--small;
       padding-top: 0;
     }
@@ -169,7 +169,7 @@ ol.list-links {
   padding-top: $lineHeight;
   padding-bottom: $lineHeight;
 
-  @include medium {
+  @include mq-medium {
     min-height: $lineHeight * 13;
     padding: $lineHeight * 2 32px;
   }
@@ -191,7 +191,7 @@ ol.list-links {
   padding-top: $lineHeight;
   margin: 0 -5%;
 
-  @include medium {
+  @include mq-medium {
     display: block;
     padding-top: 0;
     margin: 0;
@@ -199,7 +199,7 @@ ol.list-links {
 }
 
 .featured-list__img {
-  @include medium {
+  @include mq-medium {
     padding-top: 60.8%;
     padding-bottom: 0;
     height: 0;
@@ -214,7 +214,7 @@ ol.list-links {
     margin: 0 auto;
     max-width: 100%;
 
-    @include medium {
+    @include mq-medium {
       margin: 0;
       position: absolute;
       top: 0;
@@ -231,11 +231,11 @@ ol.list-links {
   padding-top: 0;
   padding-left: 0;
 
-  @include medium {
+  @include mq-medium {
     padding-top: $lineHeight
   }
 
-  @include wide {
+  @include mq-wide {
     padding-top: 0
   }
 
@@ -256,7 +256,7 @@ ol.list-links {
       border-color: transparent;
     }
 
-    @include medium {
+    @include mq-medium {
       padding-top: 0;
       padding-bottom: 0;
       border-color: transparent;
@@ -314,7 +314,7 @@ ol.list-links {
 .list-guides-intro {
   margin-bottom: $lineHeight*2;
 
-  @include small-only {
+  @include mq-small-only {
     padding-top: $lineHeight*2;
   }
 
@@ -323,7 +323,7 @@ ol.list-links {
     padding-bottom: ($lineHeight*2) - 1;
     margin-bottom: ($lineHeight*2);
 
-    @include medium {
+    @include mq-medium {
       border-color: transparent;
       padding-bottom: 0;
     }

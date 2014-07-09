@@ -5,7 +5,7 @@
 **/
 
 
-@include medium-only {
+@include mq-medium-only {
   // Generating grid classes for medium view
   @for $i from 1 through $mediumColCount {
     .g-medium--#{$i} {
@@ -48,7 +48,7 @@
 }
 
 
-@include wide {
+@include mq-wide {
   // Generating grid classes for wide view
   @for $i from 1 through $wideColCount {
     .g-wide--#{$i} {
@@ -131,13 +131,13 @@
       background-color: rgba(lighten(#000, 35%), .2);
     }
 
-    @include medium-only {
+    @include mq-medium-only {
       .g-wide--last {
         display: none;
       }
     }
 
-    @include small-only {
+    @include mq-small-only {
       display: none;
     }
   }

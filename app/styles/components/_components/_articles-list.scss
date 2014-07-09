@@ -42,7 +42,7 @@
   &:first-child {
     padding-top: 0;
 
-    @include medium {
+    @include mq-medium {
       padding-top: $lineHeight - 2;
     }
 

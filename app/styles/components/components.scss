@@ -4,6 +4,14 @@
 *
 **/
 
+@import "./../../styleguide/styles/_base";
+@import "./../../styleguide/styles/_colors";
+@import "./../../styleguide/styles/_dimens";
+@import "./../../styleguide/styles/_animations";
+
+@import "./../../styleguide/styles/_mediaqueries";
+@import "./../../styleguide/styles/_typography";
+
 @import "_utils";
 @import "_normalize";
 @import "_global";
@@ -12,25 +20,13 @@
 @import "_components/_icons";
 
 // Modules
-@import "_modules/_highlight";
-@import "_modules/_editorial-header";
 @import "_modules/_summary-header";
-@import "_modules/_related-guides";
-@import "_modules/_in-this-guide";
-@import "_modules/_articles-section";
-@import "_modules/_guides-section";
 @import "_modules/_page-header";
-@import "_modules/_featured-section";
-@import "_modules/_featured-spotlight";
 @import "_modules/_quote";
-@import "_modules/_article-nav";
-@import "_modules/_did-you-know";
-@import "_modules/_toc";
-@import "_modules/_next-lessons";
+@import "_modules/_highlight";
 
 // Components
 @import "_components/_grid";
-@import "_components/_typography";
 @import "_components/_button";
 @import "_components/_list";
 @import "_components/_link";
@@ -39,7 +35,6 @@
 @import "_components/_breadcrumb";
 @import "_components/_subsection-title";
 @import "_components/_articles-list";
-@import "_components/_guides-list";
 @import "_components/_icon-circle";
 
 // Themed styles
