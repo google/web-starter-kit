@@ -71,16 +71,6 @@
 
 Options -MultiViews
 
-# ------------------------------------------------------------------------------
-# | Custom error messages / pages                                              |
-# ------------------------------------------------------------------------------
-
-# Customize what Apache returns to the client in case of an error.
-# http://httpd.apache.org/docs/current/mod/core.html#errordocument
-
-ErrorDocument 404 /404.html
-
-
 # ##############################################################################
 # # INTERNET EXPLORER                                                          #
 # ##############################################################################
