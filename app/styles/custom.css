@@ -1,21 +1,3 @@
-@import "./../styleguide/styles/_colors";
-@import "./../styleguide/styles/_dimens";
-@import "./../styleguide/styles/_animations";
-
-// Icons - Leave it here to otherfiles can extend if needed
-@import "./../styleguide/styles/_icons";
-
-@import "./../styleguide/styles/_normalize";
-@import "./../styleguide/styles/_mediaqueries";
-@import "./../styleguide/styles/_typography";
-@import "./../styleguide/styles/_button";
-@import "./../styleguide/styles/_list";
-@import "./../styleguide/styles/_link";
-@import "./../styleguide/styles/_table";
-@import "./../styleguide/styles/_grid";
-@import "./../styleguide/styles/_media";
-@import "./../styleguide/styles/_base";
-
 /*
  * Web Starter Kit
  *
@@ -23,7 +5,6 @@
  * Web Starter Kit team.
  *
  */
-
 body.open {
   overflow: hidden;
 }
@@ -40,37 +21,37 @@ body.open {
 }
 
 .app-bar-container {
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
   width: 100%;
   height: 60px;
-
   position: relative;
-  
-  flex-direction: row;
-  
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   margin: 0 auto;
 }
 
 .app-bar.open,
 .app-bar.open ~ main {
-  transform: translate(250px, 0);
+  -webkit-transform: translate(250px, 0);
+          transform: translate(250px, 0);
 }
 
 .app-bar .logo {
-  max-width: none;
-
-  float: none;
-
-  flex: 1;
-  
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  font-size: 2em;
+  line-height: 60px;
   margin: 0 16px;
   padding: 0;
-
-  font-size: 2em;
+  color: #fefefe;
+  float: none;
+  max-width: none;
   font-weight: 300;
   line-height: 60px;
-
-  color: #fefefe;
 }
 
 .app-bar .logo a {
@@ -80,26 +61,24 @@ body.open {
 }
 
 .app-bar-actions {
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  
-  flex-direction: row;
-  
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   z-index: 2;
 }
 
 .app-bar button {
   width: 60px;
   height: 60px;
-  
-  padding: 0;
-
   background-image: none;
   background-color: transparent;
-  
   border: none;
-  
-  transition: background-color 0.2s ease-out;
-  
+  padding: 0;
+  -webkit-transition: background-color 0.2s ease-out;
+          transition: background-color 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -135,6 +114,7 @@ button.menu img {
 
   #perfmatters
   */
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
@@ -143,42 +123,38 @@ button.menu img {
 }
 
 .navdrawer-container {
-  width: 250px;
-  height: 100%;
-
+  z-index: 1;
   position: fixed;
-
   top: 0;
   bottom: 0;
-
-  z-index: 1;
-  
+  width: 250px;
+  height: 100%;
   background-color: #3367D6;
   color: #fefefe;
-  
-  transform: translate(-250px, 0);
-  
+  -webkit-transform: translate(-250px, 0);
+          transform: translate(-250px, 0);
   overflow-y: auto;
 }
 
 .navdrawer-container.open {
-  transform: translate(0, 0);
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0);
 }
 
 .app-bar, .navdrawer-container, main {
-  transition: transform 0.3s ease-out;
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+          transition: transform 0.3s ease-out;
 }
 
 .navdrawer-container h4,
 .navdrawer-container ul li a {
   height: auto;
-  
   padding: 17px 20px;
-  
   line-height: 1.4;
 }
 
 .navdrawer-container h4 {
+  height: 60px;
   background-color: white;
   color: #3367D6;
 }
@@ -191,11 +167,10 @@ button.menu img {
 
 .navdrawer-container ul li a {
   display: block;
-  
   text-decoration: none;
   color: white;
-  
-  transition: background-color 0.2s ease-out;
+  -webkit-transition: background-color 0.2s ease-out;
+          transition: background-color 0.2s ease-out;
   white-space: nowrap;
 }
 
@@ -203,7 +178,6 @@ button.menu img {
   border-bottom-style: solid;
   border-width: 1px;
   border-color: white;
-
   padding: 0;
 }
 
@@ -217,7 +191,6 @@ button.menu img {
 
 .navdrawer-container ul li a:focus {
   background-color: rgba(255, 255, 255, 0.3);
-
   outline: 0;
 }
 
@@ -226,42 +199,37 @@ button.menu img {
 }
 
 main {
-  min-height: 100%;
-
   margin: 0 auto;
   /* Height of the header */
   padding: 60px 16px 16px 16px;
+  min-height: 100%;
 }
 
 /** Larger Screens - desktops and tablets **/
-@include mq-wide {
+@media all and (min-width: 990px) {
   .app-bar {
     position: relative;
   }
 
   .app-bar.open,
   .app-bar.open ~ main {
-    transform: translate(0px, 0);
+    -webkit-transform: translate(0px, 0);
+            transform: translate(0px, 0);
   }
 
   .app-bar-container {
     display: block;
-
     height: 130px;
     max-width: 864px;
-    
     padding: 0 16px;
     box-sizing: border-box;
-    
     background-color: #4285f4;
   }
 
   .app-bar .logo {
     float: left;
-    
     margin: 0;
     padding: 0;
-
     line-height: 130px;
     font-size: 46px;
   }
@@ -273,9 +241,7 @@ main {
   .app-bar::after {
     content: ' ';
     display: block;
-
     height: 0;
-    
     overflow: hidden;
     clear: both;
   }
@@ -286,21 +252,18 @@ main {
 
   nav {
     display: block;
-
     margin-top: 130px;
   }
 
   .navdrawer-container {
+    position: relative;
     width: 100%;
     height: auto;
-
-    position: relative;
-
     margin-top: 130px;
-
-    transform: translate(0, 0);
-    transition: none;
-
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+    -webkit-transition: none;
+            transition: none;
     overflow-y: auto;
   }
 
@@ -309,13 +272,14 @@ main {
   }
 
   .navdrawer-container ul {
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
-
     max-width: 864px;
-    
-    flex-direction: row;
-
     margin: 0 auto;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
   }
 
   .navdrawer-container ul li {
@@ -324,9 +288,8 @@ main {
 
   main {
     max-width: 864px;
-    min-height: initial;
-
     padding-top: 0;
+    min-height: initial;
   }
 
   body {
@@ -335,7 +298,6 @@ main {
 
   .navdrawer-container {
     position: relative;
-
     margin-top: 0;
   }
 }

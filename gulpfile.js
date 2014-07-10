@@ -94,8 +94,7 @@ gulp.task('styles:components', function () {
     }))
     .on('error', console.error.bind(console))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
-    //.pipe(gulp.dest('.tmp/components'))
-    .pipe(gulp.dest('app/styles'))
+    .pipe(gulp.dest('.tmp/styles'))
     .pipe($.size({title: 'styles:components'}));
 });
 
