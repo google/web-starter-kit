@@ -1,33 +1,3 @@
-/**
-*
-* Global
-*
-**/
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-html, body, button {
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
-}
-
-body {
-  font-family: $fontDefault;
-  font-size: $fontBase;
-  line-height: 1.6250em; /* 26px */
-  font-weight: 300; // to thicken it a bit, we need to remove font-smoothing
-  color: $colorText;
-
-  @include baseline-grid();
-}
-
-pre {
-  background: $colorGrayBackground;
-  padding: 13px;
-}
-
 .main-container {
   @include container(true);
 }

@@ -84,18 +84,18 @@ gulp.task('styles:css', function () {
     .pipe($.size({title: 'styles:css'}));
 });
 
-// Compile Sass For Style Guide Components (app/styles/components)
+// Compile Sass For Style Guide Components (app/styles/styleguide)
 gulp.task('styles:components', function () {
-  return gulp.src('app/styles/components/components.scss')
+  return gulp.src('app/styles/styleguide.scss')
     .pipe($.rubySass({
       style: 'expanded',
       precision: 10,
-      loadPath: ['app/styles/components']
+      loadPath: ['app/styles']
     }))
     .on('error', console.error.bind(console))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
     //.pipe(gulp.dest('.tmp/components'))
-    .pipe(gulp.dest('app/styles/components'))
+    .pipe(gulp.dest('app/styles'))
     .pipe($.size({title: 'styles:components'}));
 });
 
