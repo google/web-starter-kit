@@ -16,43 +16,6 @@
   }
 }
 
-
-/*==========  COLORS  ==========*/
-
-.color--blue { color: $colorBlue; }
-.color--red { color: $colorRed; }
-.color--green { color: $colorGreen; }
-.color--yellow { color: $colorYellow; }
-.color--blue-secondary { color: $colorBlueSecondary; }
-.color--red-secondary { color: $colorRedSecondary; }
-.color--green-secondary { color: $colorGreenSecondary; }
-.color--yellow-secondary { color: $colorYellowSecondary; }
-
-.color--gray-background { color: $colorGrayBackground; }
-.color--gray-keyline { color: $colorGrayKeyline; }
-.color--gray { color: $colorGray; }
-.color--gray-dark { color: $colorGrayDark; }
-
-.color--text { color: $colorText; }
-.color--highlight { color: $colorHighlight; }
-.color--warning { color: $colorWarning; }
-.color--danger { color: $colorDanger; }
-.color--muted { color: $colorMuted; }
-
-.color--remember { color: $colorRemember; }
-.color--learning { color: $colorLearning; }
-
-.color--layouts { color: $colorLayouts; }
-.color--user { color: $colorUser; }
-.color--media { color: $colorMedia; }
-.color--performance { color: $colorPerformance; }
-.color--layouts-secondary { color: $colorLayoutsSecondary; }
-.color--user-secondary { color: $colorUserSecondary; }
-.color--media-secondary { color: $colorMediaSecondary; }
-.color--performance-secondary { color: $colorPerformanceSecondary; }
-
-
-
 /*==========  TEXT DIVIDER  ==========*/
 
 .text-divider {

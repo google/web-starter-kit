@@ -1,0 +1,75 @@
+/**
+*
+* UI colors.
+*
+**/
+
+/* ==========  UI Colors  ========== */
+
+$colorPrimary: $colorTeal;
+$colorPrimaryHueOne: nth($colorPrimary, 6);
+$colorPrimaryHueTwo: nth($colorPrimary, 2);
+$colorPrimaryHueThree: nth($colorPrimary, 8);
+
+$colorAccent: $colorPink500 !default;
+$colorAccentFallbackLight: $colorPinkA100 !default;
+$colorAccentFallbackDark: $colorPinkA400 !default;
+
+$colorGrayBackground: $colorGrayLighter !default;
+$colorGrayKeyline: $colorGrayLight !default;
+$colorGrayDark: $colorGrayDark !default;
+
+
+/* ==========  Themes colors  ========== */
+
+$colorLayouts: $colorLightBlue700 !default;
+$colorLayoutsSecondary: $colorLightBlue200 !default;
+$colorUser: $colorTeal700 !default;
+$colorUserSecondary: $colorTeal200 !default;
+$colorMedia: $colorRed700 !default;
+$colorMediaSecondary: $colorRed200 !default;
+$colorPerformance: $colorDeepPurple700 !default;
+$colorPerformanceSecondary: $colorDeepPurple200 !default;
+
+
+/* ==========  Helper colors  ========== */
+
+$colorText: $colorGrayDark !default;
+$colorHighlight: $colorBlue500 !default;
+$colorWarning: $colorAmber300 !default;
+$colorMuted: $colorGray !default;
+$colorDanger: $colorRed500 !default;
+$colorLearning: $colorPink500 !default;
+$colorRemember: $colorCyan700 !default;
+
+
+/* ==========  Color classes  ========== */
+
+.color--primary { color: $colorPrimaryHueOne; }
+.color--primary-light { color: $colorPrimaryHueTwo; }
+.color--primary-dark { color: $colorPrimaryHueThree; }
+.color--accent { color: $colorAccent; }
+.color--accent-fallback-light { color: $colorAccentFallbackLight; }
+.color--accent-fallback-dark { color: $colorAccentFallbackDark; }
+
+.color--gray-background { color: $colorGrayBackground; }
+.color--gray-keyline { color: $colorGrayKeyline; }
+.color--gray { color: $colorGray; }
+.color--gray-dark { color: $colorGrayDark; }
+
+.color--text { color: $colorText; }
+.color--highlight { color: $colorHighlight; }
+.color--warning { color: $colorWarning; }
+.color--danger { color: $colorDanger; }
+.color--muted { color: $colorMuted; }
+.color--remember { color: $colorRemember; }
+.color--learning { color: $colorLearning; }
+
+.color--layouts { color: $colorLayouts; }
+.color--user { color: $colorUser; }
+.color--media { color: $colorMedia; }
+.color--performance { color: $colorPerformance; }
+.color--layouts-secondary { color: $colorLayoutsSecondary; }
+.color--user-secondary { color: $colorUserSecondary; }
+.color--media-secondary { color: $colorMediaSecondary; }
+.color--performance-secondary { color: $colorPerformanceSecondary; }
