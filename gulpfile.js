@@ -27,6 +27,8 @@ var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
 var pagespeed = require('psi');
 var reload = browserSync.reload;
+var rework = require('gulp-rework');
+var conformance = require('rework-suit-conformance');
 
 var AUTOPREFIXER_BROWSERS = [
   'ie >= 10',
@@ -94,6 +96,7 @@ gulp.task('styles:styleguide', function () {
     }))
     .on('error', console.error.bind(console))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
+    .pipe(rework(conformance))
     .pipe(gulp.dest('.tmp/styles'))
     .pipe($.size({title: 'styles:styleguide'}));
 });
@@ -193,7 +196,7 @@ gulp.task('serve', function () {
   });
 
   gulp.watch(['app/**/*.html'], reload);
-  gulp.watch(['app/styles/**/*.scss'], ['styles:styleguide', 'styles:scss']);
+  gulp.watch(['app/styles/**/*.scss', 'app/styleguide/styles/**/*.scss'], ['styles:styleguide', 'styles:scss']);
   gulp.watch(['{.tmp,app}/styles/**/*.css'], ['styles:css', reload]);
   gulp.watch(['app/scripts/**/*.js'], ['jshint']);
   gulp.watch(['app/images/**/*'], reload);
@@ -210,7 +213,7 @@ gulp.task('serve:dist', ['default'], function () {
     server: {
       baseDir: 'dist'
     }
-    
+
   });
 });
 
