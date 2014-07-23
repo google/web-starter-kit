@@ -4,23 +4,40 @@
 *
 **/
 
-@import "./../styleguide/styles/variables/_colors";
-@import "./../styleguide/styles/variables/_dimens";
-@import "./../styleguide/styles/variables/_animations";
+@import "./../styleguide/styles/_dimens";
+@import "./../styleguide/styles/_animations";
 
+@import "./../styleguide/styles/style/_colors";
 // Icons - Leave it here to otherfiles can extend if needed
-@import "./../styleguide/styles/_icons";
+@import "./../styleguide/styles/style/_icons";
+@import "./../styleguide/styles/style/_typography";
 
 @import "./../styleguide/styles/_normalize";
 @import "./../styleguide/styles/_mediaqueries";
-@import "./../styleguide/styles/_typography";
-@import "./../styleguide/styles/_button";
 @import "./../styleguide/styles/_list";
+
+// Components
+@import "./../styleguide/styles/components/_button";
+@import "./../styleguide/styles/components/_cards";
+@import "./../styleguide/styles/components/_chip";
+@import "./../styleguide/styles/components/_dialog";
+@import "./../styleguide/styles/components/_divider";
+@import "./../styleguide/styles/components/_list";
+@import "./../styleguide/styles/components/_menu";
+@import "./../styleguide/styles/components/_progress";
+@import "./../styleguide/styles/components/_slider";
+@import "./../styleguide/styles/components/_toast";
+@import "./../styleguide/styles/components/_subheader";
+@import "./../styleguide/styles/components/_switches";
+@import "./../styleguide/styles/components/_tabs";
+@import "./../styleguide/styles/components/_textfield";
+@import "./../styleguide/styles/components/_tooltip";
+@import "./../styleguide/styles/components/_table";
+@import "./../styleguide/styles/components/_media";
+
 // Test
 @import "./../styleguide/styles/_link";
-@import "./../styleguide/styles/_table";
 @import "./../styleguide/styles/_grid";
-@import "./../styleguide/styles/_media";
 @import "./../styleguide/styles/_base";
 
 // Modules
@@ -95,7 +112,7 @@
 }
 
 .demo {
-  [class*="Grid-"] {
+  [class*="GridSystem-"] {
     background-color: $colorGrayLight;
     position: relative;
     margin-bottom: $lineHeight;
