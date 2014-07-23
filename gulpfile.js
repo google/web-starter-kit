@@ -85,7 +85,7 @@ gulp.task('styles:css', function () {
 });
 
 // Compile Sass For Style Guide Components (app/styles/styleguide)
-gulp.task('styles:components', function () {
+gulp.task('styles:styleguide', function () {
   return gulp.src('app/styles/styleguide.scss')
     .pipe($.rubySass({
       style: 'expanded',
@@ -95,12 +95,12 @@ gulp.task('styles:components', function () {
     .on('error', console.error.bind(console))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
     .pipe(gulp.dest('.tmp/styles'))
-    .pipe($.size({title: 'styles:components'}));
+    .pipe($.size({title: 'styles:styleguide'}));
 });
 
 // Compile Any Other Sass Files You Added (app/styles)
 gulp.task('styles:scss', function () {
-  return gulp.src(['app/styles/**/*.scss', '!app/styles/components/components.scss'])
+  return gulp.src(['app/styles/**/*.scss'])
     .pipe($.rubySass({
       style: 'expanded',
       precision: 10,
@@ -113,11 +113,11 @@ gulp.task('styles:scss', function () {
 });
 
 // Output Final CSS Styles
-gulp.task('styles', ['styles:components', 'styles:scss', 'styles:css']);
+gulp.task('styles', ['styles:styleguide', 'styles:scss', 'styles:css']);
 
 // Scan Your HTML For Assets & Optimize Them
-gulp.task('html', function () {
-  return gulp.src('app/**/*.html')
+gulp.task('html:app', function () {
+  return gulp.src(['app/**/*.html', '!app/styleguide/**/*.html'])
     .pipe($.useref.assets({searchPath: '{.tmp,app}'}))
     // Concatenate And Minify JavaScript
     .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
@@ -126,8 +126,7 @@ gulp.task('html', function () {
     // the next line to only include styles your project uses.
     .pipe($.if('*.css', $.uncss({
       html: [
-        'app/index.html',
-        'app/styleguide/index.html'
+        'app/index.html'
       ],
       // CSS Selectors for UnCSS to ignore
       ignore: [
@@ -140,12 +139,41 @@ gulp.task('html', function () {
     .pipe($.useref.restore())
     .pipe($.useref())
     // Update Production Style Guide Paths
-    .pipe($.replace('components/components.css', 'components/main.min.css'))
+    //.pipe($.replace('./../styles/styleguide.css', '/styles/styleguide.min.css'))
     // Minify Any HTML
     .pipe($.if('*.html', $.minifyHtml()))
     // Output Files
     .pipe(gulp.dest('dist'))
-    .pipe($.size({title: 'html'}));
+    .pipe($.size({title: 'html:app'}));
+});
+
+gulp.task('html:styleguide', function () {
+  return gulp.src(['app/styleguide/**/*.html'])
+    .pipe($.useref.assets({searchPath: '{.tmp/styleguide,app/styleguide}'}))
+    // Concatenate And Minify JavaScript
+    .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
+    // Remove Any Unused CSS
+    // Note: If not using the Style Guide, you can delete it from
+    // the next line to only include styles your project uses.
+    .pipe($.if('*.css', $.uncss({
+      html: [
+        'app/styleguide/index.html'
+      ],
+      // CSS Selectors for UnCSS to ignore
+      ignore: [
+      ]
+    })))
+    // Concatenate And Minify Styles
+    .pipe($.if('*.css', $.csso()))
+    .pipe($.useref.restore())
+    .pipe($.useref())
+    // Update Production Style Guide Paths
+    //.pipe($.replace('./../styles/styleguide.css', '/styles/styleguide.min.css'))
+    // Minify Any HTML
+    .pipe($.if('*.html', $.minifyHtml()))
+    // Output Files
+    .pipe(gulp.dest('dist'))
+    .pipe($.size({title: 'html:styleguide'}));
 });
 
 // Clean Output Directory
@@ -161,7 +189,7 @@ gulp.task('serve', function () {
   });
 
   gulp.watch(['app/**/*.html'], reload);
-  gulp.watch(['app/styles/**/*.scss'], ['styles:components', 'styles:scss']);
+  gulp.watch(['app/styles/**/*.scss'], ['styles:styleguide', 'styles:scss']);
   gulp.watch(['{.tmp,app}/styles/**/*.css'], ['styles:css', reload]);
   gulp.watch(['app/scripts/**/*.js'], ['jshint']);
   gulp.watch(['app/images/**/*'], reload);
@@ -179,7 +207,7 @@ gulp.task('serve:dist', ['default'], function () {
 
 // Build Production Files, the Default Task
 gulp.task('default', ['clean'], function (cb) {
-  runSequence('styles', ['jshint', 'html', 'images', 'fonts', 'copy'], cb);
+  runSequence('styles', ['jshint', 'html:app', 'html:styleguide', 'images', 'fonts', 'copy'], cb);
 });
 
 // Run PageSpeed Insights
