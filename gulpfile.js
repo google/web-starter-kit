@@ -88,7 +88,7 @@ gulp.task('styles:css', function () {
 
 // Compile Sass For Style Guide Components (app/styles/styleguide)
 gulp.task('styles:styleguide', function () {
-  return gulp.src('app/styleguide/styles/styleguide.scss')
+  return gulp.src('app/styleguide/styleguide.scss')
     .pipe($.rubySass({
       style: 'expanded',
       precision: 10,
@@ -196,7 +196,7 @@ gulp.task('serve', function () {
   });
 
   gulp.watch(['app/**/*.html'], reload);
-  gulp.watch(['app/styles/**/*.scss', 'app/styleguide/styles/**/*.scss'], ['styles:styleguide', 'styles:scss']);
+  gulp.watch(['app/styles/**/*.scss', 'app/styleguide/**/*.scss'], ['styles:styleguide', 'styles:scss']);
   gulp.watch(['{.tmp,app}/styles/**/*.css'], ['styles:css', reload]);
   gulp.watch(['app/scripts/**/*.js'], ['jshint']);
   gulp.watch(['app/images/**/*'], reload);

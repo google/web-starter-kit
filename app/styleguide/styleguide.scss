@@ -4,16 +4,11 @@
 *
 **/
 
-@import "./../styleguide/_dimens";
-@import "./../styleguide/_animations";
-
 @import "./../styleguide/style/_colors";
-// Icons - Leave it here to otherfiles can extend if needed
 @import "./../styleguide/style/_icons";
 @import "./../styleguide/style/_typography";
 
 @import "./../styleguide/_normalize";
-@import "./../styleguide/_mediaqueries";
 
 // Components
 @import "./../styleguide/components/_breadcrumb";
@@ -41,12 +36,11 @@
 @import "./../styleguide/components/_toast";
 @import "./../styleguide/components/_tooltip";
 
+@import "./../styleguide/_containers";
 @import "./../styleguide/_gridsystem";
 @import "./../styleguide/_base";
-@import "./../styleguide/_containers";
 
 @import "./../styleguide/style/_themed";
-// Modules
 
 @import "./../styleguide/style/_icon-circle";
 
@@ -58,6 +52,10 @@
 * Styleguide Only CSS
 *
 **/
+
+@import "./../styleguide/_dimens";
+@import "./../styleguide/style/_colors";
+@import "./../styleguide/mixins/_typography";
 
 .page--styleguide {
 

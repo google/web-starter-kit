@@ -1,3 +1,9 @@
+@import "./../style/_colors";
+@import "./../style/_icons";
+
+@import "./../mixins/_mediaqueries";
+@import "./../mixins/_typography";
+
 /**
 *
 * List
@@ -35,31 +41,6 @@
     display: inline-block;
     position: absolute;
     left: 0;
-  }
-}
-
-// Mixin to create links
-@mixin style-cta($textColor, $linkIcon: false) {
-  font-family: $fontHighlight;
-  color: $textColor;
-  font-weight: 400;
-  display: inline-block;
-  line-height: 1;
-
-  &:hover {
-    color: $colorGrayDark;
-  }
-
-  @if $linkIcon {
-    text-decoration: none;
-    &::before {
-      display: inline-block;
-      padding-right: 10px;
-      font-family: $fontIcon;
-      line-height: ($lineHeight) - 1; // remove 1px from line-height to fix baseline alignment
-      font-size: $fontSmall;
-      content: $linkIcon;
-    }
   }
 }
 

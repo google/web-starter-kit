@@ -1,31 +1,4 @@
-@font-face {
-  font-family:"icons";
-  src:url("../../images/icons/icons.eot");
-  src:url("../../images/icons/icons.eot?#iefix") format("embedded-opentype"),
-    url("../../images/icons/icons.woff2") format("woff2"),
-    url("../../images/icons/icons.woff") format("woff"),
-    url("../../images/icons/icons.ttf") format("truetype"),
-    url("../../images/icons/icons.svg?#icons") format("svg");
-  font-weight:normal;
-  font-style:normal;
-}
-
-
-.icon {
-  font-family:"icons";
-  display:inline-block;
-  vertical-align:top;
-  line-height:1;
-  font-weight:normal;
-  font-style:normal;
-  speak:none;
-  text-decoration:inherit;
-  text-transform:none;
-  text-rendering:optimizeLegibility;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-}
-
+// Icon font defined in Typography
 
 // Icons
 $icon-bullet: "\e001";

@@ -1,8 +1,14 @@
+@import "./../style/_colors";
+@import "./../style/_icons";
+@import "./../mixins/_typography";
+
 /**
 *
 * Link
 *
 **/
+
+@import "./../mixins/_links";
 
 a {
   color: $colorBlue;
@@ -13,9 +19,9 @@ a:hover {
 }
 
 .cta--primary {
-  @include style-cta($colorBlue, $icon-chevron-right);
+  @include style-link($colorBlue, $icon-chevron-right);
 }
 
 .cta--secondary {
-  @include style-cta($colorBlue);
+  @include style-link($colorBlue);
 }

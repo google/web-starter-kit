@@ -1,3 +1,5 @@
+@import "./../_dimens";
+
 // Just some helpers...
 @mixin mq-small-only {
   @media only screen and (max-width:$medium - 1) {
@@ -12,7 +14,7 @@
 }
 
 @mixin mq-medium-only {
-  @media only screen and (min-width:$medium) and (max-width: $wide - 1) { 
+  @media only screen and (min-width:$medium) and (max-width: $wide - 1) {
     @content;
     }
 }
