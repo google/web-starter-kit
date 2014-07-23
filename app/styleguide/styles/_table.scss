@@ -1,3 +1,5 @@
+/** @define Grid; use strict */
+
 /**
 *
 * Table
@@ -100,7 +102,7 @@ td:last-child::after {
   }
 }
 
-.table-2 {
+.Table-2 {
   col {
     width: $mediumContainer / 2;
     @include mq-wide {
@@ -118,7 +120,7 @@ td:last-child::after {
   }
 }
 
-.table-3 {
+.Table-3 {
   col {
     width: $mediumContainer / 3;
     @include mq-wide {
@@ -137,7 +139,7 @@ td:last-child::after {
   }
 }
 
-.table-4 {
+.Table-4 {
   col {
     width: $mediumContainer / 4;
     @include mq-wide {
