@@ -1,0 +1,166 @@
+/**
+*
+* Main Stylesheet For Visual Style Guide
+*
+**/
+
+@import "./../styleguide/styles/_colors";
+@import "./../styleguide/styles/_dimens";
+@import "./../styleguide/styles/_animations";
+
+// Icons - Leave it here to otherfiles can extend if needed
+@import "./../styleguide/styles/_icons";
+
+@import "./../styleguide/styles/_normalize";
+@import "./../styleguide/styles/_mediaqueries";
+@import "./../styleguide/styles/_typography";
+@import "./../styleguide/styles/_button";
+@import "./../styleguide/styles/_list";
+@import "./../styleguide/styles/_link";
+@import "./../styleguide/styles/_table";
+@import "./../styleguide/styles/_grid";
+@import "./../styleguide/styles/_media";
+@import "./../styleguide/styles/_base";
+
+// Modules
+@import "./../styleguide/styles/modules/_breadcrumb";
+@import "./../styleguide/styles/modules/_page-header";
+@import "./../styleguide/styles/modules/_quote";
+@import "./../styleguide/styles/modules/_icon-circle";
+@import "./../styleguide/styles/modules/_containers";
+@import "./../styleguide/styles/modules/_themed";
+
+// Code Highlighting - Include?
+@import "./../styleguide/styles/modules/_highlight";
+
+// Make sure this is last to override anything else :)
+@import "./../styleguide/styles/_helper";
+
+/**
+*
+* Styleguide Only CSS
+*
+**/
+
+.page--styleguide {
+
+  .styleguide__module-title {
+    margin-bottom: $lineHeight;
+  }
+
+  section {
+    margin-bottom: $lineHeight*2;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: $lineHeight*3 - 1;
+
+  }
+
+  .styleguide__color-list {
+    text-align: center;
+
+    li {
+      border-bottom: $lineHeight*2 solid;
+      margin-bottom: $lineHeight;
+      position: relative;
+    }
+  }
+
+  .styleguide__breadcrumb .breadcrumbs{
+    display: block;
+  }
+
+  .styleguide__lists {
+    ul,
+    ol {
+      margin-bottom: $lineHeight;
+    }
+  }
+
+  .styleguide__inverted-block {
+    background: #e8e8e8;
+    padding: 0 13px;
+  }
+
+  .styleguide__theme-block {
+    background: $colorLayouts;
+    padding: 0 13px;
+  }
+
+}
+
+.demo {
+  margin-bottom: $lineHeight;
+  margin-top: $lineHeight;
+}
+
+.demo {
+  [class*="g-"] {
+    background-color: $colorGrayLight;
+    position: relative;
+    margin-bottom: $lineHeight;
+    min-height: $lineHeight*6;
+
+    &::before,
+    &::after {
+      @include type--small;
+      display: block;
+      margin: 0 10px;
+    }
+
+    &::before {
+      content: "HTML classes: ";
+      font-weight: 700;
+    }
+
+    &::after {
+      content: attr(class);
+      word-spacing: 15px;
+    }
+  }
+}
+
+/**
+*
+* subsection__title
+*
+**/
+
+.subsection-title {
+  color: $colorGrayDark;
+  margin-top: $lineHeight * 2;
+}
+
+.subsection-number {
+  @include type--base;
+  padding-top: 0;
+  display: block;
+}
+
+/**
+*
+* Top Section Header
+**/
+
+.summary-header {
+  background-color: $colorBlue;
+  padding-bottom: $lineHeight * 3;
+  color: #ffffff;
+  margin-bottom: $lineHeight;
+  box-shadow: inset 0 2px 0 0 #fff;
+
+  .breadcrumbs__link {
+    color: #ffffff;
+  }
+
+}
+
+.summary-header__anchor-list {
+  margin-top: $lineHeight * 2;
+}
+
+
+.summary-header__anchors-item {
+  & a {
+    color: #ffffff;
+  }
+}

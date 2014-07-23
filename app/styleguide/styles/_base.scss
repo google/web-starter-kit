@@ -10,6 +10,23 @@
    Base styles: opinionated defaults
    ========================================================================== */
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, button {
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
 html,
 button,
 input,
@@ -21,6 +38,14 @@ textarea {
 body {
   font-size: 1em;
   line-height: 1.4;
+
+  font-family: $fontDefault;
+  font-size: $fontBase;
+  line-height: 1.6250em; /* 26px */
+  font-weight: 300; // to thicken it a bit, we need to remove font-smoothing
+  color: $colorText;
+
+  @include baseline-grid();
 }
 
 a {
@@ -33,6 +58,11 @@ a:visited {
 
 a:hover {
   color: #06e;
+}
+
+pre {
+  background: $colorGrayBackground;
+  padding: 13px;
 }
 
 /*
@@ -60,27 +90,6 @@ fieldset {
 textarea {
   resize: vertical;
 }
-
-/* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* ==========================================================================
    Helper classes
@@ -174,34 +183,4 @@ textarea[contenteditable] {
 
 .invisible {
   visibility: hidden;
-}
-
-/**
- * Clearfix helper
- * Used to contain floats: h5bp.com/q
- */
-
-.clearfix::before,
-.clearfix::after {
-  content: "";
-  display: table;
-}
-
-.clearfix::after {
-  clear: both;
-}
-
-/* ==========================================================================
-   EXAMPLE Media Queries for Responsive Design.
-   Theses examples override the primary ('mobile first') styles.
-   Modify as content requires.
-   ========================================================================== */
-
-@media only screen and (min-width: 800px) {
-  /* Style adjustments for viewports that meet the condition */
-}
-
-@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
-     only screen and (min-resolution: 144dpi) {
-  /* Style adjustments for viewports that meet the condition */
 }

@@ -1,0 +1,36 @@
+/**
+*
+* Media - imgs/videos
+*
+**/
+
+img,
+video,
+object {
+  max-width: 100%;
+}
+
+img {
+
+  .content & {
+    margin-top: $lineHeight;
+    margin-bottom: $lineHeight;
+  }
+}
+
+.media-iframe {
+	display: block;
+	height: 0;
+	position: relative;
+	padding-bottom: 56.25%;
+	padding-top: 35px;
+	overflow: hidden;
+
+	iframe {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+}

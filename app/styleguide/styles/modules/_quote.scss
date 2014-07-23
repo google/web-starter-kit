@@ -11,7 +11,7 @@
   padding-top: $lineHeight * 4;
   padding-left: $lineHeight;
 
-  @include medium {
+  @include mq-medium {
     padding-top: $lineHeight * 2;
     padding-left: 0;
   }
@@ -35,7 +35,7 @@
     left: $lineHeight;
     font-size: 260px;
 
-    @include medium {
+    @include mq-medium {
       top: 225px;
       left: -210px;
       font-size: 540px;

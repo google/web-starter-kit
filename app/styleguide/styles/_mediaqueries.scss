@@ -1,0 +1,30 @@
+// Just some helpers...
+@mixin mq-small-only {
+  @media only screen and (max-width:$medium - 1) {
+    @content;
+  }
+}
+
+@mixin mq-medium {
+  @media only screen and (min-width:$medium) {
+    @content;
+  }
+}
+
+@mixin mq-medium-only {
+  @media only screen and (min-width:$medium) and (max-width: $wide - 1) { 
+    @content;
+    }
+}
+
+@mixin mq-wide {
+  @media only screen and (min-width:$wide) {
+    @content;
+  }
+}
+
+@mixin mq-huge {
+  @media only screen and (min-width:$huge) {
+    @content;
+  }
+}

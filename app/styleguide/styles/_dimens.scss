@@ -1,0 +1,29 @@
+  // Defining breakpoints
+  $medium: 620px !default;
+  $wide: 800px !default;
+  $huge: 1600px !default;
+  $mediumContainer: 688px !default;
+  $wideContainer: 864px !default;
+
+  // Defining sidebar stuff
+  $sidebarWidth: 280px !default;
+
+  // Defining font sizes
+  $fontSmall: 13px !default;
+  $fontBase: 16px  !default;
+  $fontMedium: 20px !default;
+  $fontLarge: 26px !default;
+  $fontXLarge: 42px !default;
+  $fontXXLarge: 68px !default;
+  $fontHuge: 110px !default;
+
+  // Defining baseline line height
+  $lineHeight: 26px !default;
+
+  // Defining grid sizes
+  $mediumColCount: 3 !default;
+  $mediumColWidth: 30.3% !default;
+  $mediumGutterWidth: 4.5% !default;
+  $wideColCount: 4 !default;
+  $wideColWidth: 22.2% !default;
+  $wideGutterWidth: 3.7% !default;

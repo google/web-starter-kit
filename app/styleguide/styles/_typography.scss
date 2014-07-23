@@ -1,0 +1,206 @@
+/**
+*
+* Typography
+*
+**/
+
+// Mixins to determine which rule to use at which breakpoint
+@mixin type--small() {
+  font-size: $fontSmall;
+  line-height: 2.0000em; /* 26px */
+  padding-top: 2.0000em;
+  padding-bottom: 0;
+}
+
+@mixin type--base() {
+  font-size: $fontBase;
+  line-height: 1.6250em; /* 26px */
+  padding-top: 1.6250em;
+  padding-bottom: 0;
+}
+
+@mixin type--medium() {
+  font-size: $fontBase;
+  line-height: 1.6250em; /* 26px */
+  padding-top: 1.6250em;
+  padding-bottom: 0;
+
+  @media only screen and (min-width:$wide) {
+    font-size: $fontMedium;
+    font-weight: 300;
+    line-height: 1.3000em; /* 26px */
+    padding-top: 1.3000em;
+    padding-bottom: 0;
+  }
+}
+
+@mixin type--large() {
+    font-size: $fontMedium;
+    font-weight: 300;
+    line-height: 1.3000em; /* 26px */
+    padding-top: 1.3000em;
+    padding-bottom: 0;
+
+    @media only screen and (min-width:$wide) {
+      font-family: $fontHighlight;
+      font-size: $fontLarge;
+      font-weight: 300;
+      line-height: 1.0000em; /* 26px */
+      padding-top: 1.0000em;
+      padding-bottom: 0;
+    }
+}
+
+@mixin type--xlarge() {
+  font-family: $fontHighlight;
+  font-size: $fontLarge;
+  font-weight: 300;
+  line-height: 1.0000em; /* 26px */
+  padding-top: 1.0000em;
+  padding-bottom: 0;
+
+  @media only screen and (min-width:$wide) {
+    font-family: $fontHighlight;
+    font-size: $fontXLarge;
+    font-weight: 300;
+    line-height: 1.2381em; /* 52px */
+    padding-top: 0.6190em;
+    padding-bottom: 0;
+  }
+}
+
+@mixin type--xxlarge() {
+  font-family: $fontHighlight;
+  font-size: $fontXLarge;
+  font-weight: 300;
+  line-height: 1.2381em; /* 52px */
+  padding-top: 0.6190em;
+  padding-bottom: 0;
+
+  @media only screen and (min-width:$wide) {
+    font-family: $fontHighlight;
+    font-size: $fontXXLarge;
+    font-weight: 300;
+    line-height: 1.1471em; /* 78px */
+    padding-top: 0.3824em;
+    padding-bottom: 0;
+  }
+}
+
+@mixin type--huge() {
+  font-family: $fontHighlight;
+  font-size: $fontXXLarge;
+  font-weight: 300;
+  line-height: 1.1471em; /* 78px */
+  padding-top: 0.3824em;
+  padding-bottom: 0;
+
+  @media only screen and (min-width:$wide) {
+    font-family: $fontHighlight;
+    font-size: $fontHuge;
+    font-weight: 300;
+    line-height: 1.19em; /* 130px */
+    padding-top: 0.2364em;
+    padding-bottom: 0;
+  }
+}
+
+// Defining font family
+$fontDefault: Helvetica, Arial, sans-serif !default;
+$fontHighlight: "Roboto Condensed", Helvetica, sans-serif !default;
+$fontIcon: "icons" !default;
+
+// Just normalizing text
+// Recommend using padding instead of margin
+h1, h2, h3, h4, h5, p {
+  margin: 0;
+}
+
+// Definitions
+.small,
+small {
+  @include type--small;
+}
+
+.base,
+p,
+ul,
+ol {
+  @include type--base;
+}
+
+.medium,
+h4 {
+  @include type--medium;
+}
+
+.large,
+h3 {
+  @include type--large;
+}
+.xlarge,
+h2 {
+  @include type--xlarge;
+}
+
+.xxlarge,
+h1 {
+  @include type--xxlarge;
+}
+
+.huge {
+  @include type--huge;
+}
+
+
+li > p {
+  padding-top: 0;
+}
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 300;
+  src: url(/fonts/RobotoCondensed-Light.eot);
+  src: local('Roboto Condensed Light'), local('RobotoCondensed-Light'), url(/fonts/RobotoCondensed-Light.eot) format('embedded-opentype'), url(/fonts/RobotoCondensed-Light.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/fonts/RobotoCondensed-Regular.eot);
+  src: local('Roboto Condensed Regular'), local('RobotoCondensed-Regular'), url(/fonts/RobotoCondensed-Regular.eot) format('embedded-opentype'), url(/fonts/RobotoCondensed-Regular.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/fonts/RobotoCondensed-Bold.eot);
+  src: local('Roboto Condensed Regular'), local('RobotoCondensed-Bold'), url(/fonts/RobotoCondensed-Bold.eot) format('embedded-opentype'), url(/fonts/RobotoCondensed-Bold.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: italic;
+  font-weight: 300;
+  src: url(/fonts/RobotoCondensed-LightItalic.eot);
+  src: local('Roboto Condensed Light Italic'), local('RobotoCondensed-LightItalic'), url(/fonts/RobotoCondensed-LightItalic.eot) format('embedded-opentype'), url(/fonts/RobotoCondensed-LightItalic.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: italic;
+  font-weight: 400;
+  src: url(/fonts/RobotoCondensed-Italic.eot);
+  src: local('Roboto Condensed Italic'), local('RobotoCondensed-Italic'), url(/fonts/RobotoCondensed-Italic.eot) format('embedded-opentype'), url(/fonts/RobotoCondensed-Italic.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  font-style: italic;
+  font-weight: 700;
+  src: url(/fonts/RobotoCondensed-BoldItalic.eot);
+  src: local('Roboto Condensed Bold Italic'), local('RobotoCondensed-BoldItalic'), url(/fonts/RobotoCondensed-BoldItalic.eot) format('embedded-opentype'), url(/fonts/RobotoCondensed-BoldItalic.woff) format('woff');
+}

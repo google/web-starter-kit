@@ -1,0 +1,29 @@
+.main-container {
+  @include container(true);
+}
+
+.container {
+  @include container(true);
+}
+
+.container-medium {
+  @include mq-medium {
+    @include container(true);
+  }
+}
+
+.container-small {
+  @include mq-small-only {
+    @include container(true);
+  }
+}
+
+.content {
+  @media only screen and (min-width:$wide) {
+    margin-right: 25.9%; // took this from the grid output - using @extend inside media-query is deprecated, need to figure out a better way to do this.
+
+    & pre {
+      margin-right: -25.9%;
+    }
+  }
+}
