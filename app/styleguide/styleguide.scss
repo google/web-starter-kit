@@ -4,55 +4,54 @@
 *
 **/
 
-@import "./../styleguide/styles/_dimens";
-@import "./../styleguide/styles/_animations";
+@import "./../styleguide/_dimens";
+@import "./../styleguide/_animations";
 
-@import "./../styleguide/styles/style/_colors";
+@import "./../styleguide/style/_colors";
 // Icons - Leave it here to otherfiles can extend if needed
-@import "./../styleguide/styles/style/_icons";
-@import "./../styleguide/styles/style/_typography";
+@import "./../styleguide/style/_icons";
+@import "./../styleguide/style/_typography";
 
-@import "./../styleguide/styles/_normalize";
-@import "./../styleguide/styles/_mediaqueries";
-@import "./../styleguide/styles/_list";
+@import "./../styleguide/_normalize";
+@import "./../styleguide/_mediaqueries";
 
 // Components
-@import "./../styleguide/styles/components/_button";
-@import "./../styleguide/styles/components/_cards";
-@import "./../styleguide/styles/components/_chip";
-@import "./../styleguide/styles/components/_dialog";
-@import "./../styleguide/styles/components/_divider";
-@import "./../styleguide/styles/components/_list";
-@import "./../styleguide/styles/components/_menu";
-@import "./../styleguide/styles/components/_progress";
-@import "./../styleguide/styles/components/_slider";
-@import "./../styleguide/styles/components/_toast";
-@import "./../styleguide/styles/components/_subheader";
-@import "./../styleguide/styles/components/_switches";
-@import "./../styleguide/styles/components/_tabs";
-@import "./../styleguide/styles/components/_textfield";
-@import "./../styleguide/styles/components/_tooltip";
-@import "./../styleguide/styles/components/_table";
-@import "./../styleguide/styles/components/_media";
-
-// Test
-@import "./../styleguide/styles/_link";
-@import "./../styleguide/styles/_grid";
-@import "./../styleguide/styles/_base";
-
-// Modules
-@import "./../styleguide/styles/modules/_breadcrumb";
-@import "./../styleguide/styles/modules/_page-header";
-@import "./../styleguide/styles/modules/_quote";
-@import "./../styleguide/styles/modules/_icon-circle";
-@import "./../styleguide/styles/modules/_containers";
-@import "./../styleguide/styles/modules/_themed";
-
+@import "./../styleguide/components/_breadcrumb";
+@import "./../styleguide/components/_button";
+@import "./../styleguide/components/_cards";
+@import "./../styleguide/components/_chip";
 // Code Highlighting - Include?
-@import "./../styleguide/styles/modules/_highlight";
+@import "./../styleguide/components/_code";
+@import "./../styleguide/components/_dialog";
+@import "./../styleguide/components/_divider";
+@import "./../styleguide/components/_grid";
+@import "./../styleguide/components/_link";
+@import "./../styleguide/components/_list";
+@import "./../styleguide/components/_media";
+@import "./../styleguide/components/_menu";
+@import "./../styleguide/components/_page-header";
+@import "./../styleguide/components/_progress";
+@import "./../styleguide/components/_quote";
+@import "./../styleguide/components/_slider";
+@import "./../styleguide/components/_subheader";
+@import "./../styleguide/components/_switches";
+@import "./../styleguide/components/_table";
+@import "./../styleguide/components/_tabs";
+@import "./../styleguide/components/_textfield";
+@import "./../styleguide/components/_toast";
+@import "./../styleguide/components/_tooltip";
+
+@import "./../styleguide/_gridsystem";
+@import "./../styleguide/_base";
+@import "./../styleguide/_containers";
+
+@import "./../styleguide/style/_themed";
+// Modules
+
+@import "./../styleguide/style/_icon-circle";
 
 // Make sure this is last to override anything else :)
-@import "./../styleguide/styles/_helper";
+@import "./../styleguide/_helper";
 
 /**
 *
