@@ -4,9 +4,9 @@
 *
 **/
 
-@import "./../styleguide/styles/_colors";
-@import "./../styleguide/styles/_dimens";
-@import "./../styleguide/styles/_animations";
+@import "./../styleguide/styles/variables/_colors";
+@import "./../styleguide/styles/variables/_dimens";
+@import "./../styleguide/styles/variables/_animations";
 
 // Icons - Leave it here to otherfiles can extend if needed
 @import "./../styleguide/styles/_icons";
@@ -14,7 +14,7 @@
 @import "./../styleguide/styles/_normalize";
 @import "./../styleguide/styles/_mediaqueries";
 @import "./../styleguide/styles/_typography";
-@import "./../styleguide/styles/_button";
+@import "./../styleguide/styles/_buttons";
 @import "./../styleguide/styles/_list";
 // Test
 @import "./../styleguide/styles/_link";

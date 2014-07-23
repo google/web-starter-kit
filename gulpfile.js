@@ -88,7 +88,7 @@ gulp.task('styles:css', function () {
 
 // Compile Sass For Style Guide Components (app/styles/styleguide)
 gulp.task('styles:styleguide', function () {
-  return gulp.src('app/styles/styleguide.scss')
+  return gulp.src('app/styleguide/styles/styleguide.scss')
     .pipe($.rubySass({
       style: 'expanded',
       precision: 10,
@@ -96,7 +96,6 @@ gulp.task('styles:styleguide', function () {
     }))
     .on('error', console.error.bind(console))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
-    .pipe(rework(conformance))
     .pipe(gulp.dest('.tmp/styles'))
     .pipe($.size({title: 'styles:styleguide'}));
 });
@@ -110,6 +109,7 @@ gulp.task('styles:scss', function () {
       loadPath: ['app/styles']
     }))
     .on('error', console.error.bind(console))
+    .pipe(rework(conformance))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
     .pipe(gulp.dest('.tmp/styles'))
     .pipe($.size({title: 'styles:scss'}));
