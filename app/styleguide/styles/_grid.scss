@@ -1,3 +1,5 @@
+/** @define Grid; use strict */
+
 /**
 *
 * Grid
@@ -76,85 +78,85 @@
 @include mq-medium-only {
   // Generating grid classes for medium view
   @for $i from 1 through $mediumColCount {
-    .g-medium--#{$i} {
+    .Grid-medium-#{$i} {
       @include rule--col(medium);
       width: ($mediumColWidth*$i) + ($mediumGutterWidth*($i + -1));
       @if $i == $mediumColCount { margin-right: 0; }
     }
 
     @if $i < $mediumColCount {
-      .g-medium--push-#{$i} {
+      .Grid-medium-push-#{$i} {
         margin-left: ($mediumColWidth*$i) + ($mediumGutterWidth*$i);
       }
-      .g-medium--pull-#{$i} {
+      .Grid-medium-pull-#{$i} {
         margin-right: ($mediumColWidth*$i) + ($mediumGutterWidth*$i);
       }
     }
   }
 
-  .g-medium--full {
+  .Grid-medium-full {
     @include rule--col(medium);
     margin-right: 0;
     width: 100%;
   }
 
-  .g--third {
+  .Grid-third {
     @include rule--col(medium);
     width: $mediumColWidth;
   }
 
-  .g--half,
-  .g-medium--half {
+  .Grid-half,
+  .Grid-medium-half {
     @include rule--col(medium);
     width: 50% - $mediumGutterWidth/2;
   }
 
-  .g-medium--last { margin-right: 0; }
-  .g-medium--last + .g-medium--half { clear: left; }
+  .Grid-medium-last { margin-right: 0; }
+  .Grid-medium-last + .Grid-medium-half { clear: left; }
 
-  .g--pull-half { margin-right: 50% + $mediumGutterWidth/2; }
+  .Grid-pull-half { margin-right: 50% + $mediumGutterWidth/2; }
 }
 
 
 @include mq-wide {
   // Generating grid classes for wide view
   @for $i from 1 through $wideColCount {
-    .g-wide--#{$i} {
+    .Grid-wide-#{$i} {
       @include rule--col(wide);
       width: ($wideColWidth*$i) + ($wideGutterWidth*($i + -1));
       @if $i == $wideColCount { margin-right: 0; }
     }
 
     @if $i < $wideColCount {
-      .g-wide--push-#{$i} {
+      .Grid-wide-push-#{$i} {
         margin-left: ($wideColWidth*$i) + ($wideGutterWidth*$i);
       }
-      .g-wide--pull-#{$i} {
+      .Grid-wide-pull-#{$i} {
         margin-right: ($wideColWidth*$i) + ($wideGutterWidth*$i);
       }
     }
   }
 
-  .g-wide--last { margin-right: 0; }
+  .Grid-wide-last { margin-right: 0; }
 
-  .g-wide--full {
+  .Grid-wide-full {
     @include rule--col(wide);
     margin-right: 0;
     width: 100%;
   }
 
-  .g--third {
+  .Grid-third {
     @include rule--col(wide);
     width: 30.8%;
   }
 
-  .g--half,
-  .g-wide--half {
+  .Grid-half,
+  .Grid-wide-half {
     @include rule--col(wide);
     width: 50% - $wideGutterWidth/2;
   }
 
-  .g--pull-half { margin-right: 50% + $wideGutterWidth/2; }
+  .Grid-pull-half { margin-right: 50% + $wideGutterWidth/2; }
 }
 
 
@@ -164,11 +166,11 @@
 //  <div class="third"></div>
 //  <div class="third"></div>
 //  <div class="third last"></div>
-.g--last { margin-right: 0; }
+.Grid-last { margin-right: 0; }
 
 
 // This is a global 'centered' class
-.g--centered {
+.Grid-centered {
   float: none; // reset float to none so we can center it
   margin-left: auto;
   margin-right: auto;
@@ -194,13 +196,13 @@
     height: 100%;
     display: block;
 
-    [class*="g-"] {
+    [class*="Grid-"] {
       height: 100%;
       background-color: rgba(lighten(#000, 35%), .2);
     }
 
     @include mq-medium-only {
-      .g-wide--last {
+      .Grid-wide-last {
         display: none;
       }
     }
