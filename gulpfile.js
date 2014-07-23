@@ -62,7 +62,7 @@ gulp.task('images', function () {
 
 // Copy All Files At The Root Level (app)
 gulp.task('copy', function () {
-  return gulp.src(['app/*','!app/*.html'])
+  return gulp.src(['app/*','!app/*.html'], {dot: true})
     .pipe(gulp.dest('dist'))
     .pipe($.size({title: 'copy'}));
 });
@@ -183,6 +183,10 @@ gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 gulp.task('serve', function () {
   browserSync({
     notify: false,
+    // Run as an https by uncommenting 'https: true'
+    // Note: this uses an unsigned certificate which on first access
+    //       will present a certificate warning in the browser.
+    // https: true,
     server: {
       baseDir: ['.tmp', 'app']
     }
@@ -199,9 +203,14 @@ gulp.task('serve', function () {
 gulp.task('serve:dist', ['default'], function () {
   browserSync({
     notify: false,
+    // Run as an https by uncommenting 'https: true'
+    // Note: this uses an unsigned certificate which on first access
+    //       will present a certificate warning in the browser.
+    // https: true,
     server: {
       baseDir: 'dist'
     }
+    
   });
 });
 
