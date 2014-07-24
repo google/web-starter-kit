@@ -96,7 +96,7 @@ gulp.task('styles:styleguide', function () {
     }))
     .on('error', console.error.bind(console))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
-    .pipe(gulp.dest('.tmp/styles'))
+    .pipe(gulp.dest('app/styleguide'))
     .pipe($.size({title: 'styles:styleguide'}));
 });
 
@@ -119,8 +119,10 @@ gulp.task('styles', ['styles:styleguide', 'styles:scss', 'styles:css']);
 
 // Scan Your HTML For Assets & Optimize Them
 gulp.task('html:app', function () {
-  return gulp.src(['app/**/*.html', '!app/styleguide/**/*.html'])
-    .pipe($.useref.assets({searchPath: '{.tmp,app}'}))
+  var useref = require('gulp-useref');
+
+  return gulp.src(['app/**/*.html'])
+    .pipe(useref.assets({searchPath: '{.tmp,app,app/styleguide}'}).on('error', function(err) {console.log(err);}))
     // Concatenate And Minify JavaScript
     .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
     // Remove Any Unused CSS
@@ -128,7 +130,8 @@ gulp.task('html:app', function () {
     // the next line to only include styles your project uses.
     .pipe($.if('*.css', $.uncss({
       html: [
-        'app/index.html'
+        'app/index.html',
+        'app/styleguide/index.html'
       ],
       // CSS Selectors for UnCSS to ignore
       ignore: [
@@ -138,44 +141,15 @@ gulp.task('html:app', function () {
     })))
     // Concatenate And Minify Styles
     .pipe($.if('*.css', $.csso()))
-    .pipe($.useref.restore())
-    .pipe($.useref())
+    .pipe(useref.restore())
+    .pipe(useref())
     // Update Production Style Guide Paths
-    //.pipe($.replace('./../styles/styleguide.css', '/styles/styleguide.min.css'))
+    .pipe($.replace('styles/styleguide.min.css', '../styles/styleguide.min.css'))
     // Minify Any HTML
     .pipe($.if('*.html', $.minifyHtml()))
     // Output Files
     .pipe(gulp.dest('dist'))
     .pipe($.size({title: 'html:app'}));
-});
-
-gulp.task('html:styleguide', function () {
-  return gulp.src(['app/styleguide/**/*.html'])
-    .pipe($.useref.assets({searchPath: '{.tmp/styleguide,app/styleguide}'}))
-    // Concatenate And Minify JavaScript
-    .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
-    // Remove Any Unused CSS
-    // Note: If not using the Style Guide, you can delete it from
-    // the next line to only include styles your project uses.
-    .pipe($.if('*.css', $.uncss({
-      html: [
-        'app/styleguide/index.html'
-      ],
-      // CSS Selectors for UnCSS to ignore
-      ignore: [
-      ]
-    })))
-    // Concatenate And Minify Styles
-    .pipe($.if('*.css', $.csso()))
-    .pipe($.useref.restore())
-    .pipe($.useref())
-    // Update Production Style Guide Paths
-    //.pipe($.replace('./../styles/styleguide.css', '/styles/styleguide.min.css'))
-    // Minify Any HTML
-    .pipe($.if('*.html', $.minifyHtml()))
-    // Output Files
-    .pipe(gulp.dest('dist'))
-    .pipe($.size({title: 'html:styleguide'}));
 });
 
 // Clean Output Directory
@@ -218,7 +192,7 @@ gulp.task('serve:dist', ['default'], function () {
 
 // Build Production Files, the Default Task
 gulp.task('default', ['clean'], function (cb) {
-  runSequence('styles', ['jshint', 'html:app', 'html:styleguide', 'images', 'fonts', 'copy'], cb);
+  runSequence('styles', ['jshint', 'html:app', 'images', 'fonts', 'copy'], cb);
 });
 
 // Run PageSpeed Insights
