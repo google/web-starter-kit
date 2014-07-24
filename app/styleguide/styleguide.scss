@@ -4,7 +4,6 @@
 *
 **/
 
-@import "./../styleguide/style/_colors";
 @import "./../styleguide/style/_icons";
 @import "./../styleguide/style/_typography";
 
@@ -40,12 +39,12 @@
 @import "./../styleguide/_gridsystem";
 @import "./../styleguide/_base";
 
-@import "./../styleguide/style/_themed";
+@import "./../styleguide/style/_theme";
 
 @import "./../styleguide/style/_icon-circle";
 
 // Make sure this is last to override anything else :)
-@import "./../styleguide/_helper";
+@import "./../styleguide/_utilities";
 
 /**
 *
@@ -54,7 +53,8 @@
 **/
 
 @import "./../styleguide/_dimens";
-@import "./../styleguide/style/_colors";
+@import "./../styleguide/style/_color-variables";
+@import "./../styleguide/style/_color-styles";
 @import "./../styleguide/mixins/_typography";
 
 .page--styleguide {

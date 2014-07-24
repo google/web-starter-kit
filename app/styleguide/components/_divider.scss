@@ -1,0 +1,43 @@
+// Imports Go Here
+
+/** @define Divider; use strict */
+
+.Divider-text {
+  position: relative;
+  margin-bottom: $lineHeight;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 40%;
+    height: 1px;
+    box-shadow: 0 1px 0 0 $colorGrayKeyline;
+    left: 30%;
+    bottom: -$lineHeight/2;
+  }
+
+  &.xlarge {
+    margin-bottom: $lineHeight*2;
+
+    &::after {
+      bottom: -($lineHeight*2)/2;
+    }
+  }
+
+  &.xxlarge {
+    margin-bottom: $lineHeight*3;
+
+    &::after {
+      bottom: -($lineHeight*3)/2;
+    }
+  }
+
+  &.huge {
+    margin-bottom: $lineHeight*3;
+
+    &::after {
+      bottom: -($lineHeight*3)/2;
+    }
+  }
+}

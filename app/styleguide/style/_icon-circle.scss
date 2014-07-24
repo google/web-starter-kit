@@ -1,7 +1,9 @@
-@import "./_colors";
+@import "./_color-variables";
 @import "./_dimens";
 @import "./../mixins/_typography";
 @import "./../mixins/_mediaqueries";
+
+/** @define IconCircle; use strict */
 
 /**
 *
@@ -9,8 +11,8 @@
 *
 **/
 
-.icon-circle,
-.icon-circle--large {
+.IconCircle,
+.IconCircle-large {
   height: 0;
   width: 0;
   background: $colorGray;
@@ -44,7 +46,7 @@
   }
 }
 
-.icon-circle--large {
+.IconCircle-large {
   margin-top: 0;
   margin-bottom: 0;
   padding: $lineHeight;
@@ -81,7 +83,7 @@
 
 }
 
-.icon-circle--nav {
+.IconCircle-nav {
   height: 0;
   width: 0;
   background: $colorGray;

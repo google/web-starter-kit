@@ -1,14 +1,7 @@
-/**
-*
-* Typography
-*
-* Font sizes are in _dimens
-*
-**/
-
 @import "./../_dimens";
 @import "./../mixins/_typography";
 
+/** @define Typography; use strict */
 
 /**
 *
@@ -97,38 +90,38 @@ h1, h2, h3, h4, h5, p {
 }
 
 // Definitions
-.small,
+.Typography-small,
 small {
   @include type--small;
 }
 
-.base,
+.Typography-base,
 p,
 ul,
 ol {
   @include type--base;
 }
 
-.medium,
+.Typography-medium,
 h4 {
   @include type--medium;
 }
 
-.large,
+.Typography-large,
 h3 {
   @include type--large;
 }
-.xlarge,
+.Typography-xlarge,
 h2 {
   @include type--xlarge;
 }
 
-.xxlarge,
+.Typography-xxlarge,
 h1 {
   @include type--xxlarge;
 }
 
-.huge {
+.Typography-huge {
   @include type--huge;
 }
 

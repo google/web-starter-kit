@@ -1,3 +1,10 @@
+@import "./../_dimens";
+
+// Defining font family
+$fontDefault: Helvetica, Arial, sans-serif !default;
+$fontHighlight: "Roboto Condensed", Helvetica, sans-serif !default;
+$fontIcon: "icons" !default;
+
 /**
 *
 * Mixins
@@ -104,8 +111,3 @@
     padding-bottom: 0;
   }
 }
-
-// Defining font family
-$fontDefault: Helvetica, Arial, sans-serif !default;
-$fontHighlight: "Roboto Condensed", Helvetica, sans-serif !default;
-$fontIcon: "icons" !default;

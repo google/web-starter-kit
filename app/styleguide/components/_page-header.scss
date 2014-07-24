@@ -1,5 +1,7 @@
-@import "./../style/_colors";
+@import "./../style/_color-variables";
 @import "./../_dimens";
+
+/** @define PageHeader; use strict */
 
 /**
 *
@@ -7,10 +9,10 @@
 *
 **/
 
-.page-header {
+.PageHeader {
   text-align: center;
 
-  .breadcrumbs {
+  .PageHeader-breadcrumbs {
     text-align: left;
     color: $colorBlue;
 
@@ -25,7 +27,7 @@
   }
 }
 
-.page-header__excerpt {
+.PageHeader-excerpt {
   position: relative;
   padding-top: 0;
 

@@ -1,0 +1,116 @@
+@import "./_color-variables";
+
+/** @define Theme; use strict */
+
+/**
+*
+* Themed styles
+*
+**/
+
+.Theme {
+
+  .Theme-multi-device-layouts & { color: $colorLayouts; }
+
+  .Theme-introduction-to-media & { color: $colorMedia; }
+
+  .Theme-user-input & { color: $colorUser; }
+
+  .Theme-performance & { color: $colorPerformance; }
+
+}
+
+.Theme-background {
+
+  .Theme-multi-device-layouts &,
+  .Theme-multi-device-layouts &.next-lessons::before { background-color: $colorLayouts; }
+
+  .Theme-introduction-to-media &,
+  .Theme-introduction-to-media &.next-lessons::before { background-color: $colorMedia; }
+
+  .Theme-user-input &,
+  .Theme-user-input &.next-lessons::before { background-color: $colorUser; }
+
+  .Theme-performance &,
+  .Theme-performance &.next-lessons::before { background-color: $colorPerformance; }
+
+}
+
+.Theme-hover {
+
+  .Theme-multi-device-layouts &:hover { color: $colorLayouts; }
+
+  .Theme-introduction-to-media &:hover { color: $colorMedia; }
+
+  .Theme-user-input &:hover { color: $colorUser; }
+
+  .Theme-performance &:hover { color: $colorPerformance; }
+
+}
+
+.Theme-hover-secondary {
+
+  .Theme-multi-device-layouts &:hover { color: $colorLayoutsSecondary; }
+
+  .Theme-introduction-to-media &:hover { color: $colorMediaSecondary; }
+
+  .Theme-user-input &:hover { color: $colorUserSecondary; }
+
+  .Theme-performance &:hover { color: $colorPerformanceSecondary; }
+
+}
+
+
+// Wrapped content in .article-container so we can
+// encapsulate what needs to be themed without overriding
+// anything outside of this container.
+.article-container h1,
+.article-container h2 {
+
+  .article--multi-device-layouts & { color: $colorLayouts; }
+
+  .article--introduction-to-media & { color: $colorMedia; }
+
+  .article--user-input & { color: $colorUser; }
+
+  .article--performance & { color: $colorPerformance; }
+}
+
+
+// Let's make sure this is at the end so we can override
+// previous rules. Specicifity rules.
+.Theme-hover {
+
+  .Theme-nav-multi-device-layouts &:hover { color: $colorLayouts; }
+
+  .Theme-nav-introduction-to-media &:hover { color: $colorMedia; }
+
+  .Theme-nav-user-input &:hover { color: $colorUser; }
+
+  .Theme-nav-performance &:hover { color: $colorPerformance; }
+
+}
+
+.Theme {
+
+  .Theme-nav-multi-device-layouts & { color: $colorLayouts; }
+
+  .Theme-nav-introduction-to-media & { color: $colorMedia; }
+
+  .Theme-nav-user-input & { color: $colorUser; }
+
+  .Theme-nav-performance & { color: $colorPerformance; }
+
+}
+
+.Theme-background {
+
+  .Theme-nav-multi-device-layouts & { background-color: $colorLayouts; }
+
+  .Theme-nav-introduction-to-media & { background-color: $colorMedia; }
+
+  .Theme-nav-user-input & { background-color: $colorUser; }
+
+  .Theme-nav-performance & { background-color: $colorPerformance; }
+
+}
