@@ -118,7 +118,7 @@ gulp.task('styles:scss', function () {
 gulp.task('styles', ['styles:styleguide', 'styles:scss', 'styles:css']);
 
 // Scan Your HTML For Assets & Optimize Them
-gulp.task('html:app', function () {
+gulp.task('html', function () {
   var useref = require('gulp-useref');
 
   return gulp.src(['app/**/*.html'])
@@ -149,7 +149,7 @@ gulp.task('html:app', function () {
     .pipe($.if('*.html', $.minifyHtml()))
     // Output Files
     .pipe(gulp.dest('dist'))
-    .pipe($.size({title: 'html:app'}));
+    .pipe($.size({title: 'html'}));
 });
 
 // Clean Output Directory
@@ -192,7 +192,7 @@ gulp.task('serve:dist', ['default'], function () {
 
 // Build Production Files, the Default Task
 gulp.task('default', ['clean'], function (cb) {
-  runSequence('styles', ['jshint', 'html:app', 'images', 'fonts', 'copy'], cb);
+  runSequence('styles', ['jshint', 'html', 'images', 'fonts', 'copy'], cb);
 });
 
 // Run PageSpeed Insights
