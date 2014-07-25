@@ -80,9 +80,10 @@ gulp.task('fonts', function () {
 // Automatically Prefix CSS
 gulp.task('styles:css', function () {
   return gulp.src('app/styles/**/*.css')
-    .pipe($.changed('app/styles'))
+    // Changed is prevent the autoprefixing.
+    //.pipe($.changed('app/styles'))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
-    .pipe(gulp.dest('app/styles'))
+    .pipe(gulp.dest('.tmp/styles'))
     .pipe($.size({title: 'styles:css'}));
 });
 
