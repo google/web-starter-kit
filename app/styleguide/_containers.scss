@@ -1,26 +1,28 @@
+/** @define Container; use strict */
+
 @import "./mixins/_container";
 
-.main-container {
+.Container-main {
   @include container(true);
 }
 
-.container {
+.Container {
   @include container(true);
 }
 
-.container-medium {
+.Container-medium {
   @include mq-medium {
     @include container(true);
   }
 }
 
-.container-small {
+.Container-small {
   @include mq-small-only {
     @include container(true);
   }
 }
 
-.content {
+.Container-content {
   @media only screen and (min-width:$wide) {
     margin-right: 25.9%; // took this from the grid output - using @extend inside media-query is deprecated, need to figure out a better way to do this.
 

@@ -41,9 +41,6 @@ textarea {
 }
 
 body {
-  font-size: 1em;
-  line-height: 1.4;
-
   font-family: $fontDefault;
   font-size: $fontBase;
   line-height: 1.6250em; /* 26px */
@@ -54,7 +51,7 @@ body {
 }
 
 a {
-  color: #00e;
+  color: $colorBlue;
 }
 
 a:visited {
@@ -63,6 +60,7 @@ a:visited {
 
 a:hover {
   color: #06e;
+  text-decoration: none;
 }
 
 pre {
@@ -91,6 +89,159 @@ fieldset {
  */
 textarea {
   resize: vertical;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+
+  @include mq-small-only {
+    padding-left: 0;
+  }
+}
+
+ul li {
+  position: relative;
+  padding-left: 16px;
+  @include bullet-type("", icon-bullet);
+
+  &::before {
+    font-size: 4px;
+  }
+}
+
+ol {
+  counter-reset: list;
+  > li {
+    @include numbered-list;
+    position: relative;
+    padding-left: 32px;
+
+    // This selected every adjacent <li>
+    // from the 10th and overrides the
+    // content property of each
+    &:nth-child(10n) ~ li::before,
+    &:nth-child(10n)::before {
+      content: counter(list);
+    }
+
+  }
+}
+
+ul ol,
+ol ul {
+  padding-top: 0;
+}
+
+img,
+video,
+object {
+  max-width: 100%;
+}
+
+img {
+
+  .content & {
+    margin-top: $lineHeight;
+    margin-bottom: $lineHeight;
+  }
+}
+
+table {
+  margin-top: $lineHeight;
+  width: 100%;
+
+  thead {
+    background: $colorBlue;
+    color: #ffffff;
+  }
+
+  th {
+    text-align: center;
+    display: none;
+    font-family: $fontHighlight;
+    @include type--medium;
+  }
+
+  tr {
+    @include mq-medium {
+      border-bottom: 1px solid #ffffff;
+    }
+  }
+
+  tbody {
+    background: $colorGrayBackground;
+  }
+
+  td {
+    display: block;
+    padding-top: $lineHeight/2;
+    padding-bottom: $lineHeight/2;
+
+    // This is to re-plicate the table-headers for mobile
+    &::before {
+      content: attr(data-th) " :";
+      display: inline-block;
+      color: #ffffff;
+      background: $colorBlue;
+      border-right: 2px solid #ffffff;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 100px;
+      max-height: 100%;
+      font-family: $fontHighlight;
+      font-size: 16px;
+      font-weight: 400;
+      padding-left: $lineHeight/2;
+      padding-top: $lineHeight/2;
+
+      @include mq-medium {
+        display: none;
+      }
+    }
+  }
+
+  th,
+  td {
+    position: relative;
+    padding-left: 140px;
+
+    @include mq-medium {
+      display: table-cell;
+    }
+  }
+
+  th {
+    @include mq-medium {
+      padding: $lineHeight;
+      padding-top: 13px;
+      padding-bottom: $lineHeight/2 - 1;
+    }
+  }
+
+  td {
+    @include mq-medium {
+      padding: $lineHeight;
+      padding-bottom: $lineHeight - 1;
+    }
+  }
+}
+
+td:last-child::after {
+  content: "";
+  display: block;
+  background: #ffffff;
+  height: 1px;
+  left: 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  @include mq-medium {
+    display: none;
+  }
 }
 
 /* ==========================================================================

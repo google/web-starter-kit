@@ -1,10 +1,10 @@
+/** @define List; use strict */
+
 @import "./../style/_color-variables";
 @import "./../style/_icons";
 
 @import "./../mixins/_mediaqueries";
 @import "./../mixins/_typography";
-
-/** @define List; use strict */
 
 /**
 *
@@ -46,53 +46,9 @@
   }
 }
 
-ul,
-ol {
-  list-style: none;
-  margin: 0;
-
-  @include mq-small-only {
-    padding-left: 0;
-  }
-}
-
-ul li {
-  position: relative;
-  padding-left: 16px;
-  @include bullet-type("", icon-bullet);
-
-  &::before {
-    font-size: 4px;
-  }
-}
-
-ol {
-  counter-reset: list;
-  > li {
-    @include numbered-list;
-    position: relative;
-    padding-left: 32px;
-
-    // This selected every adjacent <li>
-    // from the 10th and overrides the
-    // content property of each
-    &:nth-child(10n) ~ li::before,
-    &:nth-child(10n)::before {
-      content: counter(list);
-    }
-
-  }
-}
-
-ul ol,
-ol ul {
-  padding-top: 0;
-}
-
-
 /*==========  LIST LINKS  ==========*/
 
-ul.list-links {
+ul.List-links {
   li::before {
     display: none;
   }
@@ -106,7 +62,7 @@ ul.list-links {
     font-weight: 400;
   }
 
-  &.list-links--primary {
+  &.List-links--primary {
     a {
       @include bullet-type("", icon-chevron-right);
       font-weight: 400;
@@ -117,7 +73,7 @@ ul.list-links {
   }
 }
 
-ol.list-links {
+ol.List-links {
   li {
     &::before {
       display: none;
@@ -135,14 +91,14 @@ ol.list-links {
     }
   }
 
-  &.list-links--secondary {
+  &.List-links--secondary {
     a::before {
       display: none;
     }
   }
 }
 
-.list-links--secondary {
+.List-links--secondary {
   @include type--base;
   padding-left: 0;
 
@@ -153,7 +109,7 @@ ol.list-links {
 
 /*==========  ANCHOR LIST  ==========*/
 
-.list-anchor {
+.List-anchor {
   padding-left: 0;
 
   li {
@@ -181,7 +137,7 @@ ol.list-links {
 
 /*==========  SMALL LIST  ==========*/
 
-.list-small {
+.List-small {
 
   li {
     @include mq-medium {
@@ -193,19 +149,19 @@ ol.list-links {
 
 /*==========  CENTERED LIST  ==========*/
 
-.list-centered {
+.List-centered {
   text-align: center;
   padding-left: 0;
 }
 
 /*==========  FEATURED LIST  ==========*/
 
-.featured-list {
+.List-featured {
   padding-top: $lineHeight * 3;
   padding-bottom: $lineHeight * 3;
 }
 
-.featured-list__item {
+.List-featuredItem {
   background: #ffffff;
   padding-left: 0;
   padding-top: $lineHeight;
@@ -227,7 +183,7 @@ ol.list-links {
   }
 }
 
-.featured-list__img-wrapper {
+.List-featuredImgWrapper {
   display: none;
   position: relative;
   padding-top: $lineHeight;
@@ -240,7 +196,7 @@ ol.list-links {
   }
 }
 
-.featured-list__img {
+.List-featuredImg {
   @include mq-medium {
     padding-top: 60.8%;
     padding-bottom: 0;
@@ -268,7 +224,7 @@ ol.list-links {
 }
 
 /*==========  RELATED GUIDES LIST  ==========*/
-.related-guides-list {
+.List-relatedGuides {
   font-family: $fontHighlight;
   padding-top: 0;
   padding-left: 0;
@@ -308,7 +264,7 @@ ol.list-links {
 
 /*==========  LIST RESET  ==========*/
 
-.list--reset {
+.List--reset {
   padding-left: 0;
 
   li {
@@ -323,7 +279,7 @@ ol.list-links {
 
 
 /*==========  LESSONS  ==========*/
-.list-lessons {
+.List-lessons {
   padding-left: 0;
 
   & a {
@@ -353,7 +309,7 @@ ol.list-links {
 
 
 /*==========  GUIDES INTO - used on homepage  ==========*/
-.list-guides-intro {
+.List-guidesIntro {
   margin-bottom: $lineHeight*2;
 
   @include mq-small-only {

@@ -1,8 +1,8 @@
+/** @define Button; use strict */
+
 @import "./../_dimens";
 @import "./../mixins/_typography";
 @import "./../style/_color-variables";
-
-/** @define Button; use strict */
 
 /**
 *
@@ -45,17 +45,17 @@
   @if $isInverted { border-color: transparent;}
 }
 
-.Button-primary {
+.Button--primary {
   @extend .Button;
   @include style-button(#4285f4, #ffffff);
 }
 
-.Button-secondary {
+.Button--secondary {
   @extend .Button;
   @include style-button(#ffffff, $colorBlue);
 }
 
-.Button-secondary-variation {
+.Button--secondary-variation {
   @extend .Button;
   @include style-button(#ffffff, $colorBlue, true);
 }

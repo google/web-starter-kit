@@ -1,8 +1,8 @@
+/** @define Quote; use strict */
+
 @import "./../style/_typography";
 @import "./../style/_color-variables";
 @import "./../mixins/_mediaqueries";
-
-/** @define Quote; use strict */
 
 /**
 *
@@ -10,7 +10,7 @@
 *
 **/
 
-.quote__content {
+.Quote-content {
   position: relative;
   font-family: $fontHighlight;
   @include type--medium;

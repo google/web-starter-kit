@@ -1,26 +1,12 @@
-@import "./../_dimens";
-
 /** @define Media; use strict */
+
+@import "./../_dimens";
 
 /**
 *
 * Media - imgs/videos
 *
 **/
-
-img,
-video,
-object {
-  max-width: 100%;
-}
-
-img {
-
-  .content & {
-    margin-top: $lineHeight;
-    margin-bottom: $lineHeight;
-  }
-}
 
 .Media-container {
 	display: block;

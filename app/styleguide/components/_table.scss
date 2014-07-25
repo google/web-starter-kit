@@ -1,111 +1,15 @@
+/** @define Table; use strict */
+
 @import "./../_dimens";
 @import "./../style/_color-variables";
 @import "./../mixins/_typography";
 @import "./../mixins/_mediaqueries";
-
-/** @define Table; use strict */
 
 /**
 *
 * Table
 *
 **/
-
-table {
-  margin-top: $lineHeight;
-  width: 100%;
-
-  thead {
-    background: $colorBlue;
-    color: #ffffff;
-  }
-
-  th {
-    text-align: center;
-    display: none;
-    font-family: $fontHighlight;
-    @include type--medium;
-  }
-
-  tr {
-    @include mq-medium {
-      border-bottom: 1px solid #ffffff;
-    }
-  }
-
-  tbody {
-    background: $colorGrayBackground;
-  }
-
-  td {
-    display: block;
-    padding-top: $lineHeight/2;
-    padding-bottom: $lineHeight/2;
-
-    // This is to re-plicate the table-headers for mobile
-    &::before {
-      content: attr(data-th) " :";
-      display: inline-block;
-      color: #ffffff;
-      background: $colorBlue;
-      border-right: 2px solid #ffffff;
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      width: 100px;
-      max-height: 100%;
-      font-family: $fontHighlight;
-      font-size: 16px;
-      font-weight: 400;
-      padding-left: $lineHeight/2;
-      padding-top: $lineHeight/2;
-
-      @include mq-medium {
-        display: none;
-      }
-    }
-  }
-
-  th,
-  td {
-    position: relative;
-    padding-left: 140px;
-
-    @include mq-medium {
-      display: table-cell;
-    }
-  }
-
-  th {
-    @include mq-medium {
-      padding: $lineHeight;
-      padding-top: 13px;
-      padding-bottom: $lineHeight/2 - 1;
-    }
-  }
-
-  td {
-    @include mq-medium {
-      padding: $lineHeight;
-      padding-bottom: $lineHeight - 1;
-    }
-  }
-}
-
-td:last-child::after {
-  content: "";
-  display: block;
-  background: #ffffff;
-  height: 1px;
-  left: 0;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  @include mq-medium {
-    display: none;
-  }
-}
 
 .Table-2 {
   col {

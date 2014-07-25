@@ -3,7 +3,7 @@
 * Main Stylesheet For Visual Style Guide
 *
 **/
-.icon-bullet::before, ul li::before, ul.list-links a::before, .list-anchor a::before {
+.icon-bullet::before, ul.List-links a::before, .List-anchor a::before, ul li::before {
   content: "\e001";
 }
 
@@ -19,7 +19,7 @@
   content: "\e004";
 }
 
-.icon-chevron-right::before, ul.list-links.list-links--primary a::before {
+.icon-chevron-right::before, ul.List-links.List-links--primary a::before {
   content: "\e005";
 }
 
@@ -99,6 +99,7 @@
   content: "\e018";
 }
 
+/** @define Typography; use strict */
 /**
 *
 * Mixins
@@ -106,7 +107,6 @@
 * to determine which rule to use at which breakpoint
 *
 **/
-/** @define Typography; use strict */
 /**
 *
 * Font Face Imports
@@ -685,6 +685,7 @@ blockquote {
   margin: 0;
 }
 
+/** @define Breadcrumb; use strict */
 /**
 *
 * Mixins
@@ -692,7 +693,6 @@ blockquote {
 * to determine which rule to use at which breakpoint
 *
 **/
-/** @define Breadcrumb; use strict */
 /**
 *
 * Breadcrumb
@@ -734,6 +734,7 @@ blockquote {
   }
 }
 
+/** @define Button; use strict */
 /**
 *
 * Mixins
@@ -741,13 +742,12 @@ blockquote {
 * to determine which rule to use at which breakpoint
 *
 **/
-/** @define Button; use strict */
 /**
 *
 * Button
 *
 **/
-.Button, .Button-primary, .Button-secondary, .Button-secondary-variation {
+.Button, .Button--primary, .Button--secondary, .Button--secondary-variation {
   display: inline-block;
   padding: 12px 32px;
   margin-bottom: 13px;
@@ -761,26 +761,26 @@ blockquote {
   -webkit-transition: none;
           transition: none;
 }
-.Button:hover, .Button-primary:hover, .Button-secondary:hover, .Button-secondary-variation:hover {
+.Button:hover, .Button--primary:hover, .Button--secondary:hover, .Button--secondary-variation:hover {
   background: #4d4d4d;
   color: #ffffff;
   border: 1px solid #4d4d4d;
   text-decoration: none;
 }
 
-.Button-primary {
+.Button--primary {
   background: #4285f4;
   color: white;
   border: 1px solid #1266f1;
 }
 
-.Button-secondary {
+.Button--secondary {
   background: white;
   color: #3372df;
   border: 1px solid #e6e6e6;
 }
 
-.Button-secondary-variation {
+.Button--secondary-variation {
   background: white;
   color: #3372df;
   border: 1px solid #e6e6e6;
@@ -789,6 +789,7 @@ blockquote {
 
 /** @define Cards; use strict */
 /** @define Chip; use strict */
+/** @define Code; use strict */
 /**
 *
 * Mixins
@@ -796,7 +797,6 @@ blockquote {
 * to determine which rule to use at which breakpoint
 *
 **/
-/** @define Code; use strict */
 /**
 *
 * Highlight
@@ -1289,7 +1289,8 @@ div.highlight > pre > code .il, code .highlight .il {
 }
 
 /** @define Grid; use strict */
-.icon-bullet::before, ul li::before, ul.list-links a::before, .list-anchor a::before {
+/** @define Link; use strict */
+.icon-bullet::before, ul.List-links a::before, .List-anchor a::before, ul li::before {
   content: "\e001";
 }
 
@@ -1305,7 +1306,7 @@ div.highlight > pre > code .il, code .highlight .il {
   content: "\e004";
 }
 
-.icon-chevron-right::before, ul.list-links.list-links--primary a::before {
+.icon-chevron-right::before, ul.List-links.List-links--primary a::before {
   content: "\e005";
 }
 
@@ -1392,21 +1393,12 @@ div.highlight > pre > code .il, code .highlight .il {
 * to determine which rule to use at which breakpoint
 *
 **/
-/** @define Link; use strict */
 /**
 *
 * Link
 *
 **/
-a {
-  color: #3372df;
-}
-
-a:hover {
-  text-decoration: none;
-}
-
-.cta--primary {
+.Link--primary {
   font-family: "Roboto Condensed", Helvetica, sans-serif;
   color: #3372df;
   font-weight: 400;
@@ -1414,10 +1406,10 @@ a:hover {
   line-height: 1;
   text-decoration: none;
 }
-.cta--primary:hover {
+.Link--primary:hover {
   color: #404040;
 }
-.cta--primary::before {
+.Link--primary::before {
   display: inline-block;
   padding-right: 10px;
   font-family: "icons";
@@ -1426,18 +1418,19 @@ a:hover {
   content: "\e005";
 }
 
-.cta--secondary {
+.Link--secondary {
   font-family: "Roboto Condensed", Helvetica, sans-serif;
   color: #3372df;
   font-weight: 400;
   display: inline-block;
   line-height: 1;
 }
-.cta--secondary:hover {
+.Link--secondary:hover {
   color: #404040;
 }
 
-.icon-bullet::before, ul li::before, ul.list-links a::before, .list-anchor a::before {
+/** @define List; use strict */
+.icon-bullet::before, ul.List-links a::before, .List-anchor a::before, ul li::before {
   content: "\e001";
 }
 
@@ -1453,7 +1446,7 @@ a:hover {
   content: "\e004";
 }
 
-.icon-chevron-right::before, ul.list-links.list-links--primary a::before {
+.icon-chevron-right::before, ul.List-links.List-links--primary a::before {
   content: "\e005";
 }
 
@@ -1540,75 +1533,19 @@ a:hover {
 * to determine which rule to use at which breakpoint
 *
 **/
-/** @define List; use strict */
 /**
 *
 * List
 *
 **/
-ul,
-ol {
-  list-style: none;
-  margin: 0;
-}
-@media only screen and (max-width: 619px) {
-  ul,
-  ol {
-    padding-left: 0;
-  }
-}
-
-ul li {
-  position: relative;
-  padding-left: 16px;
-}
-ul li::before {
-  font-family: "icons";
-  font-size: 13px;
-  display: block;
-  font-weight: 400;
-  position: absolute;
-  top: 0;
-  left: 0;
-  line-height: 26px;
-}
-ul li::before {
-  font-size: 4px;
-}
-
-ol {
-  counter-reset: list;
-}
-ol > li {
-  position: relative;
-  padding-left: 32px;
-}
-ol > li::before {
-  counter-increment: list;
-  content: "0" counter(list);
-  color: inherit;
-  font-weight: 400;
-  display: inline-block;
-  position: absolute;
-  left: 0;
-}
-ol > li:nth-child(10n) ~ li::before, ol > li:nth-child(10n)::before {
-  content: counter(list);
-}
-
-ul ol,
-ol ul {
-  padding-top: 0;
-}
-
 /*==========  LIST LINKS  ==========*/
-ul.list-links li::before {
+ul.List-links li::before {
   display: none;
 }
-ul.list-links a {
+ul.List-links a {
   font-weight: 400;
 }
-ul.list-links a::before {
+ul.List-links a::before {
   font-family: "icons";
   font-size: 13px;
   display: block;
@@ -1618,16 +1555,16 @@ ul.list-links a::before {
   left: 0;
   line-height: 26px;
 }
-ul.list-links a::before {
+ul.List-links a::before {
   font-size: 4px;
 }
-ul.list-links.list-links--primary a {
+ul.List-links.List-links--primary a {
   font-weight: 400;
   font-family: "Roboto Condensed", Helvetica, sans-serif;
   line-height: 1;
   text-decoration: none;
 }
-ul.list-links.list-links--primary a::before {
+ul.List-links.List-links--primary a::before {
   font-family: "icons";
   font-size: 13px;
   display: block;
@@ -1638,14 +1575,14 @@ ul.list-links.list-links--primary a::before {
   line-height: 26px;
 }
 
-ol.list-links li::before {
+ol.List-links li::before {
   display: none;
 }
-ol.list-links li a {
+ol.List-links li a {
   display: inline-block;
   font-weight: 300;
 }
-ol.list-links li a::before {
+ol.List-links li a::before {
   counter-increment: list;
   content: "0" counter(list);
   color: inherit;
@@ -1654,14 +1591,14 @@ ol.list-links li a::before {
   position: absolute;
   left: 0;
 }
-ol.list-links li:nth-child(10n) ~ li a::before, ol.list-links li:nth-child(10n) a::before {
+ol.List-links li:nth-child(10n) ~ li a::before, ol.List-links li:nth-child(10n) a::before {
   content: counter(list);
 }
-ol.list-links.list-links--secondary a::before {
+ol.List-links.List-links--secondary a::before {
   display: none;
 }
 
-.list-links--secondary {
+.List-links--secondary {
   font-size: 16px;
   line-height: 1.6250em;
   /* 26px */
@@ -1669,15 +1606,15 @@ ol.list-links.list-links--secondary a::before {
   padding-bottom: 0;
   padding-left: 0;
 }
-.list-links--secondary li {
+.List-links--secondary li {
   padding-left: 0;
 }
 
 /*==========  ANCHOR LIST  ==========*/
-.list-anchor {
+.List-anchor {
   padding-left: 0;
 }
-.list-anchor li {
+.List-anchor li {
   font-size: 16px;
   line-height: 1.6250em;
   /* 26px */
@@ -1686,15 +1623,15 @@ ol.list-links.list-links--secondary a::before {
   padding-top: 0;
   padding-left: 0;
 }
-.list-anchor li::before {
+.List-anchor li::before {
   display: none;
 }
-.list-anchor a {
+.List-anchor a {
   line-height: 1;
   display: inline-block;
   padding-left: 16px;
 }
-.list-anchor a::before {
+.List-anchor a::before {
   font-family: "icons";
   font-size: 13px;
   display: block;
@@ -1704,13 +1641,13 @@ ol.list-links.list-links--secondary a::before {
   left: 0;
   line-height: 26px;
 }
-.list-anchor a::before {
+.List-anchor a::before {
   font-size: 4px;
 }
 
 /*==========  SMALL LIST  ==========*/
 @media only screen and (min-width: 620px) {
-  .list-small li {
+  .List-small li {
     font-size: 13px;
     line-height: 2.0000em;
     /* 26px */
@@ -1721,18 +1658,18 @@ ol.list-links.list-links--secondary a::before {
 }
 
 /*==========  CENTERED LIST  ==========*/
-.list-centered {
+.List-centered {
   text-align: center;
   padding-left: 0;
 }
 
 /*==========  FEATURED LIST  ==========*/
-.featured-list {
+.List-featured {
   padding-top: 78px;
   padding-bottom: 78px;
 }
 
-.featured-list__item {
+.List-featuredItem {
   background: #ffffff;
   padding-left: 0;
   padding-top: 26px;
@@ -1740,26 +1677,26 @@ ol.list-links.list-links--secondary a::before {
   margin-top: 26px;
 }
 @media only screen and (min-width: 620px) {
-  .featured-list__item {
+  .List-featuredItem {
     min-height: 338px;
     padding: 52px 32px;
   }
 }
-.featured-list__item:first-child {
+.List-featuredItem:first-child {
   margin-top: 0;
 }
-.featured-list__item p {
+.List-featuredItem p {
   margin-bottom: 26px;
 }
 
-.featured-list__img-wrapper {
+.List-featuredImgWrapper {
   display: none;
   position: relative;
   padding-top: 26px;
   margin: 0 -5%;
 }
 @media only screen and (min-width: 620px) {
-  .featured-list__img-wrapper {
+  .List-featuredImgWrapper {
     display: block;
     padding-top: 0;
     margin: 0;
@@ -1767,7 +1704,7 @@ ol.list-links.list-links--secondary a::before {
 }
 
 @media only screen and (min-width: 620px) {
-  .featured-list__img {
+  .List-featuredImg {
     padding-top: 60.8%;
     padding-bottom: 0;
     height: 0;
@@ -1776,13 +1713,13 @@ ol.list-links.list-links--secondary a::before {
     width: 100%;
   }
 }
-.featured-list__img img {
+.List-featuredImg img {
   display: block;
   margin: 0 auto;
   max-width: 100%;
 }
 @media only screen and (min-width: 620px) {
-  .featured-list__img img {
+  .List-featuredImg img {
     margin: 0;
     position: absolute;
     top: 0;
@@ -1793,37 +1730,37 @@ ol.list-links.list-links--secondary a::before {
 }
 
 /*==========  RELATED GUIDES LIST  ==========*/
-.related-guides-list {
+.List-relatedGuides {
   font-family: "Roboto Condensed", Helvetica, sans-serif;
   padding-top: 0;
   padding-left: 0;
 }
 @media only screen and (min-width: 620px) {
-  .related-guides-list {
+  .List-relatedGuides {
     padding-top: 26px;
   }
 }
 @media only screen and (min-width: 800px) {
-  .related-guides-list {
+  .List-relatedGuides {
     padding-top: 0;
   }
 }
-.related-guides-list p {
+.List-relatedGuides p {
   padding-top: 0;
 }
-.related-guides-list .tag {
+.List-relatedGuides .tag {
   padding-top: 0;
 }
-.related-guides-list li {
+.List-relatedGuides li {
   padding-top: 26px;
   padding-bottom: 25px;
   border-bottom: 1px solid #e0e0e0;
 }
-.related-guides-list li:last-child {
+.List-relatedGuides li:last-child {
   border-color: transparent;
 }
 @media only screen and (min-width: 620px) {
-  .related-guides-list li {
+  .List-relatedGuides li {
     padding-top: 0;
     padding-bottom: 0;
     border-color: transparent;
@@ -1831,29 +1768,29 @@ ol.list-links.list-links--secondary a::before {
 }
 
 /*==========  LIST RESET  ==========*/
-.list--reset {
+.List--reset {
   padding-left: 0;
 }
-.list--reset li {
+.List--reset li {
   padding-left: 0;
 }
-.list--reset.list-links a::before, .list--reset li::before {
+.List--reset.list-links a::before, .List--reset li::before {
   display: none !important;
 }
 
 /*==========  LESSONS  ==========*/
-.list-lessons {
+.List-lessons {
   padding-left: 0;
 }
-.list-lessons a {
+.List-lessons a {
   color: #ffffff;
 }
-.list-lessons .current,
-.list-lessons .current a {
+.List-lessons .current,
+.List-lessons .current a {
   text-decoration: none;
   cursor: default;
 }
-.list-lessons .current .icon {
+.List-lessons .current .icon {
   font-size: 13px;
   display: inline-block;
   background: rgba(0, 0, 0, 0.2);
@@ -1865,26 +1802,26 @@ ol.list-links.list-links--secondary a::before {
 }
 
 /*==========  GUIDES INTO - used on homepage  ==========*/
-.list-guides-intro {
+.List-guidesIntro {
   margin-bottom: 52px;
 }
 @media only screen and (max-width: 619px) {
-  .list-guides-intro {
+  .List-guidesIntro {
     padding-top: 52px;
   }
 }
-.list-guides-intro li {
+.List-guidesIntro li {
   border-bottom: 1px solid #e0e0e0;
   padding-bottom: 51px;
   margin-bottom: 52px;
 }
 @media only screen and (min-width: 620px) {
-  .list-guides-intro li {
+  .List-guidesIntro li {
     border-color: transparent;
     padding-bottom: 0;
   }
 }
-.list-guides-intro li:last-child {
+.List-guidesIntro li:last-child {
   border-bottom: transparent;
   margin-bottom: 0;
 }
@@ -1895,17 +1832,6 @@ ol.list-links.list-links--secondary a::before {
 * Media - imgs/videos
 *
 **/
-img,
-video,
-object {
-  max-width: 100%;
-}
-
-.content img {
-  margin-top: 26px;
-  margin-bottom: 26px;
-}
-
 .Media-container {
   display: block;
   height: 0;
@@ -1953,6 +1879,8 @@ object {
 }
 
 /** @define Progress; use strict */
+/** @define Quote; use strict */
+/** @define Typography; use strict */
 /**
 *
 * Mixins
@@ -1960,7 +1888,6 @@ object {
 * to determine which rule to use at which breakpoint
 *
 **/
-/** @define Typography; use strict */
 /**
 *
 * Font Face Imports
@@ -2166,13 +2093,12 @@ li > p {
   padding-top: 0;
 }
 
-/** @define Quote; use strict */
 /**
 *
 * Quote
 *
 **/
-.quote__content {
+.Quote-content {
   position: relative;
   font-family: "Roboto Condensed", Helvetica, sans-serif;
   font-size: 16px;
@@ -2184,7 +2110,7 @@ li > p {
   padding-left: 26px;
 }
 @media only screen and (min-width: 800px) {
-  .quote__content {
+  .Quote-content {
     font-size: 20px;
     font-weight: 300;
     line-height: 1.3000em;
@@ -2194,19 +2120,19 @@ li > p {
   }
 }
 @media only screen and (min-width: 620px) {
-  .quote__content {
+  .Quote-content {
     padding-top: 52px;
     padding-left: 0;
   }
 }
-.quote__content p {
+.Quote-content p {
   border-top: 1px solid #e0e0e0;
   text-align: right;
   font-weight: 500;
   margin-top: 12px;
   padding-top: 13px;
 }
-.quote__content::before {
+.Quote-content::before {
   content: open-quote;
   display: block;
   position: absolute;
@@ -2218,7 +2144,7 @@ li > p {
   font-size: 260px;
 }
 @media only screen and (min-width: 620px) {
-  .quote__content::before {
+  .Quote-content::before {
     top: 225px;
     left: -210px;
     font-size: 540px;
@@ -2228,6 +2154,7 @@ li > p {
 /** @define Slider; use strict */
 /** @define SubHeader; use strict */
 /** @define Switches; use strict */
+/** @define Table; use strict */
 /**
 *
 * Mixins
@@ -2235,117 +2162,11 @@ li > p {
 * to determine which rule to use at which breakpoint
 *
 **/
-/** @define Table; use strict */
 /**
 *
 * Table
 *
 **/
-table {
-  margin-top: 26px;
-  width: 100%;
-}
-table thead {
-  background: #3372df;
-  color: #ffffff;
-}
-table th {
-  text-align: center;
-  display: none;
-  font-family: "Roboto Condensed", Helvetica, sans-serif;
-  font-size: 16px;
-  line-height: 1.6250em;
-  /* 26px */
-  padding-top: 1.6250em;
-  padding-bottom: 0;
-}
-@media only screen and (min-width: 800px) {
-  table th {
-    font-size: 20px;
-    font-weight: 300;
-    line-height: 1.3000em;
-    /* 26px */
-    padding-top: 1.3000em;
-    padding-bottom: 0;
-  }
-}
-@media only screen and (min-width: 620px) {
-  table tr {
-    border-bottom: 1px solid #ffffff;
-  }
-}
-table tbody {
-  background: #f0f0f0;
-}
-table td {
-  display: block;
-  padding-top: 13px;
-  padding-bottom: 13px;
-}
-table td::before {
-  content: attr(data-th) " :";
-  display: inline-block;
-  color: #ffffff;
-  background: #3372df;
-  border-right: 2px solid #ffffff;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 100px;
-  max-height: 100%;
-  font-family: "Roboto Condensed", Helvetica, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  padding-left: 13px;
-  padding-top: 13px;
-}
-@media only screen and (min-width: 620px) {
-  table td::before {
-    display: none;
-  }
-}
-table th,
-table td {
-  position: relative;
-  padding-left: 140px;
-}
-@media only screen and (min-width: 620px) {
-  table th,
-  table td {
-    display: table-cell;
-  }
-}
-@media only screen and (min-width: 620px) {
-  table th {
-    padding: 26px;
-    padding-top: 13px;
-    padding-bottom: 12px;
-  }
-}
-@media only screen and (min-width: 620px) {
-  table td {
-    padding: 26px;
-    padding-bottom: 25px;
-  }
-}
-
-td:last-child::after {
-  content: "";
-  display: block;
-  background: #ffffff;
-  height: 1px;
-  left: 0;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-}
-@media only screen and (min-width: 620px) {
-  td:last-child::after {
-    display: none;
-  }
-}
-
 .Table-2 col {
   width: 344px;
 }
@@ -2398,7 +2219,8 @@ td:last-child::after {
 /** @define TextField; use strict */
 /** @define Toast; use strict */
 /** @define Tooltip; use strict */
-.main-container {
+/** @define Container; use strict */
+.Container-main {
   box-sizing: content-box;
   position: relative;
   padding-left: 5%;
@@ -2407,21 +2229,21 @@ td:last-child::after {
   margin-right: auto;
 }
 @media only screen and (min-width: 620px) {
-  .main-container {
+  .Container-main {
     padding-left: 4.8%;
     padding-right: 4.8%;
     max-width: 688px;
   }
 }
 @media only screen and (min-width: 800px) {
-  .main-container {
+  .Container-main {
     padding-left: 4.4%;
     padding-right: 4.4%;
     max-width: 864px;
   }
 }
 
-.container {
+.Container {
   box-sizing: content-box;
   position: relative;
   padding-left: 5%;
@@ -2430,14 +2252,14 @@ td:last-child::after {
   margin-right: auto;
 }
 @media only screen and (min-width: 620px) {
-  .container {
+  .Container {
     padding-left: 4.8%;
     padding-right: 4.8%;
     max-width: 688px;
   }
 }
 @media only screen and (min-width: 800px) {
-  .container {
+  .Container {
     padding-left: 4.4%;
     padding-right: 4.4%;
     max-width: 864px;
@@ -2445,7 +2267,7 @@ td:last-child::after {
 }
 
 @media only screen and (min-width: 620px) {
-  .container-medium {
+  .Container-medium {
     box-sizing: content-box;
     position: relative;
     padding-left: 5%;
@@ -2455,14 +2277,14 @@ td:last-child::after {
   }
 }
 @media only screen and (min-width: 620px) and (min-width: 620px) {
-  .container-medium {
+  .Container-medium {
     padding-left: 4.8%;
     padding-right: 4.8%;
     max-width: 688px;
   }
 }
 @media only screen and (min-width: 620px) and (min-width: 800px) {
-  .container-medium {
+  .Container-medium {
     padding-left: 4.4%;
     padding-right: 4.4%;
     max-width: 864px;
@@ -2470,7 +2292,7 @@ td:last-child::after {
 }
 
 @media only screen and (max-width: 619px) {
-  .container-small {
+  .Container-small {
     box-sizing: content-box;
     position: relative;
     padding-left: 5%;
@@ -2480,14 +2302,14 @@ td:last-child::after {
   }
 }
 @media only screen and (max-width: 619px) and (min-width: 620px) {
-  .container-small {
+  .Container-small {
     padding-left: 4.8%;
     padding-right: 4.8%;
     max-width: 688px;
   }
 }
 @media only screen and (max-width: 619px) and (min-width: 800px) {
-  .container-small {
+  .Container-small {
     padding-left: 4.4%;
     padding-right: 4.4%;
     max-width: 864px;
@@ -2495,10 +2317,10 @@ td:last-child::after {
 }
 
 @media only screen and (min-width: 800px) {
-  .content {
+  .Container-content {
     margin-right: 25.9%;
   }
-  .content pre {
+  .Container-content pre {
     margin-right: -25.9%;
   }
 }
@@ -2756,8 +2578,6 @@ textarea {
 }
 
 body {
-  font-size: 1em;
-  line-height: 1.4;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.6250em;
@@ -2786,7 +2606,7 @@ body.debug::after {
 }
 
 a {
-  color: #00e;
+  color: #3372df;
 }
 
 a:visited {
@@ -2795,6 +2615,7 @@ a:visited {
 
 a:hover {
   color: #06e;
+  text-decoration: none;
 }
 
 pre {
@@ -2823,6 +2644,177 @@ fieldset {
  */
 textarea {
   resize: vertical;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+}
+@media only screen and (max-width: 619px) {
+  ul,
+  ol {
+    padding-left: 0;
+  }
+}
+
+ul li {
+  position: relative;
+  padding-left: 16px;
+}
+ul li::before {
+  font-family: "icons";
+  font-size: 13px;
+  display: block;
+  font-weight: 400;
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 26px;
+}
+ul li::before {
+  font-size: 4px;
+}
+
+ol {
+  counter-reset: list;
+}
+ol > li {
+  position: relative;
+  padding-left: 32px;
+}
+ol > li::before {
+  counter-increment: list;
+  content: "0" counter(list);
+  color: inherit;
+  font-weight: 400;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+}
+ol > li:nth-child(10n) ~ li::before, ol > li:nth-child(10n)::before {
+  content: counter(list);
+}
+
+ul ol,
+ol ul {
+  padding-top: 0;
+}
+
+img,
+video,
+object {
+  max-width: 100%;
+}
+
+.content img {
+  margin-top: 26px;
+  margin-bottom: 26px;
+}
+
+table {
+  margin-top: 26px;
+  width: 100%;
+}
+table thead {
+  background: #3372df;
+  color: #ffffff;
+}
+table th {
+  text-align: center;
+  display: none;
+  font-family: "Roboto Condensed", Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.6250em;
+  /* 26px */
+  padding-top: 1.6250em;
+  padding-bottom: 0;
+}
+@media only screen and (min-width: 800px) {
+  table th {
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.3000em;
+    /* 26px */
+    padding-top: 1.3000em;
+    padding-bottom: 0;
+  }
+}
+@media only screen and (min-width: 620px) {
+  table tr {
+    border-bottom: 1px solid #ffffff;
+  }
+}
+table tbody {
+  background: #f0f0f0;
+}
+table td {
+  display: block;
+  padding-top: 13px;
+  padding-bottom: 13px;
+}
+table td::before {
+  content: attr(data-th) " :";
+  display: inline-block;
+  color: #ffffff;
+  background: #3372df;
+  border-right: 2px solid #ffffff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100px;
+  max-height: 100%;
+  font-family: "Roboto Condensed", Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  padding-left: 13px;
+  padding-top: 13px;
+}
+@media only screen and (min-width: 620px) {
+  table td::before {
+    display: none;
+  }
+}
+table th,
+table td {
+  position: relative;
+  padding-left: 140px;
+}
+@media only screen and (min-width: 620px) {
+  table th,
+  table td {
+    display: table-cell;
+  }
+}
+@media only screen and (min-width: 620px) {
+  table th {
+    padding: 26px;
+    padding-top: 13px;
+    padding-bottom: 12px;
+  }
+}
+@media only screen and (min-width: 620px) {
+  table td {
+    padding: 26px;
+    padding-bottom: 25px;
+  }
+}
+
+td:last-child::after {
+  content: "";
+  display: block;
+  background: #ffffff;
+  height: 1px;
+  left: 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+@media only screen and (min-width: 620px) {
+  td:last-child::after {
+    display: none;
+  }
 }
 
 /* ==========================================================================
@@ -2954,6 +2946,7 @@ textarea[contenteditable] {
   background-color: #7b5294;
 }
 
+/** @define IconCircle; use strict */
 /**
 *
 * Mixins
@@ -2961,7 +2954,6 @@ textarea[contenteditable] {
 * to determine which rule to use at which breakpoint
 *
 **/
-/** @define IconCircle; use strict */
 /**
 *
 * Icon Circle
@@ -3146,26 +3138,6 @@ textarea[contenteditable] {
  */
 .u-invisible {
   visibility: hidden;
-}
-
-.u-tag {
-  font-size: 13px;
-  line-height: 2.0000em;
-  /* 26px */
-  padding-top: 2.0000em;
-  padding-bottom: 0;
-  font-family: "Roboto Condensed", Helvetica, sans-serif;
-  text-transform: uppercase;
-  font-weight: 700;
-  display: inline-block;
-  text-decoration: none;
-}
-.u-tag:hover {
-  color: #404040;
-}
-.u-tag::before {
-  content: "# ";
-  display: inline-block;
 }
 
 /**

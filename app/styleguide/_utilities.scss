@@ -75,21 +75,3 @@
 .u-invisible {
   visibility: hidden;
 }
-
-.u-tag {
-  @include type--small;
-  font-family: $fontHighlight;
-  text-transform: uppercase;
-  font-weight: 700;
-  display: inline-block;
-  text-decoration: none;
-
-  &:hover {
-    color: $colorGrayDark;
-  }
-
-  &::before {
-    content: "# ";
-    display: inline-block;
-  }
-}

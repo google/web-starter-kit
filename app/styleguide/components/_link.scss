@@ -1,8 +1,8 @@
+/** @define Link; use strict */
+
 @import "./../style/_color-variables";
 @import "./../style/_icons";
 @import "./../mixins/_typography";
-
-/** @define Link; use strict */
 
 /**
 *
@@ -12,18 +12,10 @@
 
 @import "./../mixins/_links";
 
-a {
-  color: $colorBlue;
-}
-
-a:hover {
-  text-decoration: none;
-}
-
-.cta--primary {
+.Link--primary {
   @include style-link($colorBlue, $icon-chevron-right);
 }
 
-.cta--secondary {
+.Link--secondary {
   @include style-link($colorBlue);
 }
