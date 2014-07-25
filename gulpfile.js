@@ -27,8 +27,6 @@ var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
 var pagespeed = require('psi');
 var reload = browserSync.reload;
-var rework = require('gulp-rework');
-var conformance = require('rework-suit-conformance');
 
 var AUTOPREFIXER_BROWSERS = [
   'ie >= 10',

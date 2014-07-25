@@ -23,9 +23,7 @@
     "opn": "^0.1.2",
     "psi": "^0.1.1",
     "require-dir": "^0.1.0",
-    "run-sequence": "^0.3.6",
-    "gulp-rework": "^0.4.0",
-    "rework-suit-conformance": "^0.4.1"
+    "run-sequence": "^0.3.6"
   },
   "engines": {
     "node": ">=0.10.0"
