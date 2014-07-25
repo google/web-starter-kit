@@ -1,0 +1,36 @@
+/** @define Breadcrumb; use strict */
+
+@import "./../mixins/_mediaqueries";
+@import "./../mixins/_typography";
+
+/**
+*
+* Breadcrumb
+*
+**/
+
+.Breadcrumbs {
+  display: none;
+  @include mq-medium {
+    display: block;
+  }
+
+  position: relative;
+  z-index: 1;
+}
+
+.Breadcrumbs p {
+  @include type--small;
+  padding-top: $lineHeight;
+}
+
+.Breadcrumbs-link {
+  @include type--small;
+  color: black;
+  font-weight: 400;
+  padding-top: 0;
+
+  @include mq-medium {
+    padding-top: 0;
+  }
+}

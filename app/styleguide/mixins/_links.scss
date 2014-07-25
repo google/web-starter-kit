@@ -1,0 +1,26 @@
+@import "./../_dimens";
+
+// Mixin to create links
+@mixin style-link($textColor, $linkIcon: false) {
+  font-family: $fontHighlight;
+  color: $textColor;
+  font-weight: 400;
+  display: inline-block;
+  line-height: 1;
+
+  &:hover {
+    color: $colorGrayDark;
+  }
+
+  @if $linkIcon {
+    text-decoration: none;
+    &::before {
+      display: inline-block;
+      padding-right: 10px;
+      font-family: $fontIcon;
+      line-height: ($lineHeight) - 1; // remove 1px from line-height to fix baseline alignment
+      font-size: $fontSmall;
+      content: $linkIcon;
+    }
+  }
+}

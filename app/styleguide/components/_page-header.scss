@@ -1,0 +1,37 @@
+/** @define PageHeader; use strict */
+
+@import "./../style/_color-variables";
+@import "./../_dimens";
+
+/**
+*
+* Page header
+*
+**/
+
+.PageHeader {
+  text-align: center;
+
+  .PageHeader-breadcrumbs {
+    text-align: left;
+    color: $colorBlue;
+
+    a {
+      color: $colorBlue;
+    }
+  }
+
+  h3 {
+    color: $colorGrayDark;
+    padding-top: $lineHeight * 2;
+  }
+}
+
+.PageHeader-excerpt {
+  position: relative;
+  padding-top: 0;
+
+  &:last-child {
+    padding-bottom: $lineHeight * 3;
+  }
+}

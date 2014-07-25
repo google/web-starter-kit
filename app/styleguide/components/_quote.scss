@@ -1,0 +1,50 @@
+/** @define Quote; use strict */
+
+@import "./../style/_typography";
+@import "./../style/_color-variables";
+@import "./../mixins/_mediaqueries";
+
+/**
+*
+* Quote
+*
+**/
+
+.Quote-content {
+  position: relative;
+  font-family: $fontHighlight;
+  @include type--medium;
+  padding-top: $lineHeight * 4;
+  padding-left: $lineHeight;
+
+  @include mq-medium {
+    padding-top: $lineHeight * 2;
+    padding-left: 0;
+  }
+
+  p {
+    border-top: 1px solid $colorGrayKeyline;
+    text-align: right;
+    font-weight: 500;
+    margin-top: $lineHeight/2 - 1;
+    padding-top: $lineHeight/2;
+  }
+
+  &::before {
+    content: open-quote;
+    display: block;
+    position: absolute;
+    font-family: $fontHighlight;
+    font-weight: 700;
+    color: $colorGrayBackground;
+    top: 90px;
+    left: $lineHeight;
+    font-size: 260px;
+
+    @include mq-medium {
+      top: 225px;
+      left: -210px;
+      font-size: 540px;
+    }
+  }
+}

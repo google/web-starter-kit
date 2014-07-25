@@ -1,0 +1,21 @@
+/** @define Link; use strict */
+
+@import "./../style/_color-variables";
+@import "./../style/_icons";
+@import "./../mixins/_typography";
+
+/**
+*
+* Link
+*
+**/
+
+@import "./../mixins/_links";
+
+.Link--primary {
+  @include style-link($colorBlue, $icon-chevron-right);
+}
+
+.Link--secondary {
+  @include style-link($colorBlue);
+}

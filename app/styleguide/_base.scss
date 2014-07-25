@@ -1,0 +1,261 @@
+/*
+ * HTML5 Boilerplate
+ *
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+@import "./_dimens";
+@import "./style/_color-variables";
+@import "./mixins/_baseline-grid";
+@import "./mixins/_typography";
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, button {
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+html,
+button,
+input,
+select,
+textarea {
+  color: #222;
+}
+
+body {
+  font-family: $fontDefault;
+  font-size: $fontBase;
+  line-height: 1.6250em; /* 26px */
+  font-weight: 300; // to thicken it a bit, we need to remove font-smoothing
+  color: $colorText;
+
+  @include baseline-grid();
+}
+
+a {
+  color: $colorBlue;
+}
+
+a:visited {
+  color: #551a8b;
+}
+
+a:hover {
+  color: #06e;
+  text-decoration: none;
+}
+
+pre {
+  background: $colorGrayBackground;
+  padding: 13px;
+}
+
+/*
+ * Remove the gap between images and the bottom of their containers: h5bp.com/i/440
+ */
+img {
+  vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+textarea {
+  resize: vertical;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+
+  @include mq-small-only {
+    padding-left: 0;
+  }
+}
+
+ul li {
+  position: relative;
+  padding-left: 16px;
+  @include bullet-type("", icon-bullet);
+
+  &::before {
+    font-size: 4px;
+  }
+}
+
+ol {
+  counter-reset: list;
+  > li {
+    @include numbered-list;
+    position: relative;
+    padding-left: 32px;
+
+    // This selected every adjacent <li>
+    // from the 10th and overrides the
+    // content property of each
+    &:nth-child(10n) ~ li::before,
+    &:nth-child(10n)::before {
+      content: counter(list);
+    }
+
+  }
+}
+
+ul ol,
+ol ul {
+  padding-top: 0;
+}
+
+img,
+video,
+object {
+  max-width: 100%;
+}
+
+img {
+
+  .content & {
+    margin-top: $lineHeight;
+    margin-bottom: $lineHeight;
+  }
+}
+
+table {
+  margin-top: $lineHeight;
+  width: 100%;
+
+  thead {
+    background: $colorBlue;
+    color: #ffffff;
+  }
+
+  th {
+    text-align: center;
+    display: none;
+    font-family: $fontHighlight;
+    @include type--medium;
+  }
+
+  tr {
+    @include mq-medium {
+      border-bottom: 1px solid #ffffff;
+    }
+  }
+
+  tbody {
+    background: $colorGrayBackground;
+  }
+
+  td {
+    display: block;
+    padding-top: $lineHeight/2;
+    padding-bottom: $lineHeight/2;
+
+    // This is to re-plicate the table-headers for mobile
+    &::before {
+      content: attr(data-th) " :";
+      display: inline-block;
+      color: #ffffff;
+      background: $colorBlue;
+      border-right: 2px solid #ffffff;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 100px;
+      max-height: 100%;
+      font-family: $fontHighlight;
+      font-size: 16px;
+      font-weight: 400;
+      padding-left: $lineHeight/2;
+      padding-top: $lineHeight/2;
+
+      @include mq-medium {
+        display: none;
+      }
+    }
+  }
+
+  th,
+  td {
+    position: relative;
+    padding-left: 140px;
+
+    @include mq-medium {
+      display: table-cell;
+    }
+  }
+
+  th {
+    @include mq-medium {
+      padding: $lineHeight;
+      padding-top: 13px;
+      padding-bottom: $lineHeight/2 - 1;
+    }
+  }
+
+  td {
+    @include mq-medium {
+      padding: $lineHeight;
+      padding-bottom: $lineHeight - 1;
+    }
+  }
+}
+
+td:last-child::after {
+  content: "";
+  display: block;
+  background: #ffffff;
+  height: 1px;
+  left: 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  @include mq-medium {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Hacks / Bug Fixes
+   ========================================================================== */
+
+/* A hack for HTML5 contenteditable attribute on mobile */
+textarea[contenteditable] {
+  -webkit-appearance: none;
+}
+
+/* A workaround for S60 3.x and 5.0 devices which do not animated gif images if
+   they have been set as display: none */
+.gifhidden {
+  position: absolute;
+  left: -100%;
+}

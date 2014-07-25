@@ -1,0 +1,35 @@
+/** @define Color; use strict */
+
+@import "./_color-variables";
+
+.Color-blue { color: $colorBlue; }
+.Color-red { color: $colorRed; }
+.Color-green { color: $colorGreen; }
+.Color-yellow { color: $colorYellow; }
+.Color-blue-secondary { color: $colorBlueSecondary; }
+.Color-red-secondary { color: $colorRedSecondary; }
+.Color-green-secondary { color: $colorGreenSecondary; }
+.Color-yellow-secondary { color: $colorYellowSecondary; }
+
+.Color-gray-background { color: $colorGrayBackground; }
+.Color-gray-keyline { color: $colorGrayKeyline; }
+.Color-gray { color: $colorGray; }
+.Color-gray-dark { color: $colorGrayDark; }
+
+.Color-text { color: $colorText; }
+.Color-highlight { color: $colorHighlight; }
+.Color-warning { color: $colorWarning; }
+.Color-danger { color: $colorDanger; }
+.Color-muted { color: $colorMuted; }
+
+.Color-remember { color: $colorRemember; }
+.Color-learning { color: $colorLearning; }
+
+.Color-layouts { color: $colorLayouts; }
+.Color-user { color: $colorUser; }
+.Color-media { color: $colorMedia; }
+.Color-performance { color: $colorPerformance; }
+.Color-layouts-secondary { color: $colorLayoutsSecondary; }
+.Color-user-secondary { color: $colorUserSecondary; }
+.Color-media-secondary { color: $colorMediaSecondary; }
+.Color-performance-secondary { color: $colorPerformanceSecondary; }

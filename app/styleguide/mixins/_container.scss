@@ -1,0 +1,28 @@
+@import "./../mixins/_mediaqueries";
+
+// Mixin to constrain elements
+@mixin container($isRelative: false) {
+  box-sizing: content-box;
+
+  @if $isRelative {
+    position: relative;
+  }
+
+  padding-left: 5%;
+  padding-right: 5%;
+  margin-left: auto;
+  margin-right: auto;
+
+
+  @include mq-medium {
+    padding-left: 4.8%;
+    padding-right: 4.8%;
+    max-width: $mediumContainer;
+  }
+
+  @include mq-wide {
+    padding-left: 4.4%;
+    padding-right: 4.4%;
+    max-width: $wideContainer;
+  }
+}

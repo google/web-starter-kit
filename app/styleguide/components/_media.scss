@@ -1,0 +1,26 @@
+/** @define Media; use strict */
+
+@import "./../_dimens";
+
+/**
+*
+* Media - imgs/videos
+*
+**/
+
+.Media-container {
+	display: block;
+	height: 0;
+	position: relative;
+	padding-bottom: 56.25%;
+	padding-top: 35px;
+	overflow: hidden;
+
+	.Media-iframe {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+}

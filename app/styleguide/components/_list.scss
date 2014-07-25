@@ -1,0 +1,334 @@
+/** @define List; use strict */
+
+@import "./../style/_color-variables";
+@import "./../style/_icons";
+
+@import "./../mixins/_mediaqueries";
+@import "./../mixins/_typography";
+
+/**
+*
+* List
+*
+**/
+
+@mixin bullet-type($bullet, $icon: false) {
+  &::before {
+    @if $icon {
+      font-family: $fontIcon;
+      @extend .#{$icon}::before;
+      font-size: $fontSmall;
+    }
+    @else {
+      content: $bullet;
+      font-family: $fontHighlight;
+    }
+
+    display: block;
+    font-weight: 400;
+    position: absolute;
+    top: 0;
+    left: 0;
+    line-height: $lineHeight;
+
+  }
+}
+
+@mixin numbered-list() {
+  &::before {
+    counter-increment: list;
+    content: "0" counter(list);
+    color: inherit;
+    font-weight: 400;
+    display: inline-block;
+    position: absolute;
+    left: 0;
+  }
+}
+
+/*==========  LIST LINKS  ==========*/
+
+ul.List-links {
+  li::before {
+    display: none;
+  }
+  a {
+    @include bullet-type("", icon-bullet);
+
+    &::before {
+      font-size: 4px;
+    }
+
+    font-weight: 400;
+  }
+
+  &.List-links--primary {
+    a {
+      @include bullet-type("", icon-chevron-right);
+      font-weight: 400;
+      font-family: $fontHighlight;
+      line-height: 1; // fixes baseline grid alignment
+      text-decoration: none;
+    }
+  }
+}
+
+ol.List-links {
+  li {
+    &::before {
+      display: none;
+    }
+
+    a {
+      display: inline-block;
+      @include numbered-list;
+      font-weight: 300;
+    }
+
+    &:nth-child(10n) ~ li a::before,
+    &:nth-child(10n) a::before {
+      content: counter(list);
+    }
+  }
+
+  &.List-links--secondary {
+    a::before {
+      display: none;
+    }
+  }
+}
+
+.List-links--secondary {
+  @include type--base;
+  padding-left: 0;
+
+  li {
+    padding-left: 0;
+  }
+}
+
+/*==========  ANCHOR LIST  ==========*/
+
+.List-anchor {
+  padding-left: 0;
+
+  li {
+    @include type--base;
+    padding-top: 0;
+    padding-left: 0;
+
+    &::before {
+      display: none
+    }
+
+  }
+
+  a {
+    @include bullet-type("", icon-bullet);
+    line-height: 1; // fixes baseline grid alignment
+    display: inline-block;
+    padding-left: 16px;
+
+    &::before {
+      font-size: 4px;
+    }
+  }
+}
+
+/*==========  SMALL LIST  ==========*/
+
+.List-small {
+
+  li {
+    @include mq-medium {
+      @include type--small;
+      padding-top: 0;
+    }
+  }
+}
+
+/*==========  CENTERED LIST  ==========*/
+
+.List-centered {
+  text-align: center;
+  padding-left: 0;
+}
+
+/*==========  FEATURED LIST  ==========*/
+
+.List-featured {
+  padding-top: $lineHeight * 3;
+  padding-bottom: $lineHeight * 3;
+}
+
+.List-featuredItem {
+  background: #ffffff;
+  padding-left: 0;
+  padding-top: $lineHeight;
+  padding-bottom: $lineHeight;
+
+  @include mq-medium {
+    min-height: $lineHeight * 13;
+    padding: $lineHeight * 2 32px;
+  }
+
+  margin-top: $lineHeight;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  p {
+    margin-bottom: $lineHeight;
+  }
+}
+
+.List-featuredImgWrapper {
+  display: none;
+  position: relative;
+  padding-top: $lineHeight;
+  margin: 0 -5%;
+
+  @include mq-medium {
+    display: block;
+    padding-top: 0;
+    margin: 0;
+  }
+}
+
+.List-featuredImg {
+  @include mq-medium {
+    padding-top: 60.8%;
+    padding-bottom: 0;
+    height: 0;
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+
+  }
+
+  img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+
+    @include mq-medium {
+      margin: 0;
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      left: 0;
+    }
+  }
+}
+
+/*==========  RELATED GUIDES LIST  ==========*/
+.List-relatedGuides {
+  font-family: $fontHighlight;
+  padding-top: 0;
+  padding-left: 0;
+
+  @include mq-medium {
+    padding-top: $lineHeight
+  }
+
+  @include mq-wide {
+    padding-top: 0
+  }
+
+  p {
+    padding-top: 0;
+  }
+
+  .tag {
+    padding-top: 0;
+  }
+
+  li {
+    padding-top: $lineHeight;
+    padding-bottom: $lineHeight - 1;
+    border-bottom: 1px solid $colorGrayKeyline;
+
+    &:last-child {
+      border-color: transparent;
+    }
+
+    @include mq-medium {
+      padding-top: 0;
+      padding-bottom: 0;
+      border-color: transparent;
+    }
+  }
+}
+
+/*==========  LIST RESET  ==========*/
+
+.List--reset {
+  padding-left: 0;
+
+  li {
+    padding-left: 0;
+  }
+
+  &.list-links a::before,
+  & li::before {
+    display: none !important; // Fine to use !important when we are forcing an override
+  }
+}
+
+
+/*==========  LESSONS  ==========*/
+.List-lessons {
+  padding-left: 0;
+
+  & a {
+    color: #ffffff;
+  }
+
+  & .current {
+    &,
+    a {
+      text-decoration: none;
+      cursor: default;
+    }
+
+    & .icon {
+      font-size: $fontSmall;
+      display: inline-block;
+      background: rgba(#000000, .2);
+      border-radius: 100%;
+      width: 26px;
+      line-height: 26px;
+      text-align: center;
+      margin-left: 7px;
+    }
+  }
+
+}
+
+
+/*==========  GUIDES INTO - used on homepage  ==========*/
+.List-guidesIntro {
+  margin-bottom: $lineHeight*2;
+
+  @include mq-small-only {
+    padding-top: $lineHeight*2;
+  }
+
+  li {
+    border-bottom: 1px solid $colorGrayKeyline;
+    padding-bottom: ($lineHeight*2) - 1;
+    margin-bottom: ($lineHeight*2);
+
+    @include mq-medium {
+      border-color: transparent;
+      padding-bottom: 0;
+    }
+
+    &:last-child {
+      border-bottom: transparent;
+      margin-bottom: 0;
+    }
+  }
+}

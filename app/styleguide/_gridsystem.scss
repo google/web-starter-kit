@@ -1,0 +1,160 @@
+/** @define GridSystem; use strict */
+
+@import "./mixins/_container";
+
+/**
+*
+* Grid
+*
+**/
+
+// Grid CSS rules
+@mixin rule--col($mediaQuery) {
+  @if $mediaQuery == medium {
+    float: left;
+    margin-right: $mediumGutterWidth;
+  }
+
+  @if $mediaQuery == wide {
+    float: left;
+    margin-right: $wideGutterWidth;
+  }
+}
+
+@include mq-medium-only {
+  // Generating grid classes for medium view
+  @for $i from 1 through $mediumColCount {
+    .GridSystem-medium-#{$i} {
+      @include rule--col(medium);
+      width: ($mediumColWidth*$i) + ($mediumGutterWidth*($i + -1));
+      @if $i == $mediumColCount { margin-right: 0; }
+    }
+
+    @if $i < $mediumColCount {
+      .GridSystem-medium-push-#{$i} {
+        margin-left: ($mediumColWidth*$i) + ($mediumGutterWidth*$i);
+      }
+      .GridSystem-medium-pull-#{$i} {
+        margin-right: ($mediumColWidth*$i) + ($mediumGutterWidth*$i);
+      }
+    }
+  }
+
+  .GridSystem-medium-full {
+    @include rule--col(medium);
+    margin-right: 0;
+    width: 100%;
+  }
+
+  .GridSystem-third {
+    @include rule--col(medium);
+    width: $mediumColWidth;
+  }
+
+  .GridSystem-half,
+  .GridSystem-medium-half {
+    @include rule--col(medium);
+    width: 50% - $mediumGutterWidth/2;
+  }
+
+  .GridSystem-medium-last { margin-right: 0; }
+  .GridSystem-medium-last + .GridSystem-medium-half { clear: left; }
+
+  .GridSystem-pull-half { margin-right: 50% + $mediumGutterWidth/2; }
+}
+
+
+@include mq-wide {
+  // Generating grid classes for wide view
+  @for $i from 1 through $wideColCount {
+    .GridSystem-wide-#{$i} {
+      @include rule--col(wide);
+      width: ($wideColWidth*$i) + ($wideGutterWidth*($i + -1));
+      @if $i == $wideColCount { margin-right: 0; }
+    }
+
+    @if $i < $wideColCount {
+      .GridSystem-wide-push-#{$i} {
+        margin-left: ($wideColWidth*$i) + ($wideGutterWidth*$i);
+      }
+      .GridSystem-wide-pull-#{$i} {
+        margin-right: ($wideColWidth*$i) + ($wideGutterWidth*$i);
+      }
+    }
+  }
+
+  .GridSystem-wide-last { margin-right: 0; }
+
+  .GridSystem-wide-full {
+    @include rule--col(wide);
+    margin-right: 0;
+    width: 100%;
+  }
+
+  .GridSystem-third {
+    @include rule--col(wide);
+    width: 30.8%;
+  }
+
+  .GridSystem-half,
+  .GridSystem-wide-half {
+    @include rule--col(wide);
+    width: 50% - $wideGutterWidth/2;
+  }
+
+  .GridSystem-pull-half { margin-right: 50% + $wideGutterWidth/2; }
+}
+
+
+// This is a global 'last' class
+// to be used with global grid classes, such as 'half' or 'third'
+// Example usage:
+//  <div class="third"></div>
+//  <div class="third"></div>
+//  <div class="third last"></div>
+.GridSystem-last { margin-right: 0; }
+
+
+// This is a global 'centered' class
+.GridSystem-centered {
+  float: none; // reset float to none so we can center it
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// This is a grid overlay
+// Its purpose is to show users our grid system
+// It becomes visible when a class 'debug' is added to the body
+.GridSystem-overlay {
+
+  display: none;
+  pointer-events: none;
+
+  // Only show when parents (body) has debug class
+  .debug & {
+    @include container(true);
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    display: block;
+
+    [class*="GridSystem-"] {
+      height: 100%;
+      background-color: rgba(lighten(#000, 35%), .2);
+    }
+
+    @include mq-medium-only {
+      .GridSystem-wide-last {
+        display: none;
+      }
+    }
+
+    @include mq-small-only {
+      display: none;
+    }
+  }
+}

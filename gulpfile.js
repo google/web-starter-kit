@@ -78,29 +78,30 @@ gulp.task('fonts', function () {
 // Automatically Prefix CSS
 gulp.task('styles:css', function () {
   return gulp.src('app/styles/**/*.css')
-    .pipe($.changed('app/styles'))
+    // Changed is prevent the autoprefixing.
+    //.pipe($.changed('app/styles'))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
-    .pipe(gulp.dest('app/styles'))
+    .pipe(gulp.dest('.tmp/styles'))
     .pipe($.size({title: 'styles:css'}));
 });
 
-// Compile Sass For Style Guide Components (app/styles/components)
-gulp.task('styles:components', function () {
-  return gulp.src('app/styles/components/components.scss')
+// Compile Sass For Style Guide Components (app/styles/styleguide)
+gulp.task('styles:styleguide', function () {
+  return gulp.src('app/styleguide/styleguide.scss')
     .pipe($.rubySass({
       style: 'expanded',
       precision: 10,
-      loadPath: ['app/styles/components']
+      loadPath: ['app/styles']
     }))
     .on('error', console.error.bind(console))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
-    .pipe(gulp.dest('app/styles/components'))
-    .pipe($.size({title: 'styles:components'}));
+    .pipe(gulp.dest('app/styleguide'))
+    .pipe($.size({title: 'styles:styleguide'}));
 });
 
 // Compile Any Other Sass Files You Added (app/styles)
 gulp.task('styles:scss', function () {
-  return gulp.src(['app/styles/**/*.scss', '!app/styles/components/components.scss'])
+  return gulp.src(['app/styles/**/*.scss'])
     .pipe($.rubySass({
       style: 'expanded',
       precision: 10,
@@ -113,12 +114,14 @@ gulp.task('styles:scss', function () {
 });
 
 // Output Final CSS Styles
-gulp.task('styles', ['styles:components', 'styles:scss', 'styles:css']);
+gulp.task('styles', ['styles:styleguide', 'styles:scss', 'styles:css']);
 
 // Scan Your HTML For Assets & Optimize Them
 gulp.task('html', function () {
-  return gulp.src('app/**/*.html')
-    .pipe($.useref.assets({searchPath: '{.tmp,app}'}))
+  var useref = require('gulp-useref');
+
+  return gulp.src(['app/**/*.html'])
+    .pipe(useref.assets({searchPath: '{.tmp,app,app/styleguide}'}).on('error', function(err) {console.log(err);}))
     // Concatenate And Minify JavaScript
     .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
     // Remove Any Unused CSS
@@ -137,10 +140,10 @@ gulp.task('html', function () {
     })))
     // Concatenate And Minify Styles
     .pipe($.if('*.css', $.csso()))
-    .pipe($.useref.restore())
-    .pipe($.useref())
+    .pipe(useref.restore())
+    .pipe(useref())
     // Update Production Style Guide Paths
-    .pipe($.replace('components/components.css', 'components/main.min.css'))
+    .pipe($.replace('styles/styleguide.min.css', '../styles/styleguide.min.css'))
     // Minify Any HTML
     .pipe($.if('*.html', $.minifyHtml()))
     // Output Files
@@ -165,7 +168,7 @@ gulp.task('serve', function () {
   });
 
   gulp.watch(['app/**/*.html'], reload);
-  gulp.watch(['app/styles/**/*.scss'], ['styles:components', 'styles:scss']);
+  gulp.watch(['app/styles/**/*.scss', 'app/styleguide/**/*.scss'], ['styles:styleguide', 'styles:scss']);
   gulp.watch(['{.tmp,app}/styles/**/*.css'], ['styles:css', reload]);
   gulp.watch(['app/scripts/**/*.js'], ['jshint']);
   gulp.watch(['app/images/**/*'], reload);
@@ -182,7 +185,7 @@ gulp.task('serve:dist', ['default'], function () {
     server: {
       baseDir: 'dist'
     }
-    
+
   });
 });
 

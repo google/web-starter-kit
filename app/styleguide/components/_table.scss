@@ -1,0 +1,69 @@
+/** @define Table; use strict */
+
+@import "./../_dimens";
+@import "./../style/_color-variables";
+@import "./../mixins/_typography";
+@import "./../mixins/_mediaqueries";
+
+/**
+*
+* Table
+*
+**/
+
+.Table-2 {
+  col {
+    width: $mediumContainer / 2;
+    @include mq-wide {
+      width: $wideContainer / 2;
+    }
+  }
+
+  th,
+  td {
+    @include mq-medium {
+      &:first-child {
+        border-right: 2px solid #ffffff;
+      }
+    }
+  }
+}
+
+.Table-3 {
+  col {
+    width: $mediumContainer / 3;
+    @include mq-wide {
+      width: $wideContainer / 3;
+    }
+  }
+
+  th,
+  td {
+    @include mq-medium {
+      &:nth-child(2) {
+        border-left: 2px solid #ffffff;
+        border-right: 2px solid #ffffff;
+      }
+    }
+  }
+}
+
+.Table-4 {
+  col {
+    width: $mediumContainer / 4;
+    @include mq-wide {
+      width: $wideContainer / 4;
+    }
+  }
+
+  th,
+  td {
+    @include mq-medium {
+      &:nth-child(2),
+      &:nth-child(3) {
+        border-left: 2px solid #ffffff;
+        border-right: 2px solid #ffffff;
+      }
+    }
+  }
+}
