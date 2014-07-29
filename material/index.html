@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Material Design Lite</title>
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="196x196" href="images/touch/chrome-touch-icon-196x196.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Web Starter Kit">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#3372DF">
+
+    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+    <!--
+    <link rel="canonical" href="http://www.example.com/">
+    -->
+
+    <!-- build:css styles/components/main.min.css -->
+    <link rel="stylesheet" href="styles/h5bp.css">
+    <!--<link rel="stylesheet" href="styles/components/components.css">-->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500|Source+Code+Pro:400,700">
+
+    <!-- Buttons -->
+      <script src='http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.1/plugins/CSSPlugin.min.js'></script>
+      <script src='http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.1/easing/EasePack.min.js'></script>
+      <script src='http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.1/TweenLite.min.js'></script>
+      <script src="lite/buttons.js"></script>
+      <link rel="stylesheet" href="lite/buttons.css">
+
+  <!--shadows-->
+  <link rel="stylesheet" href="lite/shadows.css">
+
+  <!--fab icons-->
+  <link rel="stylesheet" href="lite/fab.css">
+
+  <!--checkboxes-->
+  <link rel="stylesheet" href="lite/checkboxes.css">
+
+  </head>
+  <body>
+    <header class="app-bar promote-layer paper-toolbar paper-shadow">
+      <div class="app-bar-container paper-toolbar">
+        <button class="menu"><img src="images/hamburger.svg" alt="Menu"></button>
+        <h1 class="logo">Material Design Lite</h1>
+        <section class="app-bar-actions">
+        <!-- Put App Bar Buttons Here -->
+        </section>
+      </div>
+    </header>
+
+    <nav class="navdrawer-container promote-layer">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="#hello">Hello</a></li>
+        <li><a href="#styles">Styles</a></li>
+        <li><a href="http://developers.google.com/web/starter-kit">Web Starter Kit</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <div id="overlay"></div>
+      <h1 id="hello"></h1>
+      <p>Welcome to our labs page.</p>
+
+      <h2 id="styles">Styles</h2>
+
+      <p>Below are a number of prototypes for lightweight <a href="http://google.com/design/spec">Material Design</a> like styles we're exploring for Web Starter Kit using CSS and JavaScript.</p>
+
+      <h3>Buttons</h3>
+
+<h4>paper-button raised-button colored paper-shadow-top-z1</h4>
+<button class="paper-button colored raised-button paper-shadow-top-z-1">Button
+  <div class="ripple"></div>
+</button>
+<h4>paper-button raised-button colored violet paper-shadow-top-z1</h4>
+<button class="paper-button colored raised-button paper-shadow-top-z-1 violet">Button
+  <div class="ripple"></div>
+</button>
+<h4>paper-button raised-button colored razz paper-shadow-top-z1</h4>
+<button class="paper-button colored raised-button paper-shadow-top-z-1 razz">Button
+  <div class="ripple"></div>
+</button>
+<h4>paper-button raised-button paper-shadow-top-z1</h4>
+<button class="paper-button raised-button paper-shadow-top-z-1">Button
+  <div class="ripple"></div>
+</button>
+<h4>paper-button raised-button paper-shadow-top-z2</h4>
+<button class="paper-button raised-button paper-shadow-top-z-2">Button
+  <div class="ripple"></div>
+</button>
+<h4>paper-button colored</h4>
+<button class="paper-button colored">Button
+  <div class="ripple"></div>
+</button>
+<h4>paper-button</h4>
+<button class="paper-button">Button
+  <div class="ripple"></div>
+</button>
+<h4>paper-button disabled</h4>
+<button class="paper-button" disabled>Button</button>
+<h4>paper-button input type="submit" colored raised-button shadow-top-z-1</h4>
+<div class="paper-button colored raised-button shadow-top-z-1">
+  <input type="submit"/>
+  <div class="ripple"></div>
+</div>
+<h4>paper-button input type="submit"</h4>
+<div class="paper-button">
+  <input type="submit" value="Submit"/>
+  <div class="ripple"></div>
+</div>
+<h4>paper-button raised-button colored paper-shadow-top-z1 with custom-ripple</h4>
+<button class="paper-button colored raised-button paper-shadow-top-z-1">Button
+  <div class="ripple custom-ripple"></div>
+</button>
+
+<h3>FAB icon</h3>
+
+<button class="fab">+</button>
+<button class="fab">♥</button>
+<button class="fab">-</button>
+
+      <h3>Shadows</h3>
+
+<div class="card paper-shadow-top-z-1"></div>
+<div class="card paper-shadow-top-z-2"></div>
+<div class="card paper-shadow-top-z-3"></div>
+<div class="card paper-shadow-top-z-4"></div>
+<div class="card paper-shadow-top-z-5"></div>
+<p>&nbsp;</p>
+
+      <h3>Input fields</h3>
+
+      <h3>Checkboxes</h3>
+
+<!--
+Note: Checkboxes have not yet been implemented. These are from:
+http://codepen.io/duncankrebbers/pen/nKoJg
+-->
+<section class="content">
+	<ul class="list">
+    <li class="list__item">
+      <label class="label--checkbox">
+          <input type="checkbox" class="checkbox" checked>
+            Item 1
+      </label>
+    </li>
+    <li class="list__item">
+      <label class="label--checkbox">
+          <input type="checkbox" class="checkbox">
+            Item 2
+      </label>
+    </li>
+    <li class="list__item">
+      <label class="label--checkbox">
+          <input type="checkbox" class="checkbox">
+            Item 3
+      </label>
+    </li>
+    <li class="list__item">
+      <label class="label--checkbox">
+          <input type="checkbox" class="checkbox">
+            Item 4
+      </label>
+    </li>
+  </ul>
+</section>
+
+    </main>
+
+    <!-- build:js scripts/main.min.js -->
+    <script src="scripts/main.js"></script>
+    <!-- endbuild -->
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-XXXXX-X');
+      ga('send', 'pageview');
+    </script>
+    <!-- Built with love using Web Starter Kit -->
+  </body>
+</html>
