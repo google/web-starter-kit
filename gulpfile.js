@@ -74,7 +74,6 @@ gulp.task('fonts', function () {
     .pipe($.size({title: 'fonts'}));
 });
 
-
 // Automatically Prefix CSS
 gulp.task('styles:css', function () {
   return gulp.src('app/styles/**/*.css')
@@ -152,9 +151,13 @@ gulp.task('html', function () {
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 // Watch Files For Changes & Reload
-gulp.task('serve', function () {
+gulp.task('serve', ['styles:components', 'styles:scss'], function () {
   browserSync({
     notify: false,
+    // Run as an https by uncommenting 'https: true'
+    // Note: this uses an unsigned certificate which on first access
+    //       will present a certificate warning in the browser.
+    // https: true,
     server: {
       baseDir: ['.tmp', 'app']
     }
@@ -171,9 +174,14 @@ gulp.task('serve', function () {
 gulp.task('serve:dist', ['default'], function () {
   browserSync({
     notify: false,
+    // Run as an https by uncommenting 'https: true'
+    // Note: this uses an unsigned certificate which on first access
+    //       will present a certificate warning in the browser.
+    // https: true,
     server: {
       baseDir: 'dist'
     }
+
   });
 });
 
