@@ -24,7 +24,6 @@ textarea{
   background-color: transparent;
 }
 
-
 .text-input ~ label{
   font-size: 16px;
   width: 100%;
@@ -103,13 +102,4 @@ textarea{
 .text-input:invalid{
   box-shadow: none;
   border-color: #d34336; 
-}
-
-.inputClone, .maxHeight {
-  margin: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  visibility: hidden;
-  padding: 0.5em 0;
 }
