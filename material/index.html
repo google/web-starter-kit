@@ -33,21 +33,28 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Source+Code+Pro:400,700">
 
+    <!-- Utils -->
+    <script src="lite/utils.js"></script>
+
     <!-- Buttons -->
-      <script src='http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.1/plugins/CSSPlugin.min.js'></script>
-      <script src='http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.1/easing/EasePack.min.js'></script>
-      <script src='http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.1/TweenLite.min.js'></script>
-      <script src="lite/buttons.js"></script>
-      <link rel="stylesheet" href="lite/buttons.css">
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.1/plugins/CSSPlugin.min.js'></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.1/easing/EasePack.min.js'></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.1/TweenLite.min.js'></script>
+    <script src="lite/buttons.js"></script>
+    <link rel="stylesheet" href="lite/buttons.css">
 
-  <!--shadows-->
-  <link rel="stylesheet" href="lite/shadows.css">
+    <!--shadows-->
+    <link rel="stylesheet" href="lite/shadows.css">
 
-  <!--fab icons-->
-  <link rel="stylesheet" href="lite/fab.css">
+    <!--fab icons-->
+    <link rel="stylesheet" href="lite/fab.css">
 
-  <!--checkboxes-->
-  <link rel="stylesheet" href="lite/checkboxes.css">
+    <!--checkboxes-->
+    <link rel="stylesheet" href="lite/checkboxes.css">
+
+    <!--input-->
+    <script src="lite/input.js"></script>
+    <link rel="stylesheet" href="lite/input.css">
 
   </head>
   <body>
@@ -142,6 +149,48 @@
 <p>&nbsp;</p>
 
       <h3>Input fields</h3>
+
+<div class="paper-input">
+    <input class="text-input" type="text" name="sample" />
+    <label for="sample">Type Something...</label>
+</div>
+  
+<div class="paper-input">
+  <input class="text-input" type="text" pattern="[0-9]*" name="sample" />
+  <label for="sample">Numbers Only</label>
+  <span class="error">Input is not a number!</span>
+</div>
+
+<div class="paper-input">
+  <input class="text-input" type="text" disabled name="sample" />
+  <label for="sample">I'm Disabled</label>
+</div>
+
+<div class="paper-input">
+  <input class="text-input floating-label" type="text" name="sample" />
+  <label for="sample">Text Input</label>
+</div>
+
+<div class="paper-input">
+  <input class="floating-label text-input" type="text" pattern="[0-9]*" name="sample" />
+  <label for="sample">Numbers Only</label>
+  <span class="error">Input is not a number!</span>
+</div>
+
+<div class="paper-input">
+  <textarea class="text-input" type="text" rows= "1" name="sample" ></textarea>
+  <label for="sample">Type multiple lines here...</label>
+</div>
+
+<div class="paper-input">
+  <textarea class="text-input" type="text" rows= "3" name="sample" ></textarea>
+  <label for="sample">This input is 3 rows high</label>
+</div>
+
+<div class="paper-input">
+  <textarea class="floating-label text-input" type="text" rows= "1" name="sample" ></textarea>
+  <label for="sample">Multiple lines and a floating label</label>
+</div>
 
       <h3>Checkboxes</h3>
 
