@@ -46,4 +46,7 @@
       closeMenu();
     }
   });
+
+  // Initialize any checkboxes.
+  wskCheckbox.init();
 })();
