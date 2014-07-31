@@ -85,5 +85,3 @@ var wskCheckbox = function() {
     init: findCheckBoxes
   };
 }();
-
-wskCheckbox.init();
