@@ -3,7 +3,7 @@
  * @author Jason Mayes 2014, www.jasonmayes.com
 */
 
-label {
+.wskLabel {
   cursor: pointer;
   font-size: 12pt;
   display: block;
