@@ -17,7 +17,6 @@ var wskCheckbox = function() {
     } else {
       restore = 'wskCircle';
     }
-    console.log(restore);
     circle.className = restore  + ' show';
     setTimeout(function(){
       circle.className = restore;
