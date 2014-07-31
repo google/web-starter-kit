@@ -1,5 +1,5 @@
 (function(){
-  window.onload = function(){
+  window.addEventListener('load', function(){
     var find = document.querySelectorAll.bind(document);
     var buttons = find('.paper-button');
 
@@ -19,5 +19,5 @@
 
       });
     }
-  };
+  });
 })();
