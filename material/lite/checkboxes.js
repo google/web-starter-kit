@@ -47,6 +47,9 @@ var wskCheckbox = function() {
     if (e.keyCode === 13) {
       var f = clickHandler.bind(this);
       f(e);
+      // Also update the checkbox state.
+      var cbox = document.getElementById(this.parentNode.getAttribute('for'));
+      cbox.checked = !cbox.checked;
     }
   }
 
