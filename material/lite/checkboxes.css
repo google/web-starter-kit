@@ -25,6 +25,7 @@ input[type='checkbox'] {
   float: left;
   height: 14px;
   margin: 0 20px 20px 20px;
+  outline-color: #eaeaea;
   padding: 0;
   position:relative;
   width: 14px;
