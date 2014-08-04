@@ -42,6 +42,14 @@ var wskCheckbox = function() {
     animateCircle(this);
   }
 
+  function keyHandler(e) {
+    e.stopPropagation();
+    if (e.keyCode === 13) {
+      var f = clickHandler.bind(this);
+      f(e);
+    }
+  }
+
   function clickHandlerLabel(e) {
     var id = this.getAttribute('for');
     var i = wskCheckboxes.length;
@@ -73,6 +81,7 @@ var wskCheckbox = function() {
         labels[i].insertBefore(span2, labels[i].firstChild);
         labels[i].insertBefore(span, labels[i].firstChild);
         addEventHandler(span, 'click', clickHandler);
+        addEventHandler(span, 'keyup', keyHandler);
         addEventHandler(labels[i], 'click', clickHandlerLabel);
         wskCheckboxes.push({'checkbox': span,
             'id': labels[i].getAttribute('for')});
@@ -84,3 +93,5 @@ var wskCheckbox = function() {
     init: findCheckBoxes
   };
 }();
+
+wskCheckbox.init();
