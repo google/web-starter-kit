@@ -7,6 +7,9 @@
 
 var wskCheckbox = function() {
   var wskCheckboxes = [];
+  var CONST = {
+    'ENTER_KEY': 13
+  };
 
   function animateCircle(checkboxElement) {
     var circle =
@@ -44,9 +47,8 @@ var wskCheckbox = function() {
 
   function keyHandler(e) {
     e.stopPropagation();
-    if (e.keyCode === 13) {
-      var f = clickHandler.bind(this);
-      f(e);
+    if (e.keyCode === CONST.ENTER_KEY) {
+      clickHandler.call(this, e);
       // Also update the checkbox state.
       var cbox = document.getElementById(this.parentNode.getAttribute('for'));
       cbox.checked = !cbox.checked;
