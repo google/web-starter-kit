@@ -8,10 +8,10 @@
   overflow: hidden;
 
   .breadcrumbs {
-    color: $colorBlue;
+    color: $colorBlue500;
 
     a {
-      color: $colorBlue;
+      color: $colorBlue500;
     }
   }
 
@@ -54,7 +54,7 @@
     padding-top: 0;
     padding-bottom: $lineHeight;
   }
-  color: $colorBlue;
+  color: $colorBlue500;
 }
 
 .editorial-header__toc {
@@ -74,5 +74,5 @@
   border-bottom: 1px solid $colorGrayKeyline;
   margin-bottom: 13px;
   padding-bottom: 13px !important;
-  color: $colorBlue;
+  color: $colorBlue500;
 }

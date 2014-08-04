@@ -5,7 +5,7 @@
 **/
 
 a {
-  color: $colorBlue;
+  color: $colorBlue500;
 }
 
 a:hover {
@@ -13,9 +13,9 @@ a:hover {
 }
 
 .cta--primary {
-  @include style-cta($colorBlue, $icon-chevron-right);
+  @include style-cta($colorBlue500, $icon-chevron-right);
 }
 
 .cta--secondary {
-  @include style-cta($colorBlue);
+  @include style-cta($colorBlue500);
 }
