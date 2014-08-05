@@ -7,6 +7,7 @@
 
 var wskCheckbox = function() {
   var wskCheckboxes = [];
+  var SPACE_KEY = 32;
 
   function animateCircle(checkboxElement) {
     var circle =
@@ -42,6 +43,16 @@ var wskCheckbox = function() {
     animateCircle(this);
   }
 
+  function keyHandler(e) {
+    e.stopPropagation();
+    if (e.keyCode === SPACE_KEY) {
+      clickHandler.call(this, e);
+      // Also update the checkbox state.
+      var cbox = document.getElementById(this.parentNode.getAttribute('for'));
+      cbox.checked = !cbox.checked;
+    }
+  }
+
   function clickHandlerLabel(e) {
     var id = this.getAttribute('for');
     var i = wskCheckboxes.length;
@@ -73,6 +84,7 @@ var wskCheckbox = function() {
         labels[i].insertBefore(span2, labels[i].firstChild);
         labels[i].insertBefore(span, labels[i].firstChild);
         addEventHandler(span, 'click', clickHandler);
+        addEventHandler(span, 'keyup', keyHandler);
         addEventHandler(labels[i], 'click', clickHandlerLabel);
         wskCheckboxes.push({'checkbox': span,
             'id': labels[i].getAttribute('for')});
@@ -84,3 +96,5 @@ var wskCheckbox = function() {
     init: findCheckBoxes
   };
 }();
+
+wskCheckbox.init();
