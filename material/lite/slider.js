@@ -52,7 +52,6 @@ var wskSlider = function() {
     var i = sliders.length;
     while (i--) {
       var slider = sliders[i];
-      console.log(slider);
       setupSlider(slider);
     }
   };
