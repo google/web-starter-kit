@@ -1,31 +1,39 @@
 
 var wskSlider = function() {
+  // TODO(devnook): Explore input type="range" implementation option.
 
-  function moveKnob(knob, progress, slider, min, max, e) {
-    var dx = Math.min(Math.max(e.clientX - min, 0), max);
-    var s =  knob.style;
+  /**
+   * @param {{knob: Element,
+   *         progress: Element,
+   *         slider: Element,
+   *         min: number,
+   *         max: number}} config Object describing the elements of the slider.
+   */
+  function moveKnob(config, e) {
+    var dx = Math.min(Math.max(e.clientX - config.min, 0), config.max);
+    var s =  config.knob.style;
         s.transform = s.webkitTransform = 'translate3d(' + dx + 'px, 0, 0)';
-    progress.style.width = dx + 'px';
-    slider.setAttribute('value', dx / max);
-    if (dx === 0) {
-      knob.classList.add('ring');
-    } else {
-      knob.classList.remove('ring');
-    }
+    config.progress.style.width = dx + 'px';
+    config.slider.setAttribute('value', dx / config.max);
+    config.knob.classList.toggle('ring', dx === 0);
   };
 
-  function jumpKnob(knob, progress, slider, min, max, upHandler, e) {
-    knob.classList.add('dragging');
-    moveKnob(knob, progress, slider, min, max, e);
-    window.addEventListener('mouseup', upHandler);  
+  function jumpKnob(config, upHandler, e) {
+    config.knob.classList.add('dragging');
+    moveKnob(config, e);
+    window.addEventListener('mouseup', upHandler);
   }
 
   function setupSlider(slider) {
     var knob = slider.querySelector('.sliderKnobInner');
     var progress = slider.querySelector('.progress.active');
-    var min =  slider.getBoundingClientRect().left;
-    var max =  slider.offsetWidth;
-    var moveHandler = moveKnob.bind(this, knob, progress, slider, min, max);
+    var min = slider.getBoundingClientRect().left;
+    var max = slider.offsetWidth;
+    var moveHandler = moveKnob.bind(this, {'knob': knob,
+                                           'progress': progress,
+                                           'slider': slider,
+                                           'min': min,
+                                           'max': max});
 
     var upHandler = function(e) {
       knob.classList.remove('dragging');
@@ -41,10 +49,18 @@ var wskSlider = function() {
 
     var sliderBase = slider.querySelector('.progress.base');
     sliderBase.addEventListener('mousedown', jumpKnob.bind(
-      this, knob, progress, slider, min, max, upHandler));
+      this, {'knob': knob,
+             'progress': progress,
+             'slider': slider,
+             'min': min,
+             'max': max}, upHandler));
     var sliderActive = slider.querySelector('.progress.active');
     sliderActive.addEventListener('mousedown', jumpKnob.bind(
-      this, knob, progress, slider, min, max, upHandler));
+      this, {'knob': knob,
+             'progress': progress,
+             'slider': slider,
+             'min': min,
+             'max': max}, upHandler));
   };
 
   function findSliders() {
@@ -63,7 +79,3 @@ var wskSlider = function() {
 }();
 
 wskSlider.init();
-
-
-
-

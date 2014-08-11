@@ -3,7 +3,7 @@
 
 .slider {
   width: 640px;
-  margin: 30px auto; 
+  margin: 30px auto;
 }
 
 /* Component
@@ -19,7 +19,7 @@
   width: 100%;
   height: 2px;
   opacity: 1;
-  overflow: hidden; 
+  overflow: hidden;
   background-color: #ccc;
   margin: auto;
   position: absolute;
@@ -27,7 +27,7 @@
   /* Same speed as .slideKnobInner transition */
   transition: width 0.08s, transform 0.08s;
 }
-  
+
 .progress.active {
   background-color: #f4b400;
   width: 0;
@@ -37,7 +37,7 @@
   *border: 1px solid;
   width: 2rem;
   height: 2rem;
-  display: block; 
+  display: block;
   position: relative;
   left: -.75rem;
 }
@@ -45,8 +45,11 @@
 .sliderKnobInner {
   margin: auto;
   position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-  cursor:pointer;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
   border-radius: 50%;
   width: .5rem;
   height: .5rem;
