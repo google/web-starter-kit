@@ -81,7 +81,7 @@
 }
 
 .paper-button:hover {
-  background-color: #EAEAEA !important;
+  background-color: #EAEAEA;/* !important; */
 }
 
 .paper-button.raised-button.colored:hover {
