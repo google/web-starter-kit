@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="24px"
+	 height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24" xml:space="preserve">
+<g id="Header">
+	<g>
+		<rect x="-618" y="-1208" fill="none" width="1400" height="3600"/>
+	</g>
+</g>
+<g id="Label">
+</g>
+<g id="Icon">
+	<g>
+		<rect fill="none" width="24" height="24"/>
+		<path d="M19,7V4H5v3H2v13h8v-4h4v4h8V7H19z M11,10H9v1h2v1H8V9h2V8H8V7h3V10z M16,12h-1v-2h-2V7h1v2h1V7h1V12z"/>
+	</g>
+</g>
+<g id="Grid" display="none">
+	<g display="inline">
+	</g>
+</g>
+</svg>

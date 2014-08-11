@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="48px"
+	 height="48px" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
+<g id="Header">
+	<g>
+		<rect x="-838" y="-1848" fill="none" width="1400" height="3600"/>
+	</g>
+</g>
+<g id="Labels">
+</g>
+<g id="Icon">
+	<g>
+		<rect x="0" fill="none" width="48" height="48"/>
+		<path d="M24,38c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4s4-1.8,4-4C28,39.8,26.2,38,24,38z M12,2C9.8,2,8,3.8,8,6c0,2.2,1.8,4,4,4
+			s4-1.8,4-4C16,3.8,14.2,2,12,2z M12,14c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4s4-1.8,4-4C16,15.8,14.2,14,12,14z M12,26
+			c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4s4-1.8,4-4C16,27.8,14.2,26,12,26z M36,10c2.2,0,4-1.8,4-4c0-2.2-1.8-4-4-4c-2.2,0-4,1.8-4,4
+			C32,8.2,33.8,10,36,10z M24,26c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4s4-1.8,4-4C28,27.8,26.2,26,24,26z M36,26c-2.2,0-4,1.8-4,4
+			c0,2.2,1.8,4,4,4c2.2,0,4-1.8,4-4C40,27.8,38.2,26,36,26z M36,14c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4c2.2,0,4-1.8,4-4
+			C40,15.8,38.2,14,36,14z M24,14c-2.2,0-4,1.8-4,4c0,2.2,1.8,4,4,4s4-1.8,4-4C28,15.8,26.2,14,24,14z M24,2c-2.2,0-4,1.8-4,4
+			c0,2.2,1.8,4,4,4s4-1.8,4-4C28,3.8,26.2,2,24,2z"/>
+	</g>
+</g>
+<g id="Grid" display="none">
+	<g display="inline">
+		<line fill="none" stroke="#00E5FF" stroke-width="0.1" stroke-miterlimit="10" x1="42" y1="-1848" x2="42" y2="1704"/>
+	</g>
+</g>
+</svg>

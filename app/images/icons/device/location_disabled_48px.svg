@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="48px"
+	 height="48px" viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
+<g id="Header">
+	<g>
+		<rect x="-838" y="-1080" fill="none" width="1400" height="3600"/>
+	</g>
+</g>
+<g id="Labels">
+</g>
+<g id="Icon">
+	<g>
+		<g>
+			<rect y="-0.2" fill="none" width="48" height="48"/>
+		</g>
+		<path d="M41.9,22.2C41,13.8,34.3,7.2,26,6.3V2.2h-4v4.1c-2.3,0.2-4.4,0.9-6.3,1.9l3,3c1.6-0.7,3.4-1.1,5.3-1.1c7.7,0,14,6.3,14,14
+			c0,1.9-0.4,3.7-1,5.3l3,3c1-1.9,1.7-4,1.9-6.3H46v-4H41.9z M6,8.7l4.1,4.1c-2.1,2.6-3.6,5.8-4,9.4H2v4h4.1
+			c0.9,8.3,7.5,15,15.9,15.9v4.1h4v-4.1c3.5-0.4,6.8-1.8,9.4-4l4.1,4.1l2.5-2.5L8.5,6.2L6,8.7z M32.5,35.3c-2.4,1.8-5.3,2.9-8.5,2.9
+			c-7.7,0-14-6.3-14-14c0-3.2,1.1-6.2,2.9-8.5L32.5,35.3z"/>
+	</g>
+</g>
+<g id="Grid" display="none">
+	<g display="inline">
+		<line fill="none" stroke="#00E5FF" stroke-width="0.1" stroke-miterlimit="10" x1="42" y1="-1080" x2="42" y2="2472"/>
+	</g>
+</g>
+</svg>
