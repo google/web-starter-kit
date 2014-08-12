@@ -74,7 +74,8 @@ var wskCheckbox = function() {
     var i = labels.length;
     while (i--) {
       var posCheckbox = document.getElementById(labels[i].getAttribute('for'));
-      if (posCheckbox !== null && posCheckbox.type === 'checkbox') {
+      if (posCheckbox !== null && posCheckbox.type === 'checkbox' &&
+          (posCheckbox.className.indexOf('wskCheckbox') >= 0)) {
         var text = labels[i].innerText;
         var span = document.createElement('span');
         span.className = 'wskCheckbox';
@@ -96,5 +97,3 @@ var wskCheckbox = function() {
     init: findCheckBoxes
   };
 }();
-
-wskCheckbox.init();
