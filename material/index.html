@@ -31,25 +31,6 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
 
-    <style>
-      /*Styles specific to this page which may be moved back to main.css*/
-      h2 {
-        max-width: 800px;
-        font-size: 30px;
-        text-align: center;
-        margin: 40px auto;
-        text-transform: uppercase;
-        font-weight: 300;
-      }
-
-      .copy {
-        max-width: 800px;
-        font-size: 13px;
-        line-height: 24px;
-        margin: 40px 0px;
-      }
-    </style>
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Source+Code+Pro:400,700">
 
     <!-- Utils -->
@@ -60,14 +41,12 @@
     <script src='http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.1/easing/EasePack.min.js'></script>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/gsap/1.13.1/TweenLite.min.js'></script>
     <script src="lite/buttons.js"></script>
-
     <link rel="stylesheet" href="lite/buttons.css">
 
     <!--shadows-->
     <link rel="stylesheet" href="lite/shadows.css">
 
     <!--fab icons-->
-    <script src="lite/fab.js"></script>
     <link rel="stylesheet" href="lite/fab.css">
 
     <!--checkboxes-->
@@ -77,30 +56,6 @@
     <!--input-->
     <script src="lite/input.js"></script>
     <link rel="stylesheet" href="lite/input.css">
-
-    <!--progress-->
-    <script src="lite/progress.js"></script>
-    <link rel="stylesheet" href="lite/progress.css">
-
-    <!--toggle button-->
-    <!-- note this version uses hammer
-    http://codepen.io/mattcooper/pen/trkla
-    -->
-    <script src="lite/toggle-button.js"></script>
-    <link rel="stylesheet" href="lite/toggle-button.css">
-
-    <!--snackbar-->
-    <script src="lite/snackbar.js"></script>
-    <link rel="stylesheet" href="lite/snackbar.css">
-
-    <!--menubuttons-->
-    <script src="scripts/hammer.min.js"></script>
-    <script src="lite/menubuttons.js"></script>
-    <link rel="stylesheet" href="lite/menubuttons.css">
-
-    <!--slider-->
-    <script src="lite/slider.js"></script>
-    <link rel="stylesheet" href="lite/slider.css">
 
   </head>
   <body>
@@ -126,24 +81,13 @@
     <main>
       <div id="overlay"></div>
       <h1 id="hello"></h1>
+      <p>Welcome to our labs page.</p>
 
-      <p><a href="http://google.com/design/spec">Material Design</a> is a comprehensive guide for visual, motion, and interaction design across devices. It provides a unified framework usable by Google platforms, unifying our work on across products and pushing us to create new levels of fidelity in our UI. This is a <strong>Lite</strong> implementation of Material Design.</p>
-
-      <h1 id="styles">Component Styles</h1>
+      <h2 id="styles">Styles</h2>
 
       <p>Below are a number of prototypes for lightweight <a href="http://google.com/design/spec">Material Design</a> like styles we're exploring for Web Starter Kit using CSS and JavaScript.</p>
 
-<h2>Buttons</h2>
-<p class="copy">Contributed by Addy Osmani</p>
-
-
-<p>A button consists of text and/or an image that clearly communicates what action will occur when the user touches it.Three types of main buttons are provided:
-</p><ul>
-<li>Raised button, a typically rectangular button made of paper that lifts and emits ink reactions on press.</li>
-<li>Flat button, a button made of ink that emits ink reactions on press but does not lift.</li>
-<li>Floating action button, a circular button made of paper that lifts and emits ink reactions on press.</li>
-</ul><p></p>
-</div>
+      <h3>Buttons</h3>
 
 <h4>paper-button raised-button colored paper-shadow-top-z1</h4>
 <button class="paper-button colored raised-button paper-shadow-top-z-1">Button
@@ -190,54 +134,28 @@
   <div class="ripple custom-ripple"></div>
 </button>
 
+<h3>FAB icon</h3>
 
-<h2>FAB (Floating action button)</h2>
+<button class="fab">+</button>
+<button class="fab">♥</button>
+<button class="fab">-</button>
 
-<p class="copy">Contributed by Mat Scales & Addy Osmani</p>
+      <h3>Shadows</h3>
 
-<p>There are two sizes of floating action buttons: the default size and the small size. The small size should only be used to create visual continuity with other elements on the screen.</p>
+<div class="card paper-shadow-top-z-1"></div>
+<div class="card paper-shadow-top-z-2"></div>
+<div class="card paper-shadow-top-z-3"></div>
+<div class="card paper-shadow-top-z-4"></div>
+<div class="card paper-shadow-top-z-5"></div>
+<p>&nbsp;</p>
 
-<h4>paper-button paper-floating-action-button</h4>
-<button class="paper-button paper-floating-action-button">+
-  <div class="ripple"></div>
-</button>
-<button class="paper-button paper-floating-action-button">♥
-  <div class="ripple"></div>
-</button>
-
-<h4>purple</h4>
-<button class="paper-button paper-floating-action-button purple">♥
-  <div class="ripple"></div>
-</button>
-
-<h4>small</h4>
-<button class="paper-button paper-floating-action-button small">+
-  <div class="ripple"></div>
-</button>
-
-<h4>custom ripple color</h4>
-<button class="paper-button paper-floating-action-button">+
-  <div class="ripple custom-ripple"></div>
-</button>
-
-<h4>Overlaying a card</h4>
-<div class="card paper-shadow-top-z-4" style="position: relative;">
-  <button class="paper-button paper-floating-action-button" style="position: absolute; bottom: -5px; right: -5px;">+
-    <div class="ripple"></div>
-  </button>
-</div>
-
-<h2>Text fields</h2>
-
-<p>Text fields allow the user to input text. They can be single line, with or without scrolling, or multi-line, and can have an icon. Touching a text field places the cursor and automatically displays the keyboard. In addition to typing, text fields allow for a variety of other tasks, such as text selection (cut, copy, paste) and data lookup via auto-completion.</p>
-
-<p class="copy">Contributed by Matt Cooper</p>
+      <h3>Input fields</h3>
 
 <div class="paper-input">
     <input class="text-input" type="text" name="sample" />
     <label for="sample">Type Something...</label>
 </div>
-
+  
 <div class="paper-input">
   <input class="text-input" type="text" pattern="[0-9]*" name="sample" />
   <label for="sample">Numbers Only</label>
@@ -276,13 +194,11 @@
 </div>
 <p>&nbsp;</p>
 
+      <h3>Checkboxes</h3>
 
-<h2>Checkboxes</h2>
-
-<p class="copy">Contributed by Jason Mayes</p>
-
-<p>A checkbox can either be a primary action or a secondary action.</p>
-
+<!--
+Note: Contributed from Jason Mayes http://codepen.io/jasonmayes/pen/wxtFr
+-->
 <section class="content">
 	<input type="checkbox" id="anId1" class="wskCheckbox" />
 	<label class="wskLabel" for="anId1">Check me out</label>
@@ -296,211 +212,6 @@
 	<input type="checkbox" id="anId4" class="wskCheckbox" />
 	<label class="wskLabel" for="anId4">All you have to do is use regular native HTML elements</label>
 </section>
-
-<h2>Snackbar (Toast)</h2>
-
-<p class="copy">Contributed by Mat Scales</p>
-
-<p>Snackbars provide lightweight feedback about an operation in a small popup at the base of the screen on mobile and at the lower left on desktop. They are above all over elements on screen, including the floating action button.</p>
-
-<p>They automatically disappear after a timeout or after user interaction elsewhere on the screen, whichever comes first. Snackbars can be swiped off screen. They do not block input on the screens they appear on and cannot receive input focus. Show only one snackbar on screen at a time.</p>
-
-<button id="single" class="paper-button raised-button colored">Single line<div class="ripple"/></button>
-<button id="multi" class="paper-button raised-button colored">Multi-line<div class="ripple"/></button>
-<button id="singleaction" class="paper-button raised-button colored">Single + action<div class="ripple"/></button>
-<button id="multiaction" class="paper-button raised-button colored">Multi + action<div class="ripple"/></button>
-
-<h2>Menu button</h2>
-
-<p class="copy">Contributed by Nicolas Garnier</p>
-
-<p>A menu is a temporary piece of paper emitted from a button, an action, a pointer, or another control that contains at least two menu items. Each menu item is a discrete option or action that can affect the app, the view, or selected elements within a view.</p>
-
-<p>Menus should not be used as a primary method for navigation within an app.</p>
-
-<h4>paper-menu-button below paper-shadow-top-z-1</h4>
-<div class="paper-menu-button">
-  <button tabindex="1" class="paper-button colored raised-button paper-shadow-top-z-1">Open menu<div class="ripple"/></button>
-  <ul class="paper-menu below paper-shadow-top-z-1">
-    <li tabindex="2">Menu item 1<div class="ripple"/></li>
-    <li tabindex="3">Menu item 2<div class="ripple"/></li>
-    <li tabindex="4">Menu item 3<div class="ripple"/></li>
-    <li tabindex="5">Menu item 4<div class="ripple"/></li>
-  </ul>
-</div>
-
-
-<h4>paper-menu-button below over paper-shadow-top-z-1</h4>
-<div class="paper-menu-button">
-  <button tabindex="6" class="paper-button colored raised-button paper-shadow-top-z-1">Open menu<div class="ripple"/></button>
-  <ul class="paper-menu below over paper-shadow-top-z-1">
-    <li tabindex="7">Menu item 1<div class="ripple"/></li>
-    <li tabindex="8">Menu item 2<div class="ripple"/></li>
-    <li tabindex="9">Menu item 3<div class="ripple"/></li>
-    <li tabindex="10">Menu item 4<div class="ripple"/></li>
-  </ul>
-</div>
-
-
-<h4>paper-menu-button below left paper-shadow-top-z-1</h4>
-<div class="paper-menu-button" style="margin-left: 200px">
-  <button tabindex="11" class="paper-button colored raised-button paper-shadow-top-z-1">Open menu<div class="ripple"/></button>
-  <ul class="paper-menu below left paper-shadow-top-z-1">
-    <li tabindex="12">Menu item 1<div class="ripple"/></li>
-    <li tabindex="13">Menu item 2<div class="ripple"/></li>
-    <li tabindex="14">Menu item 3<div class="ripple"/></li>
-    <li tabindex="15">Menu item 4<div class="ripple"/></li>
-  </ul>
-</div>
-
-
-<h4>paper-menu-button below left over paper-shadow-top-z-1</h4>
-<div class="paper-menu-button" style="margin-left: 200px">
-  <button tabindex="16" class="paper-button colored raised-button paper-shadow-top-z-1">Open menu<div class="ripple"/></button>
-  <ul class="paper-menu below left over paper-shadow-top-z-1">
-    <li tabindex="17">Menu item 1<div class="ripple"/></li>
-    <li tabindex="18">Menu item 2<div class="ripple"/></li>
-    <li tabindex="19">Menu item 3<div class="ripple"/></li>
-    <li tabindex="20">Menu item 4<div class="ripple"/></li>
-  </ul>
-</div>
-
-
-
-
-<h4>paper-menu-button top paper-shadow-top-z-1</h4>
-<div class="paper-menu-button">
-  <button tabindex="21" class="paper-button colored raised-button paper-shadow-top-z-1">Open menu<div class="ripple"/></button>
-  <ul class="paper-menu top paper-shadow-top-z-1">
-    <li tabindex="22">Menu item 1<div class="ripple"/></li>
-    <li tabindex="23">Menu item 2<div class="ripple"/></li>
-    <li tabindex="24">Menu item 3<div class="ripple"/></li>
-    <li tabindex="25">Menu item 4<div class="ripple"/></li>
-  </ul>
-</div>
-
-
-<h4>paper-menu-button top left paper-shadow-top-z-1</h4>
-<div class="paper-menu-button" style="margin-left: 200px">
-  <button tabindex="26" class="paper-button colored raised-button paper-shadow-top-z-1">Open menu<div class="ripple"/></button>
-  <ul class="paper-menu top left paper-shadow-top-z-1">
-    <li tabindex="27">Menu item 1<div class="ripple"/></li>
-    <li tabindex="28">Menu item 2<div class="ripple"/></li>
-    <li tabindex="29">Menu item 3<div class="ripple"/></li>
-    <li tabindex="30">Menu item 4<div class="ripple"/></li>
-  </ul>
-</div>
-
-<h4>paper-menu-button top over paper-shadow-top-z-1</h4>
-<div class="paper-menu-button">
-  <button tabindex="31" class="paper-button colored raised-button paper-shadow-top-z-1">Open menu<div class="ripple"/></button>
-  <ul class="paper-menu top over paper-shadow-top-z-1">
-    <li tabindex="32">Menu item 1<div class="ripple"/></li>
-    <li tabindex="33">Menu item 2<div class="ripple"/></li>
-    <li tabindex="34">Menu item 3<div class="ripple"/></li>
-    <li tabindex="35">Menu item 4<div class="ripple"/></li>
-  </ul>
-</div>
-
-<h4>paper-menu-button top over left paper-shadow-top-z-1</h4>
-<div class="paper-menu-button" style="margin-left: 200px">
-  <button tabindex="36" class="paper-button colored raised-button paper-shadow-top-z-1">Open menu<div class="ripple"/></button>
-  <ul class="paper-menu top over left paper-shadow-top-z-1">
-    <li tabindex="37">Menu item 1<div class="ripple"/></li>
-    <li tabindex="38">Menu item 2<div class="ripple"/></li>
-    <li tabindex="39">Menu item 3<div class="ripple"/></li>
-    <li tabindex="40">Menu item 4<div class="ripple"/></li>
-  </ul>
-</div>
-
-<h2>Toggle buttons</h2>
-
-<p class="copy">Contributed by Matt Cooper</p>
-
-<div class="paper-toggle">
-  <input type="checkbox" id="wifi" name="wifi" class="switch" />
-  <label for="wifi">Wifi</label>
-</div>
-
-<h2>Progress indicators</h2>
-
-<p class="copy">Contributed by Marc Cohen</p>
-
-<p>Make loading content in your app as delightful and painless as possible by minimizing the amount of visual change a user sees before they can view and interact with content.</p>
-
-<section class="progress-content content">
-  <h4>Determinate progress bar with initial value .5, default max (1.0)
-    &nbsp;&nbsp;
-    <input type="range" min="0" max="1" step=".1" onInput="setProgressValue('prog1', this)" />
-  </h4>
-  <div class="pad-bottom">
-    <progress id="prog1" value=".5"></progress>
-  </div>
-
-  <h4>Determinate progress bar with initial value 25, max 100
-    &nbsp;&nbsp;
-    <input type="range" min="0" max="100" value="25" step="1" onInput="setProgressValue('prog2', this)" />
-  </h4>
-  <div class="pad-bottom">
-    <progress id="prog2" value="25" max="100"></progress>
-  </div>
-
-  <h4>Indeterminate progress bar
-    &nbsp;&nbsp;
-    <button onclick="startProgress(this, 'prog3');"> Start</button>
-  </h4>
-  <div class="pad-bottom">
-    <progress id="prog3"></progress>
-  </div>
-
-  <h4>Another indeterminate progress bar
-    &nbsp;&nbsp;
-    <button onclick="startProgress(this, 'prog4');"> Start</button>
-  </h4>
-  <div class="pad-bottom">
-    <progress id="prog4"></progress>
-  </div>
-
-  <h4>Start all indeterminate progress bars
-    &nbsp;&nbsp;
-    <button onclick="startProgress(null, null);"> Start All</button>
-  </h4>
-
-</section>
-
-  <h2>Slider</h2>
-
-  <p>Sliders lets users select a value from a continuous or discrete range of values by moving the slider thumb. The smallest value is to the left, the largest to the right. Sliders can have icons to the left and right of the bar that reflect the value intensity. The interactive nature of the slider makes it a great choice for settings that reflect intensity levels, such as volume, brightness, or color saturation.</p>
-
-  <p class="copy">Contributed by Ewa Gasperowicz</p>
-<div class="slider" value="0">
-  <div class="progress determinate base"></div>
-  <div class="progress active"></div>
-  <div class="sliderKnob">
-    <div class="sliderKnobInner ring"></div>
-  </div>
-</div>
-
-<div class="slider" value="0">
-  <div class="progress determinate base"></div>
-  <div class="progress active"></div>
-  <div class="sliderKnob">
-    <div class="sliderKnobInner ring"></div>
-  </div>
-</div>
-
-<h2>Cards/Shadows</h2>
-
-<p>A card is a piece of paper that contains a unique data set of related, heterogeneous information, for example, a photo, text, and link all about a single subject. Cards typically are an entry point to more complex and detailed information. Cards have a constant width and variable height.</p>
-
-<p>The maximum height is limited to what can fit within a single view on a platform, but it can temporarily expand as needed (for example, to display a comment field). Cards do not flip to reveal information on their back.</p>
-
-<div class="card paper-shadow-top-z-1"></div>
-<div class="card paper-shadow-top-z-2"></div>
-<div class="card paper-shadow-top-z-3"></div>
-<div class="card paper-shadow-top-z-4"></div>
-<div class="card paper-shadow-top-z-5"></div>
-<p>&nbsp;</p>
 
     </main>
 
