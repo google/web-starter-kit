@@ -1,0 +1,75 @@
+
+.paper-toggle{
+  position: relative;
+  width: 150px;
+  height: 20px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.paper-toggle input[type="checkbox"]{
+  cursor: pointer;
+  position: absolute;
+  opacity:0;
+  right: 0;
+  width: 32px;
+  margin: 0;
+  height: 20px;
+  z-index: 2;
+}
+
+.paper-toggle label:before{
+  display: block;
+  content: '';
+  right: 0;
+  top: 50%;
+  width: 32px;
+  height: 1px;
+  background-color: #5a5a5a;
+}
+
+.paper-toggle label:before,
+.marker
+{
+  position: absolute;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: all 200ms ease-in;
+  transition: all 200ms ease-in;
+}
+
+.marker.dragging{
+  -webkit-transition: none;
+  transition: none;
+}
+
+.marker
+{
+  right: 32px;
+  background-color: transparent;
+  bottom: 0.1em;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: solid 2px;
+  border-color: #5a5a5a;
+}
+
+.paper-toggle input:checked ~ label:before
+{
+	background-color: #0f9d58;
+}
+
+.paper-toggle input:checked ~ .marker
+{
+  transform:translateX(46px);
+  -ms-transform:translateX(46px);
+  -webkit-transform:translateX(46px);
+  background-color: #0f9d58;
+  border-color: #0f9d58;
+}

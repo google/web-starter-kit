@@ -1,0 +1,90 @@
+.paper-menu-button {
+  position: relative;
+  display: block;
+  height: 65px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.paper-menu {
+  visibility: hidden;
+  width: 160px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  opacity: 0;
+  color: black;
+  border-radius: 3px;
+  padding: 0;
+  margin: 0;
+  z-index: 10000;
+  background-color: white;
+  -webkit-transition: opacity 0.5s, visibility 0s linear 0.5s;
+  transition: opacity 0.5s, visibility 0s linear 0.5s;
+}
+.paper-menu.visible {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transition-delay: 0s;
+  transition-delay: 0s;
+}
+.paper-menu.below {
+  position: relative;
+  top: -1em;
+  left: 1em;
+}
+.paper-menu.below.over {
+  position: absolute;
+  top: 1em;
+}
+.paper-menu.left {
+  left: -60px;
+  margin-left: 1em;
+}
+.paper-menu.left.over {
+  top: 1em;
+}
+.paper-menu.top {
+  position: absolute;
+  margin-top: 1em;
+  margin-left: 1em;
+}
+.paper-menu.top.over {
+  position: relative;
+  margin-bottom: 0;
+  margin-top: -1em;
+}
+.paper-menu:hover {
+  -webkit-transition: opacity 0.5s linear 0.25s, visibility 0s linear 0.75s;
+  transition: opacity 0.5s linear 0.25s, visibility 0s linear 0.75s;
+}
+.paper-menu li {
+  list-style-type: none;
+  overflow: hidden;
+  padding: 10px 10px;
+  position: relative;
+  white-space: nowrap;
+  outline-color: #cccccc;
+}
+.paper-menu li:hover {
+  cursor: pointer;
+  background-color: rgba(204, 204, 204, 0.15) !important;
+}
+.paper-menu li .ripple {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  background-color: rgba(204, 204, 204, 0.5);
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  margin-left: -160px;
+  margin-top: -160px;
+  -webkit-transform: scaleX(0) scaleY(0);
+  -ms-transform: scaleX(0) scaleY(0);
+  transform: scaleX(0) scaleY(0);
+  z-index: 9000;
+}
