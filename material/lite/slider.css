@@ -63,6 +63,7 @@ input[type="range"]::-webkit-slider-thumb:active {
   background: rgb(244, 180, 0);
 }
 
+
 /* **** 0-value **** */
 
 input[type="range"].ring::-webkit-slider-thumb {
@@ -107,77 +108,3 @@ input[type="range"]:disabled:active::-webkit-slider-runnable-track {
   margin-left: -0.3rem;
   margin-right: -0.3rem;
 }
-
-
-
-/* ***** Mozilla ***** */
-
-
-
-
-input[type="range"]:-moz-focusring {
-    /** TODO:  https://bugzilla.mozilla.org/show_bug.cgi?id=932410 **/
-}
-
-
-
-
-input[type="range"]::-moz-range-track {
-  margin-left: -0.3rem;
-  margin-right: -0.3rem;
-  transition: margin 0.18s ease;
-  background: inherit;
-  user-select: none;
-  -moz-user-select: none;
-  outline: 0;
-  -moz-appearance:none;
-}
-
-input[type="range"]:focus:not(:active)::-moz-range-thumb,
-input[type="range"]::-moz-range-thumb:focus:not(:active) {
-  height: 4rem;
-  width: 4rem;
-
-  /*
-  background: radial-gradient(circle at center,
-    rgb(244, 180, 0) 0%,
-    rgb(244, 180, 0) 15%,
-    rgba(244, 180, 0, 0.5)15%,
-    rgba(244, 180, 0, 0.5) 45%,
-    rgba(0, 0, 0, 0) 45%,
-    rgba(0, 0, 0, 0) 100%); */
-  border: 1px solid rgba(244, 180, 0, 0.5);
-}
-
-
-input[type="range"]:active::-moz-range-track {
-  margin-left: -1rem;
-  margin-right: -1rem;
-}
-
-input[type="range"]:focus:not(:active)::-moz-range-track {
-  margin-left: -2rem;
-  margin-right: -2rem;
-}
-
-input[type="range"]::-moz-range-thumb {
-  -moz-appearance:none;
-  width: .6rem;
-  height: .6rem;
-  border-radius: 50%;
-  background: #F4B400;
-  border: none;
-  transition: height 0.18s ease, width 0.18s ease, background-color 0.28s ease, border 0.28s ease;
-  -moz-transition: height 0.18s ease, width 0.18s ease, background-color 0.28s ease, border 0.28s ease;
-}
-
-input[type="range"]:active::-moz-range-thumb,
-input[type="range"]::-moz-range-thumb:active {
-  height: 2rem;
-  width: 2rem;
-  background-image:none;
-  background: rgb(244, 180, 0);
-}
-
-
-

@@ -1,3 +1,4 @@
+
 var wskSlider = function() {
 
   function displayValue(slider) {
@@ -36,4 +37,6 @@ var wskSlider = function() {
 
 }();
 
-wskSlider.init();
+window.addEventListener('load', function(){
+  wskSlider.init();
+});
