@@ -2,7 +2,6 @@
  * Core styles required for the checkboxes.
  * @author Jason Mayes 2014, www.jasonmayes.com
 */
-
 .wskLabel {
   cursor: pointer;
   font-size: 12pt;
@@ -11,10 +10,6 @@
   padding-top: 20px;
   position: relative;
   min-height:40px;
-}
-
-input[type='checkbox'] {
-   display: none;
 }
 
 .wskCheckbox {
@@ -45,6 +40,10 @@ input[type='checkbox'] {
   -ms-transform: rotate(-45deg) scaleY(0.5);
   -o-transform: rotate(-45deg) scaleY(0.5);
   transform: rotate(-45deg) scaleY(0.5);
+}
+
+input[type='checkbox'].wskCheckbox {
+   display: none;
 }
 
 .wskCircle {
