@@ -21,7 +21,7 @@
 
   var querySelector = document.querySelector.bind(document);
 
-  var navdrawerContainer = querySelector('.navdrawer-container');
+  var navdrawerContainer = querySelector('.Navdrawer');
   var body = document.body;
   var appbarElement = querySelector('.app-bar');
   var menuBtn = querySelector('.menu');
@@ -36,8 +36,8 @@
   function toggleMenu() {
     body.classList.toggle('open');
     appbarElement.classList.toggle('open');
-    navdrawerContainer.classList.toggle('open');
-    navdrawerContainer.classList.add('opened');
+    navdrawerContainer.classList.toggle('is-open');
+    navdrawerContainer.classList.add('is-opened');
   }
 
   main.addEventListener('click', closeMenu);

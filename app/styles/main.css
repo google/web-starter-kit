@@ -140,7 +140,12 @@ button.menu img {
   font-size: 19px;
 }
 
-.navdrawer-container {
+.app-bar, .Navdrawer.is-opened, main {
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+          transition: transform 0.3s ease-out;
+}
+
+.Navdrawer {
   z-index: 1;
   position: fixed;
   top: 0;
@@ -154,35 +159,30 @@ button.menu img {
   overflow-y: auto;
 }
 
-.navdrawer-container.open {
+.Navdrawer.is-open {
   -webkit-transform: translate(0, 0);
           transform: translate(0, 0);
 }
 
-.app-bar, .navdrawer-container.opened, main {
-  -webkit-transition: -webkit-transform 0.3s ease-out;
-          transition: transform 0.3s ease-out;
-}
-
-.navdrawer-container h4,
-.navdrawer-container ul li a {
+.Navdrawer-title,
+.Navdrawer-item a {
   height: auto;
   padding: 17px 20px;
   line-height: 1.4;
 }
 
-.navdrawer-container h4 {
+.Navdrawer-title {
   background-color: white;
   color: #3367D6;
 }
 
-.navdrawer-container ul {
+.Navdrawer-list {
   padding: 0;
   margin: 0;
   list-style-type: none;
 }
 
-.navdrawer-container ul li a {
+.Navdrawer-item a {
   display: block;
   text-decoration: none;
   color: white;
@@ -191,27 +191,27 @@ button.menu img {
   white-space: nowrap;
 }
 
-.navdrawer-container ul li {
+.Navdrawer-item {
   border-bottom-style: solid;
   border-width: 1px;
   border-color: white;
   padding: 0;
 }
 
-.navdrawer-container ul li::before {
+.Navdrawer-item::before {
   content: none;
 }
 
-.navdrawer-container ul li a:hover {
+.Navdrawer-item a:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-.navdrawer-container ul li a:focus {
+.Navdrawer-item a:focus {
   background-color: rgba(255, 255, 255, 0.3);
   outline: 0;
 }
 
-.navdrawer-container ul li a:active {
+.Navdrawer-item a:active {
   background-color: rgba(255, 255, 255, 0.4);
 }
 
@@ -272,7 +272,7 @@ main {
     margin-top: 130px;
   }
 
-  .navdrawer-container {
+  .Navdrawer {
     position: relative;
     width: 100%;
     height: auto;
@@ -284,11 +284,11 @@ main {
     overflow-y: auto;
   }
 
-  .navdrawer-container h4 {
+  .Navdrawer-title {
     display: none;
   }
 
-  .navdrawer-container ul {
+  .Navdrawer-list {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
@@ -299,7 +299,7 @@ main {
             flex-direction: row;
   }
 
-  .navdrawer-container ul li {
+  .Navdrawer-item {
     border: none;
   }
 
