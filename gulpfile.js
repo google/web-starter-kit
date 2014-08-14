@@ -95,18 +95,6 @@ gulp.task('styles', function () {
     .on('error', console.error.bind(console))
     ))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
-    .pipe(gulp.dest('.tmp/styles'))
-    .pipe($.size({title: 'styles'}));
-});
-
-// Scan Your HTML For Assets & Optimize Them
-gulp.task('html', function () {
-  var assets = $.useref.assets({searchPath: '{.tmp,app}'});
-
-  return gulp.src('app/**/*.html')
-    .pipe(assets)
-    // Concatenate And Minify JavaScript
-    .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
     // Remove Any Unused CSS
     // Note: If not using the Style Guide, you can delete it from
     // the next line to only include styles your project uses.
@@ -121,6 +109,18 @@ gulp.task('html', function () {
         /.app-bar.open/
       ]
     })))
+    .pipe(gulp.dest('.tmp/styles'))
+    .pipe($.size({title: 'styles'}));
+});
+
+// Scan Your HTML For Assets & Optimize Them
+gulp.task('html', function () {
+  var assets = $.useref.assets({searchPath: '{.tmp,app}'});
+
+  return gulp.src('app/**/*.html')
+    .pipe(assets)
+    // Concatenate And Minify JavaScript
+    .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
     // Concatenate And Minify Styles
     .pipe($.if('*.css', $.csso()))
     .pipe(assets.restore())
