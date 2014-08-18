@@ -1,10 +1,10 @@
 /*
- * Web Starter Kit
- *
- * Multi-screen layout styles for your page. Brought to you by the
- * Web Starter Kit team.
- *
- */
+* Web Starter Kit
+*
+* Multi-screen layout styles for your page. Brought to you by the
+* Web Starter Kit team.
+*
+*/
 
 
 html,
@@ -40,28 +40,21 @@ body.open {
 }
 
 .app-bar-container {
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   width: 100%;
   height: 60px;
   position: relative;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  flex-direction: row;
   margin: 0 auto;
 }
 
 .app-bar.open,
 .app-bar.open ~ main {
-  -webkit-transform: translate(250px, 0);
-          transform: translate(250px, 0);
+  transform: translate(250px, 0);
 }
 
 .app-bar .logo {
-  -webkit-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
   font-size: 2em;
   line-height: 60px;
   margin: 0 16px;
@@ -79,12 +72,8 @@ body.open {
 }
 
 .app-bar-actions {
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-direction: row;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  flex-direction: row;
   z-index: 2;
 }
 
@@ -95,8 +84,7 @@ body.open {
   background-color: transparent;
   border: none;
   padding: 0;
-  -webkit-transition: background-color 0.2s ease-out;
-          transition: background-color 0.2s ease-out;
+  transition: background-color 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -127,7 +115,6 @@ body.open {
 
   #perfmatters
   */
-  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
@@ -144,19 +131,16 @@ body.open {
   height: 100%;
   background-color: #3367D6;
   color: #fefefe;
-  -webkit-transform: translate(-250px, 0);
-          transform: translate(-250px, 0);
+  transform: translate(-250px, 0);
   overflow-y: auto;
 }
 
 .navdrawer-container.open {
-  -webkit-transform: translate(0, 0);
-          transform: translate(0, 0);
+  transform: translate(0, 0);
 }
 
 .app-bar, .navdrawer-container.opened, main {
-  -webkit-transition: -webkit-transform 0.3s ease-out;
-          transition: transform 0.3s ease-out;
+  transition: transform 0.3s ease-out;
 }
 
 .navdrawer-container h4,
@@ -181,8 +165,7 @@ body.open {
   display: block;
   text-decoration: none;
   color: white;
-  -webkit-transition: background-color 0.2s ease-out;
-          transition: background-color 0.2s ease-out;
+  transition: background-color 0.2s ease-out;
   white-space: nowrap;
 }
 
@@ -225,8 +208,7 @@ main {
 
   .app-bar.open,
   .app-bar.open ~ main {
-    -webkit-transform: translate(0px, 0);
-            transform: translate(0px, 0);
+    transform: translate(0px, 0);
   }
 
   .app-bar-container {
@@ -267,10 +249,8 @@ main {
     width: 100%;
     height: auto;
     margin-top: 0;
-    -webkit-transform: translate(0, 0);
-            transform: translate(0, 0);
-    -webkit-transition: none;
-            transition: none;
+    transform: translate(0, 0);
+    transition: none;
     overflow-y: auto;
   }
 
@@ -279,14 +259,10 @@ main {
   }
 
   .navdrawer-container ul {
-    display: -webkit-flex;
-    display: -ms-flexbox;
     display: flex;
     max-width: 864px;
     margin: 0 auto;
-    -webkit-flex-direction: row;
-        -ms-flex-direction: row;
-            flex-direction: row;
+    flex-direction: row;
   }
 
   .navdrawer-container ul li {
