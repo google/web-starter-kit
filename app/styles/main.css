@@ -40,21 +40,28 @@ body.open {
 }
 
 .app-bar-container {
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
   width: 100%;
   height: 60px;
   position: relative;
-  flex-direction: row;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   margin: 0 auto;
 }
 
 .app-bar.open,
 .app-bar.open ~ main {
-  transform: translate(250px, 0);
+  -webkit-transform: translate(250px, 0);
+          transform: translate(250px, 0);
 }
 
 .app-bar .logo {
-  flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
   font-size: 2em;
   line-height: 60px;
   margin: 0 16px;
@@ -72,8 +79,12 @@ body.open {
 }
 
 .app-bar-actions {
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: row;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   z-index: 2;
 }
 
@@ -84,7 +95,8 @@ body.open {
   background-color: transparent;
   border: none;
   padding: 0;
-  transition: background-color 0.2s ease-out;
+  -webkit-transition: background-color 0.2s ease-out;
+          transition: background-color 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -115,6 +127,7 @@ body.open {
 
   #perfmatters
   */
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
@@ -131,16 +144,19 @@ body.open {
   height: 100%;
   background-color: #3367D6;
   color: #fefefe;
-  transform: translate(-250px, 0);
+  -webkit-transform: translate(-250px, 0);
+          transform: translate(-250px, 0);
   overflow-y: auto;
 }
 
 .navdrawer-container.open {
-  transform: translate(0, 0);
+  -webkit-transform: translate(0, 0);
+          transform: translate(0, 0);
 }
 
 .app-bar, .navdrawer-container.opened, main {
-  transition: transform 0.3s ease-out;
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+          transition: transform 0.3s ease-out;
 }
 
 .navdrawer-container h4,
@@ -165,7 +181,8 @@ body.open {
   display: block;
   text-decoration: none;
   color: white;
-  transition: background-color 0.2s ease-out;
+  -webkit-transition: background-color 0.2s ease-out;
+          transition: background-color 0.2s ease-out;
   white-space: nowrap;
 }
 
@@ -208,7 +225,8 @@ main {
 
   .app-bar.open,
   .app-bar.open ~ main {
-    transform: translate(0px, 0);
+    -webkit-transform: translate(0px, 0);
+            transform: translate(0px, 0);
   }
 
   .app-bar-container {
@@ -249,8 +267,10 @@ main {
     width: 100%;
     height: auto;
     margin-top: 0;
-    transform: translate(0, 0);
-    transition: none;
+    -webkit-transform: translate(0, 0);
+            transform: translate(0, 0);
+    -webkit-transition: none;
+            transition: none;
     overflow-y: auto;
   }
 
@@ -259,10 +279,14 @@ main {
   }
 
   .navdrawer-container ul {
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
     max-width: 864px;
     margin: 0 auto;
-    flex-direction: row;
+    -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
   }
 
   .navdrawer-container ul li {
