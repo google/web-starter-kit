@@ -49,4 +49,5 @@
 
   // Initialize any checkboxes.
   wskCheckbox.init();
+  wskSlider.init();
 })();
