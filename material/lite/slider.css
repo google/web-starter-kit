@@ -10,7 +10,6 @@ input[type="range"] {
   outline: 0;
   background-color: #ccc;
   color: #F4B400;
-  border: 1px;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
