@@ -102,6 +102,9 @@
     <script src="lite/slider.js"></script>
     <link rel="stylesheet" href="lite/slider.css">
 
+    <!--radio-->
+    <script src="lite/radio.js"></script>
+    <link rel="stylesheet" href="lite/radio.css">
   </head>
   <body>
     <header class="app-bar promote-layer paper-toolbar paper-shadow">
@@ -295,6 +298,29 @@
 	
 	<input type="checkbox" id="anId4" class="wskCheckbox" />
 	<label class="wskLabel" for="anId4">All you have to do is use regular native HTML elements</label>
+</section>
+
+<h2>Radiobuttons</h2>
+
+<p class="copy">Contributed by Karl Merkli</p>
+
+<p>A radiobutton can either be a primary action or a secondary action.</p>
+
+<section class="content">
+  <label class="paper-radio__label">
+    <input type="radio" class="paper-radio__button" name="wifi[]" value="1" checked />
+    Always
+  </label>
+
+  <label class="paper-radio__label">
+    <input type="radio" class="paper-radio__button" name="wifi[]" value="2" />
+    Only when plugged in
+  </label>
+
+  <label class="paper-radio__label">
+    <input type="radio" class="paper-radio__button" name="wifi[]" value="3" />
+    Never
+  </label>
 </section>
 
 <h2>Snackbar (Toast)</h2>
