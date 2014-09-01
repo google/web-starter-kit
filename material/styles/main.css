@@ -151,7 +151,7 @@ button.menu img {
 }
 
 .navdrawer-container {
-  z-index: 1;
+  z-index: 11;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -395,6 +395,7 @@ main {
 **/
 
 .paper-toolbar {
+  z-index: 10;
   color: #fff;
   background: #3F51B5;
 }
