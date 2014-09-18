@@ -13,6 +13,12 @@
 
         var ripple = this.querySelector('.ripple');
 
+        if (ripple === null) {
+          ripple = document.createElement('span');
+          ripple.className = 'ripple';
+          this.appendChild(ripple);
+        }
+
         TweenLite.set(ripple, {x: x, y: y, scaleX: 0, scaleY: 0, opacity: 1});
 
         TweenLite.to(ripple, 1.5, {scaleX: 1, scaleY: 1, opacity: 0, ease: Expo.easeOut});
