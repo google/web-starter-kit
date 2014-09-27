@@ -1,8 +1,9 @@
-# Learning Web Design and Fundamentals
+# Web Design and Fundamental Notes
 
 ## TOC
 
 **[Learn CSS Layout](#learn-css-layout)**
+**[Google Web Fundamentals](#google-web-fundamentals)**
 
 ### Learn CSS Layout
 
@@ -361,6 +362,408 @@ nav {
   width: 75%;
 }
 ```
+
+### Google Web Fundamentals
+
+![web fundamentals](https://developers.google.com/web/fundamentals)
+
+
+#### Responsive Design
+
+##### TL;DR
+- Always use a viewport.
+- Always start with a narrow viewport first and scale out.
+- Base your breakpoints off when you need to adapt the content.
+- Create a high-level vision of your layout across major breakpoints.
+
+##### Add a viewport
+
+- indicates to browser that page needs to scaled to fit screen
+
+```html
+  <!-- Recommended Default -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+```
+
+#### Set the viewpoint
+
+##### TL;DR
+- Use meta viewport tag to control the width and scaling of the browsers viewport.
+- Include width=device-width to match the screen's width in device independent
+- pixels.
+- Include initial-scale=1 to establish a 1:1 relationship between CSS pixels and
+- device independent pixels.
+- Ensure your page is accessible by not disabling user scaling.
+
+#### Size content to viewport
+
+##### TL;DR
+- Do not use large fixed width elements. Consider using relative widths e.g.,
+  width: 100%;
+- Content should not rely on a particular viewport width to render well.
+- Use CSS media queries to apply different styling for small and large screens.
+
+#### Use css media queries for responsiveness
+
+##### TL;DR
+- Media queries can be used to apply styles based on device characteristics.
+- Use min-width over min-device-width to ensure the broadest experience.
+- Use relative sizes for elements to avoid breaking layout.
+
+```css
+
+// Yes
+div.fullWidth {
+  width: 100%;
+}
+
+// NO
+div.fullWidth {
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+```
+
+#### How to choose breakpoints
+
+#### TL;DR
+- Create breakpoints based on content, never on specific devices, products or brands.
+- Design for the smallest mobile device first, then progressively enhance the experience as more screen real estate becomes available.
+- Keep lines of text to a maximum of around 70 or 80 characters.
+
+#### Weather CSS Example
+In this example, we’ve placed the common styles such as fonts, icons, basic
+positioning, colors in weather.css.
+
+Specific layouts for the small screen are
+then placed in weather-small.css and large screen styles are placed in
+weather-large.css.
+
+```css
+// weather.css
+
+* {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  /*border: 1px solid #999;*/
+
+}
+
+body {
+  font-family: Roboto, Arial;
+  font-size: 0.8em;
+color: #666;
+       overflow-y: hidden;
+
+}
+
+.icon {
+  background-repeat: no-repeat;
+display: inline-block;
+         margin-left: auto;
+         margin-right: auto;
+         background-size: contain;
+
+}
+
+.icon.rain {
+  background-image: url('rain.png');
+
+}
+
+.icon.sunny {
+  background-image: url('sunny.png');
+
+}
+
+.icon.pc {
+  background-image: url('partly_cloudy.png');
+
+}
+
+.icon.sshowers {
+  background-image: url('rain_s_cloudy.png');
+
+}
+
+.icon.cloudy {
+  background-image: url('cloudy.png');
+
+}
+
+.icon.thunder {
+  background-image: url('thunderstorms.png');
+
+}
+
+.weather-forecast {
+padding: 10px 10px 0 10px;
+display: inline-block;
+
+
+}
+
+/* Header row */
+
+.location {
+  font-size: 3em;
+color: #444;
+
+}
+
+.date {
+
+
+}
+
+.desc {
+
+
+}
+
+/* Current Weather Summary */
+.current {
+overflow: auto;
+width:100%;
+      margin-bottom: 15px;
+
+}
+
+.current .visual {
+width: 50%;
+float: left;
+
+}
+
+.current .description {
+width: 50%;
+float: left;
+
+}
+
+/* Current Weather - Visual */
+
+.visual .icon {
+width: 64px;
+height: 64px;
+
+}
+
+.temp {
+  font-size: 2.5em;
+display: inline-block;
+         vertical-align: top;
+
+}
+
+.scale {
+  vertical-align: top;
+display: inline-block;
+         margin-top: 6px;
+color: #888;
+
+}
+
+/* General Labels */
+
+.wind:before {
+content: "Wind: ";
+color: #888;
+
+}
+
+.precip:before {
+content: "Precipitation: ";
+color: #888;
+
+}
+
+.humidity:before {
+content: "Humidity: ";
+color: #888;
+
+}
+
+.pollen:before {
+content: "Pollen Count: ";
+color: #888;
+
+}
+
+.pcount:before {
+content: "Pollen ";
+color: #888;
+
+}
+
+
+/* Seven Day Forecast */
+
+.seven-day div {
+  vertical-align: middle;
+
+}
+
+.seven-day-fc {
+
+margin: 0 -11px -1px -11px;
+padding: 10px;
+
+}
+
+.seven-day-fc div {
+display: inline-block;
+
+}
+
+.seven-day-fc .date {
+  font-weight: bold;
+color: #444;
+
+}
+
+.seven-day-fc .icon {
+width: 50px;
+height: 50px;
+
+}
+
+.seven-day-fc .seven-day-temp {
+  text-align: center;
+
+}
+
+.seven-day-fc .temp-high {
+color: #444;
+
+
+}
+
+.seven-day-fc .temp-low {
+color: #888;
+
+}
+
+.seven-day-fc .temp-low,
+  .seven-day-fc .temp-high {
+display: block;
+
+  }
+
+.seven-day-fc .pcount {
+  text-align: center;
+
+}
+```
+
+```css
+// weather-small.css
+
+.weather-forecast {
+  width: 100%;
+}
+
+.seven-day-fc {
+  border-top: 1px solid rgba(0,0,0,0.2);
+}
+
+.seven-day-fc:last-of-type {
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+.seven-day-fc .date {
+  width: 30%;
+}
+
+.seven-day-fc .seven-day-temp {
+  width: 30%;
+}
+
+.seven-day-fc .pcount {
+  width: 16%;
+}
+
+@media (min-width: 360px) {
+  body {
+    font-size: 1.0em;
+  }
+}
+
+@media (min-width: 500px) {
+  .seven-day-fc .temp-low,
+    .seven-day-fc .temp-high {
+      display: inline-block;
+      width: 45%;
+    }
+  .seven-day-fc .seven-day-temp {
+    margin-left: 5%;
+  }
+  .seven-day-fc .icon {
+    width: 64px;
+    height: 64px;
+  }
+}
+```
+
+```css
+// weather-large.css
+
+body {
+  font-size: 1.0em;
+}
+
+.weather-forecast {
+  width: 100%;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.seven-day-fc {
+  display: inline-block;
+  width: 13.5%;
+  margin: 0;
+  border: none;
+  font-size: 0.8em;
+}
+
+.seven-day-fc div {
+  display: block;
+  text-align: center;
+}
+
+.seven-day-fc .date {
+  text-align: center;
+}
+
+.seven-day-fc .temp-low,
+.seven-day-fc .temp-high {
+  display: inline;
+}
+
+.seven-day-fc .seven-day-temp {
+  font-size: 1.25em;
+}
+
+.seven-day-fc .icon {
+  width: 64px;
+  height: 64px;
+}
+
+
+@media (min-width: 700px) {
+  .weather-forecast {
+    width: 700px;
+  }
+}
+
+```
+
+```css
+
+```
+
 
 
 
