@@ -150,7 +150,10 @@ gulp.task('serve', ['styles'], function () {
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: ['.tmp', 'app']
+    server: {
+      baseDir: ['.tmp', 'app'],
+      middleware: bsMiddleware
+    }
   });
 
   gulp.watch(['app/**/*.html'], reload);
@@ -168,7 +171,10 @@ gulp.task('serve:dist', ['default'], function () {
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: 'dist'
+    server: {
+      baseDir: ['dist'],
+      middleware: bsMiddleware
+    }
   });
 });
 
@@ -187,6 +193,13 @@ gulp.task('pagespeed', pagespeed.bind(null, {
   url: 'https://example.com',
   strategy: 'mobile'
 }));
+
+var bsMiddleware = function(req, res, next) {
+    if(req.url.indexOf('.') === -1) {
+        req.url = '/index.html';
+    }
+    next();
+};
 
 // Load custom tasks from the `tasks` directory
 try { require('require-dir')('tasks'); } catch (err) { console.error(err); }
