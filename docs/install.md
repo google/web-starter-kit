@@ -57,7 +57,7 @@ That's it! You should now have everything needed to use the Web Starter Kit.
 # Getting the code
 
 Once you have all of the dependencies installed, you only need to get the code.
-[Download](https://github.com/google/web-starter-kit/archive/v0.4.0.zip) a zip of version 0.4.0.
+[Download the latest](https://github.com/google/web-starter-kit/releases) zip release.
 Extract the files where you want to work from.
 Then start building awesome things!
 
