@@ -40,8 +40,7 @@ var paperRadio = function() {
     }
 
     ripple.addEventListener('webkitTransitionEnd', removeRip);
-    ripple.addEventListener('oTransitionEnd', removeRip);
-    ripple.addEventListener('transitionEnd', removeRip);
+    ripple.addEventListener('transitionend', removeRip);
   };
 
 };
