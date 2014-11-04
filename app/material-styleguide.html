@@ -174,12 +174,13 @@
       function sizeDemo(rootDemoElement) {
         var iframe = rootDemoElement.querySelector('iframe');
         iframe.onload = function(){
-          var contentHeight = iframe.contentDocument.documentElement.scrollHeight;
-          iframe.style.height = contentHeight+'px';
-          iframe.classList.add('heightSet');
+          var contentHeight =
+              iframe.contentDocument.documentElement.scrollHeight;
+          iframe.style.height = contentHeight + 'px';
+          iframe.className = 'heightSet';
           totalDemosPendingLoading--;
           if(totalDemosPendingLoading <= 0) {
-            document.body.classList.add('demosLoaded');
+            document.body.className = 'demosLoaded';
           }
         };
       }

@@ -2,7 +2,8 @@
 
 function Slider(element) {
   // Browser feature detection.
-  var isIE = window.navigator.msPointerEnabled;
+  var isIE =
+      window.navigator.msPointerEnabled || (document.all && !window.atob);
 
   var sliderElement = element;
 
@@ -11,7 +12,7 @@ function Slider(element) {
     // limitations, we add a parent here that trims it down to a reasonable
     // size.
     var containerIE = document.createElement('div');
-    containerIE.classList.add('Slider-IEContainer');
+    containerIE.className = 'Slider-IEContainer';
     sliderElement.parentElement.insertBefore(containerIE, sliderElement);
     sliderElement.parentElement.removeChild(sliderElement);
     containerIE.appendChild(sliderElement);
@@ -20,18 +21,18 @@ function Slider(element) {
     // and allows us to style the left and right sides of it with different
     // colors.
     var container = document.createElement('div');
-    container.classList.add('Slider-container');
+    container.className = 'Slider-container';
     sliderElement.parentElement.insertBefore(container, sliderElement);
     sliderElement.parentElement.removeChild(sliderElement);
     container.appendChild(sliderElement);
     var backgroundFlex = document.createElement('div');
-    backgroundFlex.classList.add('Slider-backgroundFlex');
+    backgroundFlex.className = 'Slider-backgroundFlex';
     container.appendChild(backgroundFlex);
     var backgroundLower = document.createElement('div');
-    backgroundLower.classList.add('Slider-backgroundLower');
+    backgroundLower.className = 'Slider-backgroundLower';
     backgroundFlex.appendChild(backgroundLower);
     var backgroundUpper = document.createElement('div');
-    backgroundUpper.classList.add('Slider-backgroundUpper');
+    backgroundUpper.className = 'Slider-backgroundUpper';
     backgroundFlex.appendChild(backgroundUpper);
   }
 
@@ -48,17 +49,17 @@ function Slider(element) {
   }.bind(this));
 
   this.updateValue = function() {
-    // Calculate and apply percentages to div structure behind slider.
-    var fraction = (sliderElement.value - sliderElement.min) /
-        (sliderElement.max - sliderElement.min);
-
-    if (fraction === 0) {
-      sliderElement.classList.add('zero');
-    } else {
-      sliderElement.classList.remove('zero');
-    }
-
     if (!isIE) {
+      // Calculate and apply percentages to div structure behind slider.
+      var fraction = (sliderElement.value - sliderElement.min) /
+          (sliderElement.max - sliderElement.min);
+
+      if (fraction === 0) {
+        sliderElement.classList.add('zero');
+      } else {
+        sliderElement.classList.remove('zero');
+      }
+
       backgroundLower.style.flex = fraction;
       backgroundLower.style.webkitFlex = fraction;
       backgroundUpper.style.flex = 1 - fraction;

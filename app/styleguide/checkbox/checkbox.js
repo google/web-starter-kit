@@ -5,6 +5,7 @@ function Checkbox(l) {
   var checkboxElement = document.getElementById(
     labelElement.getAttribute('for'));
   checkboxElement.disabled = true;
+  checkboxElement.classList.add('Checkbox--invisible');
 
   // Add additional elements
   var fakeCheckbox = document.createElement('span');
@@ -83,6 +84,10 @@ Checkbox.prototype.onKeyEvent = function(evt) {
 window.addEventListener('load', function() {
   var labels =  document.getElementsByTagName('label');
   for (var i = 0; i < labels.length; i++) {
-    new Checkbox(labels[i]);
+    // Fall back to native controls if classList isn't supported.
+    var supportsClassList = ('classList' in document.createElement('a'));
+    if (supportsClassList) {
+      new Checkbox(labels[i]);
+    }
   }
 });

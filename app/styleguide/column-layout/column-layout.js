@@ -12,7 +12,7 @@
       // CSS file for details.
       for (var j = 0; j < INVISIBLE_WRAPPING_ELEMENT_COUNT; j++) {
         var hiddenHackDiv = document.createElement('div');
-        hiddenHackDiv.classList.add(INVISIBLE_WRAPPING_ELEMENT_CLASS);
+        hiddenHackDiv.className = INVISIBLE_WRAPPING_ELEMENT_CLASS;
         columnLayout.appendChild(hiddenHackDiv);
       }
     }

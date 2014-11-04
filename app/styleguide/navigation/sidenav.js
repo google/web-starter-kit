@@ -1,6 +1,7 @@
 'use strict';
 
 (function() {
+  var supportsClassList = ('classList' in document.createElement('a'));
   /**
    * SideNav Prototype Start
    */
@@ -17,13 +18,17 @@
     this.changeState = function(newState) {
       switch (newState) {
         case this.STATE_OPEN:
-          sidenavElement.classList.add('animatable');
-          sidenavElement.classList.add('visible');
+          if (supportsClassList) {
+            sidenavElement.classList.add('animatable');
+            sidenavElement.classList.add('visible');
+          }
           this.sendEvent('onSideNavOpen');
           break;
         case this.STATE_CLOSE:
-          sidenavElement.classList.add('animatable');
-          sidenavElement.classList.remove('visible');
+          if (supportsClassList) {
+            sidenavElement.classList.add('animatable');
+            sidenavElement.classList.remove('visible');
+          }
           this.sendEvent('onSideNavClose');
           break;
       }
@@ -80,8 +85,10 @@
         return;
       }
 
-      modalBg.classList.add('animatable');
-      modalBg.classList.add('visible');
+      if (supportsClassList) {
+        modalBg.classList.add('animatable');
+        modalBg.classList.add('visible');
+      }
     });
 
     sidenav.addEventListener('onSideNavClose', function() {
@@ -90,12 +97,16 @@
         return;
       }
 
-      modalBg.classList.add('animatable');
-      modalBg.classList.remove('visible');
+      if (supportsClassList) {
+        modalBg.classList.add('animatable');
+        modalBg.classList.remove('visible');
+      }
     });
 
     modalBg.addEventListener('transitionend', function() {
-      modalBg.classList.remove('animatable');
+      if (supportsClassList) {
+        modalBg.classList.remove('animatable');
+      }
     });
 
     modalBg.addEventListener('click', function(evt) {

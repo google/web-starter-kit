@@ -41,16 +41,20 @@ function TextField(element) {
 }
 
 function ExpandableIcon(iconElement) {
+  var supportsClassList = ('classList' in document.createElement('a'));
   var container = document.createElement('span');
   iconElement.appendChild(container);
 
-  container.classList.add('ExpandableIcon-rippleContainer');
-  container.classList.add('RippleEffect');
-  container.classList.add('RippleEffect--recentering');
+  // Gracefully degrade in browsers without classList (no ripples).
+  if (supportsClassList) {
+    container.classList.add('ExpandableIcon-rippleContainer');
+    container.classList.add('RippleEffect');
+    container.classList.add('RippleEffect--recentering');
 
-  var ripple = document.createElement('span');
-  ripple.classList.add('Ripple');
-  container.appendChild(ripple);
+    var ripple = document.createElement('span');
+    ripple.classList.add('Ripple');
+    container.appendChild(ripple);
+  }
 }
 
 window.addEventListener('load', function() {
