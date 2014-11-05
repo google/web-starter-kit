@@ -1,0 +1,348 @@
+/**
+*
+* Material design color palettes.
+* @see http://www.google.com/design/spec/style/color.html
+*
+**/
+/* ==========  Color Palettes  ========== */
+/* ==========  Used Palettes  ========== */
+input[type="range"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: calc(100% - 40px);
+  height: 2px;
+  background: transparent;
+  -ms-user-select: none;
+      user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  outline: 0;
+  margin: 0 20px;
+  padding: 0;
+  color: #5677fc;
+}
+
+_:-ms-input-placeholder, :root input[type="range"] {
+  -ms-appearance: none;
+  height: 52px;
+  margin: 0;
+}
+
+.Slider-IEContainer {
+  height: 18px;
+  overflow: visible;
+  border: none;
+  margin: none;
+  padding: none;
+}
+
+input[type=range]::-moz-focus-outer {
+  border: 0;
+}
+
+input[type=range]::-ms-tooltip {
+  display: none;
+}
+
+.Slider-container {
+  position: relative;
+  background: none;
+}
+
+.Slider-backgroundFlex {
+  background: transparent;
+  position: absolute;
+  height: 2px;
+  width: calc(100% - 52px);
+  top: 12px;
+  margin: 0 26px;
+  z-index: -1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+}
+
+.Slider-backgroundLower {
+  background: #5677fc;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0;
+      -ms-flex: 0;
+          flex: 0;
+  position: relative;
+  border: 0;
+  padding: 0;
+}
+
+.Slider-backgroundUpper {
+  background: #bdbdbd;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0;
+      -ms-flex: 0;
+          flex: 0;
+  position: relative;
+  border: 0;
+  padding: 0;
+  -webkit-transition: left 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: left 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+_:-moz-tree-row(hover), .Slider-backgroundFlex {
+  top: 13px;
+}
+
+_:-moz-tree-row(hover), .Slider-backgroundUpper {
+  transition: none;
+}
+
+/* **** Tracks **** */
+input[type="range"]::-webkit-slider-runnable-track {
+  background: transparent;
+}
+
+input[type="range"]::-moz-range-track {
+  background: transparent;
+  border: none;
+}
+
+input[type="range"]::-ms-track {
+  background: none;
+  color: transparent;
+  height: 2px;
+  width: 100%;
+  border-width: 25px 0;
+  border-color: transparent;
+}
+
+input[type=range]::-ms-fill-lower {
+  padding: 0;
+  background: linear-gradient(to right, transparent, transparent 25px, #5677fc 25px, #5677fc 0);
+}
+
+input[type=range]::-ms-fill-upper {
+  padding: 0;
+  background: linear-gradient(to left, transparent, transparent 25px, #bdbdbd 25px, #bdbdbd 0);
+}
+
+/* **** Thumbs **** */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: #5677fc;
+  border: none;
+  -webkit-transition: -webkit-transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), border 0.18s cubic-bezier(0.4, 0, 0.2, 1), background 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), border 0.18s cubic-bezier(0.4, 0, 0.2, 1), background 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+input[type="range"]::-moz-range-thumb {
+  -moz-appearance: none;
+  width: 12px;
+  height: 12px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background-image: none;
+  background: #5677fc;
+  border: none;
+}
+
+input[type="range"]:focus:not(:active)::-webkit-slider-thumb {
+  background: -webkit-radial-gradient(circle closest-side, #5677fc 0%, #5677fc 24%, rgba(86, 119, 252, 0.5) 27%, rgba(86, 119, 252, 0.5) 65%, rgba(86, 119, 252, 0) 68%, rgba(86, 119, 252, 0) 94%, #5677fc 96%, #5677fc 100%);
+  background: radial-gradient(circle closest-side, #5677fc 0%, #5677fc 24%, rgba(86, 119, 252, 0.5) 27%, rgba(86, 119, 252, 0.5) 65%, rgba(86, 119, 252, 0) 68%, rgba(86, 119, 252, 0) 94%, #5677fc 96%, #5677fc 100%);
+  -webkit-transform: scale(4.166);
+          transform: scale(4.166);
+}
+
+input[type="range"]:focus:not(:active)::-moz-range-thumb {
+  background: radial-gradient(circle closest-side, #5677fc 0%, #5677fc 24%, rgba(86, 119, 252, 0.5) 27%, rgba(86, 119, 252, 0.5) 65%, rgba(86, 119, 252, 0) 68%, rgba(86, 119, 252, 0) 94%, #5677fc 96%, #5677fc 100%);
+  transform: scale(4.166);
+}
+
+input[type="range"]:active::-webkit-slider-thumb {
+  background-image: none;
+  background: #5677fc;
+  -webkit-transform: scale(1.5);
+          transform: scale(1.5);
+}
+
+input[type="range"]:active::-moz-range-thumb {
+  background-image: none;
+  background: #5677fc;
+  transform: scale(1.5);
+}
+
+input[type="range"]::-ms-thumb {
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background: #5677fc;
+  -ms-transform: scale(0.24);
+      transform: scale(0.24);
+  transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), background 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+input[type="range"]:focus:not(:active)::-ms-thumb {
+  -ms-transform: scale(1);
+      transform: scale(1);
+  background: radial-gradient(circle closest-side, #5677fc 0px, #5677fc 6px, rgba(86, 119, 252, 0.5) 7px, rgba(86, 119, 252, 0.5) 18px, transparent 19px, transparent 24px, #5677fc 25px);
+}
+
+input[type="range"]:active::-ms-thumb {
+  background: #5677fc;
+  -ms-transform: scale(0.36);
+      transform: scale(0.36);
+}
+
+/* **** 0-value **** */
+input[type="range"].zero::-webkit-slider-thumb {
+  border: 2px solid #bdbdbd;
+  background: transparent;
+}
+
+input[type="range"].zero::-moz-range-thumb {
+  border: 2px solid #bdbdbd;
+  background: transparent;
+}
+
+input[type="range"].zero ~ .Slider-backgroundFlex > .Slider-backgroundUpper {
+  left: 5px;
+}
+
+input[type="range"].zero:focus:not(:active)::-webkit-slider-thumb {
+  background: -webkit-radial-gradient(circle closest-side, transparent 0%, transparent 16%, #bdbdbd 17%, #bdbdbd 24%, rgba(189, 189, 189, 0.5) 27%, rgba(189, 189, 189, 0.5) 65%, rgba(189, 189, 189, 0) 68%, rgba(189, 189, 189, 0) 94%, #bdbdbd 96%, #bdbdbd 100%);
+  background: radial-gradient(circle closest-side, transparent 0%, transparent 16%, #bdbdbd 17%, #bdbdbd 24%, rgba(189, 189, 189, 0.5) 27%, rgba(189, 189, 189, 0.5) 65%, rgba(189, 189, 189, 0) 68%, rgba(189, 189, 189, 0) 94%, #bdbdbd 96%, #bdbdbd 100%);
+  border: none;
+  -webkit-transform: scale(4.166);
+          transform: scale(4.166);
+}
+
+input[type="range"].zero:focus:not(:active)::-moz-range-thumb {
+  background: radial-gradient(circle closest-side, transparent 0%, transparent 16%, #bdbdbd 17%, #bdbdbd 24%, rgba(189, 189, 189, 0.5) 27%, rgba(189, 189, 189, 0.5) 65%, rgba(189, 189, 189, 0) 68%, rgba(189, 189, 189, 0) 94%, #bdbdbd 96%, #bdbdbd 100%);
+  border: none;
+  transform: scale(4.166);
+}
+
+input[type="range"].zero:active::-webkit-slider-thumb {
+  border: 1.5px solid #bdbdbd;
+  -webkit-transform: scale(1.5);
+          transform: scale(1.5);
+}
+
+input[type="range"].zero:active ~ .Slider-backgroundFlex > .Slider-backgroundUpper {
+  left: 8px;
+}
+
+input[type="range"].zero:active::-moz-range-thumb {
+  border: 1.5px solid #bdbdbd;
+  transform: scale(1.5);
+}
+
+input[type="range"].zero::-ms-thumb {
+  background: radial-gradient(circle closest-side, transparent 0%, transparent 66.67%, #bdbdbd 66.67%, #bdbdbd 100%);
+}
+
+input[type="range"].zero:focus:not(:active)::-ms-thumb {
+  -ms-transform: scale(1);
+      transform: scale(1);
+  background: radial-gradient(circle closest-side, transparent 0px, transparent 4px, #bdbdbd 5px, #bdbdbd 6px, rgba(189, 189, 189, 0.5) 7px, rgba(189, 189, 189, 0.5) 18px, transparent 19px, transparent 24px, #bdbdbd 25px);
+}
+
+input[type="range"].zero:active::-ms-thumb {
+  -ms-transform: scale(0.36);
+      transform: scale(0.36);
+  background: radial-gradient(circle closest-side, transparent 0%, transparent 77.78%, #bdbdbd 77.78%, #bdbdbd 100%);
+}
+
+input[type=range].zero::-ms-fill-lower {
+  background: transparent;
+}
+
+input[type=range].zero::-ms-fill-upper {
+  margin-left: 6px;
+}
+
+input[type=range].zero:active::-ms-fill-upper {
+  margin-left: 8px;
+}
+
+/* **** Disabled **** */
+input[type="range"]:disabled:focus::-webkit-slider-thumb,
+input[type="range"]:disabled:active::-webkit-slider-thumb,
+input[type="range"]:disabled::-webkit-slider-thumb {
+  -webkit-transform: scale(0.667);
+          transform: scale(0.667);
+  background: #bdbdbd;
+}
+
+input[type="range"]:disabled:focus::-moz-range-thumb,
+input[type="range"]:disabled:active::-moz-range-thumb,
+input[type="range"]:disabled::-moz-range-thumb {
+  transform: scale(0.667);
+  background: #bdbdbd;
+}
+
+input[type="range"]:disabled ~ .Slider-backgroundFlex > .Slider-backgroundLower {
+  background-color: #bdbdbd;
+  left: -6px;
+}
+
+input[type="range"]:disabled ~ .Slider-backgroundFlex > .Slider-backgroundUpper {
+  left: 6px;
+}
+
+input[type="range"].zero:disabled:focus::-webkit-slider-thumb,
+input[type="range"].zero:disabled:active::-webkit-slider-thumb,
+input[type="range"].zero:disabled::-webkit-slider-thumb {
+  border: 3px solid #bdbdbd;
+  background: transparent;
+  -webkit-transform: scale(0.667);
+          transform: scale(0.667);
+}
+
+input[type="range"].zero:disabled:focus::-moz-range-thumb,
+input[type="range"].zero:disabled:active::-moz-range-thumb,
+input[type="range"].zero:disabled::-moz-range-thumb {
+  border: 3px solid #bdbdbd;
+  background: transparent;
+  transform: scale(0.667);
+}
+
+input[type="range"].zero:disabled:active ~ .Slider-backgroundFlex > .Slider-backgroundUpper {
+  left: 6px;
+}
+
+input[type="range"]:disabled:focus::-ms-thumb,
+input[type="range"]:disabled:active::-ms-thumb,
+input[type="range"]:disabled::-ms-thumb {
+  -ms-transform: scale(0.16);
+      transform: scale(0.16);
+  background: #bdbdbd;
+}
+
+input[type="range"].zero:disabled:focus::-ms-thumb,
+input[type="range"].zero:disabled:active::-ms-thumb,
+input[type="range"].zero:disabled::-ms-thumb {
+  -ms-transform: scale(0.16);
+      transform: scale(0.16);
+  background: radial-gradient(circle closest-side, transparent 0%, transparent 50%, #bdbdbd 50%, #bdbdbd 100%);
+}
+
+input[type=range]:disabled::-ms-fill-lower {
+  margin-right: 6px;
+  background: linear-gradient(to right, transparent, transparent 25px, #bdbdbd 25px, #bdbdbd 0);
+}
+
+input[type=range]:disabled::-ms-fill-upper {
+  margin-left: 6px;
+}
+
+input[type=range].zero:disabled:active::-ms-fill-upper {
+  margin-left: 6px;
+}
