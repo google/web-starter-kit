@@ -102,7 +102,7 @@ gulp.task('styles', function() {
 
 // Scan Your HTML For Assets & Optimize Them
 gulp.task('html', function() {
-  var assets = $.useref.assets({searchPath: '{.tmp,app}'});
+  var assets = $.useref.assets({searchPath: "{.tmp,app,app/styleguide/slider}"});
 
   return gulp.src('app/**/*.html')
     .pipe(assets)
