@@ -1,0 +1,12 @@
+@import "../styleguide_demo_bp";
+@import '_card';
+
+.Card {
+  margin: 20px;
+}
+.Card:nth-child(1) {
+  width: 330px;
+}
+.Card:nth-child(2) {
+  width: 600px;
+}

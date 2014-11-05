@@ -1,0 +1,253 @@
+@import "../styleguide_demo_bp";
+@import 'palette';
+@import "../typography/typography";
+
+@mixin colorGroups($palette) {
+  .PaletteColor--50 {
+    background-color: #{nth($palette, 1)};
+
+    &:after {
+      content: '#{nth($palette, 1)}';
+      float: right;
+    }
+  }
+
+  .PaletteColor--100 {
+    background-color: #{nth($palette, 2)};
+
+    &:after {
+      content: '#{nth($palette, 2)}';
+      float: right;
+    }
+  }
+
+  .PaletteColor--200 {
+    background-color: #{nth($palette, 3)};
+
+    &:after {
+      content: '#{nth($palette, 3)}';
+      float: right;
+    }
+  }
+
+  .PaletteColor--300 {
+    background-color: #{nth($palette, 4)};
+
+    &:after {
+      content: '#{nth($palette, 4)}';
+      float: right;
+    }
+  }
+
+  .PaletteColor--400 {
+    background-color: #{nth($palette, 5)};
+
+    &:after {
+      content: '#{nth($palette, 5)}';
+      float: right;
+    }
+  }
+
+  .PaletteColor--500 {
+    background-color: #{nth($palette, 6)};
+
+    &:after {
+      content: '#{nth($palette, 6)}';
+      float: right;
+    }
+  }
+
+  .PaletteColor--600 {
+    background-color: #{nth($palette, 7)};
+
+    &:after {
+      content: '#{nth($palette, 7)}';
+      float: right;
+    }
+  }
+
+  .PaletteColor--700 {
+    background-color: #{nth($palette, 8)};
+
+    &:after {
+      content: '#{nth($palette, 8)}';
+      float: right;
+    }
+  }
+
+  .PaletteColor--800 {
+    background-color: #{nth($palette, 9)};
+
+    &:after {
+      content: '#{nth($palette, 9)}';
+      float: right;
+    }
+  }
+
+  .PaletteColor--900 {
+    background-color: #{nth($palette, 10)};
+
+    &:after {
+      content: '#{nth($palette, 10)}';
+      float: right;
+    }
+  }
+
+  @if length($palette) > 10 {
+    .PaletteColor--A100 {
+      background-color: #{nth($palette, 11)};
+
+      &:after {
+        content: '#{nth($palette, 11)}';
+        float: right;
+      }
+    }
+
+    .PaletteColor--A200 {
+      background-color: #{nth($palette, 12)};
+
+      &:after {
+        content: '#{nth($palette, 12)}';
+        float: right;
+      }
+    }
+
+    .PaletteColor--A400 {
+      background-color: #{nth($palette, 13)};
+
+      &:after {
+        content: '#{nth($palette, 13)}';
+        float: right;
+      }
+    }
+
+    .PaletteColor--A700 {
+      background-color: #{nth($palette, 14)};
+
+      &:after {
+        content: '#{nth($palette, 14)}';
+        float: right;
+      }
+    }
+  }
+}
+
+.preview-block {
+  display: inline-block;  
+}
+
+.PaletteGroup {
+  margin-top: 15px;
+  width: 360px;
+  float: left;
+}
+
+.PaletteGroup-color, .PaletteGroup-heading {
+  @include typo-caption();
+
+  max-width: 300px;
+  padding: 15px;
+  color: white;
+}
+
+.PaletteGroup .dark-text, .PaletteGroup-heading.dark-text .PaletteGroup-name {
+  color: #000;
+}
+
+.PaletteGroup-name {
+  padding: 0 0 60px 0;
+}
+
+.PaletteGroup--red {
+  @include colorGroups($paletteRed);
+}
+
+.PaletteGroup--pink {
+  @include colorGroups($palettePink);
+}
+
+.PaletteGroup--purple {
+  @include colorGroups($palettePurple);
+}
+
+.PaletteGroup--deepPurple {
+  @include colorGroups($paletteDeepPurple);
+}
+
+.PaletteGroup--indigo {
+  @include colorGroups($paletteIndigo);
+}
+
+.PaletteGroup--blue {
+  @include colorGroups($paletteBlue);
+}
+
+.PaletteGroup--lightBlue {
+  @include colorGroups($paletteLightBlue);
+}
+
+.PaletteGroup--cyan {
+  @include colorGroups($paletteCyan);
+}
+
+.PaletteGroup--teal {
+  @include colorGroups($paletteTeal);
+}
+
+.PaletteGroup--green {
+  @include colorGroups($paletteGreen);
+}
+
+.PaletteGroup--lightGreen {
+  @include colorGroups($paletteLightGreen);
+}
+
+.PaletteGroup--lime {
+  @include colorGroups($paletteLime);
+}
+
+.PaletteGroup--yellow {
+  @include colorGroups($paletteYellow);
+}
+
+.PaletteGroup--amber {
+  @include colorGroups($paletteAmber);
+}
+
+.PaletteGroup--orange {
+  @include colorGroups($paletteOrange);
+}
+
+.PaletteGroup--deepOrange {
+  @include colorGroups($paletteDeepOrange);
+}
+
+.PaletteGroup--brown {
+  @include colorGroups($paletteBrown);
+}
+
+.PaletteGroup--grey {
+  @include colorGroups($paletteGrey);
+
+  .PaletteColor--1000 {
+    background-color: #000000;
+
+    &:after {
+      content: '#000000';
+      float: right;
+    }
+  }
+
+  .PaletteColor--1000-inverse {
+    background-color: #ffffff;
+
+    &:after {
+      content: '#ffffff';
+      float: right;
+    }
+  }
+}
+
+.PaletteGroup--blueGrey {
+  @include colorGroups($paletteBlueGrey);
+}
