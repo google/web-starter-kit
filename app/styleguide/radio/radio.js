@@ -2,26 +2,30 @@
 
 function RadioButton(btnElement, labelElement) {
   var outerCircle = document.createElement('span');
-  outerCircle.classList.add('RadioButton-outerCircle');
+  outerCircle.className = 'RadioButton-outerCircle';
 
   var innerCircle = document.createElement('span');
-  innerCircle.classList.add('RadioButton-innerCircle');
+  innerCircle.className = 'RadioButton-innerCircle';
 
   labelElement.insertBefore(outerCircle, btnElement);
   labelElement.appendChild(innerCircle);
 
-  if (btnElement.classList.contains('RippleEffect')) {
-    btnElement.classList.add('RippleEffect--recentering');
-    var rippleContainer = document.createElement('span');
-    rippleContainer.classList.add('RadioButton-rippleContainer');
-    rippleContainer.classList.add('RippleEffect');
-    rippleContainer.classList.add('RippleEffect--recentering');
+  var supportsClassList = ('classList' in document.createElement('a'));
+  // Gracefully degrade in browsers without classList (no ripples).
+  if (supportsClassList) {
+    if (btnElement.classList.contains('RippleEffect')) {
+      btnElement.classList.add('RippleEffect--recentering');
+      var rippleContainer = document.createElement('span');
+      rippleContainer.classList.add('RadioButton-rippleContainer');
+      rippleContainer.classList.add('RippleEffect');
+      rippleContainer.classList.add('RippleEffect--recentering');
 
-    var ripple = document.createElement('span');
-    ripple.classList.add('Ripple');
+      var ripple = document.createElement('span');
+      ripple.classList.add('Ripple');
 
-    rippleContainer.appendChild(ripple);
-    labelElement.appendChild(rippleContainer);
+      rippleContainer.appendChild(ripple);
+      labelElement.appendChild(rippleContainer);
+    }
   }
 }
 

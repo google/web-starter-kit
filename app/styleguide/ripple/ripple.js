@@ -103,11 +103,15 @@ RippleOwner.prototype.onClickHandler = function(evt) {
 };
 
 window.addEventListener('load', function() {
-  var rippleElements = document.querySelectorAll('.RippleEffect');
-  for (var i = 0; i < rippleElements.length; i++) {
-    var rippleElement = rippleElements[i];
-    var recentering =
-        rippleElement.classList.contains('RippleEffect--recentering');
-    new RippleOwner(rippleElement, recentering);
+  var supportsClassList = ('classList' in document.createElement('a'));
+  // Gracefully degrade in browsers without classList (no ripples).
+  if (supportsClassList) {
+    var rippleElements = document.querySelectorAll('.RippleEffect');
+    for (var i = 0; i < rippleElements.length; i++) {
+      var rippleElement = rippleElements[i];
+      var recentering =
+          rippleElement.classList.contains('RippleEffect--recentering');
+      new RippleOwner(rippleElement, recentering);
+    }
   }
 });

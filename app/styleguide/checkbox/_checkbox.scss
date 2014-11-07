@@ -8,14 +8,14 @@ $checkboxSize: 16px;
 $borderColor: nth($secondaryPalette, 8);
 $checkboxColor: nth($primaryPalette, 6);
 
-.Checkbox {
+span.Checkbox {
   border: 2px solid $borderColor;
   color: #1d1d1d;
   cursor: pointer;
   height: $checkboxSize;
   outline: none;
   padding: 0;
-  position:absolute;
+  position: absolute;
   width: $checkboxSize;
   @include material-animation-default();
   z-index:1;
@@ -34,7 +34,7 @@ $checkboxColor: nth($primaryPalette, 6);
   padding-top: ($circleSize - $checkboxSize) / 2;
   padding-left: $circleSize + 6px;
   position: relative;
-  min-height:$circleSize;
+  min-height: $circleSize;
 }
 
 .Checkbox.Checkbox-isChecked {
@@ -63,5 +63,13 @@ $checkboxColor: nth($primaryPalette, 6);
 }
 
 input[type='checkbox'].Checkbox {
-   display: none;
+  display: inline;
+  width: auto;
+  position: relative;
+  top: $circleSize - $checkboxSize + 9px;
+  left: 9px;
+}
+
+input[type='checkbox'].Checkbox--invisible {
+  display: none;
 }

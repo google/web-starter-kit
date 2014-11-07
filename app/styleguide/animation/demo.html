@@ -26,12 +26,11 @@
         var position = 1;
 
         clickable.addEventListener('click', function() {
-          moveable.classList.remove('position-' + position);
           position++;
           if (position > 6) {
             position = 1;
           }
-          moveable.classList.add('position-' + position);
+          moveable.className = 'PaperCard Shadow--z1 ' + 'position-' + position;
         });
       });
     </script>
