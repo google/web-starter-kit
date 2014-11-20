@@ -87,11 +87,13 @@ gulp.task('styles', function () {
     'app/styles/**/*.css',
     'app/styles/components/components.scss'
   ])
+    .pipe($.sourcemaps.init())
     .pipe($.changed('styles', {extension: '.scss'}))
     .pipe($.sass({
       precision: 10
     }))
     .on('error', console.error.bind(console))
+    .pipe($.sourcemaps.write())
     .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
     .pipe(gulp.dest('.tmp/styles'))
     // Concatenate And Minify Styles
