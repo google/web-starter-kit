@@ -46,6 +46,11 @@ $ npm install
 
 That's it! You should now have everything needed to use the Web Starter Kit.
 
+Psst... If you are getting many *npm ERR!* try with sudo:
+```sh
+$ sudo npm install
+```
+
 -
 
 You may also want to get used to some of the [commands](commands.md) available.
