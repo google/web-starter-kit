@@ -26,6 +26,7 @@ var del = require('del');
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
 var pagespeed = require('psi');
+var favicons = require('favicons');
 var reload = browserSync.reload;
 
 var AUTOPREFIXER_BROWSERS = [
@@ -136,6 +137,31 @@ gulp.task('html', function () {
     .pipe($.size({title: 'html'}));
 });
 
+gulp.task('favicon', function() {
+  favicons({
+    // I/O
+    source: 'app/images/favicons/favicon-1024x1024.png',
+    dest: 'dist',
+
+    // Icon Types
+    android: true,
+    apple: true,
+    coast: true,
+    favicons: true,
+    firefox: true,
+    opengraph: false,
+    windows: true,
+
+    // Miscellaneous
+    html: 'dist/index.html',
+    background: 'transparent',
+    tileBlackWhite: false,
+    manifest: null,
+    trueColor: false,
+    logging: true
+  });
+});
+
 // Clean Output Directory
 gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
 
@@ -173,7 +199,7 @@ gulp.task('serve:dist', ['default'], function () {
 
 // Build Production Files, the Default Task
 gulp.task('default', ['clean'], function (cb) {
-  runSequence('styles', ['jshint', 'html', 'images', 'fonts', 'copy'], cb);
+  runSequence('styles', ['jshint', 'html', 'favicon', 'images', 'fonts', 'copy'], cb);
 });
 
 // Run PageSpeed Insights
