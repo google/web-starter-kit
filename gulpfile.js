@@ -137,7 +137,7 @@ gulp.task('html', function () {
     .pipe($.size({title: 'html'}));
 });
 
-gulp.task('favicon', function() {
+gulp.task('favicon', function () {
   favicons({
     // I/O
     source: 'app/images/favicons/favicon-1024x1024.png',
