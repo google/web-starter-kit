@@ -1,13 +1,11 @@
-window.addEventListener('load', function() {
+viewport.addEventListener('load', function() {
   'use strict';
-
-  var blurHandlerGenerator = function(element) {
+};
+var blurHandlerGenerator = function(element) {
     return function() { element.blur(); };
-  };
-
-  var buttonElements = document.querySelectorAll('.PaperButton, .PaperFab');
-
-  for (var i = 0; i < buttonElements.length; i++) {
+};
+var buttonElements = document.querySelectorAll('.PaperButton, .PaperFab');
+for (var i = 0; i < buttonElements.length; i++) {
     var buttonElement = buttonElements[i];
     var blurHandler = blurHandlerGenerator(buttonElement);
     if (buttonElement.classList.contains('RippleEffect')) {
