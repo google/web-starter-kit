@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Icon Toggles</title>
+
+  <link rel="stylesheet" href="demo.css">
+
+  <link href='//fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+
+  <div class="preview-block">
+
+    <input type="checkbox" id="checkbox-1" class="IconToggle RippleEffect" />
+    <label class="IconToggle-label" for="checkbox-1">♠</label>
+
+    <input type="checkbox" id="checkbox-2" class="IconToggle RippleEffect" />
+    <label class="IconToggle-label" for="checkbox-2">♣</label>
+
+    <input type="checkbox" id="checkbox-3" class="IconToggle RippleEffect" />
+    <label class="IconToggle-label" for="checkbox-3">♥</label>
+
+    <input type="checkbox" id="checkbox-4" class="IconToggle RippleEffect" />
+    <label class="IconToggle-label" for="checkbox-4">♦</label>
+
+    <h2>Disabled</h2>
+
+    <input type="checkbox" id="disabled-checkbox-1" class="IconToggle RippleEffect" disabled />
+    <label class="IconToggle-label" for="disabled-checkbox-1">♠</label>
+
+    <input type="checkbox" id="disabled-checkbox-2" class="IconToggle RippleEffect" disabled />
+    <label class="IconToggle-label" for="disabled-checkbox-2">♣</label>
+
+    <input type="checkbox" id="disabled-checkbox-3" class="IconToggle RippleEffect" disabled />
+    <label class="IconToggle-label" for="disabled-checkbox-3">♥</label>
+
+    <input type="checkbox" id="disabled-checkbox-4" class="IconToggle RippleEffect" disabled />
+    <label class="IconToggle-label" for="disabled-checkbox-4">♦</label>
+  </div>
+  <!-- build:js(app/styleguide/button/) ../../scripts/main.min.js -->
+  <script src="../icon-toggle/icon-toggle.js"></script>
+  <script src="../third_party/rAF.js"></script>
+  <script src="../ripple/ripple.js"></script>
+  <!-- endbuild -->
+</body>
+</html>

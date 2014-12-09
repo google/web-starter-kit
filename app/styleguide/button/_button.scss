@@ -33,6 +33,11 @@ $default-fab-size: 56px;
 $mini-fab-size: 40px;
 $fab-font-size: 24px;
 
+// Icon button colors and sizes
+$icon-button-size: 32px;
+$icon-button-color: nth($paletteGrey, 8);
+$icon-button-focus-color: $default-flat-btn-focus-color;
+
 // Focus shadow
 @mixin focus-shadow() {
   box-shadow: 0 0 8px rgba(0,0,0,.18),0 8px 16px rgba(0,0,0,.36);
@@ -42,7 +47,8 @@ $fab-font-size: 24px;
 // Flat buttons (default)
 
 .PaperButton,
-.PaperFab {
+.PaperFab,
+.IconButton {
   background: transparent;
   border: none;
   border-radius: 2px;
@@ -61,10 +67,13 @@ $fab-font-size: 24px;
               background-color 0.2s $animation-curve-default,
               color 0.2s $animation-curve-default;
   outline: none;
+  z-index: 1;
+  cursor: pointer;
 }
 
 .PaperButton::-moz-focus-inner,
-.PaperFab::-moz-focus-inner {
+.PaperFab::-moz-focus-inner,
+.IconButton::-moz-focus-inner {
   border: 0;
 }
 
@@ -184,9 +193,44 @@ $fab-font-size: 24px;
 }
 
 
+// Icon buttons
+
+.IconButton {
+  height: $icon-button-size;
+  width: $icon-button-size;
+  min-width: $icon-button-size;
+  color: $icon-button-color;
+  border-radius: 50%;
+  font-size: $fab-font-size;
+  padding: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.IconButton:hover {
+  color: black;
+}
+
+.IconButton .PaperButton-rippleContainer {
+  border-radius: 50%;
+  -webkit-mask-image: -webkit-radial-gradient(circle, white, black);
+}
+
+.IconButton:focus:not(:active) {
+  background-color: $icon-button-focus-color;
+}
+
+.IconButton:active {
+  background-color: $default-btn-active-color;
+}
+
+
 // Disabled buttons
 
-.PaperButton[disabled] {
+.PaperButton[disabled],
+.PaperFab[disabled],
+.IconButton[disabled]
+{
   color: $disabled-btn-text-color;
   cursor: auto;
 }
@@ -198,9 +242,14 @@ $fab-font-size: 24px;
 .PaperButton[disabled].PaperButton--raised,
 .PaperFab[disabled],
 .PaperFab[disabled].PaperButton--colored,
-.PaperFab[disabled].PaperFab--colored {
+.PaperFab[disabled].PaperFab--colored,
+.PaperFab[disabled] {
   background-color: $disabled-raised-btn-bg-color;
-  color: $disabled-btn-text-color;
+}
+
+.IconButton[disabled],
+.IconButton[disabled]:hover {
+  background-color: transparent;
 }
 
 .PaperButton[disabled].PaperButton--raised:active,
@@ -223,6 +272,7 @@ $fab-font-size: 24px;
 }
 
 .PaperButton[disabled] .PaperButton-rippleContainer .Ripple,
-.PaperFab[disabled] .PaperButton-rippleContainer .Ripple, {
+.PaperFab[disabled] .PaperButton-rippleContainer .Ripple,
+.IconButton[disabled] .PaperButton-rippleContainer .Ripple {
   background-color: transparent;
 }
