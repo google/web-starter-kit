@@ -23,5 +23,5 @@
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 
-// Load custom tasks from the `gulp` directory
-try { require('require-dir')('./gulp'); } catch (err) { console.error(err); }
+// Load custom tasks from the `tasks` directory
+try { require('require-dir')('./tasks'); } catch (err) { console.error(err); }
