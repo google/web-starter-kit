@@ -1,11 +1,9 @@
 <!doctype html>
-<html lang="">
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Web Starter Kit</title>
+    <title>@passy – Pascal Hartig</title>
 
     <!-- Add to homescreen -->
     <link rel="manifest" href="manifest.json">
@@ -23,58 +21,58 @@
 
     <!-- Tile icon for Win8 (144x144 + tile color) -->
     <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
-    <meta name="msapplication-TileColor" content="#3372DF">
+    <meta name="msapplication-TileColor" content="#55ACEE">
 
-    <meta name="theme-color" content="#3372DF">
+    <meta name="theme-color" content="#55ACEE">
 
     <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
-    <!--
-    <link rel="canonical" href="http://www.example.com/">
-    -->
+    <link rel="canonical" href="http://passy.me/">
 
     <!-- Page styles -->
     <link rel="stylesheet" href="styles/main.css">
   </head>
   <body>
-    <header class="app-bar promote-layer">
-      <div class="app-bar-container">
-        <button class="menu"><img src="images/hamburger.svg" alt="Menu"></button>
-        <h1 class="logo">Web <strong>Starter Kit</strong></h1>
-        <section class="app-bar-actions">
-        <!-- Put App Bar Buttons Here -->
-        <!-- e.g <button><i class="icon icon-star"></i></button> -->
-        </section>
-      </div>
+
+    <header class="header--top">
     </header>
 
-    <nav class="navdrawer-container promote-layer">
-      <h4>Navigation</h4>
-      <ul>
-        <li><a href="#hello">Hello</a></li>
-        <li><a href="#get-started">Get Started</a></li>
-        <li><a href="styleguide.html">Style Guide</a></li>
-      </ul>
-    </nav>
-
     <main>
-      <h1 id="hello">Hello!</h1>
-      <p>Welcome to Web Starter Kit.</p>
+      <figure class="me-avatar"></figure>
+      <section class="about-text">
+        <p><strong>Hi, I&rsquo;m Pascal.</strong></p>
+        <p>I&rsquo;m a Software Engineer at Twitter in London
+           <span class="superamp">&amp;</span> Open Source addict.</p>
+        <p>I contribute to lots of projects, including
+           <a href="http://todomvc.com/">TodoMVC</a>,
+           <a href="http://yeoman.io/">Yeoman</a> and
+           <a href="https://developers.google.com/web/starter-kit/">Web Starter Kit</a>.
+        </p>
+      </section>
 
-      <h2 id="get-started">Get Started.</h2>
-      <p>Read how to <a href="https://developers.google.com/web/starter-kit">Get Started</a> or check out the <a href="styleguide.html">Style Guide</a>.</p>
+      <section class="app-links">
+        <ul>
+          <a rel="me" href="https://twitter.com/passy"><i class="icon icon-twitter"></i></a>
+          <a rel="me" href="https://plus.google.com/+Pascal Hartig/posts"><i class="icon icon-googleplus"></i></a>
+          <a rel="me" href="https://passy.svbtle.com/"><i class="icon icon-svbtle"></i></a>
+          <a rel="me" href="https://github.com/passy"><i class="icon icon-github"></i></a>
+          <a rel="me" href="mailto:phartig@rdrei.net" class="email"><i class="icon icon-email"></i></a>
+        </ul>
+      </section>
     </main>
+
+    <footer class="footer--bottom">
+    </footer>
 
     <!-- build:js scripts/main.min.js -->
     <script src="scripts/main.js"></script>
     <!-- endbuild -->
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-XXXXX-X', 'auto');
+      ga('create', 'UA-587894-17', 'auto');
       ga('send', 'pageview');
     </script>
     <!-- Built with love using Web Starter Kit -->

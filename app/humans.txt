@@ -3,11 +3,14 @@
 
 # TEAM
 
-  <name> -- <role> -- <twitter>
+  Pascal Hartig
+  Site: http://passy.me
+  Twitter: @passy
+  Location: London, UK
 
 # THANKS
 
-  <name>
+  Web Starter Kit <https://developers.google.com/web/starter-kit/>
 
 # TECHNOLOGY COLOPHON
 
