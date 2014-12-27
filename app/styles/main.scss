@@ -13,21 +13,54 @@
  */
 @import 'components/components';
 
+$colors: (
+  bg: #fff,
+  primary: #55acee
+);
+
+@function c($key) {
+  @if map-has-key($colors, $key) {
+    @return map-get($colors, $key);
+  }
+
+  @warn "Unknown `#{$key}` in $colors.";
+  @return null;
+}
+
 html,
 body {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
   position: relative;
+  background-color: c(bg);
+  box-sizing: border-box;
   font-family: 'Roboto Condensed', Helvetica, Arial, sans-serif;
   font-weight: 300;
-  background-color: #fff;
-  box-sizing: border-box;
   min-height: 100%;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.float {
+  width: 100%;
+  flex: 1 0 auto;
+}
+
+.float--top {
+  background-color: c(bg);
+}
+
+.float--bottom {
+  background-color: c(primary);
 }
 
 @font-face {
