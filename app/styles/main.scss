@@ -11,7 +11,7 @@
  * Visual Style Guide styles
  * Remove if you prefer to use a CSS library, like Bootstrap
  */
-@import 'components/components';
+// @import 'components/components';
 
 $colors: (
   bg: #fff,
@@ -50,17 +50,30 @@ body {
   justify-content: flex-start;
 }
 
-.float {
+.panel {
   width: 100%;
   flex: 1 0 auto;
 }
 
-.float--top {
+.panel--top {
   background-color: c(bg);
 }
 
-.float--bottom {
+.panel--bottom {
   background-color: c(primary);
+}
+
+.list--inline {
+  li {
+    list-style-type: none;
+    display: inline-block;
+  }
+}
+
+.superamp {
+  font-family: Baskerville, 'Goudy Old Style', Palatino, 'Book Antiqua', Georgia, serif;
+  font-style: italic;
+  font-weight: normal;
 }
 
 @font-face {
