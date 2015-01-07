@@ -4,7 +4,7 @@
  * https://github.com/jasonmayes/wsk-component-design-pattern
  * @author Jason Mayes.
  */
- /* exported componentHandler */
+/* exported componentHandler */
 var componentHandler = (function() {
   'use strict';
 
@@ -75,6 +75,11 @@ var componentHandler = (function() {
       var registeredClass = findRegisteredClass_(jsClass);
       if (registeredClass) {
         createdComponents_.push(new registeredClass.classConstructor(element));
+        // Call any callbacks the user has registered with this component type.
+        var length = registeredClass.callbacks.length;
+        for (var n = 0; n < length; n++) {
+          registeredClass.callbacks[n](element);
+        }
       } else {
         // If component creator forgot to register, try and see if
         // it is in global scope.
@@ -93,7 +98,8 @@ var componentHandler = (function() {
     var newConfig = {
       'classConstructor': config.constructor,
       'className': config.classAsString,
-      'cssClass': config.cssClass
+      'cssClass': config.cssClass,
+      'callbacks': []
     };
 
     var found = findRegisteredClass_(config.classAsString, newConfig);
@@ -106,11 +112,28 @@ var componentHandler = (function() {
   }
 
 
+  /**
+   * Allows user to be alerted to any upgrades that are performed for a given
+   * component type
+   * @param {string} jsClass The class name of the WSK component we wish
+   * to hook into for any upgrades performed.
+   * @param {function} callback The function to call upon an upgrade. This
+   * function should expect 1 parameter - the HTMLElement which got upgraded. 
+   */
+  function registerUpgradedCallbackInternal(jsClass, callback) {
+    var regClass = findRegisteredClass_(jsClass);
+    if (regClass) {
+      regClass.callbacks.push(callback);
+    }
+  }
+
+
   // Now return the functions that should be made public with their publicly
   // facing names...
   return {
     upgradeDom: upgradeDomInternal,
     upgradeElement: upgradeElementInternal,
+    registerUpgradedCallback: registerUpgradedCallbackInternal,
     register: registerInternal
   };
 })();
