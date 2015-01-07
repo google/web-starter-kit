@@ -1,10 +1,8 @@
-@import "../palette/palette";
+@import "../colors";
 
 $list-container-height: 500px;
 $list-container-width: 400px;
 $list-container-item-height: 70px;
-$list-container-item-border-color: #ddd;
-$list-container-view-background: rgba(255,255,255,1);
 
 .wsk-list {
   display : block;

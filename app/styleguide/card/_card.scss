@@ -1,5 +1,5 @@
 @import "../typography/typography";
-@import "../palette/palette";
+@import "../colors";
 @import "../shadow/shadow";
 
 /* Card dimensions */
@@ -47,23 +47,9 @@ $card-bottom-anchor-transform-origin-y: 25px !default;
 $card-heading-text-font-weight: 300 !default;
 $card-z-index: 1 !default;
 
-/* Colors */
-$card-background-color: white !default;
-$heading-color: white !default;
-$heading-back-color: white !default;
-$heading-back-bgcolor: nth($palette-primary, 8) !default;
-$action-link-color: nth($palette-primary, 10) !default;
-$caption-color: white !default;
-$caption-bgcolor: nth($palette-primary, 10) !default;
-$image-placeholder-color: nth($palette-accent, 5) !default;
-$lower-text-color: nth($palette-primary, 10) !default;
-
 /* Cover image */
 $cover-image-height: 186px !default;
 $background-image-url: '' !default;
-
-/* Heading back */
-$heading-back-border: 0 none rgb(255, 255, 255) !default;
 
 .wsk-card {
   font-size: $card-font-size;
@@ -76,9 +62,16 @@ $heading-back-border: 0 none rgb(255, 255, 255) !default;
 }
 
 .wsk-card--img-container {
-  background         : $image-placeholder-color url($background-image-url) repeat scroll 50% 50% / cover padding-box border-box;
-  background-position: 50% 50%;
-  height             : $cover-image-height;
+  background-color     : $image-placeholder-color;
+  @if str_length($background-image-url) > 0 {
+  background-image     : url($background-image-url);
+  }
+  background-repeat    : repeat;
+  background-position  : 50% 50%;
+  background-size      : cover;
+  background-origin    : padding-box;
+  background-attachment: scroll;
+  height               : $cover-image-height;
 }
 
 .wsk-card--heading {

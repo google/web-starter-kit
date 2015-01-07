@@ -1,5 +1,5 @@
 @import 'typography/typography';
-@import "palette/palette";
+@import "colors";
 @import "layout/layout";
 
 $padding: 24px;
@@ -25,7 +25,7 @@ body {
 .styleguide-demo {
   opacity: 0;
 
-  transition: opacity 0.6s 0 ease;
+  transition: opacity 0.6s ease;
 }
 
 .styleguide-masthead {
@@ -58,6 +58,10 @@ body {
   }
 }
 
+.wsk-styleguide .wsk-layout__drawer .wsk-navigation__link {
+  padding: 10px 24px;
+}
+
 .demosLoaded .styleguide-demo {
   opacity: 1;
 }
@@ -81,11 +85,3 @@ iframe.heightSet {
     border: 1px solid rgba(0,0,0,0.5);
   }
 }
-
-/*
-@media (max-width: 600px) {
-    .styleguide-masthead {
-        height:300px;
-    }
-}
-*/

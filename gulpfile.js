@@ -1,7 +1,7 @@
 /**
  *
  *  Web Starter Kit
- *  Copyright 2014 Google Inc. All rights reserved.
+ *  Copyright 2015 Google Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,18 +27,6 @@ var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
 var pagespeed = require('psi');
 var reload = browserSync.reload;
-
-var AUTOPREFIXER_BROWSERS = [
-  'ie >= 10',
-  'ie_mob >= 10',
-  'ff >= 30',
-  'chrome >= 34',
-  'safari >= 7',
-  'opera >= 23',
-  'ios >= 7',
-  'android >= 4.4',
-  'bb >= 10'
-];
 
 // Lint JavaScript
 gulp.task('jshint', function() {
@@ -88,6 +76,19 @@ gulp.task('fonts', function() {
 
 // Compile and Automatically Prefix Stylesheets
 gulp.task('styles', function() {
+
+  var AUTOPREFIXER_BROWSERS = [
+    'ie >= 10',
+    'ie_mob >= 10',
+    'ff >= 30',
+    'chrome >= 34',
+    'safari >= 7',
+    'opera >= 23',
+    'ios >= 7',
+    'android >= 4.4',
+    'bb >= 10'
+  ];
+
   // For best performance, don't add Sass partials to `gulp.src`
   return gulp.src([
     'app/**/*.scss',
@@ -95,9 +96,9 @@ gulp.task('styles', function() {
   ])
     .pipe($.changed('styles', {extension: '.scss'}))
     .pipe($.sass({
-      precision: 10
-    })
-    .on('error', console.error.bind(console)))
+      precision: 10,
+      onError: console.error.bind(console, 'Sass error:')
+    }))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
     .pipe(gulp.dest('.tmp'))
     // Concatenate And Minify Styles
@@ -108,7 +109,7 @@ gulp.task('styles', function() {
 
 // Concatenate And Minify JavaScript
 gulp.task('scripts', function() {
-  return gulp.src('app/styleguide/**/*.js')
+  return gulp.src(['app/scripts/**/*.js', 'app/styleguide/**/*.js'])
     .pipe($.concat('main.min.js'))
     .pipe($.uglify({preserveComments: 'some'}))
     // Output Files
@@ -131,10 +132,7 @@ gulp.task('html', function() {
         'app/styleguide.html'
       ],
       // CSS Selectors for UnCSS to ignore
-      ignore: [
-        /.navdrawer-container.open/,
-        /.app-bar.open/
-      ]
+      ignore: []
     })))
 
     // Concatenate And Minify Styles
@@ -142,8 +140,6 @@ gulp.task('html', function() {
     .pipe($.if('*.css', $.csso()))
     .pipe(assets.restore())
     .pipe($.useref())
-    // Update Production Style Guide Paths
-    .pipe($.replace('components/components.css', 'components/main.min.css'))
     // Minify Any HTML
     .pipe($.if('*.html', $.minifyHtml()))
     // Output Files
