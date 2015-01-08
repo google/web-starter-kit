@@ -1,10 +1,17 @@
 /**
+ * @license
+ * Copyright 2014 Web Starter Kit.
+ * https://github.com/google/web-starter-kit
+ *
+ * License: MIT
+ * Author: Jason Mayes
+ *
  * A component handler interface using the revealing module design pattern.
  * More details on this pattern design here:
  * https://github.com/jasonmayes/wsk-component-design-pattern
  * @author Jason Mayes.
  */
-/* exported componentHandler */
+ /* exported componentHandler */
 var componentHandler = (function() {
   'use strict';
 
@@ -76,10 +83,9 @@ var componentHandler = (function() {
       if (registeredClass) {
         createdComponents_.push(new registeredClass.classConstructor(element));
         // Call any callbacks the user has registered with this component type.
-        var length = registeredClass.callbacks.length;
-        for (var n = 0; n < length; n++) {
-          registeredClass.callbacks[n](element);
-        }
+        registeredClass.callbacks.forEach(function (callback) {
+          callback(element);
+        });
       } else {
         // If component creator forgot to register, try and see if
         // it is in global scope.
@@ -107,8 +113,6 @@ var componentHandler = (function() {
     if (!found) {
       registeredComponents_.push(newConfig);
     }
-    
-    upgradeDomInternal(config.classAsString);
   }
 
 
@@ -118,7 +122,7 @@ var componentHandler = (function() {
    * @param {string} jsClass The class name of the WSK component we wish
    * to hook into for any upgrades performed.
    * @param {function} callback The function to call upon an upgrade. This
-   * function should expect 1 parameter - the HTMLElement which got upgraded. 
+   * function should expect 1 parameter - the HTMLElement which got upgraded.
    */
   function registerUpgradedCallbackInternal(jsClass, callback) {
     var regClass = findRegisteredClass_(jsClass);
@@ -128,12 +132,31 @@ var componentHandler = (function() {
   }
 
 
+  /**
+   * Upgrades all registered components found in the current DOM. This is
+   * automatically called on window load.
+   */
+  function upgradeAllRegisteredInternal() {
+    for (var n = 0; n < registeredComponents_.length; n++) {
+      upgradeDomInternal(registeredComponents_[n].className);
+    }
+  }
+
+
   // Now return the functions that should be made public with their publicly
   // facing names...
   return {
     upgradeDom: upgradeDomInternal,
     upgradeElement: upgradeElementInternal,
+    upgradeAllRegistered: upgradeAllRegisteredInternal,
     registerUpgradedCallback: registerUpgradedCallbackInternal,
     register: registerInternal
   };
 })();
+
+
+window.addEventListener('load', function() {
+  'use strict';
+
+  componentHandler.upgradeAllRegistered();
+});
