@@ -1,10 +1,10 @@
 /**
- * Class constructor for Radio WSK component.
+ * Class constructor for Checkbox WSK component.
  * Implements WSK component design pattern defined at:
  * https://github.com/jasonmayes/wsk-component-design-pattern
  * @param {HTMLElement} element The element that will be upgraded.
  */
-function MaterialRadio(element) {
+function MaterialSwitch(element) {
   'use strict';
 
   this.element_ = element;
@@ -18,7 +18,7 @@ function MaterialRadio(element) {
  * @enum {string | number}
  * @private
  */
-MaterialRadio.prototype.Constant_ = {
+MaterialSwitch.prototype.Constant_ = {
   TINY_TIMEOUT: 0.001
 };
 
@@ -29,32 +29,30 @@ MaterialRadio.prototype.Constant_ = {
  * @enum {string}
  * @private
  */
-MaterialRadio.prototype.CssClasses_ = {
-  IS_FOCUSED: 'is-focused',
+MaterialSwitch.prototype.CssClasses_ = {
+  WSK_SWITCH_INPUT: 'wsk-switch__input',
 
-  IS_DISABLED: 'is-disabled',
+  WSK_SWITCH_TRACK: 'wsk-switch__track',
 
-  IS_CHECKED: 'is-checked',
+  WSK_SWITCH_THUMB: 'wsk-switch__thumb',
 
-  IS_UPGRADED: 'is-upgraded',
-
-  WSK_JS_RADIO: 'wsk-js-radio',
-
-  WSK_RADIO_BTN: 'wsk-radio__button',
-
-  WSK_RADIO_OUTER_CIRCLE: 'wsk-radio__outer-circle',
-
-  WSK_RADIO_INNER_CIRCLE: 'wsk-radio__inner-circle',
+  WSK_SWITCH_FOCUS_HELPER: 'wsk-switch__focus-helper',
 
   WSK_JS_RIPPLE_EFFECT: 'wsk-js-ripple-effect',
 
   WSK_JS_RIPPLE_EFFECT_IGNORE_EVENTS: 'wsk-js-ripple-effect--ignore-events',
 
-  WSK_RADIO_RIPPLE_CONTAINER: 'wsk-radio__ripple-container',
+  WSK_SWITCH_RIPPLE_CONTAINER: 'wsk-switch__ripple-container',
 
   WSK_RIPPLE_CENTER: 'wsk-ripple--center',
 
-  WSK_RIPPLE: 'wsk-ripple'
+  WSK_RIPPLE: 'wsk-ripple',
+
+  IS_FOCUSED: 'is-focused',
+
+  IS_DISABLED: 'is-disabled',
+
+  IS_CHECKED: 'is-checked'
 };
 
 
@@ -63,30 +61,19 @@ MaterialRadio.prototype.CssClasses_ = {
  * @param {Event} event The event that fired.
  * @private
  */
-MaterialRadio.prototype.onChange_ = function(event) {
+MaterialSwitch.prototype.onChange_ = function(event) {
   'use strict';
 
   this.updateClasses_(this.btnElement_, this.element_);
-
-  // Since other radio buttons don't get change events, we need to look for
-  // them to update their classes.
-  var radios = document.getElementsByClassName(this.CssClasses_.WSK_JS_RADIO);
-  for (var i = 0; i < radios.length; i++) {
-    var button = radios[i].querySelector('.' + this.CssClasses_.WSK_RADIO_BTN);
-    // Different name == different group, so no point updating those.
-    if (button.getAttribute('name') === this.btnElement_.getAttribute('name')) {
-      this.updateClasses_(button, radios[i]);
-    }
-  }
 };
 
 
 /**
- * Handle focus.
+ * Handle focus of element.
  * @param {Event} event The event that fired.
  * @private
  */
-MaterialRadio.prototype.onFocus_ = function(event) {
+MaterialSwitch.prototype.onFocus_ = function(event) {
   'use strict';
 
   this.element_.classList.add(this.CssClasses_.IS_FOCUSED);
@@ -94,11 +81,11 @@ MaterialRadio.prototype.onFocus_ = function(event) {
 
 
 /**
- * Handle lost focus.
+ * Handle lost focus of element.
  * @param {Event} event The event that fired.
  * @private
  */
-MaterialRadio.prototype.onBlur_ = function(event) {
+MaterialSwitch.prototype.onBlur_ = function(event) {
   'use strict';
 
   this.element_.classList.remove(this.CssClasses_.IS_FOCUSED);
@@ -110,7 +97,7 @@ MaterialRadio.prototype.onBlur_ = function(event) {
  * @param {Event} event The event that fired.
  * @private
  */
-MaterialRadio.prototype.onMouseup_ = function(event) {
+MaterialSwitch.prototype.onMouseUp_ = function(event) {
   'use strict';
 
   this.blur_();
@@ -118,12 +105,12 @@ MaterialRadio.prototype.onMouseup_ = function(event) {
 
 
 /**
- * Update classes.
+ * Handle class updates.
  * @param {HTMLElement} button The button whose classes we should update.
  * @param {HTMLElement} label The label whose classes we should update.
  * @private
  */
-MaterialRadio.prototype.updateClasses_ = function(button, label) {
+MaterialSwitch.prototype.updateClasses_ = function(button, label) {
   'use strict';
 
   if (button.disabled) {
@@ -144,7 +131,7 @@ MaterialRadio.prototype.updateClasses_ = function(button, label) {
  * Add blur.
  * @private
  */
-MaterialRadio.prototype.blur_ = function(event) {
+MaterialSwitch.prototype.blur_ = function(event) {
   'use strict';
 
   // TODO: figure out why there's a focus event being fired after our blur,
@@ -158,21 +145,26 @@ MaterialRadio.prototype.blur_ = function(event) {
 /**
  * Initialize element.
  */
-MaterialRadio.prototype.init = function() {
+MaterialSwitch.prototype.init = function() {
   'use strict';
 
   if (this.element_) {
     this.btnElement_ = this.element_.querySelector('.' +
-        this.CssClasses_.WSK_RADIO_BTN);
+        this.CssClasses_.WSK_SWITCH_INPUT);
 
-    var outerCircle = document.createElement('span');
-    outerCircle.classList.add(this.CssClasses_.WSK_RADIO_OUTER_CIRCLE);
+    var track = document.createElement('div');
+    track.classList.add(this.CssClasses_.WSK_SWITCH_TRACK);
 
-    var innerCircle = document.createElement('span');
-    innerCircle.classList.add(this.CssClasses_.WSK_RADIO_INNER_CIRCLE);
+    var thumb = document.createElement('div');
+    thumb.classList.add(this.CssClasses_.WSK_SWITCH_THUMB);
 
-    this.element_.appendChild(outerCircle);
-    this.element_.appendChild(innerCircle);
+    var focusHelper = document.createElement('span');
+    focusHelper.classList.add(this.CssClasses_.WSK_SWITCH_FOCUS_HELPER);
+
+    thumb.appendChild(focusHelper);
+
+    this.element_.appendChild(track);
+    this.element_.appendChild(thumb);
 
     var rippleContainer;
     if (this.element_.classList.contains(
@@ -181,7 +173,7 @@ MaterialRadio.prototype.init = function() {
           this.CssClasses_.WSK_JS_RIPPLE_EFFECT_IGNORE_EVENTS);
       rippleContainer = document.createElement('span');
       rippleContainer.classList.add(
-          this.CssClasses_.WSK_RADIO_RIPPLE_CONTAINER);
+          this.CssClasses_.WSK_SWITCH_RIPPLE_CONTAINER);
       rippleContainer.classList.add(this.CssClasses_.WSK_JS_RIPPLE_EFFECT);
       rippleContainer.classList.add(this.CssClasses_.WSK_RIPPLE_CENTER);
 
@@ -198,20 +190,24 @@ MaterialRadio.prototype.init = function() {
 
     this.btnElement_.addEventListener('blur', this.onBlur_.bind(this));
 
-    this.element_.addEventListener('mouseup', this.onMouseup_.bind(this));
+    this.element_.addEventListener('mouseup', this.onMouseUp_.bind(this));
 
-    rippleContainer.addEventListener('mouseup', this.onMouseup_.bind(this));
+    rippleContainer.addEventListener('mouseup', this.onMouseUp_.bind(this));
 
     this.updateClasses_(this.btnElement_, this.element_);
-    this.element_.classList.add(this.CssClasses_.IS_UPGRADED);
+    this.element_.classList.add('is-upgraded');
   }
 };
 
 
-// The component registers itself. It can assume componentHandler is available
-// in the global scope.
-componentHandler.register({
-  constructor: MaterialRadio,
-  classAsString: 'MaterialRadio',
-  cssClass: 'wsk-js-radio'
+window.addEventListener('load', function() {
+  'use strict';
+
+  // On document ready, the component registers itself. It can assume
+  // componentHandler is available in the global scope.
+  componentHandler.register({
+    constructor: MaterialSwitch,
+    classAsString: 'MaterialSwitch',
+    cssClass: 'wsk-js-switch'
+  });
 });

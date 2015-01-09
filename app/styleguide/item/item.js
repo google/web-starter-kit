@@ -30,13 +30,6 @@ MaterialItem.prototype.Constant_ = {
  * @private
  */
 MaterialItem.prototype.CssClasses_ = {
-  /**
-   * Class names should use camelCase and be prefixed with the word "material"
-   * to minimize conflict with 3rd party systems.
-   */
-
-  // TODO: Upgrade classnames in HTML / CSS / JS to use material prefix to
-  // reduce conflict and convert to camelCase for consistency.
   WSK_ITEM_RIPPLE_CONTAINER: 'wsk-item--ripple-container',
 
   WSK_RIPPLE: 'wsk-ripple'
@@ -62,8 +55,8 @@ MaterialItem.prototype.init = function() {
 };
 
 
-//The component registers itself. It can assume componentHandler is available
-//in the global scope.
+// The component registers itself. It can assume componentHandler is available
+// in the global scope.
 componentHandler.register({
   constructor: MaterialItem,
   classAsString: 'MaterialItem',
