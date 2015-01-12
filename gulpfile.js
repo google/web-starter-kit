@@ -41,7 +41,7 @@ var AUTOPREFIXER_BROWSERS = [
 ];
 
 // Lint JavaScript
-gulp.task('jshint', function () {
+gulp.task('jshint', function() {
   return gulp.src('app/scripts/**/*.js')
     .pipe(reload({stream: true, once: true}))
     .pipe($.jshint())
@@ -50,7 +50,7 @@ gulp.task('jshint', function () {
 });
 
 // Optimize Images
-gulp.task('images', function () {
+gulp.task('images', function() {
   return gulp.src('app/images/**/*')
     .pipe($.cache($.imagemin({
       progressive: true,
@@ -61,7 +61,7 @@ gulp.task('images', function () {
 });
 
 // Copy All Files At The Root Level (app)
-gulp.task('copy', function () {
+gulp.task('copy', function() {
   return gulp.src([
     'app/*',
     '!app/*.html',
@@ -73,14 +73,14 @@ gulp.task('copy', function () {
 });
 
 // Copy Web Fonts To Dist
-gulp.task('fonts', function () {
+gulp.task('fonts', function() {
   return gulp.src(['app/fonts/**'])
     .pipe(gulp.dest('dist/fonts'))
     .pipe($.size({title: 'fonts'}));
 });
 
 // Compile and Automatically Prefix Stylesheets
-gulp.task('styles', function () {
+gulp.task('styles', function() {
   // For best performance, don't add Sass partials to `gulp.src`
   return gulp.src([
     'app/styles/*.scss',
@@ -101,7 +101,7 @@ gulp.task('styles', function () {
 });
 
 // Scan Your HTML For Assets & Optimize Them
-gulp.task('html', function () {
+gulp.task('html', function() {
   var assets = $.useref.assets({searchPath: '{.tmp,app}'});
 
   return gulp.src('app/**/*.html')
@@ -140,7 +140,7 @@ gulp.task('html', function () {
 gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
 
 // Watch Files For Changes & Reload
-gulp.task('serve', ['styles'], function () {
+gulp.task('serve', ['styles'], function() {
   browserSync({
     notify: false,
     // Customize the BrowserSync console logging prefix
@@ -159,7 +159,7 @@ gulp.task('serve', ['styles'], function () {
 });
 
 // Build and serve the output from the dist build
-gulp.task('serve:dist', ['default'], function () {
+gulp.task('serve:dist', ['default'], function() {
   browserSync({
     notify: false,
     logPrefix: 'WSK',
@@ -172,7 +172,7 @@ gulp.task('serve:dist', ['default'], function () {
 });
 
 // Build Production Files, the Default Task
-gulp.task('default', ['clean'], function (cb) {
+gulp.task('default', ['clean'], function(cb) {
   runSequence('styles', ['jshint', 'html', 'images', 'fonts', 'copy'], cb);
 });
 
