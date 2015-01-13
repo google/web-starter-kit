@@ -2,5 +2,8 @@
   "preset": "google",
   "validateLineBreaks": "LF",
   "validateIndentation": 2,
-  "excludeFiles": ["node_modules/**"]
+  "excludeFiles": ["node_modules/**"],
+  "disallowSpacesInAnonymousFunctionExpression": {
+    "beforeOpeningRoundBrace": false
+  }
 }
