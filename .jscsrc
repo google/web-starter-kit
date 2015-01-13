@@ -4,6 +4,6 @@
   "validateIndentation": 2,
   "excludeFiles": ["node_modules/**"],
   "disallowSpacesInAnonymousFunctionExpression": {
-    "beforeOpeningRoundBrace": false
+    "beforeOpeningRoundBrace": null
   }
 }
