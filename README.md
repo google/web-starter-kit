@@ -1,4 +1,4 @@
-# Starter Kit for Amaze UI
+# Amaze UI 入门套件
 
 Amaze UI Starter Kit 是一个使用 Gulp、NPM 构建的前端开发工作流。通过该工作流，用户可以很方便地使用 Amaze UI 进行开发。
 
@@ -47,6 +47,8 @@ npm install gulp -g
 
 关于 NPM 安装模块时**全局**和**本地**相关概念，请通过官方文档或者相关中文社区了解。
 
+---
+
 ### 开始开发
 
 #### 获取 Amaze UI Starter Kit
@@ -83,6 +85,8 @@ Clone 完成（或者下载解压后）得到以下目录结构：
 你可以修改 `app/index.html` 或者 Less 或者 JS 文件，Gulp 会自动编译并刷新浏览器。
 
 至此，我们实现使用 jQuery 及 Amaze UI 打包好的文件进行开发并实时预览了。
+
+---
 
 ### 进阶开发
 
