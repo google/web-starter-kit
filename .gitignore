@@ -1,3 +1,16 @@
-node_modules
+# system
+.DS_Store
+
+# editor
+.idea
+
+# node.js
+npm-debug.log
+node_modules/
+
+# bower
+.bower-cache
+.bower-registry
+
+# build
 dist
-.tmp

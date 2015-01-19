@@ -1,75 +1,122 @@
-# [![Web Starter Kit](https://cloud.githubusercontent.com/assets/170270/3343034/ceef6e92-f899-11e3-96b9-5d9d69d97a00.png)](https://github.com/google/web-starter-kit/releases/latest)
+# Starter Kit for Amaze UI
 
-## Overview
+Amaze UI Starter Kit 是一个使用 Gulp、NPM 构建的前端开发工作流。通过该工作流，用户可以很方便地使用 Amaze UI 进行开发。
 
-[Web Starter Kit](https://developers.google.com/web/starter-kit) is an opinionated boilerplate for web development. Tools for building a great experience [across many devices](https://google.github.io/web-starter-kit/hello-world/) and [performance oriented](#web-performance). Helping you to stay productive following the best practices outlined in Google's [Web Fundamentals](https://developers.google.com/web/fundamentals). A solid starting point for both professionals and newcomers to the industry.
+## 使用 Gulp、NPM 构建前端开发工作流
 
-[![](https://cloud.githubusercontent.com/assets/170270/3343033/ceee251e-f899-11e3-9dd9-e313cf2522ec.png)](https://developers.google.com/web/starter-kit/ 'Features')
+2014 年，Javascript 领域[风起云涌](http://www.infoq.com/news/2014/12/javascript-review-2014)，这里我们主要提两件事。
 
-## Quickstart
+其一，**Gulp 取代 Grunt，基于 Node.js 的前端构建工具发生更迭**。2014 年中 Amaze UI 发布 1.0 测试版时就采用了 Gulp 作为构建工具。彼时，前端构建的天下还是 Grunt 的，有江湖郎中也说 Amaze UI “应该”使用 Grunt，他们可曾想到今日会是如此翻天覆地的变化。
 
-[Download](https://github.com/google/web-starter-kit/releases/latest) the kit or clone this repository and build on what is included in the `app` directory.
+其二，**[Common JS 规范](http://wiki.commonjs.org/wiki/CommonJS)向前端延伸。具体表现为：
 
-There are two HTML starting points, from which you can choose:
+- [NPM](https://www.npmjs.com) 新版官网上线，重新定位为：`npm is the package manager for javascript`,不再是单纯的后端（Node.js、io.js）包管理工具；
+- jQuery 官网停止接受新插件提交，建议用户提交到 NPM，庞大的 jQuery 生态圈转向 NPM；
+- Browserify、Webpack 等前端 Common JS 实现工具流行，并得到 Facebook 等巨头认可；
+- ……
 
-- `index.html` - (IE10+) the default starting point, containing layout and a slide-out menu
-- `basic.html` - (IE8+) no layout, but still includes our minimal mobile best-practices
+Common JS 在前端模块化开发中蔓延的表现远不止这些，相信越来越多的前端开发者会转到 Common JS 规范中来，通过前后端统一模块化规范，实现更多的代码重用，提高开发效率。
 
-Be sure to look over the [installation docs](docs/install.md) to verify your environment is prepared to run WSK.
-Once you have verified that your system can run WSK, check out the [commands](docs/commands.md) available to get started.
+Amaze UI 从 2.0 开始按照 Common JS 规范开发 JavaScript，而本项目的目的，就是让开发者快捷地搭建基于 Gulp、NPM 的开发工作流，更方便地使用 Amaze UI。
 
-## Web Performance
+### 准备工作
 
-Web Starter Kit strives to give you a high performance starting point out of the box and we actively work on delivering the best [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/) score and frame-rate possible.
+#### 环境配置
 
-In terms of CSS, opting to just use the minimal layout (main.css, h5bp.css) weighs in at ~7KB before modifications are made. Opting to use the Style Guide styles (the default) will take this up to ~39KB. It is your choice which path makes the most sense for your project, however notes on excluding Style Guide styles are in our gulpfile.
+- **安装 Node.js**：从[官网选择](http://nodejs.org/download/)相应的链接下载安装。
+- **安装 Git**：[官网下载页面](http://git-scm.com/downloads)（不是必须，但如果想靠写代码的混饭吃，那还是应该学习一下）。
 
-## Browser Support
+安装完 Node.js 以后，打开命令行窗口：
 
-At present, we officially aim to support the following browsers:
+- 输入 `node -v`，应该显示类似 `v0.10.35` 的 Node.js 版本号；
+- 输入 `npm -v`，应该显示类似 `1.4.28` 的 NPM CLI 版本号。
 
-* IE9, IE10, IE11, IE Mobile 10
-* FF 30, 31
-* Chrome 34, 35
-* Safari 7, 8
-* Opera 23, 24
-* iOS Safari 7, 8
-* Opera Coast
-* Android / Chrome 4.4, 4.4.3
-* BlackBerry 10
+如果以上信息没有正常显示，说明 Node.js 安装过程中遇到问题了，至于是要设置环境变量还是怎么的，请自行问度娘或股哥。
 
-This is not to say that Web Starter Kit cannot be used in browsers older than those reflected, but merely that our focus will be on ensuring our layouts work great in the above.
+#### 全局安装 Gulp
 
-## Web Starter Kit and [Bootstrap](http://getbootstrap.com) or other CSS libraries?
+在使用 NPM 之前，有必要了解一下 NPM 的命令，[完整列表参见官网](https://docs.npmjs.com/cli/install)。
 
-Web Starter Kit doesn't aim to compete with CSS libraries like Bootstrap, Foundation and Pure. These libraries provide an excellent solution for prototyping your initial project. The biggest challenge they present is it’s almost too easy to get stuck using their look and feel for the lifetime of your site. We think this leads to a poorer experience on the multi-screen web.
+我们现在要了解的是 `npm install` 这个命令。打开命令行窗口，输入 `npm install -h`，会列出使用说明列表。
 
-Web Starter Kit provides boilerplate styles & a visual style guide for projects, but encourages customising these to fit your own site. This may need a little more work, but the reality is that any serious project is going to have its own look and feel. We want you to feel comfortable changing the kit to suit your own needs.
+下面就全局安装 Gulp：
 
-If you wish to use Bootstrap or other CSS libraries in your Web Starter Kit project, you have the flexibility to do so.
+```
+npm install gulp -g
+```
 
-## Troubleshooting
+关于 NPM 安装模块时全局和本地相关概念，请通过官方文档或者相关中文社区了解。
 
-If you find yourself running into issues during installation or running the tools, please check our [Troubleshooting](https://github.com/google/web-starter-kit/wiki/Troubleshooting) guide and then open an [issue](https://github.com/google/web-starter-kit/issues). We would be happy to discuss how they can be solved.
+### 开始开发
 
-## A Boilerplate-only Option
+#### 获取 Amaze UI Starter Kit
 
-If you would prefer not to use any of our tooling, delete the following files from the project: `package.json`, `gulpfile.js`, `.jshintrc` and `.travis.yml`. You can now safely use the boilerplate with an alternative build-system or no build-system at all if you choose.
+可以通过两种方式获取 Amaze UI Starter Kit:
 
-## Extras
+- **使用 Git**：`git clone https://github.com/amazeui/starter-kit.git`
+- **直接下载压缩包**：[点击下载](https://github.com/amazeui/starter-kit/archive/master.zip)
 
-Optional additions, such as web server configurations, can be found at [WSK Extras
-repository](https://github.com/google/web-starter-kit-extras).
+Clone 完成（或者下载解压后）得到以下目录结构：
 
-## Inspiration
+```
+├── README.md
+├── app           // 项目源文件目录
+│   ├── humans.txt
+│   ├── i         // 图片
+│   ├── index.html
+│   ├── js        // JS
+│   ├── less      // Less
+│   ├── manifest.json
+│   ├── manifest.webapp
+│   └── robots.txt
+├── dist         // 构建目录
+├── gulpfile.js  // Gulp 任务配置
+└── package.json // 项目依赖等信息
+```
 
-Web Starter Kit is inspired by [Mobile HTML5 Boilerplate](http://html5boilerplate.com/mobile/) and Yeoman's [generator-gulp-webapp](https://github.com/yeoman/generator-gulp-webapp), having taken input from contributors to both projects during development. Our [FAQs](https://github.com/google/web-starter-kit/wiki/FAQ) attempt to answer commonly asked questions about the project.
+#### 安装依赖进行开发
 
-## Contributing
+在项目目录下执行 `npm install` 安装 Gulp 插件、jQuery、Amaze UI 等依赖。
 
-Contributions, questions and comments are all welcome and encouraged. For code contributions to Web Starter Kit, please see our [Contribution guide](CONTRIBUTING.md) before submitting a pull request. [Website](https://developers.google.com/web/starter-kit/) related issues should be filed on the [Web Fundamentals](https://github.com/google/WebFundamentals/issues/new) issue tracker.
+安装完成以后，执行 `gulp serve`，Gulp 会编译相关文件并打开系统默认浏览器进行预览。
+
+你可以修改 `app/index.html` 或者 Less 或者 JS 文件，Gulp 会自动编译并刷新浏览器。
+
+至此，我们实现使用 jQuery 及 Amaze UI 打包好的文件进行开发并实时预览了。
+
+
+### 进阶开发
+
+#### 直接使用 Amaze UI 源码开发
+
+__待补充__
+
+#### 使用 NPM 中的其他模块
+
+以使用 [detector](https://github.com/hotoo/detector) 为例：
+
+首先，安装 detector 并加入依赖列表：
+
+```
+npm install detector --save-dev
+```
+
+然后，`require` detector：
+
+```js
+var detector = require('detector');
+```
+
+接下来就可以使用 detector 干你想干的事了：
+
+```js
+$('#browser-info').append('浏览器信息：<pre>' +
+    JSON.stringify(detector.browser) +
+    '</pre>'
+);
+```
 
 ## License
 
-Apache 2.0  
+Apache 2.0
 Copyright 2014 Google Inc

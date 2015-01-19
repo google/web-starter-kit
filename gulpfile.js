@@ -19,13 +19,13 @@
 
 'use strict';
 
-// Include Gulp & Tools We'll Use
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 var del = require('del');
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
-var pagespeed = require('psi');
+var browserify = require('browserify');
+var transform = require('vinyl-transform');
 var reload = browserSync.reload;
 
 var AUTOPREFIXER_BROWSERS = [
@@ -40,152 +40,115 @@ var AUTOPREFIXER_BROWSERS = [
   'bb >= 10'
 ];
 
-// Lint JavaScript
+// JavaScript 格式校验
 gulp.task('jshint', function () {
-  return gulp.src('app/scripts/**/*.js')
+  return gulp.src('app/js/**/*.js')
     .pipe(reload({stream: true, once: true}))
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
     .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
 });
 
-// Optimize Images
+// 图片优化
 gulp.task('images', function () {
-  return gulp.src('app/images/**/*')
+  return gulp.src('app/i/**/*')
     .pipe($.cache($.imagemin({
       progressive: true,
       interlaced: true
     })))
-    .pipe(gulp.dest('dist/images'))
-    .pipe($.size({title: 'images'}));
+    .pipe(gulp.dest('dist/i'))
+    .pipe($.size({title: 'i'}));
 });
 
-// Copy All Files At The Root Level (app)
+// 拷贝相关资源
 gulp.task('copy', function () {
   return gulp.src([
     'app/*',
     '!app/*.html',
-    'node_modules/apache-server-configs/dist/.htaccess'
+    '!app/js/*',
+    '!app/less',
+    'node_modules/amazeui/dist/**/*',
+    'node_modules/jquery/dist/cdn/*.js'
   ], {
     dot: true
-  }).pipe(gulp.dest('dist'))
+  }).pipe(gulp.dest(function(file) {
+    if (file.relative.indexOf('jquery-2') > -1) {
+      return 'dist/js';
+    }
+    return 'dist';
+  }))
     .pipe($.size({title: 'copy'}));
 });
 
-// Copy Web Fonts To Dist
-gulp.task('fonts', function () {
-  return gulp.src(['app/fonts/**'])
-    .pipe(gulp.dest('dist/fonts'))
-    .pipe($.size({title: 'fonts'}));
-});
-
-// Compile and Automatically Prefix Stylesheets
+// 编译 Less，添加浏览器前缀
 gulp.task('styles', function () {
-  // For best performance, don't add Sass partials to `gulp.src`
-  return gulp.src([
-    'app/styles/*.scss',
-    'app/styles/**/*.css',
-    'app/styles/components/components.scss'
-  ])
-    .pipe($.changed('styles', {extension: '.scss'}))
-    .pipe($.sass({
-      precision: 10,
-      onError: console.error.bind(console, 'Sass error:')
-    }))
+  return gulp.src(['app/less/*.less'])
+    .pipe($.changed('styles', {extension: '.less'}))
+    .pipe($.less())
     .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
-    .pipe(gulp.dest('.tmp/styles'))
-    // Concatenate And Minify Styles
-    .pipe($.if('*.css', $.csso()))
-    .pipe(gulp.dest('dist/styles'))
+    .pipe(gulp.dest('dist/css'))
+    .pipe($.csso())
+    .pipe($.rename(
+      {
+        extname: '.min.css'
+      }
+    ))
+    .pipe(gulp.dest('dist/css'))
     .pipe($.size({title: 'styles'}));
 });
 
-// Scan Your HTML For Assets & Optimize Them
-gulp.task('html', function () {
-  var assets = $.useref.assets({searchPath: '{.tmp,app}'});
+// 打包 Common JS 模块
+gulp.task('browserify', function() {
+  var bundler = transform(function(filename) {
+    var b = browserify({
+      entries: filename,
+      basedir: './'
+    });
+    return b.bundle();
+  });
 
+  gulp.src('app/js/main.js')
+    .pipe(bundler)
+    // .pipe($.rename())
+    .pipe(gulp.dest('dist/js'))
+});
+
+// 压缩 HTML
+gulp.task('html', function () {
   return gulp.src('app/**/*.html')
-    .pipe(assets)
-    // Concatenate And Minify JavaScript
-    .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
-    // Remove Any Unused CSS
-    // Note: If not using the Style Guide, you can delete it from
-    // the next line to only include styles your project uses.
-    .pipe($.if('*.css', $.uncss({
-      html: [
-        'app/index.html',
-        'app/styleguide.html'
-      ],
-      // CSS Selectors for UnCSS to ignore
-      ignore: [
-        /.navdrawer-container.open/,
-        /.app-bar.open/
-      ]
-    })))
-    // Concatenate And Minify Styles
-    // In case you are still using useref build blocks
-    .pipe($.if('*.css', $.csso()))
-    .pipe(assets.restore())
-    .pipe($.useref())
-    // Update Production Style Guide Paths
-    .pipe($.replace('components/components.css', 'components/main.min.css'))
     // Minify Any HTML
-    .pipe($.if('*.html', $.minifyHtml()))
+    .pipe($.minifyHtml())
     // Output Files
     .pipe(gulp.dest('dist'))
     .pipe($.size({title: 'html'}));
 });
 
-// Clean Output Directory
-gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
+// 洗刷刷
+gulp.task('clean', function(cb) {
+  del(['dist/*', '!dist/.git'], {dot: true}, cb);
+});
 
-// Watch Files For Changes & Reload
-gulp.task('serve', ['styles'], function () {
+// 监视源文件变化自动编译
+gulp.task('watch', function() {
+  gulp.watch('app/**/*.html', ['html']);
+  gulp.watch('app/less/**/*less', ['styles']);
+  gulp.watch('app/i/**/*', ['images']);
+  gulp.watch('app/js/**/*', ['browserify']);
+});
+
+// 启动预览服务，并监视 Dist 目录变化自动刷新浏览器
+gulp.task('serve', ['default'], function () {
   browserSync({
     notify: false,
     // Customize the BrowserSync console logging prefix
-    logPrefix: 'WSK',
-    // Run as an https by uncommenting 'https: true'
-    // Note: this uses an unsigned certificate which on first access
-    //       will present a certificate warning in the browser.
-    // https: true,
-    server: ['.tmp', 'app']
-  });
-
-  gulp.watch(['app/**/*.html'], reload);
-  gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
-  gulp.watch(['app/scripts/**/*.js'], ['jshint']);
-  gulp.watch(['app/images/**/*'], reload);
-});
-
-// Build and serve the output from the dist build
-gulp.task('serve:dist', ['default'], function () {
-  browserSync({
-    notify: false,
-    logPrefix: 'WSK',
-    // Run as an https by uncommenting 'https: true'
-    // Note: this uses an unsigned certificate which on first access
-    //       will present a certificate warning in the browser.
-    // https: true,
+    logPrefix: 'AMUISK',
     server: 'dist'
   });
+
+  gulp.watch(['dist/**/*'], reload);
 });
 
-// Build Production Files, the Default Task
-gulp.task('default', ['clean'], function (cb) {
-  runSequence('styles', ['jshint', 'html', 'images', 'fonts', 'copy'], cb);
+// 默认任务
+gulp.task('default', function (cb) {
+  runSequence('clean', ['styles', 'jshint', 'html', 'images', 'copy', 'browserify'], 'watch', cb);
 });
-
-// Run PageSpeed Insights
-// Update `url` below to the public URL for your site
-gulp.task('pagespeed', pagespeed.bind(null, {
-  // By default, we use the PageSpeed Insights
-  // free (no API key) tier. You can use a Google
-  // Developer API key if you have one. See
-  // http://goo.gl/RkN0vE for info key: 'YOUR_API_KEY'
-  url: 'https://example.com',
-  strategy: 'mobile'
-}));
-
-// Load custom tasks from the `tasks` directory
-// try { require('require-dir')('tasks'); } catch (err) { console.error(err); }

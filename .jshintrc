@@ -1,17 +1,21 @@
 {
-  "node": true,
   "browser": true,
-  "esnext": true,
+  "node": true,
   "bitwise": true,
   "camelcase": true,
   "curly": true,
-  "eqeqeq": true,
+  "expr": true,
   "immed": true,
   "indent": 2,
+  "maxlen": 80,
   "newcap": true,
   "noarg": true,
   "quotmark": "single",
   "undef": true,
   "unused": "vars",
-  "strict": true
+  "strict": true,
+  "globals": {
+    "define": true,
+    "module": true
+  }
 }
