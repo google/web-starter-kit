@@ -27,6 +27,9 @@ var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
 var pagespeed = require('psi');
 var reload = browserSync.reload;
+var swPrecache = require('sw-precache');
+var fs = require('fs');
+var path = require('path');
 
 var AUTOPREFIXER_BROWSERS = [
   'ie >= 10',
@@ -173,7 +176,12 @@ gulp.task('serve:dist', ['default'], function () {
 
 // Build Production Files, the Default Task
 gulp.task('default', ['clean'], function (cb) {
-  runSequence('styles', ['jshint', 'html', 'images', 'fonts', 'copy'], cb);
+  runSequence(
+    'styles',
+    ['jshint', 'html', 'images', 'fonts', 'copy'],
+    'generate-service-worker',
+    cb
+  );
 });
 
 // Run PageSpeed Insights
@@ -185,6 +193,38 @@ gulp.task('pagespeed', function (cb) {
     // Use a Google Developer API key if you have one: http://goo.gl/RkN0vE
     // key: 'YOUR_API_KEY'
   }, cb);
+});
+
+// Generate a service worker file that will provide offline functionality for local resources.
+// This should only be done for the 'dist' directory, to allow thins like live reload to work
+// as expected when serving from the 'app' directory.
+gulp.task('generate-service-worker', function(callback) {
+  var rootDir = 'dist';
+
+  swPrecache({
+    dynamicUrlToDependencies: {
+      './': [path.join(rootDir, 'index.html')]
+    },
+    // Add/remove glob patterns to match your directory setup.
+    staticFileGlobs: [
+      rootDir + '/fonts/**/*.woff',
+      rootDir + '/images/**/*',
+      rootDir + '/scripts/**/*.js',
+      rootDir + '/styles/**/*.css',
+      rootDir + '/*.html'
+    ],
+    stripPrefix: path.join(rootDir, path.sep)
+  }, function(error, serviceWorkerFileContents) {
+    if (error) {
+      return callback(error);
+    }
+    fs.writeFile(path.join(rootDir, 'service-worker.js'), serviceWorkerFileContents, function(error) {
+      if (error) {
+        return callback(error);
+      }
+      callback();
+    });
+  });
 });
 
 // Load custom tasks from the `tasks` directory
