@@ -202,11 +202,12 @@ gulp.task('generate-service-worker', function(callback) {
   var rootDir = 'dist';
 
   swPrecache({
+    cacheId: 'wsk', // Used to avoid cache conflicts when serving on localhost.
     dynamicUrlToDependencies: {
       './': [path.join(rootDir, 'index.html')]
     },
-    // Add/remove glob patterns to match your directory setup.
     staticFileGlobs: [
+      // Add/remove glob patterns to match your directory setup.
       rootDir + '/fonts/**/*.woff',
       rootDir + '/images/**/*',
       rootDir + '/scripts/**/*.js',
