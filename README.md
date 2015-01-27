@@ -12,7 +12,7 @@ Amaze UI Starter Kit 是一个使用 Gulp、NPM 构建的前端开发工作流�
 
 - [NPM](https://www.npmjs.com) 新版官网上线，重新定位为：`npm is the package manager for javascript`,不再是单纯的后端（Node.js、io.js）包管理工具；
 - jQuery 官网不再接受新插件提交，建议用户提交到 NPM，庞大的 jQuery 生态圈转向 NPM；
-- Browserify、Webpack 等前端 Common JS 实现工具流行，并得到 Facebook 等巨头认可；
+- Browserify、Webpack 等前端 Common JS 实现工具流行，并得到 Facebook 等公司认可；
 - ……
 
 Common JS 在前端模块化开发中蔓延的表现远不止这些，相信越来越多的前端开发者会转到 Common JS 规范中来，通过前后端统一模块化规范，实现更多的代码重用，提高开发效率。
@@ -110,7 +110,7 @@ npm install detector --save-dev
 var detector = require('detector');
 ```
 
-接下来就可以使用 detector 干想干的事了：
+接下，使用 `detector` 获取浏览器信息并在页面中显示：
 
 ```js
 $('#browser-info').append('浏览器信息：<pre>' +
@@ -118,3 +118,9 @@ $('#browser-info').append('浏览器信息：<pre>' +
     '</pre>'
 );
 ```
+
+### 总结
+
+Gulp 及其丰富的插件、易懂的配置帮助开发者快速地搭建项目构建平台；NPM 结合 Browserify 等工具则解决了模块化、依赖管理等问题；再配合 Browser Sync、Live Reload 等实时预览工具，一个便捷、高效的前端开发工作流并呈现在眼前。
+
+然而，还需要考虑一个问题：样式依赖问题。虽然 WebPack 等支持 Less、CSS 等依赖提取，但社区也有不同的声音，认为 WepPack **滥用 `require`**；Sprockets 的 Node 移植版 [Mincer](https://github.com/nodeca/mincer) 看上去也不是那么优雅……我们也在探索样式依赖管理的方案，欢迎有经验的分享、交流。
