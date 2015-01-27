@@ -118,8 +118,3 @@ $('#browser-info').append('浏览器信息：<pre>' +
     '</pre>'
 );
 ```
-
-## License
-
-Apache 2.0
-Copyright 2014 Google Inc

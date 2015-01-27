@@ -1,6 +1,7 @@
 /**
+ *  Amaze UI Starter Kit
  *
- *  Web Starter Kit
+ *  Forked from Web Starter Kit
  *  Copyright 2014 Google Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
@@ -128,7 +129,7 @@ gulp.task('clean', function(cb) {
   del(['dist/*', '!dist/.git'], {dot: true}, cb);
 });
 
-// 监视源文件变化自动编译
+// 监视源文件变化自动cd编译
 gulp.task('watch', function() {
   gulp.watch('app/**/*.html', ['html']);
   gulp.watch('app/less/**/*less', ['styles']);
@@ -141,7 +142,7 @@ gulp.task('serve', ['default'], function () {
   browserSync({
     notify: false,
     // Customize the BrowserSync console logging prefix
-    logPrefix: 'AMUISK',
+    logPrefix: 'ASK',
     server: 'dist'
   });
 
