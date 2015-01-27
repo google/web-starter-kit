@@ -123,4 +123,4 @@ $('#browser-info').append('浏览器信息：<pre>' +
 
 Gulp 及其丰富的插件、易懂的配置帮助开发者快速地搭建项目构建平台；NPM 结合 Browserify 等工具则解决了模块化、依赖管理等问题；再配合 Browser Sync、Live Reload 等实时预览工具，一个便捷、高效的前端开发工作流并呈现在眼前。
 
-然而，还需要考虑一个问题：样式依赖问题。虽然 WebPack 等支持 Less、CSS 等依赖提取，但社区也有不同的声音，认为 WepPack **滥用 `require`**；Sprockets 的 Node 移植版 [Mincer](https://github.com/nodeca/mincer) 看上去也不是那么优雅……我们也在探索样式依赖管理的方案，欢迎有经验的分享、交流。
+然而，还需要考虑一个问题：样式依赖问题。虽然 WebPack 等支持 Less、CSS 等依赖提取，但社区也有[不同声音](http://mattdesl.svbtle.com/browserify-vs-webpack)，认为 WepPack **滥用 `require`**；Sprockets 的 Node 移植版 [Mincer](https://github.com/nodeca/mincer) 看上去也不是那么优雅……我们也在探索样式依赖管理的方案，欢迎有经验的分享、交流。
