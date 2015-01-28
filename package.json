@@ -3,6 +3,7 @@
     "amazeui": "^2.1.3",
     "browser-sync": "^1.3.0",
     "browserify": "^8.1.1",
+    "browserify-shim": "^3.8.0",
     "del": "^1.1.0",
     "detector": "^2.2.0",
     "gulp": "^3.8.10",
@@ -26,6 +27,14 @@
     "jshint-stylish": "^1.0.0",
     "run-sequence": "^1.0.1",
     "vinyl-transform": "^1.0.0"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "jquery": "global:jQuery"
   },
   "engines": {
     "node": ">=0.10.0"

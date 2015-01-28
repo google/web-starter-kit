@@ -92,7 +92,63 @@ Clone 完成（或者下载解压后）得到以下目录结构：
 
 #### 直接使用 Amaze UI 源码开发
 
-__待补充__
+如果觉得引入完整的 Amaze UI 样式和 JS 太大，可以直接使用源码进行更精细化的开发。
+
+##### 使用 Less
+
+以 `app/less/main.less` 为例，首先引入**必需**的变量和 mixins 文件
+
+```css
+@import "../../node_modules/amazeui/less/variables";
+@import "../../node_modules/amazeui/less/mixins";
+```
+
+然后可以根据需要引入其他文件。
+
+##### 使用 JS
+
+以 `app/js/main.js` 为例：
+
+```js
+var $ = require('jquery');
+var addToHome = require('../../node_modules/amazeui/js/ui.add2home');
+
+$(function() {
+  addToHome();
+});
+```
+
+#### 使用非 Common JS 规范编写的 jQuery 插件
+
+目前很多 jQuery 插件都没有按照 Common JS 规范编写，但是我们仍然可以使用 `require`:
+
+```js
+var $ = require('jquery');
+
+// require xxx 插件
+require('jquery.xxx.js');
+
+$(function() {
+  // 使用 jQuery 的方式调用 xxx 插件
+  $().xxx();
+});
+```
+
+需要注意的是 **jQuery 应该使用 `shim` 单独引入**，而不是打包到一个文件中。
+
+将以下代码添加到 `package.json` 中：
+
+```js
+"browserify": {
+  "transform": [
+    "browserify-shim"
+  ]
+},
+
+"browserify-shim": {
+  "jquery": "global:jQuery"
+}
+```
 
 #### 使用 NPM 中的其他模块
 
@@ -119,7 +175,7 @@ $('#browser-info').append('浏览器信息：<pre>' +
 );
 ```
 
-### 总结
+### 结语
 
 Gulp 及其丰富的插件、易懂的配置帮助开发者快速地搭建项目构建平台；NPM 结合 Browserify 等工具则解决了模块化、依赖管理等问题；再配合 Browser Sync、Live Reload 等实时预览工具，一个便捷、高效的前端开发工作流并呈现在眼前。
 
