@@ -49,13 +49,14 @@ gulp.task('jshint', function () {
     .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
 });
 
-// Optimize Images
+// Optimize Images Recursively (All Files)
 gulp.task('images', function () {
   return gulp.src('app/images/**/*')
-    .pipe($.cache($.imagemin({
+    .pipe($.if($.if.isFile,$.cache($.imagemin({
       progressive: true,
       interlaced: true
-    })))
+     }))
+    .on('error', function(err){ console.log(err); this.end; })))
     .pipe(gulp.dest('dist/images'))
     .pipe($.size({title: 'images'}));
 });
