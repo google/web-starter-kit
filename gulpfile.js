@@ -19,7 +19,7 @@
 
 'use strict';
 
-// Include Gulp & Tools We'll Use
+// Include Gulp & tools we'll use
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 var del = require('del');
@@ -49,7 +49,7 @@ gulp.task('jshint', function () {
     .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
 });
 
-// Optimize Images
+// Optimize images
 gulp.task('images', function () {
   return gulp.src('app/images/**/*')
     .pipe($.cache($.imagemin({
@@ -60,7 +60,7 @@ gulp.task('images', function () {
     .pipe($.size({title: 'images'}));
 });
 
-// Copy All Files At The Root Level (app)
+// Copy all files at the root level (app)
 gulp.task('copy', function () {
   return gulp.src([
     'app/*',
@@ -72,14 +72,14 @@ gulp.task('copy', function () {
     .pipe($.size({title: 'copy'}));
 });
 
-// Copy Web Fonts To Dist
+// Copy web fonts to dist
 gulp.task('fonts', function () {
   return gulp.src(['app/fonts/**'])
     .pipe(gulp.dest('dist/fonts'))
     .pipe($.size({title: 'fonts'}));
 });
 
-// Compile and Automatically Prefix Stylesheets
+// Compile and automatically prefix stylesheets
 gulp.task('styles', function () {
   // For best performance, don't add Sass partials to `gulp.src`
   return gulp.src([
@@ -96,23 +96,23 @@ gulp.task('styles', function () {
     .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest('.tmp/styles'))
-    // Concatenate And Minify Styles
+    // Concatenate and minify styles
     .pipe($.if('*.css', $.csso()))
     .pipe(gulp.dest('dist/styles'))
     .pipe($.size({title: 'styles'}));
 });
 
-// Scan Your HTML For Assets & Optimize Them
+// Scan your HTML for assets & optimize them
 gulp.task('html', function () {
   var assets = $.useref.assets({searchPath: '{.tmp,app}'});
 
   return gulp.src('app/**/*.html')
     .pipe(assets)
-    // Concatenate And Minify JavaScript
+    // Concatenate and minify JavaScript
     .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
-    // Remove Any Unused CSS
-    // Note: If not using the Style Guide, you can delete it from
-    // the next line to only include styles your project uses.
+    // Remove any unused CSS
+    // Note: if not using the Style Guide, you can delete it from
+    //       the next line to only include styles your project uses.
     .pipe($.if('*.css', $.uncss({
       html: [
         'app/index.html',
@@ -124,24 +124,24 @@ gulp.task('html', function () {
         /.app-bar.open/
       ]
     })))
-    // Concatenate And Minify Styles
+    // Concatenate and minify styles
     // In case you are still using useref build blocks
     .pipe($.if('*.css', $.csso()))
     .pipe(assets.restore())
     .pipe($.useref())
-    // Update Production Style Guide Paths
+    // Update production Style Guide paths
     .pipe($.replace('components/components.css', 'components/main.min.css'))
-    // Minify Any HTML
+    // Minify any HTML
     .pipe($.if('*.html', $.minifyHtml()))
-    // Output Files
+    // Output files
     .pipe(gulp.dest('dist'))
     .pipe($.size({title: 'html'}));
 });
 
-// Clean Output Directory
+// Clean output directory
 gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
 
-// Watch Files For Changes & Reload
+// Watch files for changes & reload
 gulp.task('serve', ['styles'], function () {
   browserSync({
     notify: false,
@@ -173,7 +173,7 @@ gulp.task('serve:dist', ['default'], function () {
   });
 });
 
-// Build Production Files, the Default Task
+// Build production files, the default task
 gulp.task('default', ['clean'], function (cb) {
   runSequence('styles', ['jshint', 'html', 'images', 'fonts', 'copy'], cb);
 });
