@@ -1,0 +1,253 @@
+@import "../styleguide_demo_bp";
+@import 'palette';
+@import "../typography/typography";
+
+@mixin colorGroups($palette) {
+  .demo-palette-color--50 {
+    background-color: #{nth($palette, 1)};
+
+    &:after {
+      content: '#{nth($palette, 1)}';
+      float: right;
+    }
+  }
+
+  .demo-palette-color--100 {
+    background-color: #{nth($palette, 2)};
+
+    &:after {
+      content: '#{nth($palette, 2)}';
+      float: right;
+    }
+  }
+
+  .demo-palette-color--200 {
+    background-color: #{nth($palette, 3)};
+
+    &:after {
+      content: '#{nth($palette, 3)}';
+      float: right;
+    }
+  }
+
+  .demo-palette-color--300 {
+    background-color: #{nth($palette, 4)};
+
+    &:after {
+      content: '#{nth($palette, 4)}';
+      float: right;
+    }
+  }
+
+  .demo-palette-color--400 {
+    background-color: #{nth($palette, 5)};
+
+    &:after {
+      content: '#{nth($palette, 5)}';
+      float: right;
+    }
+  }
+
+  .demo-palette-color--500 {
+    background-color: #{nth($palette, 6)};
+
+    &:after {
+      content: '#{nth($palette, 6)}';
+      float: right;
+    }
+  }
+
+  .demo-palette-color--600 {
+    background-color: #{nth($palette, 7)};
+
+    &:after {
+      content: '#{nth($palette, 7)}';
+      float: right;
+    }
+  }
+
+  .demo-palette-color--700 {
+    background-color: #{nth($palette, 8)};
+
+    &:after {
+      content: '#{nth($palette, 8)}';
+      float: right;
+    }
+  }
+
+  .demo-palette-color--800 {
+    background-color: #{nth($palette, 9)};
+
+    &:after {
+      content: '#{nth($palette, 9)}';
+      float: right;
+    }
+  }
+
+  .demo-palette-color--900 {
+    background-color: #{nth($palette, 10)};
+
+    &:after {
+      content: '#{nth($palette, 10)}';
+      float: right;
+    }
+  }
+
+  @if length($palette) > 10 {
+    .demo-palette-color--A100 {
+      background-color: #{nth($palette, 11)};
+
+      &:after {
+        content: '#{nth($palette, 11)}';
+        float: right;
+      }
+    }
+
+    .demo-palette-color--A200 {
+      background-color: #{nth($palette, 12)};
+
+      &:after {
+        content: '#{nth($palette, 12)}';
+        float: right;
+      }
+    }
+
+    .demo-palette-color--A400 {
+      background-color: #{nth($palette, 13)};
+
+      &:after {
+        content: '#{nth($palette, 13)}';
+        float: right;
+      }
+    }
+
+    .demo-palette-color--A700 {
+      background-color: #{nth($palette, 14)};
+
+      &:after {
+        content: '#{nth($palette, 14)}';
+        float: right;
+      }
+    }
+  }
+}
+
+.PreviewBlock {
+  display: inline-block;  
+}
+
+.demo-palette-group {
+  margin-top: 15px;
+  width: 360px;
+  float: left;
+}
+
+.demo-palette-group--color, .demo-palette-group--heading {
+  @include typo-caption();
+
+  max-width: 300px;
+  padding: 15px;
+  color: white;
+}
+
+.demo-palette-group .dark-text, .demo-palette-group-heading.dark-text .demo-palette-group-name {
+  color: #000;
+}
+
+.demo-palette-group--name {
+  padding: 0 0 60px 0;
+}
+
+.demo-palette-group__red {
+  @include colorGroups($palette-red);
+}
+
+.demo-palette-group__pink {
+  @include colorGroups($palette-pink);
+}
+
+.demo-palette-group__purple {
+  @include colorGroups($palette-purple);
+}
+
+.demo-palette-group__deep-purple {
+  @include colorGroups($palette-deep-purple);
+}
+
+.demo-palette-group__indigo {
+  @include colorGroups($palette-indigo);
+}
+
+.demo-palette-group__blue {
+  @include colorGroups($palette-blue);
+}
+
+.demo-palette-group__light-blue {
+  @include colorGroups($palette-light-blue);
+}
+
+.demo-palette-group__cyan {
+  @include colorGroups($palette-cyan);
+}
+
+.demo-palette-group__teal {
+  @include colorGroups($palette-teal);
+}
+
+.demo-palette-group__green {
+  @include colorGroups($palette-green);
+}
+
+.demo-palette-group__light-green {
+  @include colorGroups($palette-light-green);
+}
+
+.demo-palette-group__lime {
+  @include colorGroups($palette-lime);
+}
+
+.demo-palette-group__yellow {
+  @include colorGroups($palette-yellow);
+}
+
+.demo-palette-group__amber {
+  @include colorGroups($palette-amber);
+}
+
+.demo-palette-group__orange {
+  @include colorGroups($palette-orange);
+}
+
+.demo-palette-group__deep-orange {
+  @include colorGroups($palette-deep-orange);
+}
+
+.demo-palette-group__brown {
+  @include colorGroups($palette-brown);
+}
+
+.demo-palette-group__grey {
+  @include colorGroups($palette-grey);
+
+  .demo-palette-color--1000 {
+    background-color: #000000;
+
+    &:after {
+      content: '#000000';
+      float: right;
+    }
+  }
+
+  .demo-palette-color--1000-inverse {
+    background-color: #ffffff;
+
+    &:after {
+      content: '#ffffff';
+      float: right;
+    }
+  }
+}
+
+.demo-palette-group__blue-grey {
+  @include colorGroups($palette-blue-grey);
+}

@@ -1,0 +1,43 @@
+@import "../colors";
+@import "../typography/typography";
+
+.wsk-tooltip {
+  -webkit-transform: scale(0);
+  -webkit-transform-origin: top center;
+  background: $tooltip-background-color;
+  border-radius: 5px;
+  color: $tooltip-text-color;
+  display: none;
+  font-size: 10px;
+  line-height: 14px;
+  max-width: 170px;
+  padding: 5px 8px;
+  position: absolute;
+  text-align: center;
+}
+.wsk-tooltip.is-active {
+  display: inline-block;
+  -webkit-animation: pulse 200ms cubic-bezier(0, 0, .2, 1) forwards;
+  animation: pulse 200ms cubic-bezier(0, 0, .2, 1) forwards;
+}
+
+.wsk-tooltip--large {
+  line-height: 14px;
+  font-size: 14px;
+  padding: 16px;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    -webkit-transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    opacity: 1;
+    visibility: visible;
+  }
+}

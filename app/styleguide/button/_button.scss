@@ -1,0 +1,260 @@
+@import "../typography/typography";
+@import "../colors";
+@import "../shadow/shadow";
+@import "../animation/animation";
+@import "../ripple/ripple";
+
+
+/**
+ *
+ * Dimensions
+ *
+ */
+$button-min-width: 64px !default;
+$button-height: 36px !default;
+$button-padding: 8px !default;
+$button-margin: 4px !default;
+$button-border-radius: 2px !default;
+
+$button-fab-size: 56px !default;
+$button-fab-size-mini: 40px !default;
+$button-fab-font-size: 24px !default;
+
+$button-icon-size: 32px !default;
+$button-icon-size-mini: 24px !default;
+
+// Focus shadow mixin.
+@mixin focus-shadow() {
+  box-shadow: 0 0 8px rgba(0,0,0,.18),0 8px 16px rgba(0,0,0,.36);
+}
+
+
+// The button component. Defaults to a flat button.
+.wsk-button {
+  background: transparent;
+  border: none;
+  border-radius: $button-border-radius;
+  color: $button-secondary-color;
+  display: block;
+  position: relative;
+  height: $button-height;
+  min-width: $button-min-width;
+  padding: 0 $button-padding;
+  margin: 0 $button-margin;
+  display: inline-block;
+  @include typo-button();
+  overflow: hidden;
+  will-change: box-shadow, transform;
+  transition: box-shadow 0.2s $animation-curve-fast-out-linear-in,
+              background-color 0.2s $animation-curve-default,
+              color 0.2s $animation-curve-default;
+  outline: none;
+  cursor: pointer;
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  &:hover {
+    background-color: $button-hover-color;
+  }
+
+  &:focus:not(:active) {
+    background-color: $button-focus-color;
+  }
+
+  &:active {
+    background-color: $button-active-color;
+  }
+
+  // Bump up specificity by using [disabled] twice.
+  &[disabled][disabled] {
+    color: $button-secondary-color-disabled;
+    cursor: auto;
+    background-color: transparent;
+  }
+
+  &.wsk-button--colored {
+    color: $button-primary-color-alt;
+
+    &:focus:not(:active) {
+      background-color: $button-focus-color-alt;
+    }
+  }
+}
+
+
+  // Raised buttons
+  .wsk-button--raised {
+    background: $button-primary-color;
+    @include shadow-z1();
+
+    &:active {
+      @include shadow-z3();
+      background-color: $button-active-color;
+    }
+
+    &:focus:not(:active) {
+      @include focus-shadow();
+      background-color: $button-active-color;
+    }
+
+    &.wsk-button--colored {
+      background: $button-primary-color-alt;
+      color: $button-secondary-color-alt;
+
+      &:hover {
+        background-color: $button-hover-color-alt;
+      }
+
+      &:active {
+        background-color: $button-active-color-alt;
+      }
+
+      &:focus:not(:active) {
+        background-color: $button-active-color-alt;
+      }
+
+      & .wsk-ripple {
+        background: $button-ripple-color-alt;
+      }
+    }
+
+    // Bump up specificity by using [disabled] twice.
+    &[disabled][disabled] {
+      background-color: $button-primary-color-disabled;
+      color: $button-secondary-color-disabled;
+      @include shadow-z1();
+    }
+  }
+
+
+  // FABs
+  .wsk-button--fab {
+    border-radius: 50%;
+    font-size: $button-fab-font-size;
+    height: $button-fab-size;
+    margin: auto;
+    min-width: $button-fab-size;
+    width: $button-fab-size;
+    padding: 0;
+    overflow: hidden;
+    background: $button-primary-color;
+    @include shadow-z1();
+    position: relative;
+
+    & .wsk-icon {
+      position: absolute;
+      top: ($button-fab-size - $button-fab-font-size) / 2;
+      left: ($button-fab-size - $button-fab-font-size) / 2;
+    }
+
+    &.wsk-button--mini-fab {
+      height: $button-fab-size-mini;
+      min-width: $button-fab-size-mini;
+      width: $button-fab-size-mini;
+
+      & .wsk-icon {
+        top: ($button-fab-size-mini - $button-fab-font-size) / 2;
+        left: ($button-fab-size-mini - $button-fab-font-size) / 2;
+      }
+    }
+
+    & .wsk-button__ripple-container {
+      border-radius: 50%;
+      // Fixes clipping bug in Safari.
+      -webkit-mask-image: -webkit-radial-gradient(circle, white, black);
+    }
+
+    &:active {
+      @include shadow-z3();
+      background-color: $button-active-color;
+    }
+
+    &:focus:not(:active) {
+      @include focus-shadow();
+      background-color: $button-active-color;
+    }
+
+    &.wsk-button--colored {
+      background: $button-fab-color-alt;
+      color: $button-secondary-color-alt;
+
+      &:hover {
+        background-color: $button-fab-hover-color-alt;
+      }
+
+      &:focus:not(:active) {
+        background-color: $button-fab-active-color-alt;
+      }
+
+      &:active {
+        background-color: $button-fab-active-color-alt;
+      }
+
+      & .wsk-ripple {
+        background: $button-ripple-color-alt;
+      }
+    }
+
+    // Bump up specificity by using [disabled] twice.
+    &[disabled][disabled] {
+      background-color: $button-primary-color-disabled;
+      color: $button-secondary-color-disabled;
+      @include shadow-z1();
+    }
+  }
+
+
+  // Icon buttons
+  .wsk-button--icon {
+    border-radius: 50%;
+    font-size: $button-fab-font-size;
+    height: $button-icon-size;
+    margin-left: 0;
+    margin-right: 0;
+    min-width: $button-icon-size;
+    width: $button-icon-size;
+    padding: 0;
+    overflow: hidden;
+
+    & .wsk-icon {
+      position: absolute;
+      top: ($button-icon-size - $button-fab-font-size) / 2;
+      left: ($button-icon-size - $button-fab-font-size) / 2;
+    }
+
+    &.wsk-button--mini-icon {
+      height: $button-icon-size-mini;
+      min-width: $button-icon-size-mini;
+      width: $button-icon-size-mini;
+
+      & .wsk-icon {
+        top: ($button-icon-size-mini - $button-fab-font-size) / 2;
+        left: ($button-icon-size-mini - $button-fab-font-size) / 2;
+      }
+    }
+
+    & .wsk-button__ripple-container {
+      border-radius: 50%;
+      // Fixes clipping bug in Safari.
+      -webkit-mask-image: -webkit-radial-gradient(circle, white, black);
+    }
+  }
+
+
+  // Ripples
+  .wsk-button__ripple-container {
+    display: block;
+    height: 100%;
+    left: 0px;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    z-index: 0;
+    overflow: hidden;
+
+    .wsk-button[disabled] & .wsk-ripple {
+      background-color: transparent;
+    }
+  }

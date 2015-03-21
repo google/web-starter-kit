@@ -35,7 +35,6 @@ $ npm install --global gulp
 
 *This will install Gulp globally. Depending on your user account, you may need to [configure your system](https://github.com/sindresorhus/guides/blob/master/npm-global-without-sudo.md) to install packages globally without administrative privileges.*
 
-
 ### Local dependencies
 
 Next, install the local dependencies Web Starter Kit requires:

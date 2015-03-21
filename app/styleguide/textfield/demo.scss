@@ -1,0 +1,9 @@
+@import "../styleguide_demo_bp";
+@import "_textfield";
+
+
+
+textarea {
+  overflow: auto;
+  resize  : none;
+}

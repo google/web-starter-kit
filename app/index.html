@@ -10,7 +10,7 @@
     <!-- Add to homescreen -->
     <link rel="manifest" href="manifest.json">
 
-    <!-- Fallback to homescreen for Chrome <39 on Android -->
+    <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Web Starter Kit">
     <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
@@ -36,36 +36,40 @@
     <link rel="stylesheet" href="styles/main.css">
   </head>
   <body>
-    <header class="app-bar promote-layer">
-      <div class="app-bar-container">
-        <button class="menu"><img src="images/hamburger.svg" alt="Menu"></button>
-        <h1 class="logo">Web <strong>Starter Kit</strong></h1>
-        <section class="app-bar-actions">
-        <!-- Put App Bar Buttons Here -->
-        <!-- e.g <button><i class="icon icon-star"></i></button> -->
-        </section>
+
+    <div class="wsk-layout wsk-js-layout">
+      <div class="wsk-layout__header">
+        <span class="wsk-layout-title">Web <strong>Starter Kit</strong></span>
+        <div class="wsk-layout-spacer"></div>
+        <nav class="wsk-navigation">
+          <a class="wsk-navigation__link" href="#hello">Hello</a>
+          <a class="wsk-navigation__link" href="#get-started">Get Started</a>
+          <a class="wsk-navigation__link" href="styleguide.html">Style Guide</a>
+        </nav>
       </div>
-    </header>
+      <div class="wsk-layout__drawer">
+        <span class="wsk-layout-title">Web <strong>Starter Kit</strong></span>
+        <nav class="wsk-navigation">
+          <a class="wsk-navigation__link" href="#hello">Hello</a>
+          <a class="wsk-navigation__link" href="#get-started">Get Started</a>
+          <a class="wsk-navigation__link" href="styleguide.html">Style Guide</a>
+        </nav>
+      </div>
 
-    <nav class="navdrawer-container promote-layer">
-      <h4>Navigation</h4>
-      <ul>
-        <li><a href="#hello">Hello</a></li>
-        <li><a href="#get-started">Get Started</a></li>
-        <li><a href="styleguide.html">Style Guide</a></li>
-      </ul>
-    </nav>
+      <main class="wsk-layout__content">
+        <h2 id="hello">Welcome to Web Starter Kit!</h2>
+        <p>Good luck with your amazing new project.</p>
 
-    <main>
-      <h1 id="hello">Hello!</h1>
-      <p>Welcome to Web Starter Kit.</p>
+        <h2 id="get-started">Get Started.</h2>
+        <p>Read how to <a href="http://developers.google.com/web/starter-kit">Get Started</a> or
+          check out the <a href="styleguide.html">Style Guide</a>.</p>
+      </main>
+    </div>
 
-      <h2 id="get-started">Get Started.</h2>
-      <p>Read how to <a href="https://developers.google.com/web/starter-kit">Get Started</a> or check out the <a href="styleguide.html">Style Guide</a>.</p>
-    </main>
-
-    <!-- build:js scripts/main.min.js -->
+    <!-- build:js(app/) ../../scripts/main.min.js -->
+    <script src="styleguide/wskComponentHandler.js"></script>
     <script src="scripts/main.js"></script>
+    <script src="styleguide/layout/layout.js"></script>
     <!-- endbuild -->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
