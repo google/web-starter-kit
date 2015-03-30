@@ -27,6 +27,7 @@ var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
 var pagespeed = require('psi');
 var reload = browserSync.reload;
+var argv = require('minimist')(process.argv.slice(2));
 
 var AUTOPREFIXER_BROWSERS = [
   'ie >= 10',
@@ -143,6 +144,9 @@ gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], {dot: true})
 
 // Watch files for changes & reload
 gulp.task('serve', ['styles'], function () {
+  //default port is 3000
+  var port = argv.port || 3000;
+
   browserSync({
     notify: false,
     // Customize the BrowserSync console logging prefix
@@ -151,6 +155,7 @@ gulp.task('serve', ['styles'], function () {
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
+    port: port,
     server: ['.tmp', 'app']
   });
 

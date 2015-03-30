@@ -8,6 +8,12 @@ $ gulp serve
 
 This outputs an IP address you can use to locally test and another that can be used on devices connected to your network.
 
+If you want to run on custom port (f.e. 4000),  you will add port param to command:
+
+```sh
+$ gulp serve --port=4000
+```
+
 ## Build & Optimize
 
 ```sh
