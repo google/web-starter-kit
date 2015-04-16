@@ -15,7 +15,7 @@
     "gulp-if": "^1.2.1",
     "gulp-imagemin": "^2.0.0",
     "gulp-jshint": "^1.6.3",
-    "gulp-less": "^2.0.1",
+    "gulp-less": "^3.0.2",
     "gulp-load-plugins": "^0.8.0",
     "gulp-minify-html": "^0.1.5",
     "gulp-rename": "^1.2.0",
