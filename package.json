@@ -7,6 +7,7 @@
     "gulp-autoprefixer": "^2.0.0",
     "gulp-cache": "0.2.2",
     "gulp-changed": "^1.0.0",
+    "gulp-concat": "^2.5.2",
     "gulp-csso": "^1.0.0",
     "gulp-flatten": "0.0.4",
     "gulp-if": "^1.2.1",
