@@ -160,7 +160,7 @@ gulp.task('html', function () {
 gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
 
 // Watch files for changes & reload
-gulp.task('serve', ['styles'], function() {
+gulp.task('serve', ['styles'], function () {
   browserSync({
     notify: false,
     // Customize the BrowserSync console logging prefix
@@ -179,7 +179,7 @@ gulp.task('serve', ['styles'], function() {
 });
 
 // Build and serve the output from the dist build
-gulp.task('serve:dist', ['default'], function() {
+gulp.task('serve:dist', ['default'], function () {
   browserSync({
     notify: false,
     logPrefix: 'WSK',
@@ -193,7 +193,7 @@ gulp.task('serve:dist', ['default'], function() {
 });
 
 // Build production files, the default task
-gulp.task('default', ['clean'], function(cb) {
+gulp.task('default', ['clean'], function (cb) {
   runSequence(
     'styles',
     ['jshint', 'html', 'scripts', 'images', 'fonts', 'copy'],
@@ -218,7 +218,7 @@ gulp.task('pagespeed', function (cb) {
 // Generate a service worker file that will provide offline functionality for
 // local resources. This should only be done for the 'dist' directory, to allow
 // live reload to work as expected when serving from the 'app' directory.
-gulp.task('generate-service-worker', function(callback) {
+gulp.task('generate-service-worker', function (callback) {
   var rootDir = 'dist';
 
   swPrecache({
@@ -244,12 +244,12 @@ gulp.task('generate-service-worker', function(callback) {
     ],
     // Translates a static file path to the relative URL that it's served from.
     stripPrefix: path.join(rootDir, path.sep)
-  }, function(error, serviceWorkerFileContents) {
+  }, function (error, serviceWorkerFileContents) {
     if (error) {
       return callback(error);
     }
     fs.writeFile(path.join(rootDir, 'service-worker.js'),
-      serviceWorkerFileContents, function(error) {
+      serviceWorkerFileContents, function (error) {
       if (error) {
         return callback(error);
       }
