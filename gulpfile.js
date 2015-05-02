@@ -1,7 +1,7 @@
 /**
  *
  *  Web Starter Kit
- *  Copyright 2014 Google Inc. All rights reserved.
+ *  Copyright 2015 Google Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -31,18 +31,6 @@ var swPrecache = require('sw-precache');
 var fs = require('fs');
 var path = require('path');
 var packageJson = require('./package.json');
-
-var AUTOPREFIXER_BROWSERS = [
-  'ie >= 10',
-  'ie_mob >= 10',
-  'ff >= 30',
-  'chrome >= 34',
-  'safari >= 7',
-  'opera >= 23',
-  'ios >= 7',
-  'android >= 4.4',
-  'bb >= 10'
-];
 
 // Lint JavaScript
 gulp.task('jshint', function () {
@@ -83,44 +71,70 @@ gulp.task('fonts', function () {
     .pipe($.size({title: 'fonts'}));
 });
 
+
 // Compile and automatically prefix stylesheets
 gulp.task('styles', function () {
+
+  var AUTOPREFIXER_BROWSERS = [
+    'ie >= 10',
+    'ie_mob >= 10',
+    'ff >= 30',
+    'chrome >= 34',
+    'safari >= 7',
+    'opera >= 23',
+    'ios >= 7',
+    'android >= 4.4',
+    'bb >= 10'
+  ];
+
+
+
   // For best performance, don't add Sass partials to `gulp.src`
   return gulp.src([
-    'app/styles/*.scss',
-    'app/styles/**/*.css',
-    'app/styles/components/components.scss'
+    'app/**/*.scss',
+    'app/styles/**/*.css'
   ])
-    .pipe($.sourcemaps.init())
     .pipe($.changed('.tmp/styles', {extension: '.css'}))
+    .pipe($.sourcemaps.init())
     .pipe($.sass({
       precision: 10,
       onError: console.error.bind(console, 'Sass error:')
     }))
-    .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
-    .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('.tmp/styles'))
+    .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
+    .pipe(gulp.dest('.tmp'))
     // Concatenate and minify styles
     .pipe($.if('*.css', $.csso()))
-    .pipe(gulp.dest('dist/styles'))
+    .pipe($.sourcemaps.write())
+    .pipe(gulp.dest('dist'))
     .pipe($.size({title: 'styles'}));
+})
+
+// Concatenate and minify JavaScript
+gulp.task('scripts', function () {
+  var sources = [
+    // Scripts
+    'app/scripts/**/*.js'
+  ];
+  return gulp.src(sources)
+    .pipe($.concat('main.min.js'))
+    .pipe($.uglify({preserveComments: 'some'}))
+    // Output files
+    .pipe(gulp.dest('dist/scripts'))
+    .pipe($.size({title: 'scripts'}));
 });
 
 // Scan your HTML for assets & optimize them
 gulp.task('html', function () {
   var assets = $.useref.assets({searchPath: '{.tmp,app}'});
 
-  return gulp.src('app/**/*.html')
+  return gulp.src('app/**/**/*.html')
     .pipe(assets)
-    // Concatenate and minify JavaScript
-    .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
-    // Remove any unused CSS
-    // Note: if not using the Style Guide, you can delete it from
-    //       the next line to only include styles your project uses.
+    // Remove Any Unused CSS
+    // Note: If not using the Style Guide, you can delete it from
+    // the next line to only include styles your project uses.
     .pipe($.if('*.css', $.uncss({
       html: [
-        'app/index.html',
-        'app/styleguide.html'
+        'app/index.html'
       ],
       // CSS Selectors for UnCSS to ignore
       ignore: [
@@ -128,13 +142,13 @@ gulp.task('html', function () {
         /.app-bar.open/
       ]
     })))
+
     // Concatenate and minify styles
     // In case you are still using useref build blocks
     .pipe($.if('*.css', $.csso()))
     .pipe(assets.restore())
     .pipe($.useref())
-    // Update production Style Guide paths
-    .pipe($.replace('components/components.css', 'components/main.min.css'))
+
     // Minify any HTML
     .pipe($.if('*.html', $.minifyHtml()))
     // Output files
@@ -159,7 +173,7 @@ gulp.task('serve', ['styles'], function () {
   });
 
   gulp.watch(['app/**/*.html'], reload);
-  gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
+  gulp.watch(['app/styles/**/**/**/**/*.{scss,css}'], ['styles', reload]);
   gulp.watch(['app/scripts/**/*.js'], ['jshint']);
   gulp.watch(['app/images/**/*'], reload);
 });
@@ -173,15 +187,16 @@ gulp.task('serve:dist', ['default'], function () {
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: 'dist'
+    server: 'dist',
+    baseDir: "dist"
   });
 });
 
 // Build production files, the default task
-gulp.task('default', ['clean'], function(cb) {
+gulp.task('default', ['clean'], function (cb) {
   runSequence(
     'styles',
-    ['jshint', 'html', 'images', 'fonts', 'copy'],
+    ['jshint', 'html', 'scripts', 'images', 'fonts', 'copy'],
     'generate-service-worker',
     cb);
 });
@@ -203,7 +218,7 @@ gulp.task('pagespeed', function (cb) {
 // Generate a service worker file that will provide offline functionality for
 // local resources. This should only be done for the 'dist' directory, to allow
 // live reload to work as expected when serving from the 'app' directory.
-gulp.task('generate-service-worker', function(callback) {
+gulp.task('generate-service-worker', function (callback) {
   var rootDir = 'dist';
 
   swPrecache({
@@ -229,12 +244,12 @@ gulp.task('generate-service-worker', function(callback) {
     ],
     // Translates a static file path to the relative URL that it's served from.
     stripPrefix: path.join(rootDir, path.sep)
-  }, function(error, serviceWorkerFileContents) {
+  }, function (error, serviceWorkerFileContents) {
     if (error) {
       return callback(error);
     }
     fs.writeFile(path.join(rootDir, 'service-worker.js'),
-      serviceWorkerFileContents, function(error) {
+      serviceWorkerFileContents, function (error) {
       if (error) {
         return callback(error);
       }
