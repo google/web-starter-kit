@@ -98,8 +98,7 @@ gulp.task('styles', function () {
     .pipe($.sourcemaps.init())
     .pipe($.sass({
       precision: 10,
-      onError: console.error.bind(console, 'Sass error:')
-    }))
+    }).on('error', $.sass.logError))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
     .pipe(gulp.dest('.tmp'))
     // Concatenate and minify styles
