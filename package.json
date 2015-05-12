@@ -28,14 +28,7 @@
     "run-sequence": "^1.0.1",
     "vinyl-transform": "^1.0.0"
   },
-  "browserify": {
-    "transform": [
-      "browserify-shim"
-    ]
-  },
-  "browserify-shim": {
-    "jquery": "global:jQuery"
-  },
+ 
   "engines": {
     "node": ">=0.10.0"
   },
