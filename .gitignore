@@ -1,4 +1,9 @@
-node_modules
-dist
+.DS_Store
+Thumbs.db
+npm-debug.log
+npm-error.log
+node_modules/
+bower_components/
+dist/
 .tmp
 app.yaml
