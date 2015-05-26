@@ -110,7 +110,13 @@ gulp.task('styles', () => {
 
 // Concatenate and minify JavaScript
 gulp.task('scripts', () =>
-  gulp.src(['./app/scripts/main.js'])
+  gulp.src([
+    // Note: Since we are not using useref in the scripts build pipeline,
+    //       you need to explicitly list your scripts here in the right order
+    //       to be correctly concatenated
+    './app/scripts/main.js'
+    // Other scripts
+  ])
     .pipe($.concat('main.min.js'))
     .pipe($.uglify({preserveComments: 'some'}))
     // Output files
@@ -126,7 +132,7 @@ gulp.task('html', () => {
     .pipe(assets)
     // Remove any unused CSS
     // Note: If not using the Style Guide, you can delete it from
-    // the next line to only include styles your project uses.
+    //       the next line to only include styles your project uses.
     .pipe($.if('*.css', $.uncss({
       html: [
         'app/index.html'
