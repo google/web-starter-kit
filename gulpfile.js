@@ -19,7 +19,7 @@
 
 'use strict';
 
-// Include Gulp & tools we'll use
+// Include gulp & tools we'll use
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
 var del = require('del');
@@ -97,7 +97,7 @@ gulp.task('styles', function () {
     .pipe($.changed('.tmp/styles', {extension: '.css'}))
     .pipe($.sourcemaps.init())
     .pipe($.sass({
-      precision: 10,
+      precision: 10
     }).on('error', $.sass.logError))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
     .pipe(gulp.dest('.tmp'))
@@ -125,7 +125,7 @@ gulp.task('html', function () {
 
   return gulp.src('app/**/**/*.html')
     .pipe(assets)
-    // Remove Any Unused CSS
+    // Remove any unused CSS
     // Note: If not using the Style Guide, you can delete it from
     // the next line to only include styles your project uses.
     .pipe($.if('*.css', $.uncss({
@@ -184,7 +184,7 @@ gulp.task('serve:dist', ['default'], function () {
     //       will present a certificate warning in the browser.
     // https: true,
     server: 'dist',
-    baseDir: "dist"
+    baseDir: 'dist'
   });
 });
 
