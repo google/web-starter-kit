@@ -80,7 +80,6 @@ gulp.task('copy', function() {
   }, $.replace(/\/\/# sourceMappingURL=jquery.min.map/, '')))
     .pipe(gulp.dest(function(file) {
       if (file.path.indexOf('jquery') > -1) {
-        console.log(file.path);
         return 'dist/js';
       }
       return 'dist';
