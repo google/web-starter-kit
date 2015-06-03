@@ -1,5 +1,8 @@
 # Amaze UI 入门套件
 
+[![Dependency Status](https://img.shields.io/david/amazeui/starter-kit.svg?style=flat-square)](https://david-dm.org/amazeui/starter-kit)
+[![devDependency Status](https://img.shields.io/david/dev/amazeui/starter-kit.svg?style=flat-square)](https://david-dm.org/amazeui/starter-kit#info=devDependencies)
+
 Amaze UI Starter Kit 是一个使用 Gulp、NPM 构建的前端开发工作流。通过该工作流，用户可以很方便地使用 Amaze UI 进行开发。
 
 ## 使用 Gulp、NPM 构建前端开发工作流

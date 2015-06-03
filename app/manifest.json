@@ -3,19 +3,19 @@
   "short_name": "AMUISK",
   "icons": [
     {
-      "src": "images/touch/icon-128x128.png",
+      "src": "i/touch/icon-128x128.png",
       "sizes": "128x128"
     },
     {
-      "src": "images/touch/apple-touch-icon.png",
+      "src": "i/touch/apple-touch-icon.png",
       "sizes": "152x152"
     },
     {
-      "src": "images/touch/ms-touch-icon-144x144-precomposed.png",
+      "src": "i/touch/ms-touch-icon-144x144-precomposed.png",
       "sizes": "144x144"
     },
     {
-      "src": "images/touch/chrome-touch-icon-192x192.png",
+      "src": "i/touch/chrome-touch-icon-192x192.png",
       "sizes": "192x192"
     }
   ],

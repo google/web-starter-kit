@@ -25,9 +25,12 @@ var $ = require('gulp-load-plugins')();
 var del = require('del');
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
-var browserify = require('browserify');
-var transform = require('vinyl-transform');
 var reload = browserSync.reload;
+
+var browserify = require('browserify');
+var watchify = require('watchify');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
 
 var AUTOPREFIXER_BROWSERS = [
   'ie >= 10',
@@ -42,7 +45,7 @@ var AUTOPREFIXER_BROWSERS = [
 ];
 
 // JavaScript 格式校验
-gulp.task('jshint', function () {
+gulp.task('jshint', function() {
   return gulp.src('app/js/**/*.js')
     .pipe(reload({stream: true, once: true}))
     .pipe($.jshint())
@@ -51,7 +54,7 @@ gulp.task('jshint', function () {
 });
 
 // 图片优化
-gulp.task('images', function () {
+gulp.task('images', function() {
   return gulp.src('app/i/**/*')
     .pipe($.cache($.imagemin({
       progressive: true,
@@ -62,60 +65,76 @@ gulp.task('images', function () {
 });
 
 // 拷贝相关资源
-gulp.task('copy', function () {
+gulp.task('copy', function() {
   return gulp.src([
     'app/*',
     '!app/*.html',
     '!app/js/*',
     '!app/less',
     'node_modules/amazeui/dist/**/*',
-    'node_modules/jquery/dist/cdn/*.js'
+    'node_modules/jquery/dist/jquery.min.js'
   ], {
     dot: true
-  }).pipe(gulp.dest(function(file) {
-    if (file.relative.indexOf('jquery-2') > -1) {
-      return 'dist/js';
-    }
-    return 'dist';
-  }))
+  }).pipe($.if(function(file) {
+    return file.path.indexOf('jquery.min.js') > -1;
+  }, $.replace(/\/\/# sourceMappingURL=jquery.min.map/, '')))
+    .pipe(gulp.dest(function(file) {
+      if (file.path.indexOf('jquery') > -1) {
+        console.log(file.path);
+        return 'dist/js';
+      }
+      return 'dist';
+    }))
     .pipe($.size({title: 'copy'}));
 });
 
 // 编译 Less，添加浏览器前缀
-gulp.task('styles', function () {
+gulp.task('styles', function() {
   return gulp.src(['app/less/*.less'])
     .pipe($.changed('styles', {extension: '.less'}))
     .pipe($.less())
     .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
     .pipe(gulp.dest('dist/css'))
     .pipe($.csso())
-    .pipe($.rename(
-      {
-        extname: '.min.css'
-      }
-    ))
+    .pipe($.rename({suffix: '.min'}))
     .pipe(gulp.dest('dist/css'))
     .pipe($.size({title: 'styles'}));
 });
 
 // 打包 Common JS 模块
-gulp.task('browserify', function() {
-  var bundler = transform(function(filename) {
-    var b = browserify({
-      entries: filename,
-      basedir: './'
-    });
-    return b.bundle();
-  });
+var bundleInit = function() {
+  var b = watchify(browserify({
+    entries: 'app/js/main.js',
+    basedir: __dirname,
+    cache: {},
+    packageCache: {}
+  }));
 
-  gulp.src('app/js/main.js')
-    .pipe(bundler)
-    // .pipe($.rename())
+  // 如果你想把 jQuery 打包进去，注销掉下面一行
+  b.transform('browserify-shim', {global: true});
+
+  b.on('update', function() {
+    bundle(b);
+  }).on('log', $.util.log);
+
+  bundle(b);
+};
+
+var bundle = function(b) {
+  return b.bundle()
+    .on('error', $.util.log.bind($.util, 'Browserify Error'))
+    .pipe(source('main.js'))
+    .pipe(buffer())
     .pipe(gulp.dest('dist/js'))
-});
+    .pipe($.uglify())
+    .pipe($.rename({suffix: '.min'}))
+    .pipe(gulp.dest('dist/js'));
+};
+
+gulp.task('browserify', bundleInit);
 
 // 压缩 HTML
-gulp.task('html', function () {
+gulp.task('html', function() {
   return gulp.src('app/**/*.html')
     // Minify Any HTML
     .pipe($.minifyHtml())
@@ -134,11 +153,12 @@ gulp.task('watch', function() {
   gulp.watch('app/**/*.html', ['html']);
   gulp.watch('app/less/**/*less', ['styles']);
   gulp.watch('app/i/**/*', ['images']);
-  gulp.watch('app/js/**/*', ['browserify']);
+  // 使用 watchify，不再需要使用 gulp 监视 JS 变化
+  // gulp.watch('app/js/**/*', ['browserify']);
 });
 
 // 启动预览服务，并监视 Dist 目录变化自动刷新浏览器
-gulp.task('serve', ['default'], function () {
+gulp.task('serve', ['default'], function() {
   browserSync({
     notify: false,
     // Customize the BrowserSync console logging prefix
@@ -150,6 +170,6 @@ gulp.task('serve', ['default'], function () {
 });
 
 // 默认任务
-gulp.task('default', function (cb) {
+gulp.task('default', function(cb) {
   runSequence('clean', ['styles', 'jshint', 'html', 'images', 'copy', 'browserify'], 'watch', cb);
 });
