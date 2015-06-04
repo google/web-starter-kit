@@ -17,23 +17,27 @@
  *
  */
 
-'use strict';
+// This gulpfile makes use of new JavaScript features.
+// Babel handles this without us having to do anything. It just works.
+// You can read more about the new JavaScript features here:
+// https://babeljs.io/docs/learn-es2015/
 
-// Include gulp & tools we'll use
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
-var del = require('del');
-var runSequence = require('run-sequence');
-var browserSync = require('browser-sync');
-var pagespeed = require('psi');
-var reload = browserSync.reload;
-var swPrecache = require('sw-precache');
-var fs = require('fs');
-var path = require('path');
-var packageJson = require('./package.json');
+import fs from 'fs';
+import path from 'path';
+import gulp from 'gulp';
+import del from 'del';
+import runSequence from 'run-sequence';
+import browserSync from 'browser-sync';
+import swPrecache from 'sw-precache';
+import gulpLoadPlugins from 'gulp-load-plugins';
+import {output as pagespeed} from 'psi';
+import pkg from './package.json';
+
+const $ = gulpLoadPlugins();
+const reload = browserSync.reload;
 
 // Lint JavaScript
-gulp.task('jshint', function () {
+gulp.task('jshint', () => {
   return gulp.src('app/scripts/**/*.js')
     .pipe(reload({stream: true, once: true}))
     .pipe($.jshint())
@@ -42,7 +46,7 @@ gulp.task('jshint', function () {
 });
 
 // Optimize images
-gulp.task('images', function () {
+gulp.task('images', () => {
   return gulp.src('app/images/**/*')
     .pipe($.cache($.imagemin({
       progressive: true,
@@ -53,7 +57,7 @@ gulp.task('images', function () {
 });
 
 // Copy all files at the root level (app)
-gulp.task('copy', function () {
+gulp.task('copy', () => {
   return gulp.src([
     'app/*',
     '!app/*.html',
@@ -65,17 +69,15 @@ gulp.task('copy', function () {
 });
 
 // Copy web fonts to dist
-gulp.task('fonts', function () {
+gulp.task('fonts', () => {
   return gulp.src(['app/fonts/**'])
     .pipe(gulp.dest('dist/fonts'))
     .pipe($.size({title: 'fonts'}));
 });
 
-
 // Compile and automatically prefix stylesheets
-gulp.task('styles', function () {
-
-  var AUTOPREFIXER_BROWSERS = [
+gulp.task('styles', () => {
+  const AUTOPREFIXER_BROWSERS = [
     'ie >= 10',
     'ie_mob >= 10',
     'ff >= 30',
@@ -86,8 +88,6 @@ gulp.task('styles', function () {
     'android >= 4.4',
     'bb >= 10'
   ];
-
-
 
   // For best performance, don't add Sass partials to `gulp.src`
   return gulp.src([
@@ -109,9 +109,8 @@ gulp.task('styles', function () {
 })
 
 // Concatenate and minify JavaScript
-gulp.task('scripts', function () {
-  var sources = ['./app/scripts/main.js'];
-  return gulp.src(sources)
+gulp.task('scripts', () => {
+  return gulp.src(['./app/scripts/main.js'])
     .pipe($.concat('main.min.js'))
     .pipe($.uglify({preserveComments: 'some'}))
     // Output files
@@ -120,8 +119,8 @@ gulp.task('scripts', function () {
 });
 
 // Scan your HTML for assets & optimize them
-gulp.task('html', function () {
-  var assets = $.useref.assets({searchPath: '{.tmp,app}'});
+gulp.task('html', () => {
+  const assets = $.useref.assets({searchPath: '{.tmp,app}'});
 
   return gulp.src('app/**/**/*.html')
     .pipe(assets)
@@ -153,10 +152,10 @@ gulp.task('html', function () {
 });
 
 // Clean output directory
-gulp.task('clean', del.bind(null, ['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
+gulp.task('clean', () => del(['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
 
 // Watch files for changes & reload
-gulp.task('serve', ['styles'], function () {
+gulp.task('serve', ['styles'], () => {
   browserSync({
     notify: false,
     // Customize the BrowserSync console logging prefix
@@ -175,7 +174,7 @@ gulp.task('serve', ['styles'], function () {
 });
 
 // Build and serve the output from the dist build
-gulp.task('serve:dist', ['default'], function () {
+gulp.task('serve:dist', ['default'], () => {
   browserSync({
     notify: false,
     logPrefix: 'WSK',
@@ -189,18 +188,19 @@ gulp.task('serve:dist', ['default'], function () {
 });
 
 // Build production files, the default task
-gulp.task('default', ['clean'], function (cb) {
+gulp.task('default', ['clean'], cb => {
   runSequence(
     'styles',
     ['jshint', 'html', 'scripts', 'images', 'fonts', 'copy'],
     'generate-service-worker',
-    cb);
+    cb
+  );
 });
 
 // Run PageSpeed Insights
-gulp.task('pagespeed', function (cb) {
+gulp.task('pagespeed', cb => {
   // Update the below URL to the public URL of your site
-  pagespeed.output('example.com', {
+  pagespeed('example.com', {
     strategy: 'mobile',
     // By default we use the PageSpeed Insights free (no API key) tier.
     // Use a Google Developer API key if you have one: http://goo.gl/RkN0vE
@@ -208,18 +208,17 @@ gulp.task('pagespeed', function (cb) {
   }, cb);
 });
 
-
 // See http://www.html5rocks.com/en/tutorials/service-worker/introduction/ for
 // an in-depth explanation of what service workers are and why you should care.
 // Generate a service worker file that will provide offline functionality for
 // local resources. This should only be done for the 'dist' directory, to allow
 // live reload to work as expected when serving from the 'app' directory.
-gulp.task('generate-service-worker', function (callback) {
-  var rootDir = 'dist';
+gulp.task('generate-service-worker', cb => {
+  const rootDir = 'dist';
 
   swPrecache({
     // Used to avoid cache conflicts when serving on localhost.
-    cacheId: packageJson.name || 'web-starter-kit',
+    cacheId: pkg.name || 'web-starter-kit',
     // URLs that don't directly map to single static files can be defined here.
     // If any of the files a URL depends on changes, then the URL's cache entry
     // is invalidated and it will be refetched.
@@ -232,24 +231,29 @@ gulp.task('generate-service-worker', function (callback) {
     },
     staticFileGlobs: [
       // Add/remove glob patterns to match your directory setup.
-      rootDir + '/fonts/**/*.woff',
-      rootDir + '/images/**/*',
-      rootDir + '/scripts/**/*.js',
-      rootDir + '/styles/**/*.css',
-      rootDir + '/*.{html,json}'
+      `${rootDir}/fonts/**/*.woff`,
+      `${rootDir}/images/**/*`,
+      `${rootDir}/scripts/**/*.js`,
+      `${rootDir}/styles/**/*.css`,
+      `${rootDir}/*.{html,json}`
     ],
     // Translates a static file path to the relative URL that it's served from.
     stripPrefix: path.join(rootDir, path.sep)
-  }, function (error, serviceWorkerFileContents) {
-    if (error) {
-      return callback(error);
+  }, (err, swFileContents) => {
+    if (err) {
+      cb(error);
+      return;
     }
-    fs.writeFile(path.join(rootDir, 'service-worker.js'),
-      serviceWorkerFileContents, function (error) {
-      if (error) {
-        return callback(error);
+
+    const filepath = path.join(rootDir, 'service-worker.js');
+
+    fs.writeFile(filepath, swFileContents, err => {
+      if (err) {
+        cb(error);
+        return;
       }
-      callback();
+
+      cb();
     });
   });
 });

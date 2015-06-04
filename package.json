@@ -1,9 +1,10 @@
 {
   "devDependencies": {
     "apache-server-configs": "^2.7.1",
+    "babel": "^5.4.7",
     "browser-sync": "^2.6.4",
     "del": "^1.1.0",
-    "gulp": "^3.8.5",
+    "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.0.0",
     "gulp-cache": "0.2.2",
     "gulp-changed": "^1.0.0",
