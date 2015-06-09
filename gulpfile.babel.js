@@ -106,7 +106,7 @@ gulp.task('styles', () => {
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest('dist'))
     .pipe($.size({title: 'styles'}));
-})
+});
 
 // Concatenate and minify JavaScript
 gulp.task('scripts', () => {
@@ -241,7 +241,7 @@ gulp.task('generate-service-worker', cb => {
     stripPrefix: path.join(rootDir, path.sep)
   }, (err, swFileContents) => {
     if (err) {
-      cb(error);
+      cb(err);
       return;
     }
 
@@ -249,7 +249,7 @@ gulp.task('generate-service-worker', cb => {
 
     fs.writeFile(filepath, swFileContents, err => {
       if (err) {
-        cb(error);
+        cb(err);
         return;
       }
 
