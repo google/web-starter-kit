@@ -26,7 +26,7 @@ If you require Node, go to [nodejs.org](https://nodejs.org) and click on the big
 ### [Gulp](http://gulpjs.com)
 
 Bring up a terminal and type `gulp --version`.
-If Gulp is installed it should return a version number at or above 3.8.x.
+If Gulp is installed it should return a version number at or above 3.9.x.
 If you need to install/upgrade Gulp, open up a terminal and type in the following:
 
 ```sh
