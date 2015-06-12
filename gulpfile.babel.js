@@ -37,43 +37,43 @@ const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
 // Lint JavaScript
-gulp.task('jshint', () => {
-  return gulp.src('app/scripts/**/*.js')
+gulp.task('jshint', () =>
+  gulp.src('app/scripts/**/*.js')
     .pipe(reload({stream: true, once: true}))
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
-    .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
-});
+    .pipe($.if(!browserSync.active, $.jshint.reporter('fail')))
+);
 
 // Optimize images
-gulp.task('images', () => {
-  return gulp.src('app/images/**/*')
+gulp.task('images', () =>
+  gulp.src('app/images/**/*')
     .pipe($.cache($.imagemin({
       progressive: true,
       interlaced: true
     })))
     .pipe(gulp.dest('dist/images'))
-    .pipe($.size({title: 'images'}));
-});
+    .pipe($.size({title: 'images'}))
+);
 
 // Copy all files at the root level (app)
-gulp.task('copy', () => {
-  return gulp.src([
+gulp.task('copy', () =>
+  gulp.src([
     'app/*',
     '!app/*.html',
     'node_modules/apache-server-configs/dist/.htaccess'
   ], {
     dot: true
   }).pipe(gulp.dest('dist'))
-    .pipe($.size({title: 'copy'}));
-});
+    .pipe($.size({title: 'copy'}))
+);
 
 // Copy web fonts to dist
-gulp.task('fonts', () => {
-  return gulp.src(['app/fonts/**'])
+gulp.task('fonts', () =>
+  gulp.src(['app/fonts/**'])
     .pipe(gulp.dest('dist/fonts'))
-    .pipe($.size({title: 'fonts'}));
-});
+    .pipe($.size({title: 'fonts'}))
+);
 
 // Compile and automatically prefix stylesheets
 gulp.task('styles', () => {
@@ -109,14 +109,14 @@ gulp.task('styles', () => {
 });
 
 // Concatenate and minify JavaScript
-gulp.task('scripts', () => {
-  return gulp.src(['./app/scripts/main.js'])
+gulp.task('scripts', () =>
+  gulp.src(['./app/scripts/main.js'])
     .pipe($.concat('main.min.js'))
     .pipe($.uglify({preserveComments: 'some'}))
     // Output files
     .pipe(gulp.dest('dist/scripts'))
-    .pipe($.size({title: 'scripts'}));
-});
+    .pipe($.size({title: 'scripts'}))
+);
 
 // Scan your HTML for assets & optimize them
 gulp.task('html', () => {
@@ -174,7 +174,7 @@ gulp.task('serve', ['styles'], () => {
 });
 
 // Build and serve the output from the dist build
-gulp.task('serve:dist', ['default'], () => {
+gulp.task('serve:dist', ['default'], () =>
   browserSync({
     notify: false,
     logPrefix: 'WSK',
@@ -184,29 +184,29 @@ gulp.task('serve:dist', ['default'], () => {
     // https: true,
     server: 'dist',
     baseDir: 'dist'
-  });
-});
+  })
+);
 
 // Build production files, the default task
-gulp.task('default', ['clean'], cb => {
+gulp.task('default', ['clean'], cb =>
   runSequence(
     'styles',
     ['jshint', 'html', 'scripts', 'images', 'fonts', 'copy'],
     'generate-service-worker',
     cb
-  );
-});
+  )
+);
 
 // Run PageSpeed Insights
-gulp.task('pagespeed', cb => {
+gulp.task('pagespeed', cb =>
   // Update the below URL to the public URL of your site
   pagespeed('example.com', {
     strategy: 'mobile',
     // By default we use the PageSpeed Insights free (no API key) tier.
     // Use a Google Developer API key if you have one: http://goo.gl/RkN0vE
     // key: 'YOUR_API_KEY'
-  }, cb);
-});
+  }, cb)
+);
 
 // See http://www.html5rocks.com/en/tutorials/service-worker/introduction/ for
 // an in-depth explanation of what service workers are and why you should care.
