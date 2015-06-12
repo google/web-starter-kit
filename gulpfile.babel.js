@@ -102,7 +102,7 @@ gulp.task('styles', () => {
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
     .pipe(gulp.dest('.tmp'))
     // Concatenate and minify styles
-    .pipe($.if('*.css', $.csso()))
+    .pipe($.if('*.css', $.minifyCss()))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest('dist'))
     .pipe($.size({title: 'styles'}));
@@ -140,7 +140,7 @@ gulp.task('html', () => {
 
     // Concatenate and minify styles
     // In case you are still using useref build blocks
-    .pipe($.if('*.css', $.csso()))
+    .pipe($.if('*.css', $.minifyCss()))
     .pipe(assets.restore())
     .pipe($.useref())
 
