@@ -122,7 +122,7 @@ gulp.task('scripts', () => {
 gulp.task('html', () => {
   const assets = $.useref.assets({searchPath: '{.tmp,app}'});
 
-  return gulp.src('app/**/**/*.html')
+  return gulp.src('app/**/*.html')
     .pipe(assets)
     // Remove any unused CSS
     // Note: If not using the Style Guide, you can delete it from
