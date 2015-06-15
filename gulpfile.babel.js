@@ -219,16 +219,6 @@ gulp.task('generate-service-worker', cb => {
   swPrecache({
     // Used to avoid cache conflicts when serving on localhost.
     cacheId: pkg.name || 'web-starter-kit',
-    // URLs that don't directly map to single static files can be defined here.
-    // If any of the files a URL depends on changes, then the URL's cache entry
-    // is invalidated and it will be refetched.
-    // Generally, URLs that depend on multiple files (such as layout templates)
-    // should list all the files; a change in any will invalidate the cache.
-    // In this case, './' is the top-level relative URL, and its response
-    // depends on the contents of the file 'dist/index.html'.
-    dynamicUrlToDependencies: {
-      './': [path.join(rootDir, 'index.html')]
-    },
     staticFileGlobs: [
       // Add/remove glob patterns to match your directory setup.
       `${rootDir}/fonts/**/*.woff`,
