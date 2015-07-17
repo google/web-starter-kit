@@ -1,0 +1,61 @@
+{
+  /*
+   * STANDARD
+   * =================
+   */
+  
+  // All tagnames must be in lowercase only
+  "tagname-lowercase": true,
+  
+  // All attribute names must be in lowercase
+  "attr-lowercase": true,
+  
+  // Attribute values must be enclosed by double quotemarks
+  "attr-value-double-quotes": true,
+  
+  // Attributes cannot be duplicated on a single tag
+  "attr-no-duplication": true,
+  
+  // Don't look for doctypes in the html files
+  "doctype-first": false,
+  
+  // Tags must be paired
+  "tag-pair": true,
+  
+  // Empty tags must be closed by self
+  "tag-self-close": true 
+  
+  // All special characters must be escaped
+  "spec-char-escape": true,
+  
+  // All ID's must be unique
+  "id-unique": true,
+  
+  // Values for all SRC's in <img>|<script>|<link> tags must be set
+  "src-not-empty": true,
+  
+  /*
+   * PERFORMANCE
+   * =================
+   */
+  
+  // Disallow script tags in <head>
+  "head-script-disabled": true,
+  
+  /*
+   * SPECIFICATION
+   * =================
+   */
+  
+  // Disallow the use of <style> tags 
+  "style-disabled": true,
+  
+  // Prevent spaces and tabbed whitespace on the same line
+  "space-tab-mixed-disabled": true,
+
+  // Attribute values cannot use unsafe characters
+  "attr-unsafe-chars": true,
+
+  // ID's and classes cannot use the 'ad' keyword (adblock)
+  "id-class-ad-disabled": true
+}

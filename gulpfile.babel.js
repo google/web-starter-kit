@@ -45,6 +45,17 @@ gulp.task('jshint', () =>
     .pipe($.if(!browserSync.active, $.jshint.reporter('fail')))
 );
 
+// Lint HTML
+gulp.task('htmlhint', () => {
+  return gulp.src('app/**/*.html')
+    .pipe(reload({stream: true, once: true}))
+    .pipe($.htmlhint())
+    .pipe($.htmlhint.reporter('htmlhint-stylish'))
+    .pipe($.if(!browserSync.active, $.htmlhint.reporter({
+      supress: true
+    })));
+});
+
 // Optimize images
 gulp.task('images', () =>
   gulp.src('app/images/**/*')
@@ -173,7 +184,7 @@ gulp.task('serve', ['styles'], () => {
     server: ['.tmp', 'app']
   });
 
-  gulp.watch(['app/**/*.html'], reload);
+  gulp.watch(['app/**/*.html'], ['htmlhint', reload]);
   gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
   gulp.watch(['app/scripts/**/*.js'], ['jshint']);
   gulp.watch(['app/images/**/*'], reload);
@@ -197,7 +208,7 @@ gulp.task('serve:dist', ['default'], () =>
 gulp.task('default', ['clean'], cb =>
   runSequence(
     'styles',
-    ['jshint', 'html', 'scripts', 'images', 'fonts', 'copy'],
+    ['jshint', 'htmlhint', 'html', 'scripts', 'images', 'fonts', 'copy'],
     'generate-service-worker',
     cb
   )
