@@ -44,6 +44,17 @@ var AUTOPREFIXER_BROWSERS = [
   'bb >= 10'
 ];
 
+// 错误处理 防止任务中断
+var errorHandle = {
+  errorHandler: function (err) {
+    console.log(err);
+    this.emit('end');
+  }
+};
+
+
+
+
 // JavaScript 格式校验
 gulp.task('jshint', function() {
   return gulp.src('app/js/**/*.js')
@@ -91,6 +102,7 @@ gulp.task('copy', function() {
 gulp.task('styles', function() {
   return gulp.src(['app/less/*.less'])
     .pipe($.changed('styles', {extension: '.less'}))
+    .pipe($.plumber(errorHandle))
     .pipe($.less())
     .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
     .pipe(gulp.dest('dist/css'))
@@ -170,5 +182,6 @@ gulp.task('serve', ['default'], function() {
 
 // 默认任务
 gulp.task('default', function(cb) {
-  runSequence('clean', ['styles', 'jshint', 'html', 'images', 'copy', 'browserify'], 'watch', cb);
+  runSequence('clean',
+  ['styles', 'jshint', 'html', 'images', 'copy', 'browserify'], 'watch', cb);
 });
