@@ -1,7 +1,7 @@
 {
   "devDependencies": {
     "apache-server-configs": "^2.7.1",
-    "babel-core": "^5.4.7",
+    "babel": "^5.8.3",
     "browser-sync": "^2.6.4",
     "del": "^1.1.0",
     "gulp": "^3.9.0",
