@@ -19,35 +19,6 @@
 (function () {
   'use strict';
 
-  var querySelector = document.querySelector.bind(document);
-
-  var navdrawerContainer = querySelector('.navdrawer-container');
-  var body = document.body;
-  var appbarElement = querySelector('.app-bar');
-  var menuBtn = querySelector('.menu');
-  var main = querySelector('main');
-
-  function closeMenu() {
-    body.classList.remove('open');
-    appbarElement.classList.remove('open');
-    navdrawerContainer.classList.remove('open');
-  }
-
-  function toggleMenu() {
-    body.classList.toggle('open');
-    appbarElement.classList.toggle('open');
-    navdrawerContainer.classList.toggle('open');
-    navdrawerContainer.classList.add('opened');
-  }
-
-  main.addEventListener('click', closeMenu);
-  menuBtn.addEventListener('click', toggleMenu);
-  navdrawerContainer.addEventListener('click', function (event) {
-    if (event.target.nodeName === 'A' || event.target.nodeName === 'LI') {
-      closeMenu();
-    }
-  });
-
   // Check to make sure service workers are supported in the current browser,
   // and that the current page is accessed from a secure origin. Using a
   // service worker from an insecure origin will trigger JS console errors. See
