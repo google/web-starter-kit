@@ -60,6 +60,12 @@ If you would prefer not to use any of our tooling, delete the following files fr
 
 If you are interested in adding in different tooling workflows to your gulpfile.js, we recommend looking at the official Gulp [recipes](https://github.com/gulpjs/gulp/tree/master/docs/recipes) directory which includes a comprehensive list of guides.
 
+## ES2015 Support
+
+Web Starter Kit has optional ES2015 support using [Babel](https://babeljs.io/).
+To enable ES2015 support remove the line `"only": "gulpfile.babel.js",` in the [.babelrc](.babelrc) file.
+ES2015 source code will be automatically transpiled to ES5 for wide browser support.
+
 ## Extras
 
 Optional additions, such as web server configurations, can be found at [WSK Extras
