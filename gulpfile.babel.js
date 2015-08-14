@@ -56,17 +56,6 @@ gulp.task('htmlhint', () => {
     })));
 });
 
-// Lint HTML
-gulp.task('htmlhint', () => {
-  return gulp.src('app/**/*.html')
-    .pipe(reload({stream: true, once: true}))
-    .pipe($.htmlhint())
-    .pipe($.htmlhint.reporter('htmlhint-stylish'))
-    .pipe($.if(!browserSync.active, $.htmlhint.reporter({
-      supress: true
-    })));
-});
-
 // Optimize images
 gulp.task('images', () =>
   gulp.src('app/images/**/*')
