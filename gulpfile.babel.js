@@ -102,7 +102,7 @@ gulp.task('styles', () => {
 
   // For best performance, don't add Sass partials to `gulp.src`
   return gulp.src([
-    'app/**/*.scss',
+    'app/styles/**/*.scss',
     'app/styles/**/*.css'
   ])
     .pipe($.changed('.tmp/styles', {extension: '.css'}))
@@ -111,11 +111,12 @@ gulp.task('styles', () => {
       precision: 10
     }).on('error', $.sass.logError))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
-    .pipe(gulp.dest('.tmp'))
+    .pipe($.sourcemaps.write())
+    .pipe(gulp.dest('.tmp/styles'))
     // Concatenate and minify styles
     .pipe($.if('*.css', $.minifyCss()))
-    .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('dist'))
+    .pipe($.sourcemaps.write('.'))
+    .pipe(gulp.dest('dist/styles'))
     .pipe($.size({title: 'styles'}));
 });
 
