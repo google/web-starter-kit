@@ -94,7 +94,7 @@ gulp.task('styles', () => {
     'app/styles/**/*.scss',
     'app/styles/**/*.css'
   ])
-    .pipe($.changed('.tmp/styles', {extension: '.css'}))
+    .pipe($.newer({dest: '.tmp/styles', ext: '.css'}))
     .pipe($.sourcemaps.init())
     .pipe($.sass({
       precision: 10
