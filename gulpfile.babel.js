@@ -118,9 +118,11 @@ gulp.task('scripts', () =>
     './app/scripts/main.js'
     // Other scripts
   ])
+    .pipe($.sourcemaps.init())
     .pipe($.concat('main.min.js'))
     .pipe($.uglify({preserveComments: 'some'}))
     // Output files
+    .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('dist/scripts'))
     .pipe($.size({title: 'scripts'}))
 );
