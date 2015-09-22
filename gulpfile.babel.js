@@ -39,7 +39,6 @@ const reload = browserSync.reload;
 // Lint JavaScript
 gulp.task('jshint', () =>
   gulp.src('app/scripts/**/*.js')
-    .pipe(reload({stream: true, once: true}))
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
     .pipe($.if(!browserSync.active, $.jshint.reporter('fail')))
@@ -176,7 +175,7 @@ gulp.task('serve', ['styles'], () => {
 
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
-  gulp.watch(['app/scripts/**/*.js'], ['jshint']);
+  gulp.watch(['app/scripts/**/*.js'], ['jshint', reload]);
   gulp.watch(['app/images/**/*'], reload);
 });
 
