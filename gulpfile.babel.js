@@ -164,8 +164,10 @@ gulp.task('clean', cb => del(['.tmp', 'dist/*', '!dist/.git'], {dot: true}, cb))
 gulp.task('serve', ['styles'], () => {
   browserSync({
     notify: false,
-    // Customize the BrowserSync console logging prefix
+    // Customize the Browsersync console logging prefix
     logPrefix: 'WSK',
+    // Allow scroll syncing across breakpoints
+    scrollElementMapping: ['main', '.mdl-layout'],
     // Run as an https by uncommenting 'https: true'
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
@@ -184,12 +186,13 @@ gulp.task('serve:dist', ['default'], () =>
   browserSync({
     notify: false,
     logPrefix: 'WSK',
+    // Allow scroll syncing across breakpoints
+    scrollElementMapping: ['main', '.mdl-layout'],
     // Run as an https by uncommenting 'https: true'
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: 'dist',
-    baseDir: 'dist'
+    server: 'dist'
   })
 );
 
