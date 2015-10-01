@@ -4,6 +4,40 @@
 
 [Web Starter Kit](https://developers.google.com/web/starter-kit) is an opinionated boilerplate for web development. Tools for building a great experience [across many devices](https://google.github.io/web-starter-kit/hello-world/) and [performance oriented](#web-performance). Helping you to stay productive following the best practices outlined in Google's [Web Fundamentals](https://developers.google.com/web/fundamentals). A solid starting point for both professionals and newcomers to the industry.
 
+### Features
+
+> Multi-device responsive boilerplate
+
+A responsive boilerplate optimized for the multi-screen web with a high [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/) performance score. Powered by [Material Design Lite](http://getmdl.io).
+
+> Sass support
+
+Compile [Sass](http://sass-lang.com/) into CSS with ease, bringing support for variables, mixins and more.
+
+> Performance optimization with a build process powered by Gulp
+
+Minify and concatenate JavaScript, CSS, HTML and images to help keep your pages lean.
+
+> Built in HTTP Server
+
+A built-in server for previewing your site means you can test pages without messing with other tools.
+ 
+> Live Browser Reloading
+
+Reload the browser in real-time anytime an edit is made without the need for an extension.
+
+> Cross-device Synchronization
+
+Synchronize clicks, scrolls, forms and live-reload across multiple devices as you edit your project. Powered by [BrowserSync](http://browsersync.io).
+
+> PageSpeed Insights reporting
+
+Web performance metrics showing how well your site performs on mobile and desktop.
+
+> ES2015 Support
+
+Optional ES2015 support using [Babel](https://babeljs.io/). To enable ES2015 support remove the line `"only": "gulpfile.babel.js",` in the [.babelrc](.babelrc) file. ES2015 source code will be automatically transpiled to ES5 for wide browser support.
+
 ## Quickstart
 
 [Download](https://github.com/google/web-starter-kit/releases/latest) the kit or clone this repository and build on what is included in the `app` directory.
@@ -55,12 +89,6 @@ If you would prefer not to use any of our tooling, delete the following files fr
 ## Recipes
 
 If you are interested in adding in different tooling workflows to your gulpfile.js, we recommend looking at the official Gulp [recipes](https://github.com/gulpjs/gulp/tree/master/docs/recipes) directory which includes a comprehensive list of guides.
-
-## ES2015 Support
-
-Web Starter Kit has optional ES2015 support using [Babel](https://babeljs.io/).
-To enable ES2015 support remove the line `"only": "gulpfile.babel.js",` in the [.babelrc](.babelrc) file.
-ES2015 source code will be automatically transpiled to ES5 for wide browser support.
 
 ## Extras
 
