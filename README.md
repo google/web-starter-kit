@@ -4,15 +4,13 @@
 
 [Web Starter Kit](https://developers.google.com/web/starter-kit) is an opinionated boilerplate for web development. Tools for building a great experience [across many devices](https://google.github.io/web-starter-kit/hello-world/) and [performance oriented](#web-performance). Helping you to stay productive following the best practices outlined in Google's [Web Fundamentals](https://developers.google.com/web/fundamentals). A solid starting point for both professionals and newcomers to the industry.
 
-[![](https://cloud.githubusercontent.com/assets/170270/3343033/ceee251e-f899-11e3-9dd9-e313cf2522ec.png)](https://developers.google.com/web/starter-kit/ 'Features')
-
 ## Quickstart
 
 [Download](https://github.com/google/web-starter-kit/releases/latest) the kit or clone this repository and build on what is included in the `app` directory.
 
 There are two HTML starting points, from which you can choose:
 
-- `index.html` - (IE10+) the default starting point, containing layout and a slide-out menu
+- `index.html` - (IE10+) the default starting point, containing Material Design layout.
 - `basic.html` - (IE8+) no layout, but still includes our minimal mobile best-practices
 
 Be sure to look over the [installation docs](docs/install.md) to verify your environment is prepared to run WSK.
@@ -21,8 +19,6 @@ Once you have verified that your system can run WSK, check out the [commands](do
 ## Web Performance
 
 Web Starter Kit strives to give you a high performance starting point out of the box and we actively work on delivering the best [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/) score and frame-rate possible.
-
-In terms of CSS, opting to just use the minimal layout (main.css, h5bp.css) weighs in at ~7KB before modifications are made. Opting to use the Style Guide styles (the default) will take this up to ~39KB. It is your choice which path makes the most sense for your project, however notes on excluding Style Guide styles are in our gulpfile.
 
 ## Browser Support
 
