@@ -17,6 +17,8 @@
  *
  */
 
+'use strict';
+
 // This gulpfile makes use of new JavaScript features.
 // Babel handles this without us having to do anything. It just works.
 // You can read more about the new JavaScript features here:
@@ -39,7 +41,6 @@ const reload = browserSync.reload;
 // Lint JavaScript
 gulp.task('jshint', () =>
   gulp.src('app/scripts/**/*.js')
-    .pipe(reload({stream: true, once: true}))
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
     .pipe($.if(!browserSync.active, $.jshint.reporter('fail')))
@@ -94,7 +95,7 @@ gulp.task('styles', () => {
     'app/styles/**/*.scss',
     'app/styles/**/*.css'
   ])
-    .pipe($.changed('.tmp/styles', {extension: '.css'}))
+    .pipe($.newer('.tmp/styles'))
     .pipe($.sourcemaps.init())
     .pipe($.sass({
       precision: 10
@@ -109,14 +110,28 @@ gulp.task('styles', () => {
     .pipe($.size({title: 'styles'}));
 });
 
-// Concatenate and minify JavaScript
+// Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
+// to enables ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
+// `.babelrc` file.
 gulp.task('scripts', () =>
-  gulp.src(['./app/scripts/main.js'])
-    .pipe($.concat('main.min.js'))
-    .pipe($.uglify({preserveComments: 'some'}))
-    // Output files
-    .pipe(gulp.dest('dist/scripts'))
-    .pipe($.size({title: 'scripts'}))
+    gulp.src([
+      // Note: Since we are not using useref in the scripts build pipeline,
+      //       you need to explicitly list your scripts here in the right order
+      //       to be correctly concatenated
+      './app/scripts/main.js'
+      // Other scripts
+    ])
+      .pipe($.newer('.tmp/scripts'))
+      .pipe($.sourcemaps.init())
+      .pipe($.babel())
+      .pipe($.sourcemaps.write())
+      .pipe(gulp.dest('.tmp/scripts'))
+      .pipe($.concat('main.min.js'))
+      .pipe($.uglify({preserveComments: 'some'}))
+      // Output files
+      .pipe($.sourcemaps.write('.'))
+      .pipe(gulp.dest('dist/scripts'))
+      .pipe($.size({title: 'scripts'}))
 );
 
 // Scan your HTML for assets & optimize them
@@ -127,7 +142,7 @@ gulp.task('html', () => {
     .pipe(assets)
     // Remove any unused CSS
     // Note: If not using the Style Guide, you can delete it from
-    // the next line to only include styles your project uses.
+    //       the next line to only include styles your project uses.
     .pipe($.if('*.css', $.uncss({
       html: [
         'app/index.html'
@@ -153,14 +168,17 @@ gulp.task('html', () => {
 });
 
 // Clean output directory
-gulp.task('clean', cb => del(['.tmp', 'dist/*', '!dist/.git'], {dot: true}, cb));
+gulp.task('clean', cb => del(['.tmp', 'dist/*', '!dist/.git'], {dot: true},
+  cb));
 
 // Watch files for changes & reload
-gulp.task('serve', ['styles'], () => {
+gulp.task('serve', ['scripts', 'styles'], () => {
   browserSync({
     notify: false,
-    // Customize the BrowserSync console logging prefix
+    // Customize the Browsersync console logging prefix
     logPrefix: 'WSK',
+    // Allow scroll syncing across breakpoints
+    scrollElementMapping: ['main', '.mdl-layout'],
     // Run as an https by uncommenting 'https: true'
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
@@ -170,7 +188,7 @@ gulp.task('serve', ['styles'], () => {
 
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
-  gulp.watch(['app/scripts/**/*.js'], ['jshint']);
+  gulp.watch(['app/scripts/**/*.js'], ['jshint', 'scripts']);
   gulp.watch(['app/images/**/*'], reload);
 });
 
@@ -179,12 +197,13 @@ gulp.task('serve:dist', ['default'], () =>
   browserSync({
     notify: false,
     logPrefix: 'WSK',
+    // Allow scroll syncing across breakpoints
+    scrollElementMapping: ['main', '.mdl-layout'],
     // Run as an https by uncommenting 'https: true'
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: 'dist',
-    baseDir: 'dist'
+    server: 'dist'
   })
 );
 
@@ -202,7 +221,7 @@ gulp.task('default', ['clean'], cb =>
 gulp.task('pagespeed', cb =>
   // Update the below URL to the public URL of your site
   pagespeed('example.com', {
-    strategy: 'mobile',
+    strategy: 'mobile'
     // By default we use the PageSpeed Insights free (no API key) tier.
     // Use a Google Developer API key if you have one: http://goo.gl/RkN0vE
     // key: 'YOUR_API_KEY'
