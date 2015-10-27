@@ -105,9 +105,9 @@ gulp.task('styles', () => {
     .pipe(gulp.dest('.tmp/styles'))
     // Concatenate and minify styles
     .pipe($.if('*.css', $.minifyCss()))
+    .pipe($.size({title: 'styles'}))
     .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest('dist/styles'))
-    .pipe($.size({title: 'styles'}));
+    .pipe(gulp.dest('dist/styles'));
 });
 
 // Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
@@ -129,9 +129,9 @@ gulp.task('scripts', () =>
       .pipe($.concat('main.min.js'))
       .pipe($.uglify({preserveComments: 'some'}))
       // Output files
+      .pipe($.size({title: 'scripts'}))
       .pipe($.sourcemaps.write('.'))
       .pipe(gulp.dest('dist/scripts'))
-      .pipe($.size({title: 'scripts'}))
 );
 
 // Scan your HTML for assets & optimize them
