@@ -69,13 +69,6 @@ gulp.task('copy', () =>
     .pipe($.size({title: 'copy'}))
 );
 
-// Copy web fonts to dist
-gulp.task('fonts', () =>
-  gulp.src(['app/fonts/**'])
-    .pipe(gulp.dest('dist/fonts'))
-    .pipe($.size({title: 'fonts'}))
-);
-
 // Compile and automatically prefix stylesheets
 gulp.task('styles', () => {
   const AUTOPREFIXER_BROWSERS = [
@@ -211,7 +204,7 @@ gulp.task('serve:dist', ['default'], () =>
 gulp.task('default', ['clean'], cb =>
   runSequence(
     'styles',
-    ['jshint', 'html', 'scripts', 'images', 'fonts', 'copy'],
+    ['jshint', 'html', 'scripts', 'images', 'copy'],
     'generate-service-worker',
     cb
   )
@@ -241,7 +234,6 @@ gulp.task('generate-service-worker', cb => {
     cacheId: pkg.name || 'web-starter-kit',
     staticFileGlobs: [
       // Add/remove glob patterns to match your directory setup.
-      `${rootDir}/fonts/**/*.woff`,
       `${rootDir}/images/**/*`,
       `${rootDir}/scripts/**/*.js`,
       `${rootDir}/styles/**/*.css`,
