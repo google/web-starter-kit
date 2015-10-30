@@ -16,37 +16,8 @@
  *  limitations under the License
  *
  */
-(function () {
+(function() {
   'use strict';
-
-  var querySelector = document.querySelector.bind(document);
-
-  var navdrawerContainer = querySelector('.navdrawer-container');
-  var body = document.body;
-  var appbarElement = querySelector('.app-bar');
-  var menuBtn = querySelector('.menu');
-  var main = querySelector('main');
-
-  function closeMenu() {
-    body.classList.remove('open');
-    appbarElement.classList.remove('open');
-    navdrawerContainer.classList.remove('open');
-  }
-
-  function toggleMenu() {
-    body.classList.toggle('open');
-    appbarElement.classList.toggle('open');
-    navdrawerContainer.classList.toggle('open');
-    navdrawerContainer.classList.add('opened');
-  }
-
-  main.addEventListener('click', closeMenu);
-  menuBtn.addEventListener('click', toggleMenu);
-  navdrawerContainer.addEventListener('click', function (event) {
-    if (event.target.nodeName === 'A' || event.target.nodeName === 'LI') {
-      closeMenu();
-    }
-  });
 
   // Check to make sure service workers are supported in the current browser,
   // and that the current page is accessed from a secure origin. Using a
@@ -67,7 +38,7 @@
       }
 
       // updatefound is fired if service-worker.js changes.
-      registration.onupdatefound = function () {
+      registration.onupdatefound = function() {
         // updatefound is also fired the very first time the SW is installed,
         // and there's no need to prompt for a reload at that point.
         // So check here to see if the page is already controlled,
@@ -77,7 +48,7 @@
           // https://slightlyoff.github.io/ServiceWorker/spec/service_worker/index.html#service-worker-container-updatefound-event
           var installingWorker = registration.installing;
 
-          installingWorker.onstatechange = function () {
+          installingWorker.onstatechange = function() {
             switch (installingWorker.state) {
               case 'installed':
                 // At this point, the old content will have been purged and the
@@ -93,7 +64,7 @@
           };
         }
       };
-    }).catch(function (e) {
+    }).catch(function(e) {
       console.error('Error during service worker registration:', e);
     });
   }
