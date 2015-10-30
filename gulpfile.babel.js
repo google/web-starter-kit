@@ -176,7 +176,8 @@ gulp.task('serve', ['scripts', 'styles'], () => {
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: ['.tmp', 'app']
+    server: ['.tmp', 'app'],
+    port: 3000
   });
 
   gulp.watch(['app/**/*.html'], reload);
@@ -196,7 +197,8 @@ gulp.task('serve:dist', ['default'], () =>
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: 'dist'
+    server: 'dist',
+    port: 3001
   })
 );
 
