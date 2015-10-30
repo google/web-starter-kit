@@ -226,10 +226,11 @@ gulp.task('pagespeed', cb =>
 // Generate a service worker file that will provide offline functionality for
 // local resources. This should only be done for the 'dist' directory, to allow
 // live reload to work as expected when serving from the 'app' directory.
-gulp.task('generate-service-worker', cb => {
+gulp.task('generate-service-worker', () => {
   const rootDir = 'dist';
+  const filepath = path.join(rootDir, 'service-worker.js');
 
-  swPrecache({
+  return swPrecache.write(filepath, {
     // Used to avoid cache conflicts when serving on localhost.
     cacheId: pkg.name || 'web-starter-kit',
     staticFileGlobs: [
@@ -241,22 +242,6 @@ gulp.task('generate-service-worker', cb => {
     ],
     // Translates a static file path to the relative URL that it's served from.
     stripPrefix: path.join(rootDir, path.sep)
-  }, (err, swFileContents) => {
-    if (err) {
-      cb(err);
-      return;
-    }
-
-    const filepath = path.join(rootDir, 'service-worker.js');
-
-    fs.writeFile(filepath, swFileContents, err => {
-      if (err) {
-        cb(err);
-        return;
-      }
-
-      cb();
-    });
   });
 });
 
