@@ -26,7 +26,7 @@
     "psi": "^1.0.4",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.0.1",
-    "sw-precache": "^1.3.2"
+    "sw-precache": "^2.2.0"
   },
   "engines": {
     "node": ">=0.10.0"
