@@ -6,37 +6,16 @@
 
 ### Features
 
-> Multi-device responsive boilerplate
-
-A responsive boilerplate optimized for the multi-screen web with a high [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/) performance score. Powered by [Material Design Lite](http://getmdl.io).
-
-> Sass support
-
-Compile [Sass](http://sass-lang.com/) into CSS with ease, bringing support for variables, mixins and more.
-
-> Performance optimization with a build process powered by Gulp
-
-Minify and concatenate JavaScript, CSS, HTML and images to help keep your pages lean.
-
-> Built in HTTP Server
-
-A built-in server for previewing your site means you can test pages without messing with other tools.
- 
-> Live Browser Reloading
-
-Reload the browser in real-time anytime an edit is made without the need for an extension.
-
-> Cross-device Synchronization
-
-Synchronize clicks, scrolls, forms and live-reload across multiple devices as you edit your project. Powered by [BrowserSync](http://browsersync.io).
-
-> PageSpeed Insights reporting
-
-Web performance metrics showing how well your site performs on mobile and desktop.
-
-> ES2015 Support
-
-Optional ES2015 support using [Babel](https://babeljs.io/). To enable ES2015 support remove the line `"only": "gulpfile.babel.js",` in the [.babelrc](.babelrc) file. ES2015 source code will be automatically transpiled to ES5 for wide browser support.
+| Feature                                | Summary                                                                                                                                                                                                                                                     |
+|----------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Responsive boilerplate | A responsive boilerplate optimized for the multi-screen web with a high [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/) performance score. Powered by [Material Design Lite](http://getmdl.io).                               |
+| Sass support                           | Compile [Sass](http://sass-lang.com/) into CSS with ease, bringing support for variables, mixins and more. (Run `gulp serve` or `gulp` for production)                                                                                                      |
+| Performance optimization               | Minify and concatenate JavaScript, CSS, HTML and images to help keep your pages lean. (Run `gulp` to create an optimised version of your project to `/dist`)                                                                                                |
+| ES2015 via Babel 6.0                   | Optional ES2015 support using [Babel](https://babeljs.io/). To enable ES2015 support remove the line `"only": "gulpfile.babel.js",` in the [.babelrc](.babelrc) file. ES2015 source code will be automatically transpiled to ES5 for wide browser support.  |
+| Built in HTTP Server                   | A built-in server for previewing your site locally while you develop and iterate                                                                                                                                                                            |
+| Live Browser Reloading                 | Reload the browser in real-time anytime an edit is made without the need for an extension. (Run `gulp serve` and edit your files)                                                                                                                           |
+| Cross-device Synchronization           | Synchronize clicks, scrolls, forms and live-reload across multiple devices as you edit your project. Powered by [BrowserSync](http://browsersync.io). (Run `gulp serve` and open up the IP provided on other devices on your network)                       |
+| PageSpeed Insights                     | Web performance metrics showing how well your site performs on mobile and desktop (Run `gulp pagespeed`)                                                                                                                                                    |
 
 ## Quickstart
 
