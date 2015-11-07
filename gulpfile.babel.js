@@ -39,11 +39,11 @@ const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
 // Lint JavaScript
-gulp.task('jshint', () =>
+gulp.task('eslint', () =>
   gulp.src('app/scripts/**/*.js')
-    .pipe($.jshint())
-    .pipe($.jshint.reporter('jshint-stylish'))
-    .pipe($.if(!browserSync.active, $.jshint.reporter('fail')))
+    .pipe($.eslint())
+    .pipe($.eslint.format())
+    .pipe($.if(!browserSync.active, $.eslint.failOnError()))
 );
 
 // Optimize images
@@ -181,7 +181,7 @@ gulp.task('serve', ['scripts', 'styles'], () => {
 
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
-  gulp.watch(['app/scripts/**/*.js'], ['jshint', 'scripts']);
+  gulp.watch(['app/scripts/**/*.js'], ['eslint', 'scripts']);
   gulp.watch(['app/images/**/*'], reload);
 });
 
@@ -205,7 +205,7 @@ gulp.task('serve:dist', ['default'], () =>
 gulp.task('default', ['clean'], cb =>
   runSequence(
     'styles',
-    ['jshint', 'html', 'scripts', 'images', 'copy'],
+    ['eslint', 'html', 'scripts', 'images', 'copy'],
     'generate-service-worker',
     cb
   )
