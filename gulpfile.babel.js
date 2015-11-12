@@ -129,10 +129,8 @@ gulp.task('scripts', () =>
 
 // Scan your HTML for assets & optimize them
 gulp.task('html', () => {
-  const assets = $.useref.assets({searchPath: '{.tmp,app}'});
-
   return gulp.src('app/**/*.html')
-    .pipe(assets)
+    .pipe($.useref({searchPath: '{.tmp,app}'}))
     // Remove any unused CSS
     // Note: If not using the Style Guide, you can delete it from
     //       the next line to only include styles your project uses.
@@ -150,8 +148,6 @@ gulp.task('html', () => {
     // Concatenate and minify styles
     // In case you are still using useref build blocks
     .pipe($.if('*.css', $.minifyCss()))
-    .pipe(assets.restore())
-    .pipe($.useref())
 
     // Minify any HTML
     .pipe($.if('*.html', $.minifyHtml()))
