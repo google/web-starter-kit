@@ -94,12 +94,11 @@ gulp.task('styles', () => {
       precision: 10
     }).on('error', $.sass.logError))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
-    .pipe($.sourcemaps.write())
     .pipe(gulp.dest('.tmp/styles'))
     // Concatenate and minify styles
     .pipe($.if('*.css', $.minifyCss()))
     .pipe($.size({title: 'styles'}))
-    .pipe($.sourcemaps.write('.'))
+    .pipe($.sourcemaps.write('./'))
     .pipe(gulp.dest('dist/styles'));
 });
 
