@@ -176,7 +176,7 @@ gulp.task('serve', ['scripts', 'styles'], () => {
   });
 
   gulp.watch(['app/**/*.html'], reload);
-  gulp.watch(['app/styles/**/*.{scss,css}'], ['styles']);
+  gulp.watch(['app/styles/**/*.{scss,css}'], 'styles');
   gulp.watch(['app/scripts/**/*.js'], ['lint', 'scripts']);
   gulp.watch(['app/images/**/*'], reload);
 });
