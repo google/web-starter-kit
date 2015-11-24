@@ -131,17 +131,12 @@ gulp.task('html', () => {
   return gulp.src('app/**/*.html')
     .pipe($.useref({searchPath: '{.tmp,app}'}))
     // Remove any unused CSS
-    // Note: If not using the Style Guide, you can delete it from
-    //       the next line to only include styles your project uses.
     .pipe($.if('*.css', $.uncss({
       html: [
         'app/index.html'
       ],
       // CSS Selectors for UnCSS to ignore
-      ignore: [
-        /.navdrawer-container.open/,
-        /.app-bar.open/
-      ]
+      ignore: []
     })))
 
     // Concatenate and minify styles
