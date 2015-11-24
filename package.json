@@ -25,7 +25,6 @@
     "gulp-uncss": "^1.0.0",
     "gulp-useref": "^3.0.0",
     "psi": "^1.0.4",
-    "require-dir": "^0.3.0",
     "run-sequence": "^1.0.1",
     "sw-precache": "^2.2.0",
     "sw-toolbox": "^3.0.1"
