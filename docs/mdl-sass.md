@@ -39,13 +39,13 @@ Next we have some changes to make to Web Starter Kit's `app/index.html`. By defa
 
 Replace the following line:
 
-```
+```html
 <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
 ```
 
 with:
 
-```
+```html
 <link rel="stylesheet" href="styles/main.css">
 ```
 
@@ -65,13 +65,13 @@ This imports in all of MDL's component styles. If you later decide to only use a
 
 Remove:
 
-```
+```html
 <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
 ```
 
 and find the following block in `app/index.html`:
 
-```
+```html
     <!-- build:js(app/) ../../scripts/main.min.js -->
     <script src="scripts/main.js"></script>
     <!-- endbuild -->
@@ -79,7 +79,7 @@ and find the following block in `app/index.html`:
 
 Replace the above block with the following code:
 
-```
+```html
     <!-- build:js(app/) ../../scripts/main.min.js -->
     <script src="./styles/src/mdlComponentHandler.js"></script>
     <script src="./styles/src/button/button.js"></script>
@@ -103,7 +103,7 @@ Replace the above block with the following code:
 
 Then, in your `gulpfile.babel.js` (found in the root of Web Starter Kit), edit the `scripts` task. By default it will look something like this:
 
-```
+```js
 gulp.task('scripts', () =>
     gulp.src([
       // Note: Since we are not using useref in the scripts build pipeline,
@@ -115,7 +115,7 @@ gulp.task('scripts', () =>
 
 We're just going to add in the MDL component scripts so that they're correctly copied over and minified into a build when running `gulp`:
 
-```
+```js
 gulp.task('scripts', () =>
     gulp.src([
       // Component handler
