@@ -184,4 +184,8 @@ $color-accent: $palette-pink-A200 !default;
 
 Make the above change and hit save. The page should refresh, now showing you your customised theme in action. 
 
+For complete Material Design theming, you need to set two other colours: `$color-primary-contrast` and `$color-accent-contrast` in the same `app/styles/src/_variables.scss` file. These are the colours for text that is rendered on top of a solid block of primary or accent, respectively. You should set them to `$color-dark-contrast` if you've chosen a dark primary/accent, and `$color-light-contrast` if you've chosen a light primary/accent.
+
+
+
 
