@@ -64,7 +64,7 @@ If you would prefer not to use any of our tooling, delete the following files fr
 * [File Appendix](https://github.com/google/web-starter-kit/blob/master/docs/file-appendix.md) - What do the different files here do?
 * [Using Material Design Lite's Sass](https://github.com/google/web-starter-kit/blob/master/docs/mdl-sass.md) - how to get MDL's Sass working with WSK
 * [Deployment guides](https://github.com/google/web-starter-kit/blob/master/docs/deploy.md) - available for Firebase, Google App Engine and other services.
-* [Gulp recipes] - the official Gulp recipes directory includes a comprehensive list of guides for different workflows you can add to your project.
+* [Gulp recipes](https://github.com/gulpjs/gulp/tree/master/docs/recipes) - the official Gulp recipes directory includes a comprehensive list of guides for different workflows you can add to your project.
 
 ## Inspiration
 
@@ -77,4 +77,4 @@ Contributions, questions and comments are all welcome and encouraged. For code c
 ## License
 
 Apache 2.0  
-Copyright 2014 - 2015 Google Inc
+Copyright 2015 Google Inc
