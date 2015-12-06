@@ -25,8 +25,8 @@
 
 There are two HTML starting points, from which you can choose:
 
-- `index.html` - (IE10+) the default starting point, containing Material Design layout.
-- `basic.html` - (IE8+) no layout, but still includes our minimal mobile best-practices
+- `index.html` - the default starting point, containing Material Design layout.
+- `basic.html` - no layout, but still includes our minimal mobile best-practices
 
 Be sure to look over the [installation docs](docs/install.md) to verify your environment is prepared to run WSK.
 Once you have verified that your system can run WSK, check out the [commands](docs/commands.md) available to get started.
