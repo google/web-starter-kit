@@ -15,11 +15,11 @@ In gulp, you would install plugins, that do one thing and do it well, and constr
 
 `gulpfile.babel.js` is a gulpfile written in ES2015. The `babel` portion of the name refers to its use of the [Babel](https://babeljs.io) transpiler for enabling ES2015 code to run there.
 
-## app/main.js
+## app/scripts/main.js
 
 This is a file where your custom JavaScript can go. 
 
-## styles/main.css
+## app/styles/main.css
 
 This is a file where your custom CSS can go. You can place any Sass you wish to have compiled into the `styles` directory and renaming `main.css` to `main.scss` will cause Web Starter Kit to treat the file as Sass instead.
 
