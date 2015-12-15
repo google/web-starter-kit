@@ -53,8 +53,6 @@ var errorHandle = {
 };
 
 
-
-
 // JavaScript 格式校验
 gulp.task('jshint', function() {
   return gulp.src('app/js/**/*.js')
@@ -157,6 +155,11 @@ gulp.task('html', function() {
 // 洗刷刷
 gulp.task('clean', function(cb) {
   del(['dist/*', '!dist/.git'], {dot: true}, cb);
+});
+
+// 清空 gulp-cache 缓存
+gulp.task('clearCache', function(cb) {
+  return $.cache.clearAll(cb);
 });
 
 // 监视源文件变化自动cd编译
