@@ -6,13 +6,12 @@ var $ = require('jquery');
 var addToHome = require('amazeui/js/ui.add2home');
 
 // 使用 NPM 中的模块
-var detector = require('detector');
+var hljs = require('highlight.js');
 
 $(function() {
-  $('#browser-info').append('浏览器信息：<pre>' +
-    JSON.stringify(detector.browser) +
-    '</pre>'
-  );
+  $('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
 
   addToHome();
 

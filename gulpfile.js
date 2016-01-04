@@ -113,14 +113,15 @@ gulp.task('styles', function() {
 // 打包 Common JS 模块
 var bundleInit = function() {
   var b = watchify(browserify({
-    entries: 'app/js/main.js',
+    entries: './app/js/main.js',
     basedir: __dirname,
     cache: {},
     packageCache: {}
   }));
 
-  // 如果你想把 jQuery 打包进去，注销掉下面一行
-  b.transform('browserify-shim', {global: true});
+  b.transform('babelify', {presets: ['es2015']})
+    // 如果你想把 jQuery 打包进去，注销掉下面一行
+    .transform('browserify-shim', {global: true});
 
   b.on('update', function() {
     bundle(b);
@@ -146,15 +147,17 @@ gulp.task('browserify', bundleInit);
 gulp.task('html', function() {
   return gulp.src('app/**/*.html')
     // Minify Any HTML
-    .pipe($.minifyHtml())
+    .pipe($.htmlmin({
+      collapseWhitespace: true
+    }))
     // Output Files
     .pipe(gulp.dest('dist'))
     .pipe($.size({title: 'html'}));
 });
 
 // 洗刷刷
-gulp.task('clean', function(cb) {
-  del(['dist/*', '!dist/.git'], {dot: true}, cb);
+gulp.task('clean', function() {
+  return del(['dist/*', '!dist/.git'], {dot: true});
 });
 
 // 清空 gulp-cache 缓存

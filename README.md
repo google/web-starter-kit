@@ -155,27 +155,28 @@ $(function() {
 
 #### 使用 NPM 中的其他模块
 
-以使用 [detector](https://github.com/hotoo/detector) 为例：
+以使用 [highlight.js](https://www.npmjs.com/package/highlight.js) 为例：
 
-首先，安装 detector 并加入依赖列表：
+首先，安装 highlight.js 并加入依赖列表：
 
 ```
-npm install detector --save-dev
+npm install highlight.js --save-dev
 ```
 
-然后，`require` detector：
+然后，`require` highlight.js：
 
 ```js
-var detector = require('detector');
+var hljs = require('highlight.js');
 ```
 
-接下，使用 `detector` 获取浏览器信息并在页面中显示：
+接下，使用 `highlight.js` 高亮页面中的代码：
 
 ```js
-$('#browser-info').append('浏览器信息：<pre>' +
-    JSON.stringify(detector.browser) +
-    '</pre>'
-);
+$(document).ready(function() {
+  $('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
 ```
 
 ### 结语

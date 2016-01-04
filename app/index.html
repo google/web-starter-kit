@@ -73,10 +73,13 @@
       Amaze UI Stater Kit 是一个使用 Gulp、NPM 构建的工作流模板，在此模板上用户可以方便的使用 Amaze UI 开发网页应用。
     </p>
     <p><a href="https://github.com/amazeui/starter-kit" target="_blank" class="am-btn am-btn-success">查看详情</a></p>
-    <div id="browser-info">
-
+    <p>使用 highlight.js 高亮代码示例：</p>
+      <pre><code class="language-javascript">$(document).ready(function() {
+  $('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});</code></pre>
     </div>
-  </div>
 </main>
 <script src="js/jquery.min.js"></script>
 <script src="js/amazeui.min.js"></script>
