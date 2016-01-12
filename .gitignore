@@ -2,3 +2,5 @@ node_modules
 dist/
 .tmp
 app.yaml
+.idea/
+web-starter-kit.iml
