@@ -158,7 +158,7 @@ You will probably want to configure the color theme used in MDL.
 
 MDL supports Material Design's [color palette](https://www.google.com/design/spec/style/color.html#color-color-palette) through Sass variables. 
 
-If you find a color in the palette spec you would like to use e.g color name `Pink` with fill `500`, MDL exposes this as `$palette-purple-500`. Let's walk through customising the primary and accent colors for your theme.
+If you find a color in the palette spec you would like to use e.g color name `Pink` with fill `500`, MDL exposes this as `$palette-pink-500`. Let's walk through customising the primary and accent colors for your theme.
 
 This can be done using your setup as follows:
 
