@@ -19,20 +19,16 @@
 
 'use strict';
 
-// This gulpfile makes use of new JavaScript features.
-// Babel handles this without us having to do anything. It just works.
-// You can read more about the new JavaScript features here:
-// https://babeljs.io/docs/learn-es2015/
-
 import gulp from 'gulp';
+import requireDir from 'require-dir';
 
-gulp.task('default', cb => {
-  console.log('Hello, World!');
+GLOBAL.config = {
+  env: 'prod',
+  src: 'src',
+  dest: 'build'
+};
 
-  // Needed to make the task finish correctly
-  cb();
-});
+// Load tasks from the `gulp-tasks` directory
+requireDir('gulp-tasks');
 
-// Load custom tasks from the `tasks` directory
-// Run: `npm install --save-dev require-dir` from the command-line
-// try { require('require-dir')('tasks'); } catch (err) { console.error(err); }
+gulp.task('default', gulp.parallel(['sass']));
