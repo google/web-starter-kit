@@ -20,16 +20,17 @@
 import gulp from 'gulp';
 import sass from 'gulp-sass';
 import autoprefixer from 'gulp-autoprefixer';
-import minifyCSS from 'gulp-minify-css';
+import cssnano from 'gulp-cssnano';
 import sourcemaps from 'gulp-sourcemaps';
 
 const AUTOPREFIXER_BROWSERS = [
-  'ie >= 10',
+  'ie >= 11',
   'ie_mob >= 10',
-  'ff >= 30',
-  'chrome >= 34',
-  'safari >= 7',
-  'opera >= 23',
+  'last 2 ff versions',
+  'last 2 chrome versions',
+  'last 2 edge versions',
+  'last 2 safari versions',
+  'last 2 opera versions',
   'ios >= 7',
   'android >= 4.4',
   'bb >= 10'
@@ -39,23 +40,13 @@ gulp.task('sass', () => {
   var sassStream = gulp.src(GLOBAL.config.src + '/**/*.scss')
     .pipe(sass().on('error', sass.logError));
 
-  // Only create sourcemaps for non prod
-  if (GLOBAL.config.env !== 'prod') {
-    sassStream.pipe(sourcemaps.init());
-  }
-
-  sassStream.pipe(autoprefixer(AUTOPREFIXER_BROWSERS));
+  sassStream = sassStream.pipe(sourcemaps.init());
+  sassStream = sassStream.pipe(autoprefixer(AUTOPREFIXER_BROWSERS));
 
   if (GLOBAL.config.env === 'prod') {
-    sassStream.pipe(minifyCSS());
+    sassStream = sassStream.pipe(cssnano());
   }
 
-  // Only create sourcemaps for non prod
-  if (GLOBAL.config.env !== 'prod') {
-    // TODO: Test writing external sourcemaps: gulp-sourcemaps
-    // TODO: Could do this for all builds.
-    sassStream.pipe(sourcemaps.write());
-  }
-
+  sassStream = sassStream.pipe(sourcemaps.write(GLOBAL.config.dest));
   return sassStream.pipe(gulp.dest(GLOBAL.config.dest));
 });
