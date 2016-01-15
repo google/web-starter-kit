@@ -20,7 +20,7 @@
 'use strict';
 
 import gulp from 'gulp';
-import {sass} from './gulp-tasks/sass';
+import sass from './gulp-tasks/sass';
 
 GLOBAL.config = {
   env: 'prod',
