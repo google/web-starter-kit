@@ -15,7 +15,7 @@
   },
   "private": true,
   "scripts": {
-    "test": "gulp"
+    "test": "cd src && gulp"
   },
   "eslintConfig": {
     "extends": "google"
