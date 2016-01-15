@@ -20,7 +20,7 @@
 'use strict';
 
 import gulp from 'gulp';
-import requireDir from 'require-dir';
+import {sass} from './gulp-tasks/sass';
 
 GLOBAL.config = {
   env: 'prod',
@@ -28,7 +28,4 @@ GLOBAL.config = {
   dest: 'build'
 };
 
-// Load tasks from the `gulp-tasks` directory
-requireDir('gulp-tasks');
-
-gulp.task('default', gulp.parallel(['sass']));
+gulp.task('default', gulp.parallel([sass]));

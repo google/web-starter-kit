@@ -18,7 +18,7 @@
  */
 
 import gulp from 'gulp';
-import sass from 'gulp-sass';
+import gulpSass from 'gulp-sass';
 import autoprefixer from 'gulp-autoprefixer';
 import cssnano from 'gulp-cssnano';
 import sourcemaps from 'gulp-sourcemaps';
@@ -36,17 +36,17 @@ const AUTOPREFIXER_BROWSERS = [
   'bb >= 10'
 ];
 
-gulp.task('sass', () => {
+export function sass() {
   var sassStream = gulp.src(GLOBAL.config.src + '/**/*.scss')
-    .pipe(sass().on('error', sass.logError));
+    .pipe(gulpSass().on('error', gulpSass.logError))
+    .pipe(sourcemaps.init())
+    .pipe(autoprefixer(AUTOPREFIXER_BROWSERS));
 
-  sassStream = sassStream.pipe(sourcemaps.init());
-  sassStream = sassStream.pipe(autoprefixer(AUTOPREFIXER_BROWSERS));
-
+  // We only want to minify for production builds
   if (GLOBAL.config.env === 'prod') {
     sassStream = sassStream.pipe(cssnano());
   }
 
-  sassStream = sassStream.pipe(sourcemaps.write(GLOBAL.config.dest));
-  return sassStream.pipe(gulp.dest(GLOBAL.config.dest));
-});
+  return sassStream.pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest(GLOBAL.config.dest));
+}
