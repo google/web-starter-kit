@@ -1,7 +1,7 @@
 /**
  *
  *  Web Starter Kit
- *  Copyright 2015 Google Inc. All rights reserved.
+ *  Copyright 2016 Google Inc. All rights reserved.
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,20 +19,13 @@
 
 'use strict';
 
-// This gulpfile makes use of new JavaScript features.
-// Babel handles this without us having to do anything. It just works.
-// You can read more about the new JavaScript features here:
-// https://babeljs.io/docs/learn-es2015/
-
 import gulp from 'gulp';
+import * as sass from './wsk-tasks/sass';
 
-gulp.task('default', cb => {
-  console.log('Hello, World!');
+GLOBAL.config = {
+  env: 'prod',
+  src: 'src',
+  dest: 'build'
+};
 
-  // Needed to make the task finish correctly
-  cb();
-});
-
-// Load custom tasks from the `tasks` directory
-// Run: `npm install --save-dev require-dir` from the command-line
-// try { require('require-dir')('tasks'); } catch (err) { console.error(err); }
+gulp.task('default', gulp.parallel([sass.build]));

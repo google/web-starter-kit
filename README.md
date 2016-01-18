@@ -16,6 +16,11 @@ There are two HTML starting points, from which you can choose:
 Be sure to look over the [installation docs](docs/install.md) to verify your environment is prepared to run WSK.
 Once you have verified that your system can run WSK, check out the [commands](docs/commands.md) available to get started.
 
+## Locally development
+
+    npm uninstall -g gulp
+    npm install -g "gulpjs/gulp-cli#4.0"
+
 ## Troubleshooting
 
 If you find yourself running into issues during installation or running the tools, please check our [Troubleshooting](https://github.com/google/web-starter-kit/wiki/Troubleshooting) guide and then open an [issue](https://github.com/google/web-starter-kit/issues). We would be happy to discuss how they can be solved.
@@ -31,4 +36,4 @@ Contributions, questions and comments are all welcome and encouraged. For code c
 ## License
 
 Apache 2.0  
-Copyright 2015 Google Inc
+Copyright 2016 Google Inc
