@@ -20,7 +20,7 @@
 'use strict';
 
 import gulp from 'gulp';
-import sass from './gulp-tasks/sass';
+import * as sass from './wsk-tasks/sass';
 
 GLOBAL.config = {
   env: 'prod',
@@ -28,4 +28,4 @@ GLOBAL.config = {
   dest: 'build'
 };
 
-gulp.task('default', gulp.parallel([sass]));
+gulp.task('default', gulp.parallel([sass.build]));

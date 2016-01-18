@@ -36,7 +36,7 @@ const AUTOPREFIXER_BROWSERS = [
   'bb >= 10'
 ];
 
-export default function sass() {
+export function build() {
   var sassStream = gulp.src(GLOBAL.config.src + '/**/*.scss')
     .pipe(gulpSass().on('error', gulpSass.logError))
     .pipe(sourcemaps.init())
