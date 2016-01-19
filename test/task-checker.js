@@ -37,7 +37,11 @@ describe('This should enforce any rules we want to exist for our tasks', () => {
     {taskName: 'sass', task: sass}
   ];
 
-  afterEach(done => {
+  beforeEach(done => {
+    rimraf(TEST_OUTPUT_PATH, done);
+  });
+
+  after(done => {
     rimraf(TEST_OUTPUT_PATH, done);
   });
 
