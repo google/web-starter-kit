@@ -23,7 +23,7 @@
 
 require('chai').should();
 
-import * as sass from '../src/wsk-tasks/sass.js';
+var sass = require('../src/wsk-tasks/sass.js');
 
 describe('This should enforce any rules we want to exist for our tasks', () => {
   // Must clean up the output path

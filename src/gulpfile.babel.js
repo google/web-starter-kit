@@ -19,8 +19,8 @@
 
 'use strict';
 
-import gulp from 'gulp';
-import * as sass from './wsk-tasks/sass';
+var gulp = require('gulp');
+var sass = require('./wsk-tasks/sass.js');
 
 GLOBAL.config = {
   env: 'prod',
