@@ -37,13 +37,11 @@ describe('This should enforce any rules we want to exist for our tasks', () => {
     {taskName: 'sass', task: sass}
   ];
 
-  beforeEach(done => {
-    rimraf(TEST_OUTPUT_PATH, done);
-  });
+  // Clean up before each test
+  beforeEach(done => rimraf(TEST_OUTPUT_PATH, done));
 
-  after(done => {
-    rimraf(TEST_OUTPUT_PATH, done);
-  });
+  // Clean up after final test
+  after(done => rimraf(TEST_OUTPUT_PATH, done));
 
   tasksToTest.map(taskObject => {
     let taskName = taskObject.taskName;
