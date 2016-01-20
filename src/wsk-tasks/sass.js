@@ -17,11 +17,11 @@
  *
  */
 
-import gulp from 'gulp';
-import gulpSass from 'gulp-sass';
-import autoprefixer from 'gulp-autoprefixer';
-import cssnano from 'gulp-cssnano';
-import sourcemaps from 'gulp-sourcemaps';
+var gulp = require('gulp');
+var gulpSass = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
+var cssnano = require('gulp-cssnano');
+var sourcemaps = require('gulp-sourcemaps');
 
 const AUTOPREFIXER_BROWSERS = [
   'ie >= 11',
@@ -36,7 +36,7 @@ const AUTOPREFIXER_BROWSERS = [
   'bb >= 10'
 ];
 
-export function build() {
+function build() {
   var sassStream = gulp.src(GLOBAL.config.src + '/**/*.scss')
     .pipe(gulpSass().on('error', gulpSass.logError))
     .pipe(sourcemaps.init())
@@ -50,3 +50,7 @@ export function build() {
   return sassStream.pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(GLOBAL.config.dest));
 }
+
+module.exports = {
+  build: build,
+};
