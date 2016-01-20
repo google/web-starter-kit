@@ -23,17 +23,17 @@ var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 
 function build() {
-  var sassStream = gulp.src(GLOBAL.config.src + '/**/*.js')
+  var stream = gulp.src(GLOBAL.config.src + '/**/*.js')
     .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ["es2015"]
     }));
 
   if (GLOBAL.config.env === 'prod') {
-    sassStream = sassStream.pipe(uglify());
+    stream = stream.pipe(uglify());
   }
 
-  return sassStream.pipe(sourcemaps.write('.'))
+  return stream.pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(GLOBAL.config.dest));
 }
 
