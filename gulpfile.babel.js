@@ -39,7 +39,7 @@ const reload = browserSync.reload;
 
 // Lint JavaScript
 gulp.task('lint', () =>
-  gulp.src('app/scripts/**/*.js')
+  return gulp.src('app/scripts/**/*.js')
     .pipe($.eslint())
     .pipe($.eslint.format())
     .pipe($.if(!browserSync.active, $.eslint.failOnError()))
@@ -47,7 +47,7 @@ gulp.task('lint', () =>
 
 // Optimize images
 gulp.task('images', () =>
-  gulp.src('app/images/**/*')
+  return gulp.src('app/images/**/*')
     .pipe($.cache($.imagemin({
       progressive: true,
       interlaced: true
@@ -58,7 +58,7 @@ gulp.task('images', () =>
 
 // Copy all files at the root level (app)
 gulp.task('copy', () =>
-  gulp.src([
+  return gulp.src([
     'app/*',
     '!app/*.html',
     'node_modules/apache-server-configs/dist/.htaccess'
@@ -105,7 +105,7 @@ gulp.task('styles', () => {
 // to enables ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
 // `.babelrc` file.
 gulp.task('scripts', () =>
-    gulp.src([
+    return gulp.src([
       // Note: Since we are not using useref in the scripts build pipeline,
       //       you need to explicitly list your scripts here in the right order
       //       to be correctly concatenated
