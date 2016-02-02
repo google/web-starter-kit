@@ -17,6 +17,7 @@
     "gulp-if": "^2.0.0",
     "gulp-imagemin": "^2.0.0",
     "gulp-load-plugins": "^1.0.0",
+    "gulp-minify-inline": "^0.1.1",
     "gulp-newer": "^1.0.0",
     "gulp-sass": "^2.0.0",
     "gulp-size": "^2.0.0",

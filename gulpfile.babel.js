@@ -154,6 +154,18 @@ gulp.task('html', () => {
       removeStyleLinkTypeAttributes: true,
       removeOptionalTags: true
     })))
+    .pipe($.if('*.html', $.minifyInline({
+            js: {
+                output: {
+                    comments: true
+                }
+            },
+            jsSelector: 'script[type!="text/x-handlebars-template"]',
+            css: {
+                keepSpecialComments: 1
+            },
+            cssSelector: 'style[do-not-minify!="true"]'
+        })))
     // Output files
     .pipe($.if('*.html', $.size({title: 'html', showFiles: true})))
     .pipe(gulp.dest('dist'));
