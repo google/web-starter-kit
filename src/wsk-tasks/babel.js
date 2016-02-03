@@ -20,13 +20,17 @@
 var gulp = require('gulp');
 var babel = require('gulp-babel');
 var uglify = require('gulp-uglify');
+var browserify = require('gulp-browserify');
 var sourcemaps = require('gulp-sourcemaps');
 
 function build() {
   var stream = gulp.src(GLOBAL.config.src + '/**/*.js')
     .pipe(sourcemaps.init())
     .pipe(babel({
-      presets: ["es2015"]
+      presets: ['es2015']
+    }))
+    .pipe(browserify({
+      debug: GLOBAL.config.env !== 'prod'
     }));
 
   if (GLOBAL.config.env === 'prod') {
