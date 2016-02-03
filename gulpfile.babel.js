@@ -157,14 +157,14 @@ gulp.task('html', () => {
     .pipe($.if('*.html', $.minifyInline({
             js: {
                 output: {
-                    comments: true
+                    comments: false
                 }
             },
             jsSelector: 'script[type!="text/x-handlebars-template"]',
             css: {
                 keepSpecialComments: 1
             },
-            cssSelector: 'style[do-not-minify!="true"]'
+            cssSelector: 'style[data-do-not-minify!="true"]'
         })))
     // Output files
     .pipe($.if('*.html', $.size({title: 'html', showFiles: true})))
