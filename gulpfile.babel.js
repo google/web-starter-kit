@@ -160,7 +160,6 @@ gulp.task('html', () => {
                     comments: false
                 }
             },
-            jsSelector: 'script[type!="text/x-handlebars-template"]',
             css: {
                 keepSpecialComments: 1
             },
