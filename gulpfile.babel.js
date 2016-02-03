@@ -38,15 +38,15 @@ const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
 // Lint JavaScript
-gulp.task('lint', () =>
+gulp.task('lint', () => {
   return gulp.src('app/scripts/**/*.js')
     .pipe($.eslint())
     .pipe($.eslint.format())
     .pipe($.if(!browserSync.active, $.eslint.failOnError()))
-);
+});
 
 // Optimize images
-gulp.task('images', () =>
+gulp.task('images', () => {
   return gulp.src('app/images/**/*')
     .pipe($.cache($.imagemin({
       progressive: true,
@@ -54,10 +54,10 @@ gulp.task('images', () =>
     })))
     .pipe(gulp.dest('dist/images'))
     .pipe($.size({title: 'images'}))
-);
+});
 
 // Copy all files at the root level (app)
-gulp.task('copy', () =>
+gulp.task('copy', () => {
   return gulp.src([
     'app/*',
     '!app/*.html',
@@ -66,7 +66,7 @@ gulp.task('copy', () =>
     dot: true
   }).pipe(gulp.dest('dist'))
     .pipe($.size({title: 'copy'}))
-);
+});
 
 // Compile and automatically prefix stylesheets
 gulp.task('styles', () => {
@@ -104,7 +104,7 @@ gulp.task('styles', () => {
 // Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
 // to enables ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
 // `.babelrc` file.
-gulp.task('scripts', () =>
+gulp.task('scripts', () => {
     return gulp.src([
       // Note: Since we are not using useref in the scripts build pipeline,
       //       you need to explicitly list your scripts here in the right order
@@ -123,7 +123,7 @@ gulp.task('scripts', () =>
       .pipe($.size({title: 'scripts'}))
       .pipe($.sourcemaps.write('.'))
       .pipe(gulp.dest('dist/scripts'))
-);
+});
 
 // Scan your HTML for assets & optimize them
 gulp.task('html', () => {
