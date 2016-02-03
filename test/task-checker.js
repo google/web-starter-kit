@@ -23,8 +23,8 @@
 
 require('chai').should();
 
-var sass = require('../src/wsk-tasks/sass.js');
-var babel = require('../src/wsk-tasks/babel.js');
+const sass = require('../src/wsk-tasks/sass.js');
+const babel = require('../src/wsk-tasks/babel.js');
 
 describe('This should enforce any rules we want to exist for our task', () => {
   // Must clean up the output path
