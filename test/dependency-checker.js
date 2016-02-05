@@ -27,13 +27,9 @@ const path = require('path');
 const david = require('david');
 
 describe('Check that the dependencies of the project are up to date', () => {
-  function listDependencies(deps) {
-    Object.keys(deps).forEach(function(depName) {
-      var required = deps[depName].required || '*';
-      var stable = deps[depName].stable || 'None';
-      var latest = deps[depName].latest;
-      console.log('%s Required: %s Stable: %s Latest: %s', depName, required, stable, latest);
-    });
+  if (process.env.TRAVIS_PULL_REQUEST) {
+    console.warn('Skipping dependency checks for pull request');
+    return;
   }
 
   it('should have up to date npm dependencies', done => {
