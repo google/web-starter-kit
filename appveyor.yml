@@ -1,3 +1,5 @@
+version: 1.0.{build}
+
 # Test against this version of Node.js
 environment:
   matrix:
