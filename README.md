@@ -1,5 +1,6 @@
 # [![Web Starter Kit](https://cloud.githubusercontent.com/assets/110953/11445049/f05512ba-9520-11e5-8fdb-8c8eb5f690d0.jpg)](https://github.com/google/web-starter-kit/releases/latest)
 
+![Appveyor Build Badge](https://ci.appveyor.com/api/projects/status/p624piraukxlr0tj?svg=true)
 ![David Dependency Badge](https://david-dm.org/google/web-starter-kit/dev-status.svg)
 
 ## Overview
