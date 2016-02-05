@@ -28,4 +28,11 @@ GLOBAL.config = {
   dest: 'build'
 };
 
-gulp.task('default', gulp.parallel([sass.build]));
+gulp.task('watch', gulp.series([
+  gulp.parallel([sass.build]),
+  gulp.parallel([sass.watch])
+]));
+
+gulp.task('default', gulp.series([
+  gulp.parallel([sass.build])
+]));

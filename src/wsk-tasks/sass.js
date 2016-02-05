@@ -22,6 +22,8 @@ var gulpSass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var cssnano = require('gulp-cssnano');
 var sourcemaps = require('gulp-sourcemaps');
+var gulpWatch = require('gulp-watch');
+var fs = require('fs');
 
 const AUTOPREFIXER_BROWSERS = [
   'ie >= 11',
@@ -37,6 +39,7 @@ const AUTOPREFIXER_BROWSERS = [
 ];
 
 function build() {
+  console.log('Sass build');
   var sassStream = gulp.src(GLOBAL.config.src + '/**/*.scss')
     .pipe(gulpSass().on('error', gulpSass.logError))
     .pipe(sourcemaps.init())
@@ -51,6 +54,11 @@ function build() {
     .pipe(gulp.dest(GLOBAL.config.dest));
 }
 
+function watch(cb) {
+  gulp.watch(GLOBAL.config.src + '/**/*.scss', gulp.series([build, cb]));
+}
+
 module.exports = {
   build: build,
+  watch: watch
 };
