@@ -23,9 +23,10 @@
 
 require('chai').should();
 
-var sass = require('../src/wsk-tasks/sass.js');
+const sass = require('../src/wsk-tasks/sass.js');
+const babel = require('../src/wsk-tasks/babel.js');
 
-describe('This should enforce any rules we want to exist for our tasks', () => {
+describe('This should enforce any rules we want to exist for our task', () => {
   // Must clean up the output path
   let fs = require('fs');
   let rimraf = require('rimraf');
@@ -34,7 +35,8 @@ describe('This should enforce any rules we want to exist for our tasks', () => {
   const TEST_OUTPUT_PATH = 'test/output';
 
   let tasksToTest = [
-    {taskName: 'sass', task: sass}
+    {taskName: 'sass', task: sass},
+    {taskName: 'babel', task: babel},
   ];
 
   // Clean up before each test
@@ -46,51 +48,53 @@ describe('This should enforce any rules we want to exist for our tasks', () => {
   tasksToTest.map(taskObject => {
     let taskName = taskObject.taskName;
     let task = taskObject.task;
+    describe(taskName, () => {
+      it('should only have supported methods', () => {
+        let supportedMethods = ['build', 'watch'];
+        let invalidKeys = Object.keys(task).filter(key => {
+          if (supportedMethods.indexOf(key) === -1) {
+            return key;
+          }
+        });
 
-    it('should only have supported methods', () => {
-      let supportedMethods = ['build', 'watch'];
-      let invalidKeys = Object.keys(task).filter(key => {
-        if (supportedMethods.indexOf(key) === -1) {
-          return key;
+        if (invalidKeys.length > 0) {
+          let keysString = invalidKeys.join(',');
+          throw new Error(`There are unexpected methods ` +
+            `in the "${taskName}" task: [ ${keysString} ]`);
         }
       });
 
-      if (invalidKeys.length > 0) {
-        let keysString = invalidKeys.join(',');
-        throw new Error(`There are unexpected methods ` +
-          `in the "${taskName}" task: [ ${keysString} ]`);
-      }
-    });
+      it('should have all required methods', () => {
+        let requiredMethods = ['build'];
+        let taskKeys = Object.keys(task);
+        let missingMethods = requiredMethods.filter(key => {
+          if (taskKeys.indexOf(key) === -1) {
+            return key;
+          }
+        });
 
-    it('should have all required methods', () => {
-      let requiredMethods = ['build'];
-      let taskKeys = Object.keys(task);
-      let missingMethods = requiredMethods.filter(key => {
-        if (taskKeys.indexOf(key) === -1) {
-          return key;
+        if (missingMethods.length > 0) {
+          let keysString = missingMethods.join(',');
+          throw new Error(`There are missing required methods ` +
+            `in the "${taskName}" task: [ ${keysString} ]`);
         }
       });
 
-      if (missingMethods.length > 0) {
-        let keysString = missingMethods.join(',');
-        throw new Error(`There are missing required methods ` +
-          `in the "${taskName}" task: [ ${keysString} ]`);
-      }
-    });
+      it('should build cleanly', function(done) {
+        this.timeout(10000);
+        GLOBAL.config = {
+          env: 'prod',
+          src: VALID_TEST_FILES,
+          dest: TEST_OUTPUT_PATH
+        };
 
-    it('should build cleanly', done => {
-      GLOBAL.config = {
-        env: 'prod',
-        src: VALID_TEST_FILES,
-        dest: TEST_OUTPUT_PATH
-      };
+        task.build().on('end', () => {
+          // Check output exists
+          var outputFiles = fs.readdirSync('test/output');
+          outputFiles.should.have.length.above(0);
 
-      task.build().on('end', () => {
-        // Check output exists
-        var outputFiles = fs.readdirSync('test/output');
-        outputFiles.should.have.length.above(0);
-
-        done();
+          done();
+        });
       });
     });
   });
