@@ -100,7 +100,7 @@ gulp.task('styles', () => {
     .pipe($.size({title: 'styles'}))
     .pipe($.sourcemaps.write('./'))
     .pipe(gulp.dest('dist/styles'))
-    .pipe($.if(bs.active, bs.stream({ match: '**/*.css' })));
+    .pipe($.if(browserSync.active, browserSync.stream({ match: '**/*.css' })));
 });
 
 // Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
