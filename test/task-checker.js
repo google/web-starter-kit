@@ -65,7 +65,9 @@ let describeTestsForTask = function(taskName, task) {
     });
 
     it('should build cleanly', function(done) {
-      this.timeout(10000);
+      // This has to be increased to a minute to ensure Appveyor
+      // (i.e. Windows) has time to complete babel build
+      this.timeout(60000);
       GLOBAL.config = {
         env: 'prod',
         src: VALID_TEST_FILES,
