@@ -184,7 +184,7 @@ gulp.task('serve', ['scripts', 'styles'], () => {
 
 // Build and serve the output from the dist build
 gulp.task('serve:dist', ['default'], () =>
-  browserSync({
+  browserSync.init({
     notify: false,
     logPrefix: 'WSK',
     // Allow scroll syncing across breakpoints
