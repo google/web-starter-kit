@@ -29,12 +29,13 @@ import path from 'path';
 import gulp from 'gulp';
 import del from 'del';
 import runSequence from 'run-sequence';
-import browserSync from 'browser-sync';
+import bs from 'browser-sync';
 import swPrecache from 'sw-precache';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import {output as pagespeed} from 'psi';
 import pkg from './package.json';
 
+const browserSync = bs.create()
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
@@ -161,7 +162,7 @@ gulp.task('clean', cb => del(['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
 
 // Watch files for changes & reload
 gulp.task('serve', ['scripts', 'styles'], () => {
-  browserSync({
+  browserSync.init({
     notify: false,
     // Customize the Browsersync console logging prefix
     logPrefix: 'WSK',
