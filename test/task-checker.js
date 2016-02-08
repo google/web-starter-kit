@@ -22,9 +22,9 @@
 'use strict';
 
 require('chai').should();
-let fs = require('fs');
-let path = require('path');
-let rimraf = require('rimraf');
+const fs = require('fs');
+const path = require('path');
+const rimraf = require('rimraf');
 
 const TASKS_DIRECTORY = path.join(__dirname, '..', 'src', 'wsk-tasks');
 const VALID_TEST_FILES = 'test/data/valid-files';
