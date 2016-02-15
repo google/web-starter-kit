@@ -34,7 +34,13 @@ const VALID_TEST_FILES = 'test/data/valid-files';
 const VALID_CHANGE_TEST_FILES = 'test/data/valid-change-files';
 const TEST_OUTPUT_PATH = 'test/output';
 
-describe('This should test watch lifecycle for different tasks', () => {
+function copyFiles(from, to) {
+  return new Promise((resolve, reject) => {
+    
+  });
+}
+
+describe('This should test the watch lifecycle for each task', () => {
   let tasksToTest = [];
   let taskFilenames = fs.readdirSync(TASKS_DIRECTORY);
   taskFilenames.map(taskFilename => {
@@ -59,7 +65,7 @@ describe('This should test watch lifecycle for different tasks', () => {
       return;
     }
 
-    describe(taskName, () => {
+    describe(`Test the watch task of ${taskName}`, () => {
       it('should watch for new file changes', function(done) {
         // This is a long time to account for slow babel builds on Windows
         this.timeout(60000);
