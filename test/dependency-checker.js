@@ -25,6 +25,7 @@ require('chai').should();
 
 const path = require('path');
 const david = require('david');
+const dependencyCaveat = require('../dependency-caveats.json');
 
 describe('Check that the dependencies of the project are up to date', () => {
   if (process.env.TRAVIS_PULL_REQUEST) {
@@ -52,18 +53,39 @@ describe('Check that the dependencies of the project are up to date', () => {
         return done(er);
       }
 
-      // We need gulp 4.0 which at the moment isn't stable.
-      // Ignore this dependency change gulp is updated
-      if (
-        deps.gulp &&
-        deps.gulp.required === 'gulpjs/gulp#4.0' &&
-        deps.gulp.stable === '3.9.0' &&
-        deps.gulp.latest === '3.9.0'
-      ) {
-        delete deps.gulp;
+      const outdatedDependencies = Object.keys(deps);
+      outdatedDependencies.forEach((dependencyName, index) => {
+        if (!dependencyCaveat[dependencyName]) {
+          return;
+        }
+
+        const caveatDetails = dependencyCaveat[dependencyName];
+        const dependencyDetails = deps[dependencyName];
+
+        if (
+          dependencyDetails.required === caveatDetails.overrideVersion ||
+          deps.gulp.stable === caveatDetails.currentVersion
+        ) {
+          outdatedDependencies.splice(index, 1);
+        } else {
+          console.warn(`Dependency caveat for ${dependencyName} is out of date`);
+        }
+      });
+
+      // Show some useful debugging info
+      if (outdatedDependencies.length > 0) {
+        console.error('---------------- Out of Date Dependencies ----------------');
+        outdatedDependencies.map(dependencyName => {
+          const dependencyDetails = deps[dependencyName];
+          console.error(`${dependencyName} is out of date.`);
+          console.error(`    package.json requires: ${dependencyDetails.required}`);
+          console.error(`    NPM Stable is:         ${dependencyDetails.stable}`);
+          console.error(`    NPM Latest is:         ${dependencyDetails.latest}`);
+        });
+        console.error('---------------- ------------------------ ----------------');
       }
 
-      Object.keys(deps).length.should.equal(0);
+      outdatedDependencies.length.should.equal(0);
       done();
     });
   });
