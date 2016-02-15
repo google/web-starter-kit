@@ -28,99 +28,166 @@ const path = require('path');
 const del = require('del');
 const ncp = require('ncp');
 const mkdirp = require('mkdirp');
+const taskHelper = require('./helpers/task-helper');
 
-const TASKS_DIRECTORY = path.join(__dirname, '..', 'src', 'wsk-tasks');
 const VALID_TEST_FILES = 'test/data/valid-files';
 const VALID_CHANGE_TEST_FILES = 'test/data/valid-change-files';
-const TEST_OUTPUT_PATH = 'test/output';
+const TEST_OUTPUT_PATH = path.join('test', 'output');
+const TEST_OUTPUT_SRC = path.join(TEST_OUTPUT_PATH, 'src');
+const TEST_OUTPUT_DEST = path.join(TEST_OUTPUT_PATH, 'build');
 
-function copyFiles(from, to) {
+let watcherTask;
+
+// Clean up before each test
+beforeEach(done => {
+  del(TEST_OUTPUT_PATH + '/**')
+  .then(() => {
+    if (watcherTask) {
+      watcherTask.close();
+      watcherTask = null;
+    }
+  })
+  .then(() => {
+    // Create Source Path
+    mkdirp.sync(TEST_OUTPUT_SRC);
+
+    GLOBAL.config = {
+      env: 'dev',
+      src: TEST_OUTPUT_SRC,
+      dest: TEST_OUTPUT_DEST
+    };
+  })
+  .then(() => done(), done);
+});
+
+// Clean up after final test
+after(done => del(TEST_OUTPUT_PATH + '/**').then(() => done(), done));
+
+const copyFiles = (from, to) => {
   return new Promise((resolve, reject) => {
-    
-  });
-}
+    ncp(from, to, err => {
+      if (err) {
+        reject(err);
+        return;
+      }
 
-describe('This should test the watch lifecycle for each task', () => {
-  let tasksToTest = [];
-  let taskFilenames = fs.readdirSync(TASKS_DIRECTORY);
-  taskFilenames.map(taskFilename => {
-    tasksToTest.push({
-      taskName: taskFilename,
-      task: require(path.join(TASKS_DIRECTORY, taskFilename))
+      resolve();
     });
   });
+};
 
-  // Clean up before each test
-  beforeEach(done => del(TEST_OUTPUT_PATH + '/**').then(() => done(), done));
-
-  // Clean up after final test
-  after(done => del(TEST_OUTPUT_PATH + '/**').then(() => done(), done));
-
-  tasksToTest.map(taskObject => {
-    let taskName = taskObject.taskName;
-    let task = taskObject.task;
-
-    // Check that there is a watch task
-    if (typeof task.watch === 'undefined') {
+const validateOutput = () => {
+  // Get directories in build directory
+  const folders = fs.readdirSync(TEST_OUTPUT_DEST);
+  folders.forEach(folderName => {
+    try {
+      // Check if the source directory lives, if it doesn't we can ignore
+      // the remaining output (i.e. old stuff that needs cleaning out)
+      fs.lstatSync(path.join(TEST_OUTPUT_SRC, folderName));
+    } catch (err) {
+      // Path doesn't exist, we can ignore it
       return;
     }
 
-    describe(`Test the watch task of ${taskName}`, () => {
-      it('should watch for new file changes', function(done) {
-        // This is a long time to account for slow babel builds on Windows
-        this.timeout(60000);
+    const expectedOutputFileBuffer = fs.readFileSync(path.join(TEST_OUTPUT_SRC, folderName, 'output.json'));
+    const expectedOutput = JSON.parse(expectedOutputFileBuffer.toString());
+    expectedOutput.forEach(file => {
+      const fullpath = path.join(TEST_OUTPUT_DEST, folderName, file);
+      const pathstats = fs.lstatSync(fullpath);
+      if (!pathstats) {
+        throw new Error(`Expected output file could not be found: ${fullpath}`);
+      }
 
-        const testSrcPath = path.join(TEST_OUTPUT_PATH, 'src');
-        mkdirp.sync(testSrcPath);
-
-        ncp(VALID_TEST_FILES, testSrcPath, err => {
-          if (err) {
-            return done(err);
-          }
-
-          GLOBAL.config = {
-            env: 'dev',
-            src: testSrcPath,
-            dest: path.join(TEST_OUTPUT_PATH, 'build')
-          };
-
-          // VALID_CHANGE_TEST_FILES
-          let changeLogged = false
-          task.watch(() => {
-            console.log('change logged');
-            if (!changeLogged) {
-              changeLogged = true;
-              done();
-            }
-          });
-
-          setTimeout(() => {
-            const deletePath = path.join(testSrcPath, 'sass', 'nest1', 'nest2', 'nest3', '**');
-            console.log('deletePath: ', deletePath);
-            del(deletePath)
-            .then(() => {
-              console.log('Deleted');
-              /** ncp(VALID_CHANGE_TEST_FILES, testSrcPath, err => {
-                if (err) {
-                  return done(err);
-                }
-
-                console.log('Files changed');
-              });**/
-            })
-            .catch(err => {
-              console.log(err);
-            });
-          }, 2000);
-          /** .on('end', () => {
-            // Check output exists
-            var outputFiles = fs.readdirSync('test/output');
-            outputFiles.should.have.length.above(0);
-
-            done();
-          });**/
-        });
-      });
+      if (pathstats.size <= 0) {
+        throw new Error(`Output file has no contents: ${fullpath}`);
+      }
     });
   });
+};
+
+const runSteps = (taskName, task, steps) => {
+  return new Promise((resolve, reject) => {
+    // Create path to puth files into
+    let stepIndex = 0;
+    let currentTimeout = null;
+
+    // Start Watching
+    watcherTask = task.watch();
+    if (!watcherTask) {
+      reject(new Error(`Nothing returned from the tasks watch() method. Is the result of gulp.watch returned in ${taskName}`));
+    }
+
+    // Listen to events to detect when changes are handled and add a short delay
+    // to give task time to complete
+    watcherTask.on('all', () => {
+      if (currentTimeout) {
+        clearTimeout(currentTimeout);
+      }
+
+      currentTimeout = setTimeout(() => {
+        if (stepIndex === (steps.length - 1)) {
+          resolve();
+          return;
+        }
+
+        stepIndex++;
+        steps[stepIndex]();
+      }, 200);
+    });
+
+    // Listen for when to start changes to files
+    watcherTask.on('ready', steps[stepIndex]);
+  })
+  .then(validateOutput);
+};
+
+const registerTestsForTask = (taskName, task) => {
+  describe(`Test the watch task of ${taskName}`, function() {
+    it('should watch for new files being added to empty directory', function() {
+      // This is a long time to account for slow babel builds on Windows
+      this.timeout(60000);
+
+      const steps = [
+        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC)
+      ];
+
+      return runSteps(taskName, task, steps);
+    });
+
+    it('should watch for new files being added and changed', function() {
+      // This is a long time to account for slow babel builds on Windows
+      this.timeout(60000);
+
+      const steps = [
+        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
+        () => copyFiles(VALID_CHANGE_TEST_FILES, TEST_OUTPUT_SRC)
+      ];
+
+      return runSteps(taskName, task, steps);
+    });
+
+    it('should watch for new files being added and deleted', function() {
+      // This is a long time to account for slow babel builds on Windows
+      this.timeout(60000);
+
+      const steps = [
+        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
+        () => del(TEST_OUTPUT_SRC + '/*')
+      ];
+
+      return runSteps(taskName, task, steps);
+    });
+  });
+};
+
+taskHelper.getTasks().map(taskObject => {
+  let taskName = taskObject.taskName;
+  let task = taskObject.task;
+
+  // Check that there is a watch task
+  if (typeof task.watch === 'undefined') {
+    return;
+  }
+
+  registerTestsForTask(taskName, task);
 });

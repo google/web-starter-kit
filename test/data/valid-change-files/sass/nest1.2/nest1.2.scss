@@ -1,0 +1,7 @@
+@import '../example';
+
+$color: rgba(0, 0, 255, 0.5);
+
+.nest1 {
+  color: $color;
+}
