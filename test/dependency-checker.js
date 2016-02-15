@@ -27,14 +27,9 @@ const path = require('path');
 const david = require('david');
 const dependencyCaveat = require('../dependency-caveats.json');
 
-const checkDependencies = testDevDeps => {
+const checkDependencies = (packageManifest, additionalOps) => {
   return new Promise((resolve, reject) => {
-    const options = {stable: true};
-    if (testDevDeps) {
-      options.dev = true;
-    }
-
-    const packageManifest = require(path.join(__dirname, '..', 'package.json'));
+    const options = Object.assign({stable: true}, additionalOps);
     david.getUpdatedDependencies(packageManifest, options, function(er, deps) {
       if (er) {
         reject(er);
@@ -63,7 +58,7 @@ const checkDependencies = testDevDeps => {
 
       // Show some useful debugging info
       if (Object.keys(filteredOutdatedDeps).length > 0) {
-        const title = testDevDeps ? 'Dev Dependencies' : 'Dependencies';
+        const title = options.dev ? 'Dev Dependencies' : 'Dependencies';
         console.error(`---------------- Out of Date ${title} ----------------`);
         Object.keys(filteredOutdatedDeps).map(dependencyName => {
           console.error(`${dependencyName} is out of date.`);
@@ -87,11 +82,17 @@ describe('Check that the dependencies of the project are up to date', () => {
     return;
   }
 
+  const packageManifest = require(path.join(__dirname, '..', 'package.json'));
+
   it('should have up to date npm dependencies', () => {
-    return checkDependencies(false);
+    return checkDependencies(packageManifest, {
+      dev: false
+    });
   });
 
   it('should have up to date npm devDependencies', () => {
-    return checkDependencies(true);
+    return checkDependencies(packageManifest, {
+      dev: true
+    });
   });
 });
