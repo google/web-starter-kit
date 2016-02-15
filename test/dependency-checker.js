@@ -27,66 +27,71 @@ const path = require('path');
 const david = require('david');
 const dependencyCaveat = require('../dependency-caveats.json');
 
+const checkDependencies = testDevDeps => {
+  return new Promise((resolve, reject) => {
+    const options = {stable: true};
+    if (testDevDeps) {
+      options.dev = true;
+    }
+
+    const packageManifest = require(path.join(__dirname, '..', 'package.json'));
+    david.getUpdatedDependencies(packageManifest, options, function(er, deps) {
+      if (er) {
+        reject(er);
+        return;
+      }
+
+      const filteredOutdatedDeps = {};
+      const outdatedDependencies = Object.keys(deps);
+      outdatedDependencies.forEach(dependencyName => {
+        if (dependencyCaveat[dependencyName]) {
+          const caveatDetails = dependencyCaveat[dependencyName];
+          const dependencyDetails = deps[dependencyName];
+
+          if (
+            dependencyDetails.required === caveatDetails.overrideVersion ||
+            dependencyDetails.stable === caveatDetails.currentVersion
+          ) {
+            return;
+          }
+
+          console.warn(`Dependency caveat for ${dependencyName} is out of date`);
+        }
+
+        filteredOutdatedDeps[dependencyName] = deps[dependencyName];
+      });
+
+      // Show some useful debugging info
+      if (Object.keys(filteredOutdatedDeps).length > 0) {
+        const title = testDevDeps ? 'Dev Dependencies' : 'Dependencies';
+        console.error(`---------------- Out of Date ${title} ----------------`);
+        Object.keys(filteredOutdatedDeps).map(dependencyName => {
+          console.error(`${dependencyName} is out of date.`);
+          console.error(`    package.json requires: ${filteredOutdatedDeps[dependencyName].required}`);
+          console.error(`    NPM Stable is:         ${filteredOutdatedDeps[dependencyName].stable}`);
+        });
+        console.error('---------------- ------------------------ ----------------');
+      }
+
+      resolve(filteredOutdatedDeps);
+    });
+  })
+  .then(outdatedDependencies => {
+    Object.keys(outdatedDependencies).length.should.equal(0);
+  });
+};
+
 describe('Check that the dependencies of the project are up to date', () => {
   if (process.env.TRAVIS_PULL_REQUEST) {
     console.warn('Skipping dependency checks for pull request');
     return;
   }
 
-  it('should have up to date npm dependencies', done => {
-    const packageManifest = require(path.join(__dirname, '..', 'package.json'));
-
-    david.getUpdatedDependencies(packageManifest, {stable: true}, function(er, deps) {
-      if (er) {
-        return done(er);
-      }
-
-      Object.keys(deps).length.should.equal(0);
-      done();
-    });
+  it('should have up to date npm dependencies', () => {
+    return checkDependencies(false);
   });
 
-  it('should have up to date npm dev-dependencies', done => {
-    const packageManifest = require(path.join(__dirname, '..', 'package.json'));
-    david.getUpdatedDependencies(packageManifest, {dev: true, stable: true}, function(er, deps) {
-      if (er) {
-        return done(er);
-      }
-
-      const outdatedDependencies = Object.keys(deps);
-      outdatedDependencies.forEach((dependencyName, index) => {
-        if (!dependencyCaveat[dependencyName]) {
-          return;
-        }
-
-        const caveatDetails = dependencyCaveat[dependencyName];
-        const dependencyDetails = deps[dependencyName];
-
-        if (
-          dependencyDetails.required === caveatDetails.overrideVersion ||
-          deps.gulp.stable === caveatDetails.currentVersion
-        ) {
-          outdatedDependencies.splice(index, 1);
-        } else {
-          console.warn(`Dependency caveat for ${dependencyName} is out of date`);
-        }
-      });
-
-      // Show some useful debugging info
-      if (outdatedDependencies.length > 0) {
-        console.error('---------------- Out of Date Dependencies ----------------');
-        outdatedDependencies.map(dependencyName => {
-          const dependencyDetails = deps[dependencyName];
-          console.error(`${dependencyName} is out of date.`);
-          console.error(`    package.json requires: ${dependencyDetails.required}`);
-          console.error(`    NPM Stable is:         ${dependencyDetails.stable}`);
-          console.error(`    NPM Latest is:         ${dependencyDetails.latest}`);
-        });
-        console.error('---------------- ------------------------ ----------------');
-      }
-
-      outdatedDependencies.length.should.equal(0);
-      done();
-    });
+  it('should have up to date npm devDependencies', () => {
+    return checkDependencies(true);
   });
 });
