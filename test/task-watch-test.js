@@ -30,8 +30,9 @@ const ncp = require('ncp');
 const mkdirp = require('mkdirp');
 const taskHelper = require('./helpers/task-helper');
 
-const VALID_TEST_FILES = 'test/data/valid-files';
-const VALID_CHANGE_TEST_FILES = 'test/data/valid-change-files';
+const VALID_TEST_FILES = path.join('test', 'data', 'valid-files');
+const INVALID_TEST_FILES = path.join('test', 'data', 'invalid-files');
+const VALID_TEST_FILES_2 = path.join('test', 'data', 'valid-files-2');
 const TEST_OUTPUT_PATH = path.join('test', 'output');
 const TEST_OUTPUT_SRC = path.join(TEST_OUTPUT_PATH, 'src');
 const TEST_OUTPUT_DEST = path.join(TEST_OUTPUT_PATH, 'build');
@@ -40,7 +41,7 @@ let watcherTask;
 
 // Clean up before each test
 beforeEach(done => {
-  del(TEST_OUTPUT_PATH + '/**')
+  del(path.join(TEST_OUTPUT_PATH, '**'))
   .then(() => {
     if (watcherTask) {
       watcherTask.close();
@@ -61,7 +62,7 @@ beforeEach(done => {
 });
 
 // Clean up after final test
-after(done => del(TEST_OUTPUT_PATH + '/**').then(() => done(), done));
+after(done => del(path.join(TEST_OUTPUT_PATH, '**')).then(() => done(), done));
 
 const copyFiles = (from, to) => {
   return new Promise((resolve, reject) => {
@@ -160,7 +161,7 @@ const registerTestsForTask = (taskName, task) => {
 
       const steps = [
         () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
-        () => copyFiles(VALID_CHANGE_TEST_FILES, TEST_OUTPUT_SRC)
+        () => copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC)
       ];
 
       return runSteps(taskName, task, steps);
@@ -173,6 +174,32 @@ const registerTestsForTask = (taskName, task) => {
       const steps = [
         () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
         () => del(TEST_OUTPUT_SRC + '/*')
+      ];
+
+      return runSteps(taskName, task, steps);
+    });
+
+    it('should watch for new files being added, followed by bad example files followed by the original files', function() {
+      // This is a long time to account for slow babel builds on Windows
+      this.timeout(60000);
+
+      const steps = [
+        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
+        () => copyFiles(INVALID_TEST_FILES, TEST_OUTPUT_SRC),
+        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC)
+      ];
+
+      return runSteps(taskName, task, steps);
+    });
+
+    it('should watch for new files being added, followed by bad example files followed by the differnt valid files', function() {
+      // This is a long time to account for slow babel builds on Windows
+      this.timeout(60000);
+
+      const steps = [
+        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
+        () => copyFiles(INVALID_TEST_FILES, TEST_OUTPUT_SRC),
+        () => copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC)
       ];
 
       return runSteps(taskName, task, steps);
