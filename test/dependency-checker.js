@@ -28,9 +28,12 @@ const david = require('david');
 const dependencyCaveat = require('../dependency-caveats.json');
 
 const checkDependencies = (packageManifest, additionalOps) => {
+  console.log('Starting check for dependencies');
   return new Promise((resolve, reject) => {
     const options = Object.assign({stable: true}, additionalOps);
     david.getUpdatedDependencies(packageManifest, options, function(er, deps) {
+      console.log('    Error', er);
+      console.log('    Deps', deps);
       if (er) {
         reject(er);
         return;
@@ -38,6 +41,7 @@ const checkDependencies = (packageManifest, additionalOps) => {
 
       const filteredOutdatedDeps = {};
       const outdatedDependencies = Object.keys(deps);
+
       outdatedDependencies.forEach(dependencyName => {
         if (dependencyCaveat[dependencyName]) {
           const caveatDetails = dependencyCaveat[dependencyName];
@@ -55,6 +59,8 @@ const checkDependencies = (packageManifest, additionalOps) => {
 
         filteredOutdatedDeps[dependencyName] = deps[dependencyName];
       });
+
+      console.log('    filteredOutdatedDeps', filteredOutdatedDeps);
 
       // Show some useful debugging info
       if (Object.keys(filteredOutdatedDeps).length > 0) {
