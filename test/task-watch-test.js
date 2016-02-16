@@ -41,21 +41,17 @@ let watcherTask;
 
 // Clean up before each test
 beforeEach(() => {
-  console.log('Deleting the output path');
   return del(path.join(TEST_OUTPUT_PATH, '**'))
   .then(() => {
-    console.log('Closing watch task');
     if (watcherTask) {
       watcherTask.close();
       watcherTask = null;
     }
   })
   .then(() => {
-    console.log('Making source directory');
     // Create Source Path
     mkdirp.sync(TEST_OUTPUT_SRC);
 
-    console.log('Setting global sync');
     GLOBAL.config = {
       env: 'dev',
       src: TEST_OUTPUT_SRC,
@@ -63,8 +59,8 @@ beforeEach(() => {
     };
   })
   .catch(err => {
-    // Logging for better info in Travis + Appvery
-    console.log(err);
+    // Logging for better info in Travis + AppVeyor
+    console.error(err);
     throw err;
   });
 });
@@ -73,8 +69,8 @@ beforeEach(() => {
 after(() => {
   del(path.join(TEST_OUTPUT_PATH, '**'))
   .catch(err => {
-    // Logging for better info in Travis + Appvery
-    console.log(err);
+    // Logging for better info in Travis + AppVeyor
+    console.error(err);
     throw err;
   });
 });
