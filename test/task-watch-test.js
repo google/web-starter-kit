@@ -40,29 +40,44 @@ const TEST_OUTPUT_DEST = path.join(TEST_OUTPUT_PATH, 'build');
 let watcherTask;
 
 // Clean up before each test
-beforeEach(done => {
-  del(path.join(TEST_OUTPUT_PATH, '**'))
+beforeEach(() => {
+  console.log('Deleting the output path');
+  return del(path.join(TEST_OUTPUT_PATH, '**'))
   .then(() => {
+    console.log('Closing watch task');
     if (watcherTask) {
       watcherTask.close();
       watcherTask = null;
     }
   })
   .then(() => {
+    console.log('Making source directory');
     // Create Source Path
     mkdirp.sync(TEST_OUTPUT_SRC);
 
+    console.log('Setting global sync');
     GLOBAL.config = {
       env: 'dev',
       src: TEST_OUTPUT_SRC,
       dest: TEST_OUTPUT_DEST
     };
   })
-  .then(() => done(), done);
+  .catch(err => {
+    // Logging for better info in Travis + Appvery
+    console.log(err);
+    throw err;
+  });
 });
 
 // Clean up after final test
-after(done => del(path.join(TEST_OUTPUT_PATH, '**')).then(() => done(), done));
+after(() => {
+  del(path.join(TEST_OUTPUT_PATH, '**'))
+  .catch(err => {
+    // Logging for better info in Travis + Appvery
+    console.log(err);
+    throw err;
+  });
+});
 
 const copyFiles = (from, to) => {
   return new Promise((resolve, reject) => {
