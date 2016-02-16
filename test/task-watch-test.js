@@ -60,8 +60,8 @@ beforeEach(() => {
   })
   .catch(err => {
     // Logging for better info in Travis + AppVeyor
-    console.error(err);
-    throw err;
+    console.log(err);
+    throw new Error('Problem in beforeEach');
   });
 });
 
@@ -70,8 +70,8 @@ after(() => {
   del(path.join(TEST_OUTPUT_PATH, '**'))
   .catch(err => {
     // Logging for better info in Travis + AppVeyor
-    console.error(err);
-    throw err;
+    console.log(err);
+    throw new Error('Problem in beforeEach');
   });
 });
 
