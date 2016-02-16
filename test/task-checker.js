@@ -23,10 +23,9 @@
 
 require('chai').should();
 const fs = require('fs');
-const path = require('path');
-const rimraf = require('rimraf');
+const del = require('del');
+const taskHelper = require('./helpers/task-helper');
 
-const TASKS_DIRECTORY = path.join(__dirname, '..', 'src', 'wsk-tasks');
 const VALID_TEST_FILES = 'test/data/valid-files';
 const TEST_OUTPUT_PATH = 'test/output';
 
@@ -86,23 +85,13 @@ let describeTestsForTask = function(taskName, task) {
 };
 
 describe('Run checks and tests against each WSK task', () => {
-  let taskFilenames = fs.readdirSync(TASKS_DIRECTORY);
-  let tasksToTest =
-   [];
-  taskFilenames.map(taskFilename => {
-    tasksToTest.push({
-      taskName: taskFilename,
-      task: require(path.join(TASKS_DIRECTORY, taskFilename))
-    });
-  });
-
   // Clean up before each test
-  beforeEach(done => rimraf(TEST_OUTPUT_PATH, done));
+  beforeEach(done => del(TEST_OUTPUT_PATH + '/**').then(() => done(), done));
 
   // Clean up after final test
-  after(done => rimraf(TEST_OUTPUT_PATH, done));
+  after(done => del(TEST_OUTPUT_PATH + '/**').then(() => done(), done));
 
-  tasksToTest.map(taskObject => {
+  taskHelper.getTasks().map(taskObject => {
     let taskName = taskObject.taskName;
     let task = taskObject.task;
 
