@@ -41,7 +41,6 @@ let watcherTask;
 
 // Clean up before each test
 beforeEach(() => {
-  console.log('Before Each');
   return del(path.join(TEST_OUTPUT_PATH, '**'), {dot: true})
   .then(() => {
     if (watcherTask) {
@@ -58,24 +57,11 @@ beforeEach(() => {
       src: TEST_OUTPUT_SRC,
       dest: TEST_OUTPUT_DEST
     };
-  })
-  .catch(err => {
-    // Logging for better info in Travis + AppVeyor
-    console.log(err);
-    throw new Error('Problem in beforeEach');
   });
 });
 
 // Clean up after final test
-after(() => {
-  console.log('After');
-  del(path.join(TEST_OUTPUT_PATH, '**'), {dot: true})
-  .catch(err => {
-    // Logging for better info in Travis + AppVeyor
-    console.log(err);
-    throw new Error('Problem in beforeEach');
-  });
-});
+after(() => del(path.join(TEST_OUTPUT_PATH, '**'), {dot: true}));
 
 const copyFiles = (from, to) => {
   return new Promise((resolve, reject) => {
