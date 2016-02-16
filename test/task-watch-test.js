@@ -41,6 +41,7 @@ let watcherTask;
 
 // Clean up before each test
 beforeEach(() => {
+  console.log('Before Each');
   return del(path.join(TEST_OUTPUT_PATH, '**'))
   .then(() => {
     if (watcherTask) {
@@ -67,6 +68,7 @@ beforeEach(() => {
 
 // Clean up after final test
 after(() => {
+  console.log('After');
   del(path.join(TEST_OUTPUT_PATH, '**'))
   .catch(err => {
     // Logging for better info in Travis + AppVeyor
