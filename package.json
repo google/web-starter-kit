@@ -24,7 +24,7 @@
   },
   "private": true,
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --full-trace"
   },
   "eslintConfig": {
     "extends": "google"
