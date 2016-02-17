@@ -192,6 +192,9 @@ const registerTestsForTask = (taskName, task) => {
       ];
 
       return runSteps(taskName, task, steps)
+        .then(() => {
+          console.log('runSteps DONE <---------------');
+        })
         .catch(err => {
           console.log('Error from Task', err);
           throw err;
