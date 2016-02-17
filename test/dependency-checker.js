@@ -32,13 +32,13 @@ const checkDependencies = (packageManifest, additionalOps) => {
   return new Promise((resolve, reject) => {
     const options = Object.assign({stable: true}, additionalOps);
     david.getUpdatedDependencies(packageManifest, options, function(er, deps) {
-      console.log('    Error', er);
-      console.log('    Deps', deps);
       if (er) {
+        console.log('    Error', er);
         reject(er);
         return;
       }
 
+      console.log('    Deps', deps);
       const filteredOutdatedDeps = {};
       const outdatedDependencies = Object.keys(deps);
 
@@ -90,13 +90,15 @@ describe('Check that the dependencies of the project are up to date', () => {
 
   const packageManifest = require(path.join(__dirname, '..', 'package.json'));
 
-  it('should have up to date npm dependencies', () => {
+  it('should have up to date npm dependencies', function() {
+    this.timeout(6000);
     return checkDependencies(packageManifest, {
       dev: false
     });
   });
 
-  it('should have up to date npm devDependencies', () => {
+  it('should have up to date npm devDependencies', function() {
+    this.timeout(6000);
     return checkDependencies(packageManifest, {
       dev: true
     });
