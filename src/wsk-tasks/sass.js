@@ -39,21 +39,21 @@ const AUTOPREFIXER_BROWSERS = [
 
 function build() {
   var sassStream = gulp.src(GLOBAL.config.src + '/**/*.scss')
-    .pipe(gulpSass().on('error', gutil.log('error occured with sass')))
-    .pipe(sourcemaps.init().on('error', gutil.log('error occured with sass')))
+    .pipe(gulpSass().on('error', gutil.log))
+    .pipe(sourcemaps.init().on('error', gutil.log))
     .pipe(autoprefixer(AUTOPREFIXER_BROWSERS)
-      .on('error', gutil.log('error occured with sass')));
+      .on('error', gutil.log));
 
   // We only want to minify for production builds
   if (GLOBAL.config.env === 'prod') {
     sassStream = sassStream.pipe(cssnano()
-      .on('error', gutil.log('error occured with sass')));
+      .on('error', gutil.log));
   }
 
   return sassStream.pipe(sourcemaps.write('.')
-      .on('error', gutil.log('error occured with sass')))
+      .on('error', gutil.log))
     .pipe(gulp.dest(GLOBAL.config.dest)
-      .on('error', gutil.log('error occured with sass')));
+      .on('error', gutil.log));
 }
 
 function watch() {
