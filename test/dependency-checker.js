@@ -28,7 +28,6 @@ const david = require('david');
 const dependencyCaveat = require('../dependency-caveats.json');
 
 const checkDependencies = (packageManifest, additionalOps) => {
-  console.log('Starting check for dependencies');
   return new Promise((resolve, reject) => {
     const options = Object.assign({stable: true}, additionalOps);
     david.getUpdatedDependencies(packageManifest, options, function(er, deps) {

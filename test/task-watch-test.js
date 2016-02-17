@@ -41,7 +41,12 @@ let watcherTask;
 
 // Clean up before each test
 beforeEach(() => {
+  console.log('Going to attempt to delete: ', path.join(TEST_OUTPUT_PATH, '**'));
   return del(path.join(TEST_OUTPUT_PATH, '**'), {dot: true})
+  .catch(err => {
+    console.log(err);
+    throw err;
+  })
   .then(() => {
     if (watcherTask) {
       watcherTask.close();
@@ -61,7 +66,13 @@ beforeEach(() => {
 });
 
 // Clean up after final test
-after(() => del(path.join(TEST_OUTPUT_PATH, '**'), {dot: true}));
+after(() => {
+  return del(path.join(TEST_OUTPUT_PATH, '**'), {dot: true}).catch(() => {})
+  .catch(err => {
+    console.log(err);
+    throw err;
+  });
+});
 
 const copyFiles = (from, to) => {
   return new Promise((resolve, reject) => {
@@ -133,7 +144,7 @@ const runSteps = (taskName, task, steps) => {
 
         stepIndex++;
         steps[stepIndex]();
-      }, 5000);
+      }, 1000);
     });
 
     // Listen for when to start changes to files
