@@ -105,6 +105,10 @@ const validateOutput = () => {
 };
 
 const runSteps = (taskName, task, steps) => {
+  console.log('');
+  console.log('');
+  console.log('');
+  console.log('------------------- START OF TEST');
   // Start Watching
   watcherTask = task.watch();
   if (!watcherTask) {
@@ -298,6 +302,15 @@ describe('Run tests against watch methods', function() {
         src: TEST_OUTPUT_SRC,
         dest: TEST_OUTPUT_DEST
       };
+    })
+    .then(() => {
+      console.log('');
+      console.log('');
+      console.log('');
+      console.log('END OF BEFORE EACH -----------------*********************');
+      console.log('');
+      console.log('');
+      console.log('');
     });
   });
 
