@@ -4,6 +4,7 @@
     "chai": "^3.4.1",
     "david": "^7.0.0",
     "del": "^2.2.0",
+    "domain": "0.0.1",
     "eslint": "^2.0.0",
     "eslint-config-google": "^0.4.0",
     "gulp": "gulpjs/gulp#4.0",

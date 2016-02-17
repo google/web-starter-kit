@@ -28,6 +28,7 @@ const path = require('path');
 const ncp = require('ncp');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
+const domain = require('domain');
 const taskHelper = require('./helpers/task-helper');
 
 const VALID_TEST_FILES = path.join('test', 'data', 'valid-files');
@@ -214,6 +215,25 @@ const runSteps = (taskName, task, steps) => {
   });
 };
 
+const testWrapper = function(taskName, task, steps, done) {
+  const d = domain.create();
+  d.on('error', function(err) {
+    console.log('Domain Error: ', err);
+  });
+
+  d.run(function() {
+    runSteps(taskName, task, steps)
+    .then(() => {
+      console.log('run steps finished');
+      done();
+    })
+    .catch(err => {
+      console.log('run steps error', err);
+      done(err);
+    });
+  });
+};
+
 const registerTestsForTask = (taskName, task) => {
   describe(`${taskName}`, function() {
     it('should watch for new files being added to empty directory', function(done) {
@@ -226,15 +246,7 @@ const registerTestsForTask = (taskName, task) => {
         }
       ];
 
-      runSteps(taskName, task, steps)
-      .then(() => {
-        console.log('run steps finished');
-        done();
-      })
-      .catch(err => {
-        console.log('run steps error', err);
-        done(err);
-      });
+      testWrapper(taskName, task, steps, done);
     });
 
     it('should watch for new files being added and changed', function(done) {
@@ -258,15 +270,7 @@ const registerTestsForTask = (taskName, task) => {
         }
       ];
 
-      runSteps(taskName, task, steps)
-      .then(() => {
-        console.log('run steps finished');
-        done();
-      })
-      .catch(err => {
-        console.log('run steps error', err);
-        done(err);
-      });
+      testWrapper(taskName, task, steps, done);
     });
 
     it('should watch for new files being added and deleted', function(done) {
@@ -282,15 +286,7 @@ const registerTestsForTask = (taskName, task) => {
         }
       ];
 
-      runSteps(taskName, task, steps)
-      .then(() => {
-        console.log('run steps finished');
-        done();
-      })
-      .catch(err => {
-        console.log('run steps error', err);
-        done(err);
-      });
+      testWrapper(taskName, task, steps, done);
     });
 
     it('should watch for new files being added, followed by bad example files followed by the original files', function(done) {
@@ -309,15 +305,7 @@ const registerTestsForTask = (taskName, task) => {
         }
       ];
 
-      runSteps(taskName, task, steps)
-      .then(() => {
-        console.log('run steps finished');
-        done();
-      })
-      .catch(err => {
-        console.log('run steps error', err);
-        done(err);
-      });
+      testWrapper(taskName, task, steps, done);
     });
 
     it('should watch for new files being added, followed by bad example files followed by the differnt valid files', function(done) {
@@ -336,15 +324,7 @@ const registerTestsForTask = (taskName, task) => {
         }
       ];
 
-      runSteps(taskName, task, steps)
-      .then(() => {
-        console.log('run steps finished');
-        done();
-      })
-      .catch(err => {
-        console.log('run steps error', err);
-        done(err);
-      });
+      testWrapper(taskName, task, steps, done);
     });
   });
 };
