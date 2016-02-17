@@ -83,7 +83,7 @@ const copyFiles = (from, to) => {
 };
 
 const validateOutput = () => {
-  console.log('validateOutpu');
+  console.log('validateOutput');
   // console.log('validateOutput');
   // Get directories in build directory
   const folders = fs.readdirSync(TEST_OUTPUT_DEST);
@@ -143,6 +143,13 @@ const runSteps = (taskName, task, steps) => {
           console.log('Step done, waiting');
           // Add time between each step
           return new Promise(timeoutResolve => setTimeout(timeoutResolve, 500));
+        })
+        .then(() => {
+          console.log('Step done and timeout finished');
+        })
+        .catch(err => {
+          console.log('Steps Reduced Promise Error', err);
+          throw err;
         });
     }, Promise.resolve());
   })
@@ -180,8 +187,10 @@ const runSteps = (taskName, task, steps) => {
         watcherTask.close();
         watcherTask = null;
       }
+      console.log('End of then()');
     })
     .catch(error => {
+      console.log('Catch()');
       if (currentTimeout) {
         clearTimeout(currentTimeout);
       }
@@ -194,12 +203,20 @@ const runSteps = (taskName, task, steps) => {
       throw error;
     });
   })
-  .then(validateOutput);
+  .then(() => {
+    console.log('Validate the output');
+    validateOutput();
+    console.log('Output validated');
+  })
+  .catch(err => {
+    console.log('runSteps Error', err);
+    throw err;
+  });
 };
 
 const registerTestsForTask = (taskName, task) => {
   describe(`${taskName}`, function() {
-    it('should watch for new files being added to empty directory', function() {
+    it('should watch for new files being added to empty directory', function(done) {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(60000);
 
@@ -209,26 +226,50 @@ const registerTestsForTask = (taskName, task) => {
         }
       ];
 
-      return runSteps(taskName, task, steps);
+      runSteps(taskName, task, steps)
+      .then(() => {
+        console.log('run steps finished');
+        done();
+      })
+      .catch(err => {
+        console.log('run steps error', err);
+        done(err);
+      });
     });
 
-    it('should watch for new files being added and changed', function() {
+    it('should watch for new files being added and changed', function(done) {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(60000);
 
       const steps = [
         () => {
-          return copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC);
+          return copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC)
+          .catch(err => {
+            console.log('STEP 1 Error', err);
+            throw err;
+          });
         },
         () => {
-          return copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC);
+          return copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC)
+          .catch(err => {
+            console.log('STEP 2 Error', err);
+            throw err;
+          });
         }
       ];
 
-      return runSteps(taskName, task, steps);
+      runSteps(taskName, task, steps)
+      .then(() => {
+        console.log('run steps finished');
+        done();
+      })
+      .catch(err => {
+        console.log('run steps error', err);
+        done(err);
+      });
     });
 
-    it('should watch for new files being added and deleted', function() {
+    it('should watch for new files being added and deleted', function(done) {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(60000);
 
@@ -241,17 +282,18 @@ const registerTestsForTask = (taskName, task) => {
         }
       ];
 
-      return runSteps(taskName, task, steps)
-        .then(() => {
-          console.log('runSteps DONE <---------------');
-        })
-        .catch(err => {
-          console.log('Error from Task', err);
-          throw err;
-        });
+      runSteps(taskName, task, steps)
+      .then(() => {
+        console.log('run steps finished');
+        done();
+      })
+      .catch(err => {
+        console.log('run steps error', err);
+        done(err);
+      });
     });
 
-    it('should watch for new files being added, followed by bad example files followed by the original files', function() {
+    it('should watch for new files being added, followed by bad example files followed by the original files', function(done) {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(60000);
 
@@ -267,10 +309,18 @@ const registerTestsForTask = (taskName, task) => {
         }
       ];
 
-      return runSteps(taskName, task, steps);
+      runSteps(taskName, task, steps)
+      .then(() => {
+        console.log('run steps finished');
+        done();
+      })
+      .catch(err => {
+        console.log('run steps error', err);
+        done(err);
+      });
     });
 
-    it('should watch for new files being added, followed by bad example files followed by the differnt valid files', function() {
+    it('should watch for new files being added, followed by bad example files followed by the differnt valid files', function(done) {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(60000);
 
@@ -286,7 +336,15 @@ const registerTestsForTask = (taskName, task) => {
         }
       ];
 
-      return runSteps(taskName, task, steps);
+      runSteps(taskName, task, steps)
+      .then(() => {
+        console.log('run steps finished');
+        done();
+      })
+      .catch(err => {
+        console.log('run steps error', err);
+        done(err);
+      });
     });
   });
 };

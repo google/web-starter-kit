@@ -39,25 +39,24 @@ const AUTOPREFIXER_BROWSERS = [
 
 function build() {
   var sassStream = gulp.src(GLOBAL.config.src + '/**/*.scss')
-    .pipe(gulpSass().on('error', gutil.log))
-    .pipe(sourcemaps.init().on('error', gutil.log))
-    .pipe(autoprefixer(AUTOPREFIXER_BROWSERS)
-      .on('error', gutil.log));
+    .pipe(gulpSass().on('error', gulpSass.logError))
+    .pipe(sourcemaps.init())
+    .pipe(autoprefixer(AUTOPREFIXER_BROWSERS));
 
   // We only want to minify for production builds
   if (GLOBAL.config.env === 'prod') {
-    sassStream = sassStream.pipe(cssnano()
-      .on('error', gutil.log));
+    sassStream = sassStream.pipe(cssnano());
   }
 
-  return sassStream.pipe(sourcemaps.write('.')
-      .on('error', gutil.log))
-    .pipe(gulp.dest(GLOBAL.config.dest)
-      .on('error', gutil.log));
+  return sassStream.pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest(GLOBAL.config.dest));
 }
 
 function watch() {
-  return gulp.watch(GLOBAL.config.src + '/**/*.scss', build);
+  return gulp.watch(GLOBAL.config.src + '/**/*.scss',
+    () => {
+      return build().on('error', gutil.log);
+    });
 }
 
 module.exports = {
