@@ -68,6 +68,7 @@ const copyFiles = (from, to) => {
 };
 
 const validateOutput = () => {
+  console.log('validateOutpu');
   // console.log('validateOutput');
   // Get directories in build directory
   const folders = fs.readdirSync(TEST_OUTPUT_DEST);
@@ -100,59 +101,68 @@ const validateOutput = () => {
 };
 
 const runSteps = (taskName, task, steps) => {
-  return new Promise((resolve, reject) => {
-    // Create path to puth files into
-    let stepIndex = 0;
-    let currentTimeout = null;
+  // Start Watching
+  watcherTask = task.watch();
+  if (!watcherTask) {
+    return Promise.reject(new Error(`Nothing returned from the tasks watch() method. Is the result of gulp.watch returned in ${taskName}`));
+  }
 
-    // Start Watching
-    watcherTask = task.watch();
-    if (!watcherTask) {
-      reject(new Error(`Nothing returned from the tasks watch() method. Is the result of gulp.watch returned in ${taskName}`));
-      return;
-    }
-
-    // Listen to events to detect when changes are handled and add a short delay
-    // to give task time to complete
-    watcherTask.on('all', event => {
-      console.log('Watch Event: ', event, watcherTask._customId);
-      if (currentTimeout) {
-        clearTimeout(currentTimeout);
-      }
-
-      console.log('Watch Event: Step 1', event, watcherTask._customId);
-
-      currentTimeout = setTimeout(() => {
-        console.log('Watch Event: Step 3 (Timeout)', event, watcherTask._customId);
-        if (stepIndex === (steps.length - 1)) {
-          console.log('Steps Finished - Closing Watcher ' + watcherTask._customId);
-          resolve();
-          return;
-        }
-
-        stepIndex++;
-        steps[stepIndex]();
-      }, 6000);
-
-      console.log('Watch Event: Step 2', event, watcherTask._customId);
-    });
-
-    // Listen for when to start changes to files
+  return new Promise(watcherReadyResolve => {
+    console.log('Wait until watcher is ready');
     watcherTask.on('ready', () => {
-      steps[stepIndex]()
-      .catch(err => {
-        console.error('Step ' + stepIndex + ' threw an error', err);
-        clearTimeout(currentTimeout);
-        reject(err);
-      });
+      watcherReadyResolve();
     });
   })
-  .then(function() {
-    console.log('Promise Has Finished');
-    if (watcherTask) {
-      watcherTask.close();
-      watcherTask = null;
-    }
+  .then(() => {
+    console.log('Wait until steps have completed');
+    return steps.reduce((promise, step) => {
+      return promise
+        .then(() => step())
+        .then(() => {
+          // Add time between each step
+          return new Promise(timeoutResolve => setTimeout(timeoutResolve, 500));
+        });
+    }, Promise.resolve());
+  })
+  .then(() => {
+    console.log('Wait until there is a quiet period from the watcher');
+    return new Promise((watcherTaskQuietResolve, watcherTaskFinishReject) => {
+      let currentTimeout = null;
+      const completionCb = () => {
+        console.log('Quiet period reached');
+
+        if (currentTimeout) {
+          clearTimeout(currentTimeout);
+        }
+
+        if (watcherTask) {
+          watcherTask.close();
+          watcherTask = null;
+        }
+
+        watcherTaskQuietResolve();
+      };
+
+      // Start the initial timeout
+      currentTimeout = setTimeout(completionCb, 2000);
+
+      watcherTask.on('all', event => {
+        try {
+          console.log('Watch Event: ', event);
+          if (currentTimeout) {
+            clearTimeout(currentTimeout);
+          }
+
+          console.log('Watch Event: Step 1', event);
+
+          currentTimeout = setTimeout(completionCb, 2000);
+          console.log('Watch Event: Step 2', event);
+        } catch (error) {
+          console.error('Problem waiting for watch task to complete', error);
+          watcherTaskFinishReject(error);
+        }
+      });
+    });
   })
   .then(validateOutput);
 };
