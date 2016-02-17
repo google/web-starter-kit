@@ -93,18 +93,15 @@ const runSteps = (taskName, task, steps) => {
     let currentTimeout = null;
 
     // Start Watching
-    watcherTaskId++;
     watcherTask = task.watch();
     if (!watcherTask) {
       reject(new Error(`Nothing returned from the tasks watch() method. Is the result of gulp.watch returned in ${taskName}`));
       return;
     }
 
-    watcherTask._customId = watcherTaskId;
-
     // Listen to events to detect when changes are handled and add a short delay
     // to give task time to complete
-    watcherTask.on('all', (event) => {
+    watcherTask.on('all', event => {
       console.log('Watch Event: ', event, watcherTask._customId);
       if (currentTimeout) {
         clearTimeout(currentTimeout);
@@ -128,7 +125,14 @@ const runSteps = (taskName, task, steps) => {
     });
 
     // Listen for when to start changes to files
-    watcherTask.on('ready', steps[stepIndex]);
+    watcherTask.on('ready', () => {
+      steps[stepIndex]()
+      .catch(err => {
+        console.error('Step ' + stepIndex + ' threw an error', err);
+        clearTimeout(currentTimeout);
+        reject(err);
+      });
+    });
   })
   .then(function() {
     console.log('Promise Has Finished');
