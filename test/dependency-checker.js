@@ -33,12 +33,10 @@ const checkDependencies = (packageManifest, additionalOps) => {
     const options = Object.assign({stable: true}, additionalOps);
     david.getUpdatedDependencies(packageManifest, options, function(er, deps) {
       if (er) {
-        console.log('    Error', er);
         reject(er);
         return;
       }
 
-      console.log('    Deps', deps);
       const filteredOutdatedDeps = {};
       const outdatedDependencies = Object.keys(deps);
 
@@ -53,14 +51,10 @@ const checkDependencies = (packageManifest, additionalOps) => {
           ) {
             return;
           }
-
-          console.warn(`Dependency caveat for ${dependencyName} is out of date`);
         }
 
         filteredOutdatedDeps[dependencyName] = deps[dependencyName];
       });
-
-      console.log('    filteredOutdatedDeps', filteredOutdatedDeps);
 
       // Show some useful debugging info
       if (Object.keys(filteredOutdatedDeps).length > 0) {
@@ -91,6 +85,7 @@ describe('Check that the dependencies of the project are up to date', () => {
   const packageManifest = require(path.join(__dirname, '..', 'package.json'));
 
   it('should have up to date npm dependencies', function() {
+    // AppVeyor is slow to get a response from NPM sometimes
     this.timeout(6000);
     return checkDependencies(packageManifest, {
       dev: false
@@ -98,6 +93,7 @@ describe('Check that the dependencies of the project are up to date', () => {
   });
 
   it('should have up to date npm devDependencies', function() {
+    // AppVeyor is slow to get a response from NPM sometimes
     this.timeout(6000);
     return checkDependencies(packageManifest, {
       dev: true

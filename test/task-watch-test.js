@@ -133,7 +133,7 @@ const runSteps = (taskName, task, steps) => {
 
         stepIndex++;
         steps[stepIndex]();
-      }, 200);
+      }, 5000);
     });
 
     // Listen for when to start changes to files
