@@ -39,41 +39,6 @@ const TEST_OUTPUT_DEST = path.join(TEST_OUTPUT_PATH, 'build');
 
 let watcherTask;
 
-// Clean up before each test
-beforeEach(() => {
-  console.log('Going to attempt to delete: ', path.join(TEST_OUTPUT_PATH, '**'));
-  return del(path.join(TEST_OUTPUT_PATH, '**'), {dot: true})
-  .catch(err => {
-    console.log(err);
-    throw err;
-  })
-  .then(() => {
-    if (watcherTask) {
-      watcherTask.close();
-      watcherTask = null;
-    }
-  })
-  .then(() => {
-    // Create Source Path
-    mkdirp.sync(TEST_OUTPUT_SRC);
-
-    GLOBAL.config = {
-      env: 'dev',
-      src: TEST_OUTPUT_SRC,
-      dest: TEST_OUTPUT_DEST
-    };
-  });
-});
-
-// Clean up after final test
-after(() => {
-  return del(path.join(TEST_OUTPUT_PATH, '**'), {dot: true}).catch(() => {})
-  .catch(err => {
-    console.log(err);
-    throw err;
-  });
-});
-
 const copyFiles = (from, to) => {
   return new Promise((resolve, reject) => {
     ncp(from, to, err => {
@@ -218,14 +183,51 @@ const registerTestsForTask = (taskName, task) => {
   });
 };
 
-taskHelper.getTasks().map(taskObject => {
-  let taskName = taskObject.taskName;
-  let task = taskObject.task;
+describe('Run tests against watch methods', function() {
+  // Clean up before each test
+  beforeEach(() => {
+    console.log('Going to attempt to delete: ', path.join(TEST_OUTPUT_PATH, '**'));
+    return del(path.join(TEST_OUTPUT_PATH, '**'), {dot: true})
+    .catch(err => {
+      console.log(err);
+      throw err;
+    })
+    .then(() => {
+      if (watcherTask) {
+        watcherTask.close();
+        watcherTask = null;
+      }
+    })
+    .then(() => {
+      // Create Source Path
+      mkdirp.sync(TEST_OUTPUT_SRC);
 
-  // Check that there is a watch task
-  if (typeof task.watch === 'undefined') {
-    return;
-  }
+      GLOBAL.config = {
+        env: 'dev',
+        src: TEST_OUTPUT_SRC,
+        dest: TEST_OUTPUT_DEST
+      };
+    });
+  });
 
-  registerTestsForTask(taskName, task);
+  // Clean up after final test
+  after(() => {
+    return del(path.join(TEST_OUTPUT_PATH, '**'), {dot: true}).catch(() => {})
+    .catch(err => {
+      console.log(err);
+      throw err;
+    });
+  });
+
+  taskHelper.getTasks().map(taskObject => {
+    let taskName = taskObject.taskName;
+    let task = taskObject.task;
+
+    // Check that there is a watch task
+    if (typeof task.watch === 'undefined') {
+      return;
+    }
+
+    registerTestsForTask(taskName, task);
+  });
 });
