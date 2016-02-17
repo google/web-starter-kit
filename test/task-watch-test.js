@@ -39,6 +39,7 @@ const TEST_OUTPUT_SRC = path.join(TEST_OUTPUT_PATH, 'src');
 const TEST_OUTPUT_DEST = path.join(TEST_OUTPUT_PATH, 'build');
 
 let watcherTask;
+let currentDomain;
 
 // Use rimraf over del because it seems to work more reliably on Windows.
 // Probably due to it's retries.
@@ -216,12 +217,12 @@ const runSteps = (taskName, task, steps) => {
 };
 
 const testWrapper = function(taskName, task, steps, done) {
-  const d = domain.create();
-  d.on('error', function(err) {
-    console.log('Domain Error: ', err);
+  currentDomain = domain.create();
+  currentDomain.on('error', function(err) {
+    console.log('////////////////////////// Domain Error: ', err);
   });
 
-  d.run(function() {
+  currentDomain.run(function() {
     runSteps(taskName, task, steps)
     .then(() => {
       console.log('run steps finished');
@@ -333,6 +334,10 @@ describe('Run tests against watch methods', function() {
   // Clean up before each test
   beforeEach(() => {
     console.log('beforeEach Step 1');
+    if (currentDomain) {
+      currentDomain.exit();
+    }
+
     if (watcherTask) {
       console.log('Watcher task .close()');
       watcherTask.close();
