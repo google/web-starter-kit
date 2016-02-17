@@ -42,6 +42,7 @@ let watcherTask;
 // Use rimraf over del because it seems to work more reliably on Windows.
 // Probably due to it's retries.
 const deleteFiles = path => {
+  console.log('deleteFiles: ', path);
   return new Promise((resolve, reject) => {
     rimraf(path, err => {
       if (err) {
@@ -56,6 +57,7 @@ const deleteFiles = path => {
 };
 
 const copyFiles = (from, to) => {
+  console.log('copyFiles: ', from, to);
   return new Promise((resolve, reject) => {
     ncp(from, to, err => {
       if (err) {
@@ -119,8 +121,11 @@ const runSteps = (taskName, task, steps) => {
     console.log('Wait until steps have completed');
     return steps.reduce((promise, step) => {
       return promise
-        .then(() => step())
         .then(() => {
+          return step();
+        })
+        .then(() => {
+          console.log('Step done, waiting');
           // Add time between each step
           return new Promise(timeoutResolve => setTimeout(timeoutResolve, 500));
         });
@@ -184,7 +189,9 @@ const registerTestsForTask = (taskName, task) => {
       this.timeout(60000);
 
       const steps = [
-        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC)
+        () => {
+          return copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC);
+        }
       ];
 
       return runSteps(taskName, task, steps);
@@ -195,8 +202,12 @@ const registerTestsForTask = (taskName, task) => {
       this.timeout(60000);
 
       const steps = [
-        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
-        () => copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC)
+        () => {
+          return copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC);
+        },
+        () => {
+          return copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC);
+        }
       ];
 
       return runSteps(taskName, task, steps);
@@ -207,8 +218,12 @@ const registerTestsForTask = (taskName, task) => {
       this.timeout(60000);
 
       const steps = [
-        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
-        () => deleteFiles(path.join(TEST_OUTPUT_SRC, '*'))
+        () => {
+          return copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC);
+        },
+        () => {
+          return deleteFiles(path.join(TEST_OUTPUT_SRC, '*'));
+        }
       ];
 
       return runSteps(taskName, task, steps)
@@ -226,9 +241,15 @@ const registerTestsForTask = (taskName, task) => {
       this.timeout(60000);
 
       const steps = [
-        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
-        () => copyFiles(INVALID_TEST_FILES, TEST_OUTPUT_SRC),
-        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC)
+        () => {
+          return copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC);
+        },
+        () => {
+          return copyFiles(INVALID_TEST_FILES, TEST_OUTPUT_SRC);
+        },
+        () => {
+          return copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC);
+        }
       ];
 
       return runSteps(taskName, task, steps);
@@ -239,9 +260,15 @@ const registerTestsForTask = (taskName, task) => {
       this.timeout(60000);
 
       const steps = [
-        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
-        () => copyFiles(INVALID_TEST_FILES, TEST_OUTPUT_SRC),
-        () => copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC)
+        () => {
+          return copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC);
+        },
+        () => {
+          return copyFiles(INVALID_TEST_FILES, TEST_OUTPUT_SRC);
+        },
+        () => {
+          return copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC);
+        }
       ];
 
       return runSteps(taskName, task, steps);
