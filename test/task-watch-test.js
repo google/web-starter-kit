@@ -99,6 +99,7 @@ const validateOutput = () => {
       }
 
       if (pathstats.size <= 0) {
+        console.log(pathstats);
         throw new Error(`Output file has no contents: ${fullpath}`);
       }
     });
