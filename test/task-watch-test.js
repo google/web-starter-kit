@@ -45,6 +45,7 @@ const deleteFiles = path => {
   return new Promise((resolve, reject) => {
     rimraf(path, err => {
       if (err) {
+        console.log('rimraf error :(', err);
         reject(err);
         return;
       }
