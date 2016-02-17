@@ -59,6 +59,7 @@ const copyFiles = (from, to) => {
   return new Promise((resolve, reject) => {
     ncp(from, to, err => {
       if (err) {
+        console.log('ncp error :(', err);
         reject(err);
         return;
       }
@@ -127,25 +128,10 @@ const runSteps = (taskName, task, steps) => {
   })
   .then(() => {
     console.log('Wait until there is a quiet period from the watcher');
+    let currentTimeout = null;
     return new Promise((watcherTaskQuietResolve, watcherTaskFinishReject) => {
-      let currentTimeout = null;
-      const completionCb = () => {
-        console.log('Quiet period reached');
-
-        if (currentTimeout) {
-          clearTimeout(currentTimeout);
-        }
-
-        if (watcherTask) {
-          watcherTask.close();
-          watcherTask = null;
-        }
-
-        watcherTaskQuietResolve();
-      };
-
       // Start the initial timeout
-      currentTimeout = setTimeout(completionCb, 2000);
+      currentTimeout = setTimeout(watcherTaskQuietResolve, 2000);
 
       watcherTask.on('all', event => {
         try {
@@ -156,13 +142,36 @@ const runSteps = (taskName, task, steps) => {
 
           console.log('Watch Event: Step 1', event);
 
-          currentTimeout = setTimeout(completionCb, 2000);
+          currentTimeout = setTimeout(watcherTaskQuietResolve, 2000);
           console.log('Watch Event: Step 2', event);
         } catch (error) {
           console.error('Problem waiting for watch task to complete', error);
           watcherTaskFinishReject(error);
         }
       });
+    })
+    .then(() => {
+      console.log('Quiet perioed reached');
+      if (currentTimeout) {
+        clearTimeout(currentTimeout);
+      }
+
+      if (watcherTask) {
+        watcherTask.close();
+        watcherTask = null;
+      }
+    })
+    .catch(error => {
+      if (currentTimeout) {
+        clearTimeout(currentTimeout);
+      }
+
+      if (watcherTask) {
+        watcherTask.close();
+        watcherTask = null;
+      }
+
+      throw error;
     });
   })
   .then(validateOutput);
