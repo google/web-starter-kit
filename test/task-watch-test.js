@@ -44,30 +44,41 @@ let watcherTask;
 const deleteFiles = path => {
   console.log('deleteFiles: ', path);
   return new Promise((resolve, reject) => {
-    rimraf(path, err => {
-      if (err) {
-        console.log('rimraf error :(', err);
-        reject(err);
-        return;
-      }
+    try {
+      rimraf(path, err => {
+        if (err) {
+          console.log('rimraf error :(', err);
+          reject(err);
+          return;
+        }
 
-      resolve();
-    });
+        console.log('rimraf ok :)');
+        resolve();
+      });
+    } catch (error) {
+      console.log('rimraf error :(', error);
+      reject(error);
+    }
   });
 };
 
 const copyFiles = (from, to) => {
   console.log('copyFiles: ', from, to);
   return new Promise((resolve, reject) => {
-    ncp(from, to, err => {
-      if (err) {
-        console.log('ncp error :(', err);
-        reject(err);
-        return;
-      }
+    try {
+      ncp(from, to, err => {
+        if (err) {
+          console.log('ncp error :(', err);
+          reject(err);
+          return;
+        }
 
-      resolve();
-    });
+        console.log('ncp OK :)');
+        resolve();
+      });
+    } catch (error) {
+      console.log('ncp error :(', error);
+    }
   });
 };
 
