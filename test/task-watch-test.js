@@ -28,6 +28,7 @@ const path = require('path');
 const del = require('del');
 const ncp = require('ncp');
 const mkdirp = require('mkdirp');
+const rimraf = require('rimraf');
 const taskHelper = require('./helpers/task-helper');
 
 const VALID_TEST_FILES = path.join('test', 'data', 'valid-files');
@@ -185,14 +186,30 @@ const registerTestsForTask = (taskName, task) => {
 
 describe('Run tests against watch methods', function() {
   // Clean up before each test
-  beforeEach(() => {
+  beforeEach(done => {
+    rimraf(path.join(TEST_OUTPUT_PATH, '**'), () => {
+      if (watcherTask) {
+        watcherTask.close();
+        watcherTask = null;
+      }
+
+      mkdirp.sync(TEST_OUTPUT_SRC);
+
+      GLOBAL.config = {
+        env: 'dev',
+        src: TEST_OUTPUT_SRC,
+        dest: TEST_OUTPUT_DEST
+      };
+
+      done();
+    });
     console.log('Going to attempt to delete: ', path.join(TEST_OUTPUT_PATH, '**'));
-    return del(path.join(TEST_OUTPUT_PATH, '**'), {dot: true})
-    .catch(err => {
-      console.log(err);
-      throw err;
-    })
-    .then(() => {
+    // return del(path.join(TEST_OUTPUT_PATH, '**'), {dot: true})
+    // .catch(err => {
+    //   console.log(err);
+    //   throw err;
+    // })
+    /** .then(() => {
       if (watcherTask) {
         watcherTask.close();
         watcherTask = null;
@@ -207,16 +224,17 @@ describe('Run tests against watch methods', function() {
         src: TEST_OUTPUT_SRC,
         dest: TEST_OUTPUT_DEST
       };
-    });
+    });**/
   });
 
   // Clean up after final test
-  after(() => {
-    return del(path.join(TEST_OUTPUT_PATH, '**'), {dot: true}).catch(() => {})
-    .catch(err => {
-      console.log(err);
-      throw err;
-    });
+  after(done => {
+    rimraf(path.join(TEST_OUTPUT_PATH, '**'), done);
+    // return del(path.join(TEST_OUTPUT_PATH, '**'), {dot: true}).catch(() => {})
+    // .catch(err => {
+    //   console.log(err);
+    //   throw err;
+    // });
   });
 
   taskHelper.getTasks().map(taskObject => {
