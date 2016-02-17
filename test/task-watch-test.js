@@ -25,7 +25,6 @@ require('chai').should();
 
 const fs = require('fs');
 const path = require('path');
-const del = require('del');
 const ncp = require('ncp');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
@@ -38,8 +37,22 @@ const TEST_OUTPUT_PATH = path.join('test', 'output');
 const TEST_OUTPUT_SRC = path.join(TEST_OUTPUT_PATH, 'src');
 const TEST_OUTPUT_DEST = path.join(TEST_OUTPUT_PATH, 'build');
 
-let watcherTaskId = 0;
 let watcherTask;
+
+// Use rimraf over del because it seems to work more reliably on Windows.
+// Probably due to it's retries.
+const deleteFiles = path => {
+  return new Promise((resolve, reject) => {
+    rimraf(path, err => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      resolve();
+    });
+  });
+};
 
 const copyFiles = (from, to) => {
   return new Promise((resolve, reject) => {
@@ -175,7 +188,7 @@ const registerTestsForTask = (taskName, task) => {
 
       const steps = [
         () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
-        () => del(TEST_OUTPUT_SRC + '/*')
+        () => deleteFiles(path.join(TEST_OUTPUT_SRC, '*'))
       ];
 
       return runSteps(taskName, task, steps)
@@ -215,7 +228,7 @@ const registerTestsForTask = (taskName, task) => {
 
 describe('Run tests against watch methods', function() {
   // Clean up before each test
-  beforeEach(done => {
+  beforeEach(() => {
     console.log('beforeEach Step 1');
     if (watcherTask) {
       console.log('Watcher task .close()');
@@ -224,9 +237,8 @@ describe('Run tests against watch methods', function() {
     }
     console.log('beforeEach Step 2');
 
-    // Use rimraf over del because it seems to work more reliably on Windows.
-    // Probably due to it's retries.
-    rimraf(path.join(TEST_OUTPUT_PATH, '**'), function() {
+    return deleteFiles(path.join(TEST_OUTPUT_PATH, '**'))
+    .then(() => {
       // Create Source Path
       // console.log('beforeEach Step 3');
       mkdirp.sync(TEST_OUTPUT_SRC);
@@ -236,13 +248,11 @@ describe('Run tests against watch methods', function() {
         src: TEST_OUTPUT_SRC,
         dest: TEST_OUTPUT_DEST
       };
-
-      done();
     });
   });
 
   // Clean up after final test
-  after(done => {
+  after(() => {
     if (watcherTask) {
       watcherTask.close();
       watcherTask = null;
@@ -250,7 +260,7 @@ describe('Run tests against watch methods', function() {
 
     // Use rimraf over del because it seems to work more reliably on Windows.
     // Probably due to it's retries.
-    rimraf(path.join(TEST_OUTPUT_PATH, '**'), done);
+    return deleteFiles(path.join(TEST_OUTPUT_PATH, '**'));
   });
 
   taskHelper.getTasks().map(taskObject => {
