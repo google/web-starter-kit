@@ -23,11 +23,13 @@
 
 require('chai').should();
 
+const gulp = require('gulp');
 const fs = require('fs');
 const path = require('path');
 const ncp = require('ncp');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
+const plumber = require('gulp-plumber');
 const taskHelper = require('./helpers/task-helper');
 
 const VALID_TEST_FILES = path.join('test', 'data', 'valid-files');
@@ -366,12 +368,26 @@ describe('Run tests against watch methods', function() {
     });
   });
 
+  var originalGulpSrc = null;
+  before(() => {
+    // Mocha detects errors in the gulp stream on Windows
+    // We can silence these to force testing explicit
+    // input -> output of files using gulp-plumber
+
+    originalGulpSrc = gulp.src;
+    originalGulpSrc = () => {
+      return originalGulpSrc(arguments).pipe(plumber());
+    };
+  });
+
   // Clean up after final test
   after(() => {
     console.log('');
     console.log('');
     console.log('');
     console.log('********************* START OF AFTER');
+
+    gulp.src = originalGulpSrc;
 
     if (watcherTask) {
       watcherTask.close();
