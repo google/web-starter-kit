@@ -29,7 +29,6 @@ const path = require('path');
 const ncp = require('ncp');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
-const proxyquire = require('proxyquire');
 const plumber = require('gulp-plumber');
 const taskHelper = require('./helpers/task-helper');
 
@@ -377,7 +376,9 @@ describe('Run tests against watch methods', function() {
 
     originalGulpSrc = gulp.src;
     gulp.src = function() {
-      return originalGulpSrc.apply(gulp, arguments).pipe(plumber());
+      return originalGulpSrc.apply(gulp, arguments).on('error', function() {
+        console.log('src error?');
+      }).pipe(plumber());
     };
   });
 
