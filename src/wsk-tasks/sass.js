@@ -37,7 +37,6 @@ const AUTOPREFIXER_BROWSERS = [
 ];
 
 function build() {
-  console.log('BUILD START', new Date());
   var sassStream = gulp.src(GLOBAL.config.src + '/**/*.scss')
     .pipe(gulpSass().on('error', gulpSass.logError))
     .pipe(sourcemaps.init())
