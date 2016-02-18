@@ -24,12 +24,12 @@
 require('chai').should();
 
 const path = require('path');
-const david = require('david');
 const dependencyCaveat = require('../dependency-caveats.json');
 
 const checkDependencies = (packageManifest, additionalOps) => {
   return new Promise((resolve, reject) => {
     const options = Object.assign({stable: true}, additionalOps);
+    const david = require('david');
     david.getUpdatedDependencies(packageManifest, options, function(er, deps) {
       if (er) {
         reject(er);
@@ -38,6 +38,7 @@ const checkDependencies = (packageManifest, additionalOps) => {
 
       const filteredOutdatedDeps = {};
       const outdatedDependencies = Object.keys(deps);
+
       outdatedDependencies.forEach(dependencyName => {
         if (dependencyCaveat[dependencyName]) {
           const caveatDetails = dependencyCaveat[dependencyName];
@@ -49,8 +50,6 @@ const checkDependencies = (packageManifest, additionalOps) => {
           ) {
             return;
           }
-
-          console.warn(`Dependency caveat for ${dependencyName} is out of date`);
         }
 
         filteredOutdatedDeps[dependencyName] = deps[dependencyName];
@@ -84,13 +83,17 @@ describe('Check that the dependencies of the project are up to date', () => {
 
   const packageManifest = require(path.join(__dirname, '..', 'package.json'));
 
-  it('should have up to date npm dependencies', () => {
+  it('should have up to date npm dependencies', function() {
+    // AppVeyor is slow to get a response from NPM sometimes
+    this.timeout(6000);
     return checkDependencies(packageManifest, {
       dev: false
     });
   });
 
-  it('should have up to date npm devDependencies', () => {
+  it('should have up to date npm devDependencies', function() {
+    // AppVeyor is slow to get a response from NPM sometimes
+    this.timeout(6000);
     return checkDependencies(packageManifest, {
       dev: true
     });

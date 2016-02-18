@@ -51,6 +51,11 @@ function build() {
     .pipe(gulp.dest(GLOBAL.config.dest));
 }
 
+function watch() {
+  return gulp.watch(GLOBAL.config.src + '/**/*.scss', build);
+}
+
 module.exports = {
   build: build,
+  watch: watch
 };
