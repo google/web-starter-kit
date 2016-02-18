@@ -67,7 +67,7 @@ const copyFiles = (from, to) => {
         return;
       }
 
-      console.log('copyFiles() OK :)');
+      console.log('copyFiles() OK :)', new Date());
       resolve();
     });
   });
@@ -106,7 +106,10 @@ const validateOutput = () => {
 
 const runSteps = (taskName, task, steps) => {
   // Start the tasks watching
-  watcherTask = task.watch();
+  const buildEndCb = () => {
+    console.log('Build has finished');
+  };
+  watcherTask = task.watch(buildEndCb);
   if (!watcherTask) {
     return Promise.reject(new Error(`Nothing returned from the tasks watch() method. Is the result of gulp.watch returned in ${taskName}`));
   }
@@ -119,19 +122,26 @@ const runSteps = (taskName, task, steps) => {
   })
   .then(steps)
   .then(() => {
-    console.log('Steps complete, wait for watch task quiet period');
+    console.log('Steps complete, wait for watch task quiet period', new Date());
     return new Promise(watcherTaskQuietResolve => {
       let currentTimeout = Date.now();
 
       watcherTask.on('all', () => {
+        console.log('Updating the current timeout', new Date());
         currentTimeout = Date.now();
       });
 
-      while ((Date.now() - currentTimeout) < 2000) {
-        // Keep looping
-      }
+      const timeoutCallback = () => {
+        if ((Date.now() - currentTimeout) > 5000) {
+          // Keep looping
 
-      watcherTaskQuietResolve();
+          console.log('Timeout End', new Date());
+          watcherTaskQuietResolve();
+        } else {
+          setTimeout(timeoutCallback, 5000);
+        }
+      };
+      timeoutCallback();
     })
     .then(() => {
       console.log('Quiet perioed reached');
@@ -188,9 +198,9 @@ const registerTestsForTask = (taskName, task) => {
       const steps = () => {
         return Promise.resolve()
           .then(() => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC))
-          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)))
+          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 5000)))
           .then(() => copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC))
-          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)));
+          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 5000)));
       };
 
       console.log('');
@@ -358,6 +368,11 @@ describe('Run tests against watch methods', function() {
 
   // Clean up after final test
   after(() => {
+    console.log('');
+    console.log('');
+    console.log('');
+    console.log('********************* START OF AFTER');
+
     if (watcherTask) {
       watcherTask.close();
       watcherTask = null;
@@ -365,7 +380,13 @@ describe('Run tests against watch methods', function() {
 
     // Use rimraf over del because it seems to work more reliably on Windows.
     // Probably due to it's retries.
-    return deleteFiles(path.join(TEST_OUTPUT_PATH, '**'));
+    return deleteFiles(path.join(TEST_OUTPUT_PATH, '**'))
+    .then(() => {
+      console.log('********************* END OF AFTER');
+      console.log('');
+      console.log('');
+      console.log('');
+    });
   });
 
   taskHelper.getTasks().map(taskObject => {

@@ -38,6 +38,7 @@ const AUTOPREFIXER_BROWSERS = [
 ];
 
 function build() {
+  console.log('BUILD START', new Date());
   var sassStream = gulp.src(GLOBAL.config.src + '/**/*.scss')
     .pipe(gulpSass().on('error', gulpSass.logError))
     .pipe(sourcemaps.init())
@@ -52,11 +53,12 @@ function build() {
     .pipe(gulp.dest(GLOBAL.config.dest));
 }
 
-function watch() {
-  return gulp.watch(GLOBAL.config.src + '/**/*.scss',
-    () => {
-      return build().on('error', gutil.log);
-    });
+function watch(cb) {
+  var watchTasks = [build];
+  if (cb) {
+    watchTasks.push(cb);
+  }
+  return gulp.watch(GLOBAL.config.src + '/**/*.scss', gulp.series(watchTasks));
 }
 
 module.exports = {
