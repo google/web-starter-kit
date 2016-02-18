@@ -173,7 +173,7 @@ const registerTestsForTask = (taskName, task) => {
         done();
       })
       .catch(err => {
-        console.log('------------------- ERROR IN TEST');
+        console.log('------------------- ERROR IN TEST', err);
         console.log('');
         console.log('');
         console.log('');
@@ -207,7 +207,7 @@ const registerTestsForTask = (taskName, task) => {
         done();
       })
       .catch(err => {
-        console.log('------------------- ERROR IN TEST');
+        console.log('------------------- ERROR IN TEST', err);
         console.log('');
         console.log('');
         console.log('');
@@ -241,7 +241,7 @@ const registerTestsForTask = (taskName, task) => {
         done();
       })
       .catch(err => {
-        console.log('------------------- ERROR IN TEST');
+        console.log('------------------- ERROR IN TEST', err);
         console.log('');
         console.log('');
         console.log('');
@@ -277,7 +277,7 @@ const registerTestsForTask = (taskName, task) => {
         done();
       })
       .catch(err => {
-        console.log('------------------- ERROR IN TEST');
+        console.log('------------------- ERROR IN TEST', err);
         console.log('');
         console.log('');
         console.log('');
@@ -313,7 +313,7 @@ const registerTestsForTask = (taskName, task) => {
         done();
       })
       .catch(err => {
-        console.log('------------------- ERROR IN TEST');
+        console.log('------------------- ERROR IN TEST', err);
         console.log('');
         console.log('');
         console.log('');
