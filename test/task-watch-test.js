@@ -106,56 +106,74 @@ const validateOutput = () => {
   });
 };
 
-const runSteps = (taskName, task, steps) => {
+const performStep = (step, watcher) => {
+  return new Promise(resolve => {
+    let lastTimeout = Date.now();
+    let callback = () => {
+      console.log('Watcher Event');
+      lastTimeout = Date.now();
+    };
+    watcher.on('all', callback);
+
+    step();
+
+    let timeoutHandler = () => {
+      if ((Date.now() - lastTimeout) > 5000) {
+        console.log('Timeout reached');
+        watcher.removeListener('all', callback);
+        resolve();
+      } else {
+        setTimeout(timeoutHandler, 1000);
+      }
+    };
+
+    timeoutHandler();
+  });
+};
+
+const stepOverEachStep = (steps, watcher) => {
+  return steps.reduce((chainedPromise, nextStep) => {
+    return chainedPromise.then(() => performStep(nextStep, watcher));
+  }, Promise.resolve());
+};
+
+const waitForWatcher = watcher => {
+  return new Promise(resolve => {
+    watcher.on('ready', () => {
+      console.log('Watch task is ready');
+      resolve();
+    });
+  });
+};
+
+const performTest = (taskName, task, steps) => {
+  console.log('');
+  console.log('');
+  console.log('');
+  console.log('------------------- START OF TEST');
+
   // Start the tasks watching
-  const buildEndCb = () => {
-    console.log('Build has finished');
-  };
-  watcherTask = task.watch(buildEndCb);
+  watcherTask = task.watch();
   if (!watcherTask) {
     return Promise.reject(new Error(`Nothing returned from the tasks watch() method. Is the result of gulp.watch returned in ${taskName}`));
   }
 
-  return new Promise(watcherReadyResolve => {
-    watcherTask.on('ready', () => {
-      console.log('Watch task is ready');
-      watcherReadyResolve();
-    });
-  })
-  .then(steps)
+  return waitForWatcher(watcherTask)
+  .then(() => stepOverEachStep(steps, watcherTask))
   .then(() => {
-    console.log('Steps complete, wait for watch task quiet period', new Date());
-    return new Promise(watcherTaskQuietResolve => {
-      let currentTimeout = Date.now();
-
-      watcherTask.on('all', () => {
-        console.log('Updating the current timeout', new Date());
-        currentTimeout = Date.now();
-      });
-
-      const timeoutCallback = () => {
-        if ((Date.now() - currentTimeout) > 5000) {
-          // Keep looping
-
-          console.log('Timeout End', new Date());
-          watcherTaskQuietResolve();
-        } else {
-          setTimeout(timeoutCallback, 5000);
-        }
-      };
-      timeoutCallback();
-    })
-    .then(() => {
-      console.log('Quiet perioed reached');
-      if (watcherTask) {
-        watcherTask.close();
-        watcherTask = null;
-      }
-    });
+    if (watcherTask) {
+      watcherTask.close();
+      watcherTask = null;
+    }
   })
   .then(() => {
-    console.log('Validate the output');
     validateOutput();
+  })
+  .then(() => {
+    console.log('------------------- END OF TEST');
+    console.log('');
+    console.log('');
+    console.log('');
   });
 };
 
@@ -165,25 +183,12 @@ const registerTestsForTask = (taskName, task) => {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(60000);
 
-      const steps = () => {
-        return Promise.resolve()
-          .then(() => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC))
-          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)));
-      };
+      const steps = [
+        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC)
+      ];
 
-      console.log('');
-      console.log('');
-      console.log('');
-      console.log('------------------- START OF TEST');
-
-      runSteps(taskName, task, steps)
-      .then(() => {
-        console.log('------------------- END OF TEST');
-        console.log('');
-        console.log('');
-        console.log('');
-        done();
-      })
+      performTest(taskName, task, steps)
+      .then(() => done())
       .catch(err => {
         console.log('------------------- ERROR IN TEST', err);
         console.log('');
@@ -197,27 +202,13 @@ const registerTestsForTask = (taskName, task) => {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(60000);
 
-      const steps = () => {
-        return Promise.resolve()
-          .then(() => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC))
-          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 5000)))
-          .then(() => copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC))
-          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 5000)));
-      };
+      const steps = [
+        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
+        () => copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC)
+      ];
 
-      console.log('');
-      console.log('');
-      console.log('');
-      console.log('------------------- START OF TEST');
-
-      runSteps(taskName, task, steps)
-      .then(() => {
-        console.log('------------------- END OF TEST');
-        console.log('');
-        console.log('');
-        console.log('');
-        done();
-      })
+      performTest(taskName, task, steps)
+      .then(() => done())
       .catch(err => {
         console.log('------------------- ERROR IN TEST', err);
         console.log('');
@@ -231,27 +222,13 @@ const registerTestsForTask = (taskName, task) => {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(60000);
 
-      const steps = () => {
-        return Promise.resolve()
-        .then(() => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC))
-        .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)))
-        .then(() => deleteFiles(path.join(TEST_OUTPUT_SRC, '*')))
-        .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)));
-      };
+      const steps = [
+        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
+        () => deleteFiles(path.join(TEST_OUTPUT_SRC, '*'))
+      ];
 
-      console.log('');
-      console.log('');
-      console.log('');
-      console.log('------------------- START OF TEST');
-
-      runSteps(taskName, task, steps)
-      .then(() => {
-        console.log('------------------- END OF TEST');
-        console.log('');
-        console.log('');
-        console.log('');
-        done();
-      })
+      performTest(taskName, task, steps)
+      .then(() => done())
       .catch(err => {
         console.log('------------------- ERROR IN TEST', err);
         console.log('');
@@ -265,29 +242,14 @@ const registerTestsForTask = (taskName, task) => {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(60000);
 
-      const steps = () => {
-        return Promise.resolve()
-          .then(() => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC))
-          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)))
-          .then(() => copyFiles(INVALID_TEST_FILES, TEST_OUTPUT_SRC))
-          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)))
-          .then(() => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC))
-          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)));
-      };
+      const steps = [
+        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
+        () => copyFiles(INVALID_TEST_FILES, TEST_OUTPUT_SRC),
+        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC)
+      ];
 
-      console.log('');
-      console.log('');
-      console.log('');
-      console.log('------------------- START OF TEST');
-
-      runSteps(taskName, task, steps)
-      .then(() => {
-        console.log('------------------- END OF TEST');
-        console.log('');
-        console.log('');
-        console.log('');
-        done();
-      })
+      performTest(taskName, task, steps)
+      .then(() => done())
       .catch(err => {
         console.log('------------------- ERROR IN TEST', err);
         console.log('');
@@ -301,29 +263,14 @@ const registerTestsForTask = (taskName, task) => {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(60000);
 
-      const steps = () => {
-        return Promise.resolve()
-          .then(() => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC))
-          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)))
-          .then(() => copyFiles(INVALID_TEST_FILES, TEST_OUTPUT_SRC))
-          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)))
-          .then(() => copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC))
-          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)));
-      };
+      const steps = [
+        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
+        () => copyFiles(INVALID_TEST_FILES, TEST_OUTPUT_SRC),
+        () => copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC)
+      ];
 
-      console.log('');
-      console.log('');
-      console.log('');
-      console.log('------------------- START OF TEST');
-
-      runSteps(taskName, task, steps)
-      .then(() => {
-        console.log('------------------- END OF TEST');
-        console.log('');
-        console.log('');
-        console.log('');
-        done();
-      })
+      performTest(taskName, task, steps)
+      .then(() => done())
       .catch(err => {
         console.log('------------------- ERROR IN TEST', err);
         console.log('');
@@ -338,8 +285,6 @@ const registerTestsForTask = (taskName, task) => {
 describe('Run tests against watch methods', function() {
   // Clean up before each test
   beforeEach(() => {
-    console.log('');
-    console.log('');
     console.log('');
     console.log('********************* START OF BEFORE EACH');
     if (watcherTask) {
@@ -363,8 +308,6 @@ describe('Run tests against watch methods', function() {
     .then(() => {
       console.log('********************* END OF BEFORE EACH');
       console.log('');
-      console.log('');
-      console.log('');
     });
   });
 
@@ -376,16 +319,12 @@ describe('Run tests against watch methods', function() {
 
     originalGulpSrc = gulp.src;
     gulp.src = function() {
-      return originalGulpSrc.apply(gulp, arguments).on('error', function() {
-        console.log('src error?');
-      }).pipe(plumber());
+      return originalGulpSrc.apply(gulp, arguments).pipe(plumber());
     };
   });
 
   // Clean up after final test
   after(() => {
-    console.log('');
-    console.log('');
     console.log('');
     console.log('********************* START OF AFTER');
 
@@ -401,8 +340,6 @@ describe('Run tests against watch methods', function() {
     return deleteFiles(path.join(TEST_OUTPUT_PATH, '**'))
     .then(() => {
       console.log('********************* END OF AFTER');
-      console.log('');
-      console.log('');
       console.log('');
     });
   });
