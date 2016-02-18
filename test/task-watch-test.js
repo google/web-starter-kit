@@ -56,6 +56,9 @@ const deleteFiles = path => {
       console.log('deleteFiles() ok :)');
       resolve();
     });
+  })
+  .catch(err => {
+    console.log('deleteFiles error() ', err);
   });
 };
 

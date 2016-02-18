@@ -24,12 +24,12 @@
 require('chai').should();
 
 const path = require('path');
-const david = require('david');
 const dependencyCaveat = require('../dependency-caveats.json');
 
 const checkDependencies = (packageManifest, additionalOps) => {
   return new Promise((resolve, reject) => {
     const options = Object.assign({stable: true}, additionalOps);
+    const david = require('david');
     david.getUpdatedDependencies(packageManifest, options, function(er, deps) {
       if (er) {
         reject(er);

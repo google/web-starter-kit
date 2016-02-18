@@ -23,7 +23,6 @@
 
 require('chai').should();
 const fs = require('fs');
-const del = require('del');
 const taskHelper = require('./helpers/task-helper');
 
 const VALID_TEST_FILES = 'test/data/valid-files';
@@ -85,6 +84,8 @@ let describeTestsForTask = function(taskName, task) {
 };
 
 describe('Run checks and tests against each WSK task', () => {
+  const del = require('del');
+
   // Clean up before each test
   beforeEach(done => del(TEST_OUTPUT_PATH + '/**').then(() => done(), done));
 
