@@ -10,7 +10,7 @@ module.exports = {
     taskFilenames.map(taskFilename => {
       tasksToTest.push({
         taskName: taskFilename,
-        task: require(path.join(tasksDirectory, taskFilename))
+        taskPath: path.join(tasksDirectory, taskFilename)
       });
     });
 

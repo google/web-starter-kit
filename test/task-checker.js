@@ -93,7 +93,7 @@ describe('Run checks and tests against each WSK task', () => {
 
   taskHelper.getTasks().map(taskObject => {
     let taskName = taskObject.taskName;
-    let task = taskObject.task;
+    let task = require(taskObject.taskPath);
 
     describeTestsForTask(taskName, task);
   });

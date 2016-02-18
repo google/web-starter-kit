@@ -29,6 +29,7 @@ const path = require('path');
 const ncp = require('ncp');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
+const proxyquire = require('proxyquire');
 const plumber = require('gulp-plumber');
 const taskHelper = require('./helpers/task-helper');
 
@@ -375,8 +376,8 @@ describe('Run tests against watch methods', function() {
     // input -> output of files using gulp-plumber
 
     originalGulpSrc = gulp.src;
-    originalGulpSrc = () => {
-      return originalGulpSrc(arguments).pipe(plumber());
+    gulp.src = function() {
+      return originalGulpSrc.apply(gulp, arguments).pipe(plumber());
     };
   });
 
@@ -407,7 +408,7 @@ describe('Run tests against watch methods', function() {
 
   taskHelper.getTasks().map(taskObject => {
     let taskName = taskObject.taskName;
-    let task = taskObject.task;
+    let task = require(taskObject.taskPath);
 
     // Check that there is a watch task
     if (typeof task.watch === 'undefined') {
