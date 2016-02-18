@@ -18,7 +18,7 @@
  */
 
 var gulp = require('gulp');
-var gutil = require('gulp-util');
+var plumber = require('gulp-plumber');
 var gulpSass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var cssnano = require('gulp-cssnano');
@@ -40,6 +40,7 @@ const AUTOPREFIXER_BROWSERS = [
 function build() {
   console.log('BUILD START', new Date());
   var sassStream = gulp.src(GLOBAL.config.src + '/**/*.scss')
+    .pipe(plumber())
     .pipe(gulpSass().on('error', gulpSass.logError))
     .pipe(sourcemaps.init())
     .pipe(autoprefixer(AUTOPREFIXER_BROWSERS));
@@ -50,15 +51,12 @@ function build() {
   }
 
   return sassStream.pipe(sourcemaps.write('.'))
+    .pipe(plumber.stop())
     .pipe(gulp.dest(GLOBAL.config.dest));
 }
 
-function watch(cb) {
-  var watchTasks = [build];
-  if (cb) {
-    watchTasks.push(cb);
-  }
-  return gulp.watch(GLOBAL.config.src + '/**/*.scss', gulp.series(watchTasks));
+function watch() {
+  return gulp.watch(GLOBAL.config.src + '/**/*.scss', build);
 }
 
 module.exports = {
