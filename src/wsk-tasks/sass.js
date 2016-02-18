@@ -22,6 +22,7 @@ var gulpSass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var cssnano = require('gulp-cssnano');
 var sourcemaps = require('gulp-sourcemaps');
+var debug = require('gulp-debug');
 
 const AUTOPREFIXER_BROWSERS = [
   'ie >= 11',
@@ -39,16 +40,22 @@ const AUTOPREFIXER_BROWSERS = [
 function build() {
   console.log('BUILD START', new Date());
   var sassStream = gulp.src(GLOBAL.config.src + '/**/*.scss')
+    .pipe(debug({title: '    Before Sass'}))
     .pipe(gulpSass().on('error', gulpSass.logError))
+    .pipe(debug({title: '    Before Sourcemaps'}))
     .pipe(sourcemaps.init())
+    .pipe(debug({title: '    Before Autoprefixer'}))
     .pipe(autoprefixer(AUTOPREFIXER_BROWSERS));
 
   // We only want to minify for production builds
   if (GLOBAL.config.env === 'prod') {
+    sassStream = sassStream.pipe(debug({title: '    Before cssnano'}));
     sassStream = sassStream.pipe(cssnano());
   }
 
+  sassStream = sassStream.pipe(debug({title: '    Before sourcemap write'}));
   return sassStream.pipe(sourcemaps.write('.'))
+    .pipe(debug({title: '    Before gulp dest'}))
     .pipe(gulp.dest(GLOBAL.config.dest));
 }
 
