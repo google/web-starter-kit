@@ -237,6 +237,12 @@ const registerTestsForTask = (taskName, task) => {
 };
 
 describe('Run tests against watch methods', function() {
+  if (process.platform.indexOf('win') === 0) {
+    console.warn('Skipping watch task tests. Windows file permissions ' +
+    'result in flakey test behaviour.');
+    return;
+  }
+
   // Clean up before each test
   beforeEach(() => {
     if (watcherTask) {
