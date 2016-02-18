@@ -23,13 +23,11 @@
 
 require('chai').should();
 
-const gulp = require('gulp');
 const fs = require('fs');
 const path = require('path');
 const ncp = require('ncp');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
-const plumber = require('gulp-plumber');
 const taskHelper = require('./helpers/task-helper');
 
 const VALID_TEST_FILES = path.join('test', 'data', 'valid-files');
@@ -44,43 +42,40 @@ let watcherTask;
 // Use rimraf over del because it seems to work more reliably on Windows.
 // Probably due to it's retries.
 const deleteFiles = path => {
-  console.log('deleteFiles() ', path);
   return new Promise((resolve, reject) => {
     rimraf(path, err => {
       if (err) {
-        console.log('deleteFiles() error :(', err);
         reject(err);
         return;
       }
 
-      console.log('deleteFiles() ok :)');
       resolve();
     });
   })
   .catch(err => {
-    console.log('deleteFiles error() ', err);
+    console.log('deleteFiles() error ', err);
+    throw err;
   });
 };
 
 const copyFiles = (from, to) => {
-  console.log('copyFiles() ', from, to);
   return new Promise((resolve, reject) => {
     ncp(from, to, err => {
       if (err) {
-        console.log('copyFiles() error :(', err);
         reject(err);
         return;
       }
 
-      console.log('copyFiles() OK :)', new Date());
       resolve();
     });
+  })
+  .catch(err => {
+    console.log('copyFiles() error ', err);
+    throw err;
   });
 };
 
 const validateOutput = () => {
-  console.log('validateOutput()');
-
   // Get directories in build directory
   const folders = fs.readdirSync(TEST_OUTPUT_DEST);
   folders.forEach(folderName => {
@@ -113,7 +108,6 @@ const performStep = (step, watcher) => {
   return new Promise(resolve => {
     let lastTimeout = Date.now();
     let callback = () => {
-      console.log('Watcher Event');
       lastTimeout = Date.now();
     };
     watcher.on('all', callback);
@@ -121,8 +115,7 @@ const performStep = (step, watcher) => {
     step();
 
     let timeoutHandler = () => {
-      if ((Date.now() - lastTimeout) > 5000) {
-        console.log('Timeout reached');
+      if ((Date.now() - lastTimeout) > 2000) {
         watcher.removeListener('all', callback);
         resolve();
       } else {
@@ -143,18 +136,12 @@ const stepOverEachStep = (steps, watcher) => {
 const waitForWatcher = watcher => {
   return new Promise(resolve => {
     watcher.on('ready', () => {
-      console.log('Watch task is ready');
       resolve();
     });
   });
 };
 
 const performTest = (taskName, task, steps) => {
-  console.log('');
-  console.log('');
-  console.log('');
-  console.log('------------------- START OF TEST');
-
   // Start the tasks watching
   watcherTask = task.watch();
   if (!watcherTask) {
@@ -171,12 +158,6 @@ const performTest = (taskName, task, steps) => {
   })
   .then(() => {
     validateOutput();
-  })
-  .then(() => {
-    console.log('------------------- END OF TEST');
-    console.log('');
-    console.log('');
-    console.log('');
   });
 };
 
@@ -192,13 +173,7 @@ const registerTestsForTask = (taskName, task) => {
 
       performTest(taskName, task, steps)
       .then(() => done())
-      .catch(err => {
-        console.log('------------------- ERROR IN TEST', err);
-        console.log('');
-        console.log('');
-        console.log('');
-        done(err);
-      });
+      .catch(err => done(err));
     });
 
     it('should watch for new files being added and changed', function(done) {
@@ -212,13 +187,7 @@ const registerTestsForTask = (taskName, task) => {
 
       performTest(taskName, task, steps)
       .then(() => done())
-      .catch(err => {
-        console.log('------------------- ERROR IN TEST', err);
-        console.log('');
-        console.log('');
-        console.log('');
-        done(err);
-      });
+      .catch(err => done(err));
     });
 
     it('should watch for new files being added and deleted', function(done) {
@@ -232,13 +201,7 @@ const registerTestsForTask = (taskName, task) => {
 
       performTest(taskName, task, steps)
       .then(() => done())
-      .catch(err => {
-        console.log('------------------- ERROR IN TEST', err);
-        console.log('');
-        console.log('');
-        console.log('');
-        done(err);
-      });
+      .catch(err => done(err));
     });
 
     it('should watch for new files being added, followed by bad example files followed by the original files', function(done) {
@@ -253,13 +216,7 @@ const registerTestsForTask = (taskName, task) => {
 
       performTest(taskName, task, steps)
       .then(() => done())
-      .catch(err => {
-        console.log('------------------- ERROR IN TEST', err);
-        console.log('');
-        console.log('');
-        console.log('');
-        done(err);
-      });
+      .catch(err => done(err));
     });
 
     it('should watch for new files being added, followed by bad example files followed by the differnt valid files', function(done) {
@@ -274,13 +231,7 @@ const registerTestsForTask = (taskName, task) => {
 
       performTest(taskName, task, steps)
       .then(() => done())
-      .catch(err => {
-        console.log('------------------- ERROR IN TEST', err);
-        console.log('');
-        console.log('');
-        console.log('');
-        done(err);
-      });
+      .catch(err => done(err));
     });
   });
 };
@@ -288,10 +239,7 @@ const registerTestsForTask = (taskName, task) => {
 describe('Run tests against watch methods', function() {
   // Clean up before each test
   beforeEach(() => {
-    console.log('');
-    console.log('********************* START OF BEFORE EACH');
     if (watcherTask) {
-      console.log('Watcher task .close()');
       watcherTask.close();
       watcherTask = null;
     }
@@ -307,32 +255,11 @@ describe('Run tests against watch methods', function() {
         src: TEST_OUTPUT_SRC,
         dest: TEST_OUTPUT_DEST
       };
-    })
-    .then(() => {
-      console.log('********************* END OF BEFORE EACH');
-      console.log('');
     });
-  });
-
-  var originalGulpSrc = null;
-  before(() => {
-    // Mocha detects errors in the gulp stream on Windows
-    // We can silence these to force testing explicit
-    // input -> output of files using gulp-plumber
-
-    originalGulpSrc = gulp.src;
-    gulp.src = function() {
-      return originalGulpSrc.apply(gulp, arguments).pipe(plumber());
-    };
   });
 
   // Clean up after final test
   after(() => {
-    console.log('');
-    console.log('********************* START OF AFTER');
-
-    gulp.src = originalGulpSrc;
-
     if (watcherTask) {
       watcherTask.close();
       watcherTask = null;
@@ -340,11 +267,7 @@ describe('Run tests against watch methods', function() {
 
     // Use rimraf over del because it seems to work more reliably on Windows.
     // Probably due to it's retries.
-    return deleteFiles(path.join(TEST_OUTPUT_PATH, '**'))
-    .then(() => {
-      console.log('********************* END OF AFTER');
-      console.log('');
-    });
+    return deleteFiles(path.join(TEST_OUTPUT_PATH, '**'));
   });
 
   taskHelper.getTasks().map(taskObject => {
