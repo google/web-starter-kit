@@ -28,7 +28,6 @@ const path = require('path');
 const ncp = require('ncp');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
-const domain = require('domain');
 const taskHelper = require('./helpers/task-helper');
 
 const VALID_TEST_FILES = path.join('test', 'data', 'valid-files');
@@ -39,61 +38,50 @@ const TEST_OUTPUT_SRC = path.join(TEST_OUTPUT_PATH, 'src');
 const TEST_OUTPUT_DEST = path.join(TEST_OUTPUT_PATH, 'build');
 
 let watcherTask;
-let currentDomain;
 
 // Use rimraf over del because it seems to work more reliably on Windows.
 // Probably due to it's retries.
 const deleteFiles = path => {
-  console.log('deleteFiles: ', path);
+  console.log('deleteFiles() ', path);
   return new Promise((resolve, reject) => {
-    try {
-      rimraf(path, err => {
-        if (err) {
-          console.log('rimraf error :(', err);
-          reject(err);
-          return;
-        }
+    rimraf(path, err => {
+      if (err) {
+        console.log('deleteFiles() error :(', err);
+        reject(err);
+        return;
+      }
 
-        console.log('rimraf ok :)');
-        resolve();
-      });
-    } catch (error) {
-      console.log('rimraf error :(', error);
-      reject(error);
-    }
+      console.log('deleteFiles() ok :)');
+      resolve();
+    });
   });
 };
 
 const copyFiles = (from, to) => {
-  console.log('copyFiles: ', from, to);
+  console.log('copyFiles() ', from, to);
   return new Promise((resolve, reject) => {
-    try {
-      ncp(from, to, err => {
-        if (err) {
-          console.log('ncp error :(', err);
-          reject(err);
-          return;
-        }
+    ncp(from, to, err => {
+      if (err) {
+        console.log('copyFiles() error :(', err);
+        reject(err);
+        return;
+      }
 
-        console.log('ncp OK :)');
-        resolve();
-      });
-    } catch (error) {
-      console.log('ncp error :(', error);
-    }
+      console.log('copyFiles() OK :)');
+      resolve();
+    });
   });
 };
 
 const validateOutput = () => {
-  console.log('validateOutput');
-  // console.log('validateOutput');
+  console.log('validateOutput()');
+
   // Get directories in build directory
   const folders = fs.readdirSync(TEST_OUTPUT_DEST);
   folders.forEach(folderName => {
+    // Check if the source directory lives, if it doesn't we can ignore
+    // the remaining output (i.e. old stuff that needs cleaning out)
     try {
-      // Check if the source directory lives, if it doesn't we can ignore
-      // the remaining output (i.e. old stuff that needs cleaning out)
-      // console.log('Running lstat');
       fs.lstatSync(path.join(TEST_OUTPUT_SRC, folderName));
     } catch (err) {
       // Path doesn't exist, we can ignore it
@@ -104,7 +92,6 @@ const validateOutput = () => {
     const expectedOutput = JSON.parse(expectedOutputFileBuffer.toString());
     expectedOutput.forEach(file => {
       const fullpath = path.join(TEST_OUTPUT_DEST, folderName, file);
-      console.log('lstat');
       const pathstats = fs.lstatSync(fullpath);
       if (!pathstats) {
         throw new Error(`Expected output file could not be found: ${fullpath}`);
@@ -118,120 +105,45 @@ const validateOutput = () => {
 };
 
 const runSteps = (taskName, task, steps) => {
-  console.log('');
-  console.log('');
-  console.log('');
-  console.log('------------------- START OF TEST');
-  // Start Watching
+  // Start the tasks watching
   watcherTask = task.watch();
   if (!watcherTask) {
     return Promise.reject(new Error(`Nothing returned from the tasks watch() method. Is the result of gulp.watch returned in ${taskName}`));
   }
 
   return new Promise(watcherReadyResolve => {
-    console.log('Wait until watcher is ready');
     watcherTask.on('ready', () => {
+      console.log('Watch task is ready');
       watcherReadyResolve();
     });
   })
+  .then(steps)
   .then(() => {
-    console.log('Wait until steps have completed');
-    return steps.reduce((promise, step) => {
-      return promise
-        .then(() => {
-          return step();
-        })
-        .then(() => {
-          console.log('Step done, waiting');
-          // Add time between each step
-          return new Promise(timeoutResolve => setTimeout(timeoutResolve, 500));
-        })
-        .then(() => {
-          console.log('Step done and timeout finished');
-        })
-        .catch(err => {
-          console.log('Steps Reduced Promise Error', err);
-          throw err;
-        });
-    }, Promise.resolve());
-  })
-  .then(() => {
-    console.log('Wait until there is a quiet period from the watcher');
-    let currentTimeout = null;
-    return new Promise((watcherTaskQuietResolve, watcherTaskFinishReject) => {
-      // Start the initial timeout
-      currentTimeout = setTimeout(watcherTaskQuietResolve, 2000);
+    console.log('Steps complete, wait for watch task quiet period');
+    return new Promise(watcherTaskQuietResolve => {
+      let currentTimeout = Date.now();
 
-      watcherTask.on('all', event => {
-        try {
-          console.log('Watch Event: ', event);
-          if (currentTimeout) {
-            clearTimeout(currentTimeout);
-          }
-
-          console.log('Watch Event: Step 1', event);
-
-          currentTimeout = setTimeout(watcherTaskQuietResolve, 2000);
-          console.log('Watch Event: Step 2', event);
-        } catch (error) {
-          console.error('Problem waiting for watch task to complete', error);
-          watcherTaskFinishReject(error);
-        }
+      watcherTask.on('all', () => {
+        currentTimeout = Date.now();
       });
+
+      while ((Date.now() - currentTimeout) < 2000) {
+        // Keep looping
+      }
+
+      watcherTaskQuietResolve();
     })
     .then(() => {
       console.log('Quiet perioed reached');
-      if (currentTimeout) {
-        clearTimeout(currentTimeout);
-      }
-
       if (watcherTask) {
         watcherTask.close();
         watcherTask = null;
       }
-      console.log('End of then()');
-    })
-    .catch(error => {
-      console.log('Catch()');
-      if (currentTimeout) {
-        clearTimeout(currentTimeout);
-      }
-
-      if (watcherTask) {
-        watcherTask.close();
-        watcherTask = null;
-      }
-
-      throw error;
     });
   })
   .then(() => {
     console.log('Validate the output');
     validateOutput();
-    console.log('Output validated');
-  })
-  .catch(err => {
-    console.log('runSteps Error', err);
-    throw err;
-  });
-};
-
-const testWrapper = function(taskName, task, steps, done) {
-  currentDomain = domain.create();
-  currentDomain.on('error', function(err) {
-    console.log('////////////////////////// Domain Error: ', err);
-  });
-
-  currentDomain.run(function() {
-    runSteps(taskName, task, steps)
-    .then(() => {
-      console.log('run steps finished');
-      done();
-    })
-    .catch(err => {
-      console.log('run steps error', err);
-      done(err);
-    });
   });
 };
 
@@ -241,91 +153,172 @@ const registerTestsForTask = (taskName, task) => {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(60000);
 
-      const steps = [
-        () => {
-          return copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC);
-        }
-      ];
+      const steps = () => {
+        return Promise.resolve()
+          .then(() => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC))
+          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)));
+      };
 
-      testWrapper(taskName, task, steps, done);
+      console.log('');
+      console.log('');
+      console.log('');
+      console.log('------------------- START OF TEST');
+
+      runSteps(taskName, task, steps)
+      .then(() => {
+        console.log('------------------- END OF TEST');
+        console.log('');
+        console.log('');
+        console.log('');
+        done();
+      })
+      .catch(err => {
+        console.log('------------------- ERROR IN TEST');
+        console.log('');
+        console.log('');
+        console.log('');
+        done(err);
+      });
     });
 
     it('should watch for new files being added and changed', function(done) {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(60000);
 
-      const steps = [
-        () => {
-          return copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC)
-          .catch(err => {
-            console.log('STEP 1 Error', err);
-            throw err;
-          });
-        },
-        () => {
-          return copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC)
-          .catch(err => {
-            console.log('STEP 2 Error', err);
-            throw err;
-          });
-        }
-      ];
+      const steps = () => {
+        return Promise.resolve()
+          .then(() => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC))
+          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)))
+          .then(() => copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC))
+          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)));
+      };
 
-      testWrapper(taskName, task, steps, done);
+      console.log('');
+      console.log('');
+      console.log('');
+      console.log('------------------- START OF TEST');
+
+      runSteps(taskName, task, steps)
+      .then(() => {
+        console.log('------------------- END OF TEST');
+        console.log('');
+        console.log('');
+        console.log('');
+        done();
+      })
+      .catch(err => {
+        console.log('------------------- ERROR IN TEST');
+        console.log('');
+        console.log('');
+        console.log('');
+        done(err);
+      });
     });
 
     it('should watch for new files being added and deleted', function(done) {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(60000);
 
-      const steps = [
-        () => {
-          return copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC);
-        },
-        () => {
-          return deleteFiles(path.join(TEST_OUTPUT_SRC, '*'));
-        }
-      ];
+      const steps = () => {
+        return Promise.resolve()
+        .then(() => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC))
+        .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)))
+        .then(() => deleteFiles(path.join(TEST_OUTPUT_SRC, '*')))
+        .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)));
+      };
 
-      testWrapper(taskName, task, steps, done);
+      console.log('');
+      console.log('');
+      console.log('');
+      console.log('------------------- START OF TEST');
+
+      runSteps(taskName, task, steps)
+      .then(() => {
+        console.log('------------------- END OF TEST');
+        console.log('');
+        console.log('');
+        console.log('');
+        done();
+      })
+      .catch(err => {
+        console.log('------------------- ERROR IN TEST');
+        console.log('');
+        console.log('');
+        console.log('');
+        done(err);
+      });
     });
 
     it('should watch for new files being added, followed by bad example files followed by the original files', function(done) {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(60000);
 
-      const steps = [
-        () => {
-          return copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC);
-        },
-        () => {
-          return copyFiles(INVALID_TEST_FILES, TEST_OUTPUT_SRC);
-        },
-        () => {
-          return copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC);
-        }
-      ];
+      const steps = () => {
+        return Promise.resolve()
+          .then(() => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC))
+          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)))
+          .then(() => copyFiles(INVALID_TEST_FILES, TEST_OUTPUT_SRC))
+          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)))
+          .then(() => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC))
+          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)));
+      };
 
-      testWrapper(taskName, task, steps, done);
+      console.log('');
+      console.log('');
+      console.log('');
+      console.log('------------------- START OF TEST');
+
+      runSteps(taskName, task, steps)
+      .then(() => {
+        console.log('------------------- END OF TEST');
+        console.log('');
+        console.log('');
+        console.log('');
+        done();
+      })
+      .catch(err => {
+        console.log('------------------- ERROR IN TEST');
+        console.log('');
+        console.log('');
+        console.log('');
+        done(err);
+      });
     });
 
     it('should watch for new files being added, followed by bad example files followed by the differnt valid files', function(done) {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(60000);
 
-      const steps = [
-        () => {
-          return copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC);
-        },
-        () => {
-          return copyFiles(INVALID_TEST_FILES, TEST_OUTPUT_SRC);
-        },
-        () => {
-          return copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC);
-        }
-      ];
+      const steps = () => {
+        return Promise.resolve()
+          .then(() => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC))
+          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)))
+          .then(() => copyFiles(INVALID_TEST_FILES, TEST_OUTPUT_SRC))
+          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)))
+          .then(() => copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC))
+          .then(() => new Promise(timeoutResolve => setTimeout(timeoutResolve, 500)));
+      };
 
-      testWrapper(taskName, task, steps, done);
+      console.log('');
+      console.log('');
+      console.log('');
+      console.log('------------------- START OF TEST');
+
+      runSteps(taskName, task, steps)
+      .then(() => {
+        console.log('------------------- END OF TEST');
+        console.log('');
+        console.log('');
+        console.log('');
+        done();
+      })
+      .catch(err => {
+        console.log('------------------- ERROR IN TEST');
+        console.log('');
+        console.log('');
+        console.log('');
+        done(err);
+      });
     });
   });
 };
@@ -333,17 +326,15 @@ const registerTestsForTask = (taskName, task) => {
 describe('Run tests against watch methods', function() {
   // Clean up before each test
   beforeEach(() => {
-    console.log('beforeEach Step 1');
-    if (currentDomain) {
-      currentDomain.exit();
-    }
-
+    console.log('');
+    console.log('');
+    console.log('');
+    console.log('********************* START OF BEFORE EACH');
     if (watcherTask) {
       console.log('Watcher task .close()');
       watcherTask.close();
       watcherTask = null;
     }
-    console.log('beforeEach Step 2');
 
     return deleteFiles(path.join(TEST_OUTPUT_PATH, '**'))
     .then(() => {
@@ -358,10 +349,7 @@ describe('Run tests against watch methods', function() {
       };
     })
     .then(() => {
-      console.log('');
-      console.log('');
-      console.log('');
-      console.log('END OF BEFORE EACH -----------------*********************');
+      console.log('********************* END OF BEFORE EACH');
       console.log('');
       console.log('');
       console.log('');
