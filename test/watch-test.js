@@ -41,39 +41,27 @@ let watcherTask;
 
 // Use rimraf over del because it seems to work more reliably on Windows.
 // Probably due to it's retries.
-const deleteFiles = path => {
-  return new Promise((resolve, reject) => {
-    rimraf(path, err => {
-      if (err) {
-        reject(err);
-        return;
-      }
+const deleteFiles = path => new Promise((resolve, reject) => {
+  rimraf(path, err => {
+    if (err) {
+      reject(err);
+      return;
+    }
 
-      resolve();
-    });
-  })
-  .catch(err => {
-    console.log('deleteFiles() error ', err);
-    throw err;
+    resolve();
   });
-};
+});
 
-const copyFiles = (from, to) => {
-  return new Promise((resolve, reject) => {
-    ncp(from, to, err => {
-      if (err) {
-        reject(err);
-        return;
-      }
+const copyFiles = (from, to) => new Promise((resolve, reject) => {
+  ncp(from, to, err => {
+    if (err) {
+      reject(err);
+      return;
+    }
 
-      resolve();
-    });
-  })
-  .catch(err => {
-    console.log('copyFiles() error ', err);
-    throw err;
+    resolve();
   });
-};
+});
 
 const validateOutput = () => {
   // Get directories in build directory
@@ -104,6 +92,14 @@ const validateOutput = () => {
   });
 };
 
+/**
+ * This method will execute the step function and wait for the watcher to
+ * not fire an event for a set period. After this period, it is assumed the
+ * watcher has finished building the file changes performed in the step method
+ * @param  {Function} step    Steps that manipulate the files being watched
+ * @param  {FSWatcher} watcher This is the watcher for the watch() method of the task
+ * @return {Promise}         Promise that resolves once the watcher has finished firing events from the changes in the step function
+ */
 const performStep = (step, watcher) => {
   return new Promise(resolve => {
     let lastTimeout = Date.now();
@@ -127,6 +123,14 @@ const performStep = (step, watcher) => {
   });
 };
 
+/**
+ * This method will take all the steps the test wants to perform
+ * - in this case copy or delete files into a directory being watched
+ * and returns a promise that resolves once all the steps have been performed.
+ * @param  {Array<Functions>} steps    Steps that manipulate the files being watched
+ * @param  {FSWatcher} watcher This is the watcher for the watch() method of the task
+ * @return {Promise}         Resolves once all steps have completed
+ */
 const stepOverEachStep = (steps, watcher) => {
   return steps.reduce((chainedPromise, nextStep) => {
     return chainedPromise.then(() => performStep(nextStep, watcher));
@@ -141,11 +145,22 @@ const waitForWatcher = watcher => {
   });
 };
 
+/**
+ * This function is a helper method that will call the watch method on the
+ * task, wait until it's ready to perform actions, and then Run
+ * each step that will result in the task building. When finished
+ * it will stop the watch task and check if the final output is
+ * what we'd expect.
+ * @param  {String} taskName name of the tasks file
+ * @param  {Object} task     The required task with a watch method
+ * @param  {Array<Functions>} steps    Steps that manipulate the files being watched
+ * @return {Promise}          Resolves or Rejects if the tests pass or fail
+ */
 const performTest = (taskName, task, steps) => {
   // Start the tasks watching
   watcherTask = task.watch();
   if (!watcherTask) {
-    return Promise.reject(new Error(`Nothing returned from the tasks watch() method. Is the result of gulp.watch returned in ${taskName}`));
+    return Promise.reject(new Error(`Nothing returned from the tasks watch() method. Is the result of gulp.watch returned in ${taskName}?`));
   }
 
   return waitForWatcher(watcherTask)
@@ -163,22 +178,21 @@ const performTest = (taskName, task, steps) => {
 
 const registerTestsForTask = (taskName, task) => {
   describe(`${taskName}`, function() {
+    const TEST_TIMEOUT = 10000;
     it('should watch for new files being added to empty directory', function(done) {
-      // This is a long time to account for slow babel builds on Windows
-      this.timeout(60000);
+      this.timeout(TEST_TIMEOUT);
 
       const steps = [
         () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC)
       ];
 
       performTest(taskName, task, steps)
-      .then(() => done())
-      .catch(err => done(err));
+      .then(() => done(), done);
     });
 
     it('should watch for new files being added and changed', function(done) {
       // This is a long time to account for slow babel builds on Windows
-      this.timeout(60000);
+      this.timeout(TEST_TIMEOUT);
 
       const steps = [
         () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
@@ -186,13 +200,12 @@ const registerTestsForTask = (taskName, task) => {
       ];
 
       performTest(taskName, task, steps)
-      .then(() => done())
-      .catch(err => done(err));
+      .then(() => done(), done);
     });
 
     it('should watch for new files being added and deleted', function(done) {
       // This is a long time to account for slow babel builds on Windows
-      this.timeout(60000);
+      this.timeout(TEST_TIMEOUT);
 
       const steps = [
         () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
@@ -200,13 +213,12 @@ const registerTestsForTask = (taskName, task) => {
       ];
 
       performTest(taskName, task, steps)
-      .then(() => done())
-      .catch(err => done(err));
+      .then(() => done(), done);
     });
 
     it('should watch for new files being added, followed by bad example files followed by the original files', function(done) {
       // This is a long time to account for slow babel builds on Windows
-      this.timeout(60000);
+      this.timeout(TEST_TIMEOUT);
 
       const steps = [
         () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
@@ -215,13 +227,12 @@ const registerTestsForTask = (taskName, task) => {
       ];
 
       performTest(taskName, task, steps)
-      .then(() => done())
-      .catch(err => done(err));
+      .then(() => done(), done);
     });
 
     it('should watch for new files being added, followed by bad example files followed by the differnt valid files', function(done) {
       // This is a long time to account for slow babel builds on Windows
-      this.timeout(60000);
+      this.timeout(TEST_TIMEOUT);
 
       const steps = [
         () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
@@ -230,8 +241,7 @@ const registerTestsForTask = (taskName, task) => {
       ];
 
       performTest(taskName, task, steps)
-      .then(() => done())
-      .catch(err => done(err));
+      .then(() => done(), done);
     });
   });
 };
