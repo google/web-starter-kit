@@ -17,20 +17,28 @@
  *
  */
 
-'use strict';
+const gulp = require('gulp');
+const htmlmin = require('gulp-htmlmin');
+const inlineSource = require('gulp-inline-source');
 
-var gulp = require('gulp');
-var html = require('./wsk-tasks/html.js');
-var sass = require('./wsk-tasks/sass.js');
-var babel = require('./wsk-tasks/babel.js');
+function build() {
+  var stream = gulp.src(GLOBAL.config.src + '/**/*.html');
 
-GLOBAL.config = {
-  env: 'prod',
-  src: 'src',
-  dest: 'build'
+  // We only want to minify for production builds
+  if (GLOBAL.config.env === 'prod') {
+    stream = stream.pipe(inlineSource({
+      compress: false,
+      rootpath: GLOBAL.config.dest
+    }))
+    .pipe(htmlmin({
+      collapseWhitespace: true,
+      removeComments: true
+    }));
+  }
+
+  return stream.pipe(gulp.dest(GLOBAL.config.dest));
+}
+
+module.exports = {
+  build: build
 };
-
-gulp.task('default', gulp.series([
-  gulp.parallel([sass.build, babel.build]),
-  html.build
-]));
