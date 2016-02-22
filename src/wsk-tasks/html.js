@@ -39,6 +39,11 @@ function build() {
   return stream.pipe(gulp.dest(GLOBAL.config.dest));
 }
 
+function watch() {
+  return gulp.watch(GLOBAL.config.src + '/**/*.html', build);
+}
+
 module.exports = {
-  build: build
+  build: build,
+  watch: watch
 };
