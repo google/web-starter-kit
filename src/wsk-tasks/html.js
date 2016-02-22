@@ -29,6 +29,7 @@ function build() {
   // We only want to minify for production builds
   if (GLOBAL.config.env === 'prod') {
     stream = stream.pipe(inlineSource({
+      attribute: 'data-inline',
       compress: false,
       rootpath: GLOBAL.config.dest
     }))
