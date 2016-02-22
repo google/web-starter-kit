@@ -17,6 +17,8 @@
  *
  */
 
+'use strict';
+
 const gulp = require('gulp');
 const gulpSass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');

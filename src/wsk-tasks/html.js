@@ -17,6 +17,8 @@
  *
  */
 
+'use strict';
+
 const gulp = require('gulp');
 const htmlmin = require('gulp-htmlmin');
 const inlineSource = require('gulp-inline-source');
