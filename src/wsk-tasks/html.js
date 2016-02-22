@@ -22,7 +22,7 @@ const htmlmin = require('gulp-htmlmin');
 const inlineSource = require('gulp-inline-source');
 
 function build() {
-  var stream = gulp.src(GLOBAL.config.src + '/**/*.html');
+  let stream = gulp.src(GLOBAL.config.src + '/**/*.html');
 
   // We only want to minify for production builds
   if (GLOBAL.config.env === 'prod') {

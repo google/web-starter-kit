@@ -17,14 +17,14 @@
  *
  */
 
-var gulp = require('gulp');
-var babel = require('gulp-babel');
-var uglify = require('gulp-uglify');
-var rollup = require('gulp-rollup');
-var sourcemaps = require('gulp-sourcemaps');
+const gulp = require('gulp');
+const babel = require('gulp-babel');
+const uglify = require('gulp-uglify');
+const rollup = require('gulp-rollup');
+const sourcemaps = require('gulp-sourcemaps');
 
 function build() {
-  var stream = gulp.src(GLOBAL.config.src + '/**/*.js')
+  let stream = gulp.src(GLOBAL.config.src + '/**/*.js')
     .pipe(sourcemaps.init())
     .pipe(rollup())
     .pipe(babel({
@@ -40,5 +40,5 @@ function build() {
 }
 
 module.exports = {
-  build: build,
+  build: build
 };
