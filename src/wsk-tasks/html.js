@@ -22,20 +22,39 @@
 const gulp = require('gulp');
 const htmlmin = require('gulp-htmlmin');
 const inlineSource = require('gulp-inline-source');
+const minifyInline = require('gulp-minify-inline');
 
 function build() {
   let stream = gulp.src(GLOBAL.config.src + '/**/*.html');
 
   // We only want to minify for production builds
   if (GLOBAL.config.env === 'prod') {
-    stream = stream.pipe(inlineSource({
+    stream = stream.pipe(minifyInline({
+      js: {
+        output: {
+          comments: false
+        }
+      },
+      css: {
+        keepSpecialComments: 1
+      },
+      cssSelector: 'style[data-do-not-minify!="true"]'
+    }))
+    .pipe(inlineSource({
       attribute: 'data-inline',
       compress: false,
       rootpath: GLOBAL.config.dest
     }))
     .pipe(htmlmin({
+      removeComments: true,
       collapseWhitespace: true,
-      removeComments: true
+      collapseBooleanAttributes: true,
+      removeAttributeQuotes: true,
+      removeRedundantAttributes: true,
+      removeEmptyAttributes: true,
+      removeScriptTypeAttributes: true,
+      removeStyleLinkTypeAttributes: true,
+      removeOptionalTags: true
     }));
   }
 
