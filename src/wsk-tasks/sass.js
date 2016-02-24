@@ -24,6 +24,7 @@ const gulpSass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
 const cssnano = require('gulp-cssnano');
 const sourcemaps = require('gulp-sourcemaps');
+const taskHelper = require('./task-helper');
 
 const AUTOPREFIXER_BROWSERS = [
   'ie >= 11',
@@ -54,15 +55,7 @@ function build() {
 }
 
 function watch() {
-  const watchFunctions = [build];
-
-  // Add the browsersync reload function to the chain if it's available
-  if (GLOBAL.config.reload) {
-    watchFunctions.push(GLOBAL.config.reload);
-  }
-
-  return gulp.watch(GLOBAL.config.src + '/**/*.scss',
-    gulp.series(watchFunctions));
+  return taskHelper.performWatch(GLOBAL.config.src + '/**/*.scss', [build]);
 }
 
 module.exports = {

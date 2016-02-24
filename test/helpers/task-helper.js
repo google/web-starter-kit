@@ -8,6 +8,10 @@ module.exports = {
     const taskFilenames = fs.readdirSync(tasksDirectory);
 
     taskFilenames.map(taskFilename => {
+      if (taskFilename === 'task-helper.js') {
+        return;
+      }
+      
       tasksToTest.push({
         taskName: taskFilename,
         taskPath: path.join(tasksDirectory, taskFilename)

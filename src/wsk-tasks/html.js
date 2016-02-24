@@ -23,6 +23,7 @@ const gulp = require('gulp');
 const htmlmin = require('gulp-htmlmin');
 const inlineSource = require('gulp-inline-source');
 const minifyInline = require('gulp-minify-inline');
+const taskHelper = require('./task-helper');
 
 function build() {
   let stream = gulp.src(GLOBAL.config.src + '/**/*.html');
@@ -69,13 +70,7 @@ function watch() {
     watchPaths.push(GLOBAL.config.dest + '/**/*.js');
   }
 
-  // Add the browsersync reload function to the chain if it's available
-  const watchFunctions = [build];
-  if (GLOBAL.config.reload) {
-    watchFunctions.push(GLOBAL.config.reload);
-  }
-
-  return gulp.watch(watchPaths, gulp.series(watchFunctions));
+  return taskHelper.performWatch(watchPaths, [build]);
 }
 
 module.exports = {
