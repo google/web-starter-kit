@@ -23,6 +23,7 @@ const gulp = require('gulp');
 const browserSync = require('browser-sync').create();
 const path = require('path');
 const fs = require('fs');
+const taskHelper = require('./task-helper');
 
 function watch() {
   return new Promise(resolve => {
@@ -53,16 +54,13 @@ function watch() {
     });
 
     // Register watch tasks
-    const tasksDirectory = path.join(__dirname, '..', '..', 'src', 'wsk-tasks');
-    const tasksToTest = [];
-    const taskFilenames = fs.readdirSync(tasksDirectory);
-
-    taskFilenames.map(taskFilename => {
-      if (taskFilename === 'browsersync.js') {
+    const allTasks = taskHelper.getTasks();
+    allTasks.map(taskInfo => {
+      if (taskInfo.filename === 'browsersync.js') {
         return;
       }
 
-      var task = require(path.join(tasksDirectory, taskFilename));
+      var task = require(taskInfo.path);
       if (task.watch) {
         task.watch();
       }

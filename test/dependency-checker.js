@@ -84,13 +84,15 @@ describe('Check that the dependencies of the project are up to date', () => {
 
   const packageManifest = require(path.join(__dirname, '..', 'package.json'));
 
-  it('should have up to date npm dependencies', () => {
+  it('should have up to date npm dependencies', function() {
+    this.timeout(10000);
     return checkDependencies(packageManifest, {
       dev: false
     });
   });
 
-  it('should have up to date npm devDependencies', () => {
+  it('should have up to date npm devDependencies', function() {
+    this.timeout(10000);
     return checkDependencies(packageManifest, {
       dev: true
     });

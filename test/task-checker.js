@@ -23,7 +23,7 @@
 
 require('chai').should();
 const fs = require('fs');
-const taskHelper = require('./helpers/task-helper');
+const taskHelper = require('../src/wsk-tasks/task-helper');
 
 const VALID_TEST_FILES = 'test/data/valid-files';
 const TEST_OUTPUT_PATH = 'test/output';
@@ -95,9 +95,6 @@ describe('Run checks and tests against each WSK task', () => {
   after(done => del(TEST_OUTPUT_PATH + '/**').then(() => done(), done));
 
   taskHelper.getTasks().map(taskObject => {
-    let taskName = taskObject.taskName;
-    let task = require(taskObject.taskPath);
-
-    describeTestsForTask(taskName, task);
+    describeTestsForTask(taskObject.filename, require(taskObject.path));
   });
 });

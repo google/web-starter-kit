@@ -20,6 +20,8 @@
 'use strict';
 
 const gulp = require('gulp');
+const path = require('path');
+const fs = require('fs');
 
 const performWatch = (pathsToWatch, tasksToPerform) => {
   if (!Array.isArray(tasksToPerform)) {
@@ -36,6 +38,26 @@ const performWatch = (pathsToWatch, tasksToPerform) => {
   return gulp.watch(pathsToWatch, gulp.series(watchFunctions));
 };
 
+const getTasks = () => {
+  const tasksDirectory = path.join(__dirname, '..', '..', 'src', 'wsk-tasks');
+  const tasksToTest = [];
+  const taskFilenames = fs.readdirSync(tasksDirectory);
+
+  taskFilenames.map(taskFilename => {
+    if (taskFilename === 'task-helper.js') {
+      return;
+    }
+
+    tasksToTest.push({
+      filename: taskFilename,
+      path: path.join(tasksDirectory, taskFilename)
+    });
+  });
+
+  return tasksToTest;
+};
+
 module.exports = {
-  performWatch: performWatch
+  performWatch: performWatch,
+  getTasks: getTasks
 }

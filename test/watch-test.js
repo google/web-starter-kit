@@ -28,7 +28,7 @@ const path = require('path');
 const ncp = require('ncp');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
-const taskHelper = require('./helpers/task-helper');
+const taskHelper = require('../src/wsk-tasks/task-helper');
 
 const VALID_TEST_FILES = path.join('test', 'data', 'valid-files');
 const INVALID_TEST_FILES = path.join('test', 'data', 'invalid-files');
@@ -287,12 +287,12 @@ describe('Run tests against watch methods', function() {
   });
 
   taskHelper.getTasks().map(taskObject => {
-    let taskName = taskObject.taskName;
+    let taskName = taskObject.filename;
     if(taskName === 'browsersync.js') {
       return;
     }
 
-    let task = require(taskObject.taskPath);
+    let task = require(taskObject.path);
 
     // Check that there is a watch task
     if (typeof task.watch === 'undefined') {
