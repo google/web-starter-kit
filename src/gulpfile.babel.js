@@ -20,7 +20,9 @@
 'use strict';
 
 var gulp = require('gulp');
+var html = require('./wsk-tasks/html.js');
 var sass = require('./wsk-tasks/sass.js');
+var babel = require('./wsk-tasks/babel.js');
 
 GLOBAL.config = {
   env: 'prod',
@@ -28,4 +30,7 @@ GLOBAL.config = {
   dest: 'build'
 };
 
-gulp.task('default', gulp.parallel([sass.build]));
+gulp.task('default', gulp.series([
+  gulp.parallel([sass.build, babel.build]),
+  html.build
+]));

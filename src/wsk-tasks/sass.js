@@ -17,11 +17,13 @@
  *
  */
 
-var gulp = require('gulp');
-var gulpSass = require('gulp-sass');
-var autoprefixer = require('gulp-autoprefixer');
-var cssnano = require('gulp-cssnano');
-var sourcemaps = require('gulp-sourcemaps');
+'use strict';
+
+const gulp = require('gulp');
+const gulpSass = require('gulp-sass');
+const autoprefixer = require('gulp-autoprefixer');
+const cssnano = require('gulp-cssnano');
+const sourcemaps = require('gulp-sourcemaps');
 
 const AUTOPREFIXER_BROWSERS = [
   'ie >= 11',
@@ -37,17 +39,17 @@ const AUTOPREFIXER_BROWSERS = [
 ];
 
 function build() {
-  var sassStream = gulp.src(GLOBAL.config.src + '/**/*.scss')
+  let stream = gulp.src(GLOBAL.config.src + '/**/*.scss')
     .pipe(gulpSass().on('error', gulpSass.logError))
     .pipe(sourcemaps.init())
     .pipe(autoprefixer(AUTOPREFIXER_BROWSERS));
 
   // We only want to minify for production builds
   if (GLOBAL.config.env === 'prod') {
-    sassStream = sassStream.pipe(cssnano());
+    stream = stream.pipe(cssnano());
   }
 
-  return sassStream.pipe(sourcemaps.write('.'))
+  return stream.pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(GLOBAL.config.dest));
 }
 
