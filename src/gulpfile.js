@@ -23,6 +23,7 @@ var gulp = require('gulp');
 var html = require('./wsk-tasks/html.js');
 var sass = require('./wsk-tasks/sass.js');
 var babel = require('./wsk-tasks/babel.js');
+var browserSync = require('./wsk-tasks/browsersync.js');
 
 GLOBAL.config = {
   env: 'prod',
@@ -33,4 +34,15 @@ GLOBAL.config = {
 gulp.task('default', gulp.series([
   gulp.parallel([sass.build, babel.build]),
   html.build
+]));
+
+gulp.task('watch', gulp.series([
+  () => {
+    GLOBAL.config.env = 'dev';
+    return Promise.resolve();
+  },
+  gulp.parallel([
+    browserSync.watch,
+    'default'
+  ])
 ]));

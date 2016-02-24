@@ -288,6 +288,10 @@ describe('Run tests against watch methods', function() {
 
   taskHelper.getTasks().map(taskObject => {
     let taskName = taskObject.taskName;
+    if(taskName === 'browsersync.js') {
+      return;
+    }
+
     let task = require(taskObject.taskPath);
 
     // Check that there is a watch task

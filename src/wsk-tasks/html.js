@@ -54,7 +54,6 @@ function build() {
       removeEmptyAttributes: true,
       removeScriptTypeAttributes: true,
       removeStyleLinkTypeAttributes: true,
-      removeOptionalTags: true
     }));
   }
 
@@ -62,7 +61,21 @@ function build() {
 }
 
 function watch() {
-  return gulp.watch(GLOBAL.config.src + '/**/*.html', build);
+  const watchPaths = [GLOBAL.config.src + '/**/*.html'];
+
+  // In production we might inline CSS and JS so should check for changes
+  if (GLOBAL.config.env === 'prod') {
+    watchPaths.push(GLOBAL.config.dest + '/**/*.css');
+    watchPaths.push(GLOBAL.config.dest + '/**/*.js');
+  }
+
+  // Add the browsersync reload function to the chain if it's available
+  const watchFunctions = [build];
+  if (GLOBAL.config.reload) {
+    watchFunctions.push(GLOBAL.config.reload);
+  }
+
+  return gulp.watch(watchPaths, gulp.series(watchFunctions));
 }
 
 module.exports = {

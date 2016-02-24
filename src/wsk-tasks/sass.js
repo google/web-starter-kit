@@ -54,7 +54,15 @@ function build() {
 }
 
 function watch() {
-  return gulp.watch(GLOBAL.config.src + '/**/*.scss', build);
+  const watchFunctions = [build];
+
+  // Add the browsersync reload function to the chain if it's available
+  if (GLOBAL.config.reload) {
+    watchFunctions.push(GLOBAL.config.reload);
+  }
+
+  return gulp.watch(GLOBAL.config.src + '/**/*.scss',
+    gulp.series(watchFunctions));
 }
 
 module.exports = {

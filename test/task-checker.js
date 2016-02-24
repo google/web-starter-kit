@@ -47,39 +47,41 @@ let describeTestsForTask = function(taskName, task) {
       }
     });
 
-    it('should have all required methods', () => {
-      let taskKeys = Object.keys(task);
-      let missingMethods = REQUIRED_METHODS.filter(key => {
-        if (taskKeys.indexOf(key) === -1) {
-          return key;
+    if(taskName !== 'browsersync.js') {
+      it('should have all required methods', () => {
+        let taskKeys = Object.keys(task);
+        let missingMethods = REQUIRED_METHODS.filter(key => {
+          if (taskKeys.indexOf(key) === -1) {
+            return key;
+          }
+        });
+
+        if (missingMethods.length > 0) {
+          let keysString = missingMethods.join(',');
+          throw new Error(`There are missing required methods ` +
+            `in the "${taskName}" task: [ ${keysString} ]`);
         }
       });
 
-      if (missingMethods.length > 0) {
-        let keysString = missingMethods.join(',');
-        throw new Error(`There are missing required methods ` +
-          `in the "${taskName}" task: [ ${keysString} ]`);
-      }
-    });
+      it('should build cleanly', function(done) {
+        // This has to be increased to a minute to ensure Appveyor
+        // (i.e. Windows) has time to complete babel build
+        this.timeout(60000);
+        GLOBAL.config = {
+          env: 'prod',
+          src: VALID_TEST_FILES,
+          dest: TEST_OUTPUT_PATH
+        };
 
-    it('should build cleanly', function(done) {
-      // This has to be increased to a minute to ensure Appveyor
-      // (i.e. Windows) has time to complete babel build
-      this.timeout(60000);
-      GLOBAL.config = {
-        env: 'prod',
-        src: VALID_TEST_FILES,
-        dest: TEST_OUTPUT_PATH
-      };
+        task.build().on('end', () => {
+          // Check output exists
+          var outputFiles = fs.readdirSync('test/output');
+          outputFiles.should.have.length.above(0);
 
-      task.build().on('end', () => {
-        // Check output exists
-        var outputFiles = fs.readdirSync('test/output');
-        outputFiles.should.have.length.above(0);
-
-        done();
+          done();
+        });
       });
-    });
+    }
   });
 };
 
