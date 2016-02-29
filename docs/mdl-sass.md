@@ -55,7 +55,7 @@ We're going to rename our `app/styles/main.css` file to `app/styles/main.scss` s
 
 One final change for getting Sass working is adding the following line to the very top of `app/styles/main.scss`:
 
-```
+```scss
 @import "src/material-design-lite";
 ```
 
@@ -166,7 +166,7 @@ This can be done using your setup as follows:
 2. Open `app/styles/src/_variables.scss` in your Text Editor.
 3. Find `$color-primary`. It should be in the same block as two other color variables we can use for theming - `$color-primary-dark` and `$color-accent`.
 
-```
+```scss
 $color-primary: $palette-indigo-500 !default;
 $color-primary-dark: $palette-indigo-700 !default;
 $color-accent: $palette-pink-A200 !default;
@@ -176,7 +176,7 @@ We can change out the default theme for a custom one by consulting `app/styles/s
 
 For this example, we're going to change out `palette-indigo-500` for `palette-purple-500` and `palette-indigo-700` for `palette-deep-purple-700`.
 
-```
+```scss
 $color-primary: $palette-purple-500 !default;
 $color-primary-dark: $palette-deep-purple-700 !default;
 $color-accent: $palette-pink-A200 !default;
