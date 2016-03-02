@@ -26,7 +26,7 @@ var del = require('del');
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
-
+var autoprefixer = require('autoprefixer');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var source = require('vinyl-source-stream');
@@ -46,7 +46,7 @@ var AUTOPREFIXER_BROWSERS = [
 
 // 错误处理 防止任务中断
 var errorHandle = {
-  errorHandler: function (err) {
+  errorHandler: function(err) {
     console.log(err);
     this.emit('end');
   }
@@ -73,21 +73,24 @@ gulp.task('images', function() {
     .pipe($.size({title: 'i'}));
 });
 
+gulp.task('clearCache', function(done) {
+  return $.cache.clearAll(done);
+});
+
 // 拷贝相关资源
 gulp.task('copy', function() {
   return gulp.src([
-    'app/*',
-    '!app/*.html',
-    '!app/js/*',
-    '!app/less',
-    'node_modules/amazeui/dist/**/*',
-    'node_modules/jquery/dist/jquery.min.js'
-  ], {
-    dot: true
-  }).pipe($.if(function(file) {
-    return file.path.indexOf('jquery.min.js') > -1;
-  }, $.replace(/\/\/# sourceMappingURL=jquery.min.map/, '')))
+      'app/*',
+      '!app/*.html',
+      '!app/js/*',
+      '!app/less',
+      'node_modules/amazeui/dist/**/*',
+      'node_modules/jquery/dist/jquery.min.js'
+    ], {
+      dot: true
+    })
     .pipe(gulp.dest(function(file) {
+      console.log(file.path);
       if (file.path.indexOf('jquery') > -1) {
         return 'dist/js';
       }
@@ -102,7 +105,7 @@ gulp.task('styles', function() {
     .pipe($.changed('styles', {extension: '.less'}))
     .pipe($.plumber(errorHandle))
     .pipe($.less())
-    .pipe($.autoprefixer({browsers: AUTOPREFIXER_BROWSERS}))
+    .pipe($.postcss([autoprefixer({browsers: AUTOPREFIXER_BROWSERS})]))
     .pipe(gulp.dest('dist/css'))
     .pipe($.csso())
     .pipe($.rename({suffix: '.min'}))
@@ -189,5 +192,5 @@ gulp.task('serve', ['default'], function() {
 // 默认任务
 gulp.task('default', function(cb) {
   runSequence('clean',
-  ['styles', 'jshint', 'html', 'images', 'copy', 'browserify'], 'watch', cb);
+    ['styles', 'jshint', 'html', 'images', 'copy', 'browserify'], 'watch', cb);
 });
