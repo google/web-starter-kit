@@ -129,6 +129,11 @@ gulp.task('scripts', () =>
 gulp.task('html', () => {
   return gulp.src('app/**/*.html')
     .pipe($.useref({searchPath: '{.tmp,app}'}))
+
+    // We use useref for changing the reference to main.js
+    // Drop its output because it's not the minified version
+    .pipe($.ignore.exclude('scripts/main.min.js'))
+
     // Remove any unused CSS
     .pipe($.if('*.css', $.uncss({
       html: [
