@@ -23,6 +23,7 @@ const gulp = require('gulp');
 const htmlmin = require('gulp-htmlmin');
 const inlineSource = require('gulp-inline-source');
 const minifyInline = require('gulp-minify-inline');
+const taskHelper = require('./task-helper');
 
 function build() {
   let stream = gulp.src(GLOBAL.config.src + '/**/*.html');
@@ -54,7 +55,6 @@ function build() {
       removeEmptyAttributes: true,
       removeScriptTypeAttributes: true,
       removeStyleLinkTypeAttributes: true,
-      removeOptionalTags: true
     }));
   }
 
@@ -62,7 +62,15 @@ function build() {
 }
 
 function watch() {
-  return gulp.watch(GLOBAL.config.src + '/**/*.html', build);
+  const watchPaths = [GLOBAL.config.src + '/**/*.html'];
+
+  // In production we might inline CSS and JS so should check for changes
+  if (GLOBAL.config.env === 'prod') {
+    watchPaths.push(GLOBAL.config.dest + '/**/*.css');
+    watchPaths.push(GLOBAL.config.dest + '/**/*.js');
+  }
+
+  return taskHelper.performWatch(watchPaths, [build]);
 }
 
 module.exports = {

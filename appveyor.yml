@@ -10,14 +10,16 @@ environment:
 install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
-  # install modules
-  - npm install
-
-# Post-install test scripts.
-test_script:
   # Output useful info for debugging.
   - node --version
   - npm --version
+  # install modules
+  # --force is required to fix node 4 on AppVeyor failing
+  # See: http://help.appveyor.com/discussions/problems/3147-error-eperm-operation-not-permitted-rename-on-npm-install
+  - npm install --force
+
+# Post-install test scripts.
+test_script:
   # run tests
   - npm test
 
