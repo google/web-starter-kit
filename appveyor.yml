@@ -3,7 +3,6 @@ version: 1.0.{build}
 # Test against this version of Node.js
 environment:
   matrix:
-  - nodejs_version: "4"
   - nodejs_version: "5"
 
 # Install scripts. (runs after repo cloning)
@@ -13,14 +12,10 @@ install:
   # Output useful info for debugging.
   - node --version
   - npm --version
-  # install modules
-  # --force is required to fix node 4 on AppVeyor failing
-  # See: http://help.appveyor.com/discussions/problems/3147-error-eperm-operation-not-permitted-rename-on-npm-install
-  - npm install --force
+  - npm install
 
 # Post-install test scripts.
 test_script:
-  # run tests
   - npm test
 
 # Don't actually build.

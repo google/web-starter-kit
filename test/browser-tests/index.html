@@ -1,0 +1,59 @@
+<!--
+  Copyright 2016 Google Inc. All rights reserved.
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+      http://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>WSK Tests</title>
+
+  <link href="/node_modules/mocha/mocha.css" rel="stylesheet" />
+
+  <!--
+    iframes are used to manage service worker scoping.
+    This will hide them and stop the page from jumping around
+  -->
+  <style>
+    iframe {
+      width: 0;
+      height: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="mocha"></div>
+
+  <script src="/node_modules/chai/chai.js"></script>
+  <script src="/node_modules/mocha/mocha.js"></script>
+  <script src="/node_modules/sw-testing-helpers/src/mocha/utils.js"></script>
+
+  <!-- Add global classes imports for use here -->
+
+  <script>mocha.setup({
+    ui: 'bdd'
+  })</script>
+
+  <!-- In browser test scripts should be added to the page here-->
+  <script src="/test/browser-tests/script-results.js"></script>
+
+  <script>
+  (function() {
+    // should adds objects to primitives which requires this call to be made
+    // before any tests are run.
+    window.chai.should();
+    window.goog.MochaUtils.startMochaTest()
+    .then(results => {
+      window.testsuite = results;
+    });
+  })();
+  </script>
+</body>
+</html>

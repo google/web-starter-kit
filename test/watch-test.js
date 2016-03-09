@@ -25,7 +25,7 @@ require('chai').should();
 
 const fs = require('fs');
 const path = require('path');
-const ncp = require('ncp');
+const glob = require('glob');
 const mkdirp = require('mkdirp');
 const rimraf = require('rimraf');
 const taskHelper = require('../src/wsk-tasks/task-helper');
@@ -38,6 +38,7 @@ const TEST_OUTPUT_SRC = path.join(TEST_OUTPUT_PATH, 'src');
 const TEST_OUTPUT_DEST = path.join(TEST_OUTPUT_PATH, 'build');
 
 let watcherTask;
+let onStreamCompleteCb;
 
 // Use rimraf over del because it seems to work more reliably on Windows.
 // Probably due to it's retries.
@@ -52,18 +53,24 @@ const deleteFiles = path => new Promise((resolve, reject) => {
   });
 });
 
-const copyFiles = (from, to) => new Promise((resolve, reject) => {
-  ncp(from, to, err => {
-    if (err) {
-      reject(err);
-      return;
-    }
+const copyFile = (from, to) => new Promise((resolve, reject) => {
+  mkdirp.sync(path.dirname(to));
 
+  const readStream = fs.createReadStream(from);
+  readStream.on('error', function(err) {
+    reject(err);
+  });
+  const writeStream = fs.createWriteStream(to);
+  writeStream.on('error', err => {
+    reject(err);
+  });
+  writeStream.on('close', () => {
     resolve();
   });
+  readStream.pipe(writeStream);
 });
 
-const validateOutput = () => {
+const validateOutput = testDataDir => {
   // Get directories in build directory
   const folders = fs.readdirSync(TEST_OUTPUT_DEST);
   folders.forEach(folderName => {
@@ -76,8 +83,9 @@ const validateOutput = () => {
       return;
     }
 
-    const expectedOutputFileBuffer = fs.readFileSync(path.join(TEST_OUTPUT_SRC, folderName, 'output.json'));
+    const expectedOutputFileBuffer = fs.readFileSync(path.join(testDataDir, folderName, 'output.json'));
     const expectedOutput = JSON.parse(expectedOutputFileBuffer.toString());
+
     expectedOutput.forEach(file => {
       const fullpath = path.join(TEST_OUTPUT_DEST, folderName, file);
       const pathstats = fs.lstatSync(fullpath);
@@ -101,25 +109,32 @@ const validateOutput = () => {
  * @return {Promise}         Promise that resolves once the watcher has finished firing events from the changes in the step function
  */
 const performStep = (step, watcher) => {
-  return new Promise(resolve => {
-    let lastTimeout = Date.now();
-    let callback = () => {
-      lastTimeout = Date.now();
-    };
-    watcher.on('all', callback);
-
-    step();
-
-    let timeoutHandler = () => {
-      if ((Date.now() - lastTimeout) > 2000) {
-        watcher.removeListener('all', callback);
-        resolve();
-      } else {
-        setTimeout(timeoutHandler, 1000);
-      }
+  return new Promise((resolve, reject) => {
+    let taskAcknowledged = false;
+    onStreamCompleteCb = () => {
+      taskAcknowledged = true;
+      resolve();
     };
 
-    timeoutHandler();
+    const watcherCallback = () => {
+      taskAcknowledged = true;
+      watcher.removeListener('all', watcherCallback);
+    };
+    watcher.on('all', watcherCallback);
+
+    step()
+    .then(() => {
+      // Give the watcher one attempt to re-catch a change
+      setTimeout(() => {
+        if (taskAcknowledged) {
+          return;
+        }
+
+        step()
+        .catch(reject);
+      }, 400);
+    })
+    .catch(reject);
   });
 };
 
@@ -154,9 +169,15 @@ const waitForWatcher = watcher => {
  * @param  {String} taskName name of the tasks file
  * @param  {Object} task     The required task with a watch method
  * @param  {Array<Functions>} steps    Steps that manipulate the files being watched
+ * @param  {String} testDataDir Directory of the source files to test for output
  * @return {Promise}          Resolves or Rejects if the tests pass or fail
  */
-const performTest = (taskName, task, steps) => {
+const performTest = (taskName, task, steps, testDataDir) => {
+  GLOBAL.config.reload = function() {
+    if (onStreamCompleteCb) {
+      onStreamCompleteCb();
+    }
+  };
   // Start the tasks watching
   watcherTask = task.watch();
   if (!watcherTask) {
@@ -166,82 +187,184 @@ const performTest = (taskName, task, steps) => {
   return waitForWatcher(watcherTask)
   .then(() => stepOverEachStep(steps, watcherTask))
   .then(() => {
-    if (watcherTask) {
-      watcherTask.close();
-      watcherTask = null;
-    }
-  })
-  .then(() => {
-    validateOutput();
+    return validateOutput(testDataDir);
   });
 };
 
 const registerTestsForTask = (taskName, task) => {
   describe(`${taskName}`, function() {
+    // Clean up before each test
+    beforeEach(function() {
+      onStreamCompleteCb = null;
+
+      if (watcherTask) {
+        watcherTask.close();
+        watcherTask = null;
+      }
+
+      return new Promise(resolve => {
+        // This is included just to give a small amount of time to
+        // ensure the watcher task is closed
+        // 1 second is a long time, but given variablility in CI's
+        // it's worth including
+        setTimeout(resolve, 1000);
+      })
+      .then(() => {
+        return deleteFiles(path.join(TEST_OUTPUT_PATH));
+      })
+      .then(() => {
+        // Create Source Path
+        mkdirp.sync(TEST_OUTPUT_SRC);
+
+        GLOBAL.config = {
+          env: 'dev',
+          src: TEST_OUTPUT_SRC,
+          dest: TEST_OUTPUT_DEST
+        };
+      });
+    });
+
+    // Clean up after final test
+    after(function() {
+      onStreamCompleteCb = null;
+
+      if (watcherTask) {
+        watcherTask.close();
+        watcherTask = null;
+      }
+
+      // return deleteFiles(path.join(TEST_OUTPUT_PATH));
+    });
+
     const TEST_TIMEOUT = 10000;
-    it('should watch for new files being added to empty directory', function(done) {
-      this.timeout(TEST_TIMEOUT);
+    const fileExtensions = {
+      'html.js': 'html',
+      'babel.js': 'js',
+      'sass.js': 'scss'
+    };
+    const fileExtension = fileExtensions[taskName];
 
-      const steps = [
-        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC)
-      ];
-
-      performTest(taskName, task, steps)
-      .then(() => done(), done);
+    it('should have a file extension to glob for', function() {
+      if (!fileExtension) {
+        throw new Error(`${taskName} has no files to test but has a watch task`);
+      }
     });
 
-    it('should watch for new files being added and changed', function(done) {
+    if (!fileExtension) {
+      return;
+    }
+
+    it('should watch for new files being added to empty directory', function() {
+      this.timeout(TEST_TIMEOUT);
+
+      const individualFiles = glob.sync(path.join(VALID_TEST_FILES, '**', '*.' + fileExtension));
+      const steps = individualFiles.map(filePath => {
+        const relativeFilePath = filePath.substring(VALID_TEST_FILES.length);
+        return () => copyFile(filePath, path.join(TEST_OUTPUT_SRC, relativeFilePath));
+      });
+
+      return performTest(taskName, task, steps, VALID_TEST_FILES);
+    });
+
+    it('should watch for new files being added and changed', function() {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(TEST_TIMEOUT);
 
-      const steps = [
-        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
-        () => copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC)
-      ];
+      let individualFiles = glob.sync(path.join(VALID_TEST_FILES, '**', '*.' + fileExtension));
+      const steps1 = individualFiles.map(filePath => {
+        const relativeFilePath = filePath.substring(VALID_TEST_FILES.length);
+        return () => copyFile(filePath, path.join(TEST_OUTPUT_SRC, relativeFilePath));
+      });
 
-      performTest(taskName, task, steps)
-      .then(() => done(), done);
+      individualFiles = glob.sync(path.join(VALID_TEST_FILES_2, '**', '*.' + fileExtension));
+      const steps2 = individualFiles.map(filePath => {
+        const relativeFilePath = filePath.substring(VALID_TEST_FILES_2.length);
+        return () => copyFile(filePath, path.join(TEST_OUTPUT_SRC, relativeFilePath));
+      });
+
+      const steps = steps1.concat(steps2);
+
+      return performTest(taskName, task, steps, VALID_TEST_FILES_2);
     });
 
-    it('should watch for new files being added and deleted', function(done) {
+    // NOTE: This test is kind of meh. If we delete a tonne of files, that's
+    // fine, but it doesn't actually delete the final output, so the validation
+    // passes when it' probably shouldn't
+    it('should watch for new files being added and deleted', function() {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(TEST_TIMEOUT);
 
-      const steps = [
-        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
-        () => deleteFiles(path.join(TEST_OUTPUT_SRC, '*'))
-      ];
+      let individualFiles = glob.sync(path.join(VALID_TEST_FILES, '**', '*.' + fileExtension));
+      const steps1 = individualFiles.map(filePath => {
+        const relativeFilePath = filePath.substring(VALID_TEST_FILES.length);
+        return () => copyFile(filePath, path.join(TEST_OUTPUT_SRC, relativeFilePath));
+      });
 
-      performTest(taskName, task, steps)
-      .then(() => done(), done);
+      individualFiles = glob.sync(path.join(TEST_OUTPUT_SRC, '**', '*.' + fileExtension));
+      const steps2 = individualFiles.map(filePath => {
+        const relativeFilePath = filePath.substring(TEST_OUTPUT_SRC.length);
+        return () => deleteFiles(path.join(TEST_OUTPUT_SRC, relativeFilePath));
+      });
+
+      const steps = steps1.concat(steps2);
+
+      return performTest(taskName, task, steps, VALID_TEST_FILES);
     });
 
-    it('should watch for new files being added, followed by bad example files followed by the original files', function(done) {
+    it('should watch for new files being added, followed by bad example files followed by the original files', function() {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(TEST_TIMEOUT);
 
-      const steps = [
-        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
-        () => copyFiles(INVALID_TEST_FILES, TEST_OUTPUT_SRC),
-        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC)
-      ];
+      let individualFiles = glob.sync(path.join(VALID_TEST_FILES, '**', '*.' + fileExtension));
+      const steps1 = individualFiles.map(filePath => {
+        const relativeFilePath = filePath.substring(VALID_TEST_FILES.length);
+        return () => copyFile(filePath, path.join(TEST_OUTPUT_SRC, relativeFilePath));
+      });
 
-      performTest(taskName, task, steps)
-      .then(() => done(), done);
+      individualFiles = glob.sync(path.join(INVALID_TEST_FILES, '**', '*.' + fileExtension));
+      const steps2 = individualFiles.map(filePath => {
+        const relativeFilePath = filePath.substring(INVALID_TEST_FILES.length);
+        return () => {
+          return copyFile(filePath, path.join(TEST_OUTPUT_SRC, relativeFilePath));
+        };
+      });
+
+      individualFiles = glob.sync(path.join(VALID_TEST_FILES, '**', '*.' + fileExtension));
+      const steps3 = individualFiles.map(filePath => {
+        const relativeFilePath = filePath.substring(VALID_TEST_FILES.length);
+        return () => copyFile(filePath, path.join(TEST_OUTPUT_SRC, relativeFilePath));
+      });
+
+      const steps = steps1.concat(steps2).concat(steps3);
+
+      return performTest(taskName, task, steps, VALID_TEST_FILES);
     });
 
-    it('should watch for new files being added, followed by bad example files followed by the differnt valid files', function(done) {
+    it('should watch for new files being added, followed by bad example files followed by the differnt valid files', function() {
       // This is a long time to account for slow babel builds on Windows
       this.timeout(TEST_TIMEOUT);
 
-      const steps = [
-        () => copyFiles(VALID_TEST_FILES, TEST_OUTPUT_SRC),
-        () => copyFiles(INVALID_TEST_FILES, TEST_OUTPUT_SRC),
-        () => copyFiles(VALID_TEST_FILES_2, TEST_OUTPUT_SRC)
-      ];
+      let individualFiles = glob.sync(path.join(VALID_TEST_FILES, '**', '*.' + fileExtension));
+      const steps1 = individualFiles.map(filePath => {
+        const relativeFilePath = filePath.substring(VALID_TEST_FILES.length);
+        return () => copyFile(filePath, path.join(TEST_OUTPUT_SRC, relativeFilePath));
+      });
 
-      performTest(taskName, task, steps)
-      .then(() => done(), done);
+      individualFiles = glob.sync(path.join(INVALID_TEST_FILES, '**', '*.' + fileExtension));
+      const steps2 = individualFiles.map(filePath => {
+        const relativeFilePath = filePath.substring(INVALID_TEST_FILES.length);
+        return () => copyFile(filePath, path.join(TEST_OUTPUT_SRC, relativeFilePath));
+      });
+
+      individualFiles = glob.sync(path.join(VALID_TEST_FILES_2, '**', '*.' + fileExtension));
+      const steps3 = individualFiles.map(filePath => {
+        const relativeFilePath = filePath.substring(VALID_TEST_FILES_2.length);
+        return () => copyFile(filePath, path.join(TEST_OUTPUT_SRC, relativeFilePath));
+      });
+
+      const steps = steps1.concat(steps2).concat(steps3);
+
+      return performTest(taskName, task, steps, VALID_TEST_FILES_2);
     });
   });
 };
@@ -253,42 +376,9 @@ describe('Run tests against watch methods', function() {
     return;
   }
 
-  // Clean up before each test
-  beforeEach(() => {
-    if (watcherTask) {
-      watcherTask.close();
-      watcherTask = null;
-    }
-
-    return deleteFiles(path.join(TEST_OUTPUT_PATH, '**'))
-    .then(() => {
-      // Create Source Path
-      // console.log('beforeEach Step 3');
-      mkdirp.sync(TEST_OUTPUT_SRC);
-
-      GLOBAL.config = {
-        env: 'dev',
-        src: TEST_OUTPUT_SRC,
-        dest: TEST_OUTPUT_DEST
-      };
-    });
-  });
-
-  // Clean up after final test
-  after(() => {
-    if (watcherTask) {
-      watcherTask.close();
-      watcherTask = null;
-    }
-
-    // Use rimraf over del because it seems to work more reliably on Windows.
-    // Probably due to it's retries.
-    return deleteFiles(path.join(TEST_OUTPUT_PATH, '**'));
-  });
-
-  taskHelper.getTasks().map(taskObject => {
+  taskHelper.getTasks().forEach(taskObject => {
     let taskName = taskObject.filename;
-    if(taskName === 'browsersync.js') {
+    if (taskName === 'browsersync.js') {
       return;
     }
 

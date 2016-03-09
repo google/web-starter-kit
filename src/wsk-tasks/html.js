@@ -54,7 +54,7 @@ function build() {
       removeRedundantAttributes: true,
       removeEmptyAttributes: true,
       removeScriptTypeAttributes: true,
-      removeStyleLinkTypeAttributes: true,
+      removeStyleLinkTypeAttributes: true
     }));
   }
 
