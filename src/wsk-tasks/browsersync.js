@@ -43,7 +43,7 @@ function watch() {
       // Customize the Browsersync console logging prefix
       logPrefix: 'WSK',
       // Change to false if you don't want the browser to open when run
-      open: true,
+      open: true
       // You can enable local proxies by uncommenting the line below and
       // setting to your own path
       // proxy: "yourlocal.dev"
@@ -55,7 +55,7 @@ function watch() {
 
     // Register watch tasks
     const allTasks = taskHelper.getTasks();
-    allTasks.map(taskInfo => {
+    allTasks.forEach(taskInfo => {
       if (taskInfo.filename === 'browsersync.js') {
         return;
       }

@@ -25,7 +25,7 @@ const fs = require('fs');
 
 const performWatch = (pathsToWatch, tasksToPerform) => {
   if (!Array.isArray(tasksToPerform)) {
-    throw new Error('performWatch() expects an array of ');
+    throw new Error('performWatch() expects an array of functions');
   }
 
   const watchFunctions = tasksToPerform;
@@ -40,24 +40,20 @@ const performWatch = (pathsToWatch, tasksToPerform) => {
 
 const getTasks = () => {
   const tasksDirectory = path.join(__dirname, '..', '..', 'src', 'wsk-tasks');
-  const tasksToTest = [];
-  const taskFilenames = fs.readdirSync(tasksDirectory);
-
-  taskFilenames.map(taskFilename => {
-    if (taskFilename === 'task-helper.js') {
-      return;
-    }
-
-    tasksToTest.push({
+  let taskFilenames = fs.readdirSync(tasksDirectory);
+  const taskHelperIndex = taskFilenames.indexOf('task-helper.js');
+  if (taskHelperIndex !== -1) {
+    taskFilenames.splice(taskHelperIndex, 1);
+  }
+  return taskFilenames.map(taskFilename => {
+    return {
       filename: taskFilename,
       path: path.join(tasksDirectory, taskFilename)
-    });
+    };
   });
-
-  return tasksToTest;
 };
 
 module.exports = {
   performWatch: performWatch,
   getTasks: getTasks
-}
+};
