@@ -1,0 +1,7 @@
+{
+  "extends": "airbnb/legacy",
+  "rules": {
+    "space-before-function-paren": [2, {"anonymous": "never", "named": "always"}]
+
+  }
+}

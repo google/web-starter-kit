@@ -20,19 +20,22 @@
 
 'use strict';
 
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
-var del = require('del');
-var runSequence = require('run-sequence');
-var browserSync = require('browser-sync');
-var reload = browserSync.reload;
-var autoprefixer = require('autoprefixer');
-var browserify = require('browserify');
-var watchify = require('watchify');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
+import gulp from 'gulp';
+import gulpLoadPlugins from 'gulp-load-plugins';
+import del from 'del';
+import runSequence from 'run-sequence';
+import browserSync from 'browser-sync';
+import autoprefixer from 'autoprefixer';
+import cssnano from 'cssnano';
+import browserify from 'browserify';
+import watchify from 'watchify';
+import source from 'vinyl-source-stream';
+import buffer from 'vinyl-buffer';
 
-var AUTOPREFIXER_BROWSERS = [
+const $ = gulpLoadPlugins();
+const reload = browserSync.reload;
+
+const AUTOPREFIXER_BROWSERS = [
   'ie >= 10',
   'ie_mob >= 10',
   'ff >= 30',
@@ -44,26 +47,17 @@ var AUTOPREFIXER_BROWSERS = [
   'bb >= 10'
 ];
 
-// 错误处理 防止任务中断
-var errorHandle = {
-  errorHandler: function(err) {
-    console.log(err);
-    this.emit('end');
-  }
-};
-
-
 // JavaScript 格式校验
-gulp.task('jshint', function() {
+gulp.task('lint', () => {
   return gulp.src('app/js/**/*.js')
     .pipe(reload({stream: true, once: true}))
-    .pipe($.jshint())
-    .pipe($.jshint.reporter('jshint-stylish'))
-    .pipe($.if(!browserSync.active, $.jshint.reporter('fail')));
+    .pipe($.eslint())
+    .pipe($.eslint.format())
+    .pipe($.if(!browserSync.active, $.eslint.failOnError()));
 });
 
 // 图片优化
-gulp.task('images', function() {
+gulp.task('images', () => {
   return gulp.src('app/i/**/*')
     .pipe($.cache($.imagemin({
       progressive: true,
@@ -73,12 +67,12 @@ gulp.task('images', function() {
     .pipe($.size({title: 'i'}));
 });
 
-gulp.task('clearCache', function(done) {
+gulp.task('clearCache', (done) => {
   return $.cache.clearAll(done);
 });
 
 // 拷贝相关资源
-gulp.task('copy', function() {
+gulp.task('copy', () => {
   return gulp.src([
       'app/*',
       '!app/*.html',
@@ -89,8 +83,7 @@ gulp.task('copy', function() {
     ], {
       dot: true
     })
-    .pipe(gulp.dest(function(file) {
-      console.log(file.path);
+    .pipe(gulp.dest((file) => {
       if (file.path.indexOf('jquery') > -1) {
         return 'dist/js';
       }
@@ -100,21 +93,26 @@ gulp.task('copy', function() {
 });
 
 // 编译 Less，添加浏览器前缀
-gulp.task('styles', function() {
+gulp.task('styles', () => {
   return gulp.src(['app/less/*.less'])
     .pipe($.changed('styles', {extension: '.less'}))
-    .pipe($.plumber(errorHandle))
+    .pipe($.plumber({
+      errorHandler: err => {
+        console.log(err);
+        this.emit('end');
+      }
+    }))
     .pipe($.less())
     .pipe($.postcss([autoprefixer({browsers: AUTOPREFIXER_BROWSERS})]))
     .pipe(gulp.dest('dist/css'))
-    .pipe($.csso())
+    .pipe($.postcss([cssnano()]))
     .pipe($.rename({suffix: '.min'}))
     .pipe(gulp.dest('dist/css'))
     .pipe($.size({title: 'styles'}));
 });
 
 // 打包 Common JS 模块
-var bundleInit = function() {
+var bundleInit = () => {
   var b = watchify(browserify({
     entries: './app/js/main.js',
     basedir: __dirname,
@@ -126,14 +124,14 @@ var bundleInit = function() {
     // 如果你想把 jQuery 打包进去，注销掉下面一行
     .transform('browserify-shim', {global: true});
 
-  b.on('update', function() {
+  b.on('update', () => {
     bundle(b);
   }).on('log', $.util.log);
 
   bundle(b);
 };
 
-var bundle = function(b) {
+var bundle = (b) => {
   return b.bundle()
     .on('error', $.util.log.bind($.util, 'Browserify Error'))
     .pipe(source('main.js'))
@@ -147,7 +145,7 @@ var bundle = function(b) {
 gulp.task('browserify', bundleInit);
 
 // 压缩 HTML
-gulp.task('html', function() {
+gulp.task('html', () => {
   return gulp.src('app/**/*.html')
     // Minify Any HTML
     .pipe($.htmlmin({
@@ -159,17 +157,17 @@ gulp.task('html', function() {
 });
 
 // 洗刷刷
-gulp.task('clean', function() {
+gulp.task('clean', () => {
   return del(['dist/*', '!dist/.git'], {dot: true});
 });
 
 // 清空 gulp-cache 缓存
-gulp.task('clearCache', function(cb) {
+gulp.task('clearCache', (cb) => {
   return $.cache.clearAll(cb);
 });
 
 // 监视源文件变化自动cd编译
-gulp.task('watch', function() {
+gulp.task('watch', () => {
   gulp.watch('app/**/*.html', ['html']);
   gulp.watch('app/less/**/*less', ['styles']);
   gulp.watch('app/i/**/*', ['images']);
@@ -178,7 +176,7 @@ gulp.task('watch', function() {
 });
 
 // 启动预览服务，并监视 Dist 目录变化自动刷新浏览器
-gulp.task('serve', ['default'], function() {
+gulp.task('serve', ['default'], () => {
   browserSync({
     notify: false,
     // Customize the BrowserSync console logging prefix
@@ -190,7 +188,7 @@ gulp.task('serve', ['default'], function() {
 });
 
 // 默认任务
-gulp.task('default', function(cb) {
+gulp.task('default', (cb) => {
   runSequence('clean',
-    ['styles', 'jshint', 'html', 'images', 'copy', 'browserify'], 'watch', cb);
+    ['styles', 'lint', 'html', 'images', 'copy', 'browserify'], 'watch', cb);
 });
