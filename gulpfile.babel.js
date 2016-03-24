@@ -102,7 +102,7 @@ gulp.task('styles', () => {
 });
 
 // Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
-// to enables ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
+// to enable ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
 // `.babelrc` file.
 gulp.task('scripts', () =>
     gulp.src([
