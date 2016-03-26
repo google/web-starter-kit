@@ -92,6 +92,14 @@ gulp.task('styles', () => {
     .pipe($.sass({
       precision: 10
     }).on('error', $.sass.logError))
+    // Remove any unused CSS
+    .pipe($.if('*.css', $.uncss({
+      html: [
+        'app/index.html'
+      ],
+      // CSS Selectors for UnCSS to ignore
+      ignore: []
+    })))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
     .pipe(gulp.dest('.tmp/styles'))
     // Concatenate and minify styles
@@ -132,18 +140,6 @@ gulp.task('html', () => {
       searchPath: '{.tmp,app}',
       noAssets: true
     }))
-    // Remove any unused CSS
-    .pipe($.if('*.css', $.uncss({
-      html: [
-        'app/index.html'
-      ],
-      // CSS Selectors for UnCSS to ignore
-      ignore: []
-    })))
-
-    // Concatenate and minify styles
-    // In case you are still using useref build blocks
-    .pipe($.if('*.css', $.cssnano()))
 
     // Minify any HTML
     .pipe($.if('*.html', $.htmlmin({
