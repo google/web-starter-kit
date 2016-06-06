@@ -28,12 +28,13 @@ import path from 'path';
 import gulp from 'gulp';
 import del from 'del';
 import runSequence from 'run-sequence';
-import browserSync from 'browser-sync';
+import bs from 'browser-sync';
 import swPrecache from 'sw-precache';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import {output as pagespeed} from 'psi';
 import pkg from './package.json';
 
+const browserSync = bs.create()
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
@@ -106,7 +107,8 @@ gulp.task('styles', () => {
     .pipe($.if('*.css', $.cssnano()))
     .pipe($.size({title: 'styles'}))
     .pipe($.sourcemaps.write('./'))
-    .pipe(gulp.dest('dist/styles'));
+    .pipe(gulp.dest('dist/styles'))
+    .pipe($.if(browserSync.active, browserSync.stream({ match: '**/*.css' })));
 });
 
 // Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
@@ -163,7 +165,7 @@ gulp.task('clean', () => del(['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
 
 // Watch files for changes & reload
 gulp.task('serve', ['scripts', 'styles'], () => {
-  browserSync({
+  browserSync.init({
     notify: false,
     // Customize the Browsersync console logging prefix
     logPrefix: 'WSK',
@@ -178,14 +180,14 @@ gulp.task('serve', ['scripts', 'styles'], () => {
   });
 
   gulp.watch(['app/**/*.html'], reload);
-  gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
+  gulp.watch(['app/styles/**/*.{scss,css}'], 'styles');
   gulp.watch(['app/scripts/**/*.js'], ['lint', 'scripts']);
   gulp.watch(['app/images/**/*'], reload);
 });
 
 // Build and serve the output from the dist build
 gulp.task('serve:dist', ['default'], () =>
-  browserSync({
+  browserSync.init({
     notify: false,
     logPrefix: 'WSK',
     // Allow scroll syncing across breakpoints
