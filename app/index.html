@@ -7,7 +7,7 @@
         content="An Amaze UI template that helps you build fast, modern mobile web apps.">
   <meta name="viewport"
         content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-  <title>Web Starter Kit for Amaze UI</title>
+  <title><%= htmlWebpackPlugin.options.title %></title>
 
   <!-- Set render engine for 360 browser -->
   <meta name="renderer" content="webkit">
@@ -29,7 +29,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title"
-        content="Amaze UI Sfavicon.pngtarter Kit">
+        content="Amaze UI Starter Kit">
   <link rel="apple-touch-icon" href="i/touch/apple-touch-icon.png">
 
   <!-- Tile icon for Win8 (144x144 + tile color) -->
@@ -41,8 +41,8 @@
   <!--
   <link rel="canonical" href="http://www.example.com/">
   -->
-  <link rel="stylesheet" href="css/amazeui.min.css"/>
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="<%= htmlWebpackPlugin.options.AMUICDN %>css/amazeui.min.css"/>
+  <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css %>">
 </head>
 <body>
 <header class="am-topbar am-topbar-inverse ask-header">
@@ -70,7 +70,7 @@
 <main>
   <div class="am-container am-padding-vertical">
     <p>
-      Amaze UI Stater Kit 是一个使用 Gulp、NPM 构建的工作流模板，在此模板上用户可以方便的使用 Amaze UI 开发网页应用。
+      Amaze UI Stater Kit 是一个使用 Webpack、NPM 构建的工作流模板，在此模板上用户可以方便的使用 Amaze UI 开发网页应用。
     </p>
     <p><a href="https://github.com/amazeui/starter-kit" target="_blank" class="am-btn am-btn-success">查看详情</a></p>
     <p>使用 highlight.js 高亮代码示例：</p>
@@ -81,9 +81,15 @@
 });</code></pre>
     </div>
 </main>
-<script src="js/jquery.min.js"></script>
+
+<% if (htmlWebpackPlugin.options.prod) { %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/amazeui/2.7.0/js/amazeui.min.js"></script>
+<% } else { %>
+<script src="dist/jquery.min.js"></script>
 <script src="js/amazeui.min.js"></script>
-<script src="js/main.js"></script>
+<% } %>
+<script src="<%= htmlWebpackPlugin.files.js %>"></script>
 <!-- Built with love using Web Starter Kit -->
 </body>
 </html>
