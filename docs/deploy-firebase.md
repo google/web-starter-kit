@@ -15,6 +15,10 @@ guide](https://www.firebase.com/docs/hosting/quickstart.html).
     can use the `firebase` command from any directory. You may need
     to install the package with `sudo` privileges.
 
+1.  Login to your Firebase account
+
+        firebase login
+
 1.  `cd` into your project directory
 
 1.  Inititalize the Firebase application
