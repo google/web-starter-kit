@@ -29,7 +29,7 @@
   },
   "private": true,
   "scripts": {
-    "clean": "del ./dist",
+    "clean": "del dist",
     "build": "npm run clean && cross-env NODE_ENV=production webpack --config webpack.config.js",
     "lint": "eslint app/js/**",
     "start": "node serve.js",
