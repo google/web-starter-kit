@@ -33,14 +33,14 @@ The `src` directory above contains MDL's Sass files and the JavaScript sources f
 └── src
 ```
 
-Next we have some changes to make to Web Starter Kit's `app/index.html`. By default it includes the CDN-hosted production builds of Material Design Lite (e.g `https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css`) We will need to swap these out for references to our local files instead. 
+Next we have some changes to make to Web Starter Kit's `app/index.html`. By default it includes the CDN-hosted production builds of Material Design Lite. We will need to swap these out for references to our local files instead. 
 
 5. First, we'll switch the CDN-hosted stylesheets to our local version.
 
 Replace the following line:
 
 ```html
-<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+<link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
 ```
 
 with:
@@ -66,7 +66,7 @@ This imports in all of MDL's component styles. If you later decide to only use a
 Remove:
 
 ```html
-<script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+<script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
 ```
 
 and find the following block in `app/index.html`:
