@@ -44,6 +44,9 @@ Next, install the local dependencies Web Starter Kit requires:
 $ npm install
 ```
 
+Note: if you have the [Yarn](https://yarnpkg.com/) package manager installed, you can just run `yarn`.
+Web Starter Kit includes a yarn.lock file that will be used here.
+
 That's it! You should now have everything needed to use the Web Starter Kit.
 
 -
