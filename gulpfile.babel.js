@@ -106,35 +106,23 @@ gulp.task('styles', () => {
 // to enable ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
 // `.babelrc` file.
 gulp.task('scripts', () =>
-    gulp.src([
-      // Note: Since we are not using useref in the scripts build pipeline,
-      //       you need to explicitly list your scripts here in the right order
-      //       to be correctly concatenated
-      './app/scripts/main.js'
-      // Other scripts
-    ])
+    gulp.src('app/scripts/**/*.js')
       .pipe($.newer('.tmp/scripts'))
       .pipe($.sourcemaps.init())
       .pipe($.babel())
-      .pipe($.sourcemaps.write())
-      .pipe(gulp.dest('.tmp/scripts'))
-      .pipe($.concat('main.min.js'))
-      .pipe($.uglify({preserveComments: 'some'}))
       // Output files
-      .pipe($.size({title: 'scripts'}))
       .pipe($.sourcemaps.write('.'))
-      .pipe(gulp.dest('dist/scripts'))
       .pipe(gulp.dest('.tmp/scripts'))
+      .pipe($.size({title: 'scripts'}))
 );
 
 // Scan your HTML for assets & optimize them
-gulp.task('html', () => {
+gulp.task('html', ['styles', 'scripts'], () => {
   return gulp.src('app/**/*.html')
     .pipe($.useref({
-      searchPath: '{.tmp,app}',
-      noAssets: true
+      searchPath: ['.tmp', 'app', '.']
     }))
-
+    .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
     // Minify any HTML
     .pipe($.if('*.html', $.htmlmin({
       removeComments: true,
