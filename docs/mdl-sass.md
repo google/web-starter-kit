@@ -59,7 +59,7 @@ One final change for getting Sass working is adding the following line to the ve
 @import "src/material-design-lite";
 ```
 
-This imports in all of MDL's component styles. If you later decide to only use a smallet set of components, just edit `src/material-design-lite.scss`, commenting out what you don't want.
+This imports in all of MDL's component styles. If you later decide to only use a small set of components, just edit `src/material-design-lite.scss`, commenting out what you don't want.
 
 6. Next, we'll localise our JavaScript files for MDL. Once again, we'll edit `app/index.html`:
 
@@ -144,7 +144,7 @@ gulp.task('scripts', () =>
 ```
 
 
-> Note: We are aware that it can feel a little suboptimal to reference the same set of source files twice in the above pipeline. We wil be looking at simplifying this workflow in a future release. 
+> Note: We are aware that it can feel a little suboptimal to reference the same set of source files twice in the above pipeline. We will be looking at simplifying this workflow in a future release. 
 
 Similar to styles, you can comment out what you don't need here if you decide to only use a smaller set of components. 
 
@@ -158,7 +158,7 @@ You will probably want to configure the color theme used in MDL.
 
 MDL supports Material Design's [color palette](https://www.google.com/design/spec/style/color.html#color-color-palette) through Sass variables. 
 
-If you find a color in the palette spec you would like to use e.g color name `Pink` with fill `500`, MDL exposes this as `$palette-pink-500`. Let's walk through customising the primary and accent colors for your theme.
+If you find a color in the palette spec you would like to use (e.g., color name `Pink` with fill `500`), MDL exposes this as `$palette-pink-500`. Let's walk through customising the primary and accent colors for your theme.
 
 This can be done using your setup as follows:
 
