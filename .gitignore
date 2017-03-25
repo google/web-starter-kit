@@ -1,4 +1,7 @@
 node_modules
 dist/
+!dist/server.js
+!dist/package.json
 .tmp
 app.yaml
+.idea

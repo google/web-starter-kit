@@ -52,7 +52,7 @@ gulp.task('images', () =>
       progressive: true,
       interlaced: true
     })))
-    .pipe(gulp.dest('dist/images'))
+    .pipe(gulp.dest('dist/public/images'))
     .pipe($.size({title: 'images'}))
 );
 
@@ -61,10 +61,10 @@ gulp.task('copy', () =>
   gulp.src([
     'app/*',
     '!app/*.html',
-    'node_modules/apache-server-configs/dist/.htaccess'
+    'node_modules/apache-server-configs/dist/public/.htaccess'
   ], {
     dot: true
-  }).pipe(gulp.dest('dist'))
+  }).pipe(gulp.dest('dist/public'))
     .pipe($.size({title: 'copy'}))
 );
 
@@ -98,7 +98,7 @@ gulp.task('styles', () => {
     .pipe($.if('*.css', $.cssnano()))
     .pipe($.size({title: 'styles'}))
     .pipe($.sourcemaps.write('./'))
-    .pipe(gulp.dest('dist/styles'))
+    .pipe(gulp.dest('dist/public/styles'))
     .pipe(gulp.dest('.tmp/styles'));
 });
 
@@ -123,7 +123,7 @@ gulp.task('scripts', () =>
       // Output files
       .pipe($.size({title: 'scripts'}))
       .pipe($.sourcemaps.write('.'))
-      .pipe(gulp.dest('dist/scripts'))
+      .pipe(gulp.dest('dist/public/scripts'))
       .pipe(gulp.dest('.tmp/scripts'))
 );
 
@@ -149,7 +149,7 @@ gulp.task('html', () => {
     })))
     // Output files
     .pipe($.if('*.html', $.size({title: 'html', showFiles: true})))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('dist/public'));
 });
 
 // Clean output directory
@@ -188,7 +188,9 @@ gulp.task('serve:dist', ['default'], () =>
     // Note: this uses an unsigned certificate which on first access
     //       will present a certificate warning in the browser.
     // https: true,
-    server: 'dist',
+    server: {
+      baseDir: ['dist/public']
+    },
     port: 3001
   })
 );
@@ -217,7 +219,7 @@ gulp.task('pagespeed', cb =>
 // Copy over the scripts that are used in importScripts as part of the generate-service-worker task.
 gulp.task('copy-sw-scripts', () => {
   return gulp.src(['node_modules/sw-toolbox/sw-toolbox.js', 'app/scripts/sw/runtime-caching.js'])
-    .pipe(gulp.dest('dist/scripts/sw'));
+    .pipe(gulp.dest('dist/public/scripts/sw'));
 });
 
 // See http://www.html5rocks.com/en/tutorials/service-worker/introduction/ for
