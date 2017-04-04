@@ -1,4 +1,4 @@
 node_modules
-.sass-cache
-dist
+dist/
 .tmp
+app.yaml
