@@ -1,4 +1,7 @@
 node_modules
+ #npm install --save-dev gulp工程中自动加上
 dist/
 .tmp
 app.yaml
+.idea/
+web-starter-kit.iml
