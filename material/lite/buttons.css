@@ -1,0 +1,112 @@
+.paper-button {
+  position: relative;
+  padding: 4px 0;
+  margin: 1em;
+  width: 160px;
+  overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: black;
+  text-transform: uppercase;
+  border-radius: 3px;
+  outline-color: #cccccc;
+}
+.paper-button:hover {
+  cursor: pointer;
+}
+.paper-button .ripple {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  background-color: rgba(204, 204, 204, 0.5);
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  margin-left: -160px;
+  margin-top: -160px;
+  -webkit-transform: scaleX(0) scaleY(0);
+  -ms-transform: scaleX(0) scaleY(0);
+  transform: scaleX(0) scaleY(0);
+  z-index: 9000;
+}
+
+.paper-button button, .paper-button input[type="submit"] {
+  background: inherit;
+  border: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-family: 'Roboto';
+  font-size: 1em;
+  color: black;
+  text-transform: uppercase;
+}
+
+.paper-button.colored, .paper-button.colored button {
+  color: #4285f4;
+}
+
+.paper-button .ripple {
+  background-color: rgba(204, 204, 204, 0.5);
+}
+
+.paper-button.raised-button.colored .ripple {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.paper-button.raised-button .ripple {
+  background-color: rgba(204, 204, 204, 0.5);
+}
+
+.paper-button.raised-button.colored {
+  background-color: #4285f4;
+}
+
+.paper-button .raised-button {
+  -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+}
+
+.paper-button.raised-button.colored {
+  background: #4285f4;
+  color: #fff;
+}
+
+.paper-button[disabled] {
+  background-color: #EAEAEA !important;
+  color: #A8A8A8 !important;
+  cursor: auto;
+}
+
+.paper-button:hover {
+  background-color: #EAEAEA;/* !important; */
+}
+
+.paper-button.raised-button.colored:hover {
+  background-color: #3367d6 !important;
+}
+
+button.paper-button {
+  border: 0;
+  font-family: Roboto, 'Helvetica Neue', Helvetica, Arial;
+  font-size: 1em;
+  line-height: 25px;
+  background-color: white;
+}
+
+.paper-button input[type="submit"] {
+  outline-color: #cccccc;
+}
+
+.paper-button.colored.raised-button input[type="submit"] {
+  color: white;
+}
+
+/*POC*/
+.paper-button.colored.violet {background-color:#303F9F;}
+.paper-button.colored.violet:hover {background-color:#1a237e
+!important;}
+.paper-button.colored.razz {background: #E91E63}
+.paper-button.colored.razz:hover {background-color:#880e4f !important;}

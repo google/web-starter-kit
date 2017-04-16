@@ -1,0 +1,16 @@
+/**
+*
+* subsection__title
+*
+**/
+
+.subsection-title {
+  color: $colorGrayDark;
+  margin-top: $lineHeight * 2;
+}
+
+.subsection-number {
+  @include type--base;
+  padding-top: 0;
+  display: block;
+}
