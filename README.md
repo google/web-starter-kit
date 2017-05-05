@@ -23,6 +23,11 @@
 
 [Download](https://github.com/google/web-starter-kit/releases/latest) the kit or clone this repository and build on what is included in the `app` directory.
 
+```bash
+$ npm install
+$ npm start
+```
+
 There are two HTML starting points, from which you can choose:
 
 - `index.html` - the default starting point, containing Material Design layout.
