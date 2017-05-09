@@ -127,6 +127,18 @@ gulp.task('scripts', () =>
       .pipe(gulp.dest('.tmp/scripts'))
 );
 
+// Render HTML using Nunjucks template engine
+gulp.task('nunjucks', () => {
+  // Gets .html and .nunjucks files in pages
+  return gulp.src('app/pages/**/*.+(html|nunjucks)')
+    // Renders template with nunjucks
+    .pipe($.nunjucksRender({
+      path: ['app/templates']
+    }))
+    // output files in app folder
+    .pipe(gulp.dest('app'))
+});
+
 // Scan your HTML for assets & optimize them
 gulp.task('html', () => {
   return gulp.src('app/**/*.html')
@@ -156,7 +168,7 @@ gulp.task('html', () => {
 gulp.task('clean', () => del(['.tmp', 'dist/*', '!dist/.git'], {dot: true}));
 
 // Watch files for changes & reload
-gulp.task('serve', ['scripts', 'styles'], () => {
+gulp.task('serve', ['scripts', 'styles', 'nunjucks'], () => {
   browserSync({
     notify: false,
     // Customize the Browsersync console logging prefix
@@ -171,6 +183,7 @@ gulp.task('serve', ['scripts', 'styles'], () => {
     port: 3000
   });
 
+  gulp.watch(['app/{pages,templates}/**/*.{nunjucks,html}'], ['nunjucks', reload]);
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
   gulp.watch(['app/scripts/**/*.js'], ['lint', 'scripts', reload]);
@@ -197,7 +210,7 @@ gulp.task('serve:dist', ['default'], () =>
 gulp.task('default', ['clean'], cb =>
   runSequence(
     'styles',
-    ['lint', 'html', 'scripts', 'images', 'copy'],
+    ['nunjucks', 'lint', 'html', 'scripts', 'images', 'copy'],
     'generate-service-worker',
     cb
   )

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>{% block title %}{% endblock title %}</title>
 
     <!-- Disable tap highlight on IE -->
     <meta name="msapplication-tap-highlight" content="no">
@@ -35,11 +35,37 @@
     <!--
     <link rel="canonical" href="http://www.example.com/">
     -->
-    
-  </head>
-  <body>
-    <!-- Add your site or app content here -->
+    {% block headincludes -%}
 
+    <!-- Material Design icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+    <!-- Material Design Lite page styles:
+    You can choose other color schemes from the CDN, more info here http://www.getmdl.io/customize/index.html
+    Format: material.color1-color2.min.css, some examples:
+    material.red-teal.min.css
+    material.blue-orange.min.css
+    material.purple-indigo.min.css
+    -->
+    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
+
+    <!-- Your styles -->
+    <link rel="stylesheet" href="styles/main.css">
+    {%- endblock %}
+  </head>
+  <body {%- block bodyclasses %} class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base"{% endblock %}>
+    {% block body -%}
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      {% include 'partials/_header.nunjucks' %}
+      {% block main %}{% endblock main %}
+    </div>
+    {%- endblock body %}
+
+    {%- block bottomincludes %}
+
+    <script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+    {%- endblock bottomincludes %}
     <!-- build:js scripts/main.min.js -->
     <script src="scripts/main.js"></script>
     <!-- endbuild -->
