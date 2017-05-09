@@ -1,0 +1,13 @@
+{% extends 'layout.nunjucks' %}
+
+{% block title %}{% endblock title %}
+
+{% block headincludes %}{% endblock headincludes %}
+
+{% block bodyclasses %}{% endblock bodyclasses %}
+
+{% block body -%}
+  <!-- Add your site or app content here -->
+{% endblock body %}
+
+{%- block bottomincludes %}{% endblock bottomincludes %}
