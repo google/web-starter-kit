@@ -18,6 +18,7 @@
     "gulp-imagemin": "^2.4.0",
     "gulp-load-plugins": "^1.2.4",
     "gulp-newer": "^1.2.0",
+    "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.2",
     "gulp-size": "^2.1.0",
     "gulp-sourcemaps": "^1.6.0",
@@ -25,8 +26,8 @@
     "gulp-useref": "^3.1.0",
     "psi": "^2.0.4",
     "run-sequence": "^1.0.1",
-    "sw-precache": "^3.2.0",
-    "sw-toolbox": "^3.2.1"
+    "workbox-build": "^1.0.0",
+    "workbox-sw": "^1.0.0"
   },
   "engines": {
     "node": ">=0.12"
