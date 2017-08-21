@@ -17,5 +17,5 @@ workbox.precache([]);
 
 // Register route for Google static files.
 workbox.router.registerRoute(
-  /.*(?:googleapis|gstatic)\.com.*$/,
+  /.*(?:googleapis|gstatic)\.com/,
   workbox.strategies.staleWhileRevalidate());

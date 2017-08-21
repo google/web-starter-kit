@@ -244,13 +244,7 @@ gulp.task('generate-service-worker', () => {
       `scripts/**/*.js`,
       `styles/**/*.css`,
       `*.{html,json}`
-    ],
-    // Translates a static file path to the relative URL that it's served from.
-    // This is '/' rather than path.sep because the paths returned from
-    // glob always use '/'.
-    modifyUrlPrefix: {
-      'dist/': ''
-    }
+    ]
   });
 });
 
