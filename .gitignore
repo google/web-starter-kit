@@ -2,4 +2,3 @@ node_modules
 dist/
 .tmp
 app.yaml
-app/third_party/
