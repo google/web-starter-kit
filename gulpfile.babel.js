@@ -157,7 +157,7 @@ gulp.task('html', () => {
 gulp.task('clean', () => del(['.tmp', 'dist/*', 'app/third_party/', '!dist/.git'], {dot: true}));
 
 // Watch files for changes & reload
-gulp.task('serve', ['scripts', 'styles', 'third-party:dev'], () => {
+gulp.task('serve', ['scripts', 'styles'], () => {
   browserSync({
     notify: false,
     // Customize the Browsersync console logging prefix
@@ -199,8 +199,7 @@ gulp.task('default', ['clean'], cb =>
   runSequence(
     'styles',
     ['lint', 'html', 'scripts', 'images', 'copy'],
-    ['third-party:prod', 'generate-service-worker'],
-    'service-worker:prod',
+    'generate-service-worker',
     cb
   )
 );
@@ -216,26 +215,13 @@ gulp.task('pagespeed', cb =>
   }, cb)
 );
 
-// Copy over the scripts that are used in importScripts as part of the generate-service-worker task.
-gulp.task('third-party:dev', () => {
-  return gulp.src(['node_modules/workbox-sw/build/importScripts/workbox-sw.dev.*.js'])
-    .pipe($.rename('workbox-sw.dev.js'))
-    .pipe(gulp.dest('app/third_party/workbox-sw/'));
-});
-
-gulp.task('third-party:prod', () => {
-  return gulp.src(['node_modules/workbox-sw/build/importScripts/workbox-sw.prod.*.js'])
-    .pipe(gulp.dest('dist/third_party/workbox-sw/'));
-});
-
 // See http://www.html5rocks.com/en/tutorials/service-worker/introduction/ for
 // an in-depth explanation of what service workers are and why you should care.
 // Generate a service worker file that will provide offline functionality for
 // local resources. This should only be done for the 'dist' directory, to allow
 // live reload to work as expected when serving from the 'app' directory.
 gulp.task('generate-service-worker', () => {
-  return workboxBuild.injectManifest({
-    swSrc: `app/service-worker.js`,
+  return workboxBuild.generateSW({
     swDest: `dist/service-worker.js`,
     globDirectory: `dist`,
     // Add/remove glob patterns to match your directory setup.
@@ -244,24 +230,13 @@ gulp.task('generate-service-worker', () => {
       `scripts/**/*.js`,
       `styles/**/*.css`,
       `*.{html,json}`
-    ]
-  });
-});
-
-gulp.task('service-worker:prod', () => {
-  const globResults = glob.sync('node_modules/workbox-sw/build/importScripts/workbox-sw.prod.*.js');
-  if (globResults.length !== 1) {
-    throw new Error('Unable to find the workbox-sw production file.');
-  }
-
-  return replace({
-    regex: 'workbox-sw.dev.js',
-    replacement: path.basename(globResults[0]),
-    paths: [
-      'dist/service-worker.js'
     ],
-    recursive: true,
-    silent: true
+    runtimeCaching: [
+      {
+        urlPattern: /.*(?:googleapis|gstatic)\.com/,
+        handler: 'staleWhileRevalidate'
+      }
+    ]
   });
 });
 
