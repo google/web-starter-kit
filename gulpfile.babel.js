@@ -30,17 +30,14 @@ import runSequence from 'run-sequence';
 import browserSync from 'browser-sync';
 import workboxBuild from 'workbox-build';
 import gulpLoadPlugins from 'gulp-load-plugins';
-import replace from 'replace';
 import {output as pagespeed} from 'psi';
-import glob from 'glob';
-import path from 'path';
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
 // Lint JavaScript
 gulp.task('lint', () =>
-  gulp.src(['app/scripts/**/*.js','!node_modules/**'])
+  gulp.src(['app/scripts/**/*.js', '!node_modules/**'])
     .pipe($.eslint())
     .pipe($.eslint.format())
     .pipe($.if(!browserSync.active, $.eslint.failAfterError()))
