@@ -5,5 +5,3 @@ node_js:
   - '5'
   - '4'
   - '0.12'
-before_script:
-  - npm install -g gulp-cli
