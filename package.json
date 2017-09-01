@@ -2,6 +2,7 @@
   "devDependencies": {
     "apache-server-configs": "^2.14.0",
     "babel-core": "^6.14.0",
+	"babel-register": "^6.14.0",
     "babel-preset-es2015": "^6.0.15",
     "browser-sync": "^2.14.0",
     "del": "^2.2.2",
