@@ -33,6 +33,7 @@ import swPrecache from 'sw-precache';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import {output as pagespeed} from 'psi';
 import pkg from './package.json';
+import jade from 'gulp-jade';
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
@@ -61,6 +62,8 @@ gulp.task('copy', () =>
   gulp.src([
     'app/*',
     '!app/*.html',
+    '!app/*.jade',
+    '!app/jade',
     'node_modules/apache-server-configs/dist/.htaccess'
   ], {
     dot: true
@@ -129,12 +132,18 @@ gulp.task('scripts', () =>
 
 // Scan your HTML for assets & optimize them
 gulp.task('html', () => {
-  return gulp.src('app/**/*.html')
+  return gulp.src([
+      'app/*.jade',
+      'app/*.html'
+    ])
     .pipe($.useref({
       searchPath: '{.tmp,app}',
       noAssets: true
     }))
-
+    // Compile Jade
+    .pipe($.if('*jade', jade({
+      pretty: true
+    })))
     // Minify any HTML
     .pipe($.if('*.html', $.htmlmin({
       removeComments: true,
@@ -171,7 +180,7 @@ gulp.task('serve', ['scripts', 'styles'], () => {
     port: 3000
   });
 
-  gulp.watch(['app/**/*.html'], reload);
+  gulp.watch(['app/*.jade'], ['html',reload]);
   gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
   gulp.watch(['app/scripts/**/*.js'], ['lint', 'scripts', reload]);
   gulp.watch(['app/images/**/*'], reload);
