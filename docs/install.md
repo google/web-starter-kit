@@ -2,7 +2,7 @@
 
 **tl;dr**: [Download WSK](https://github.com/google/web-starter-kit/releases/latest) and run `$ npm install --global gulp && npm install` in that directory to get started.
 
--
+---
 
 To take advantage of Web Starter Kit you need to:
 
@@ -49,6 +49,6 @@ Web Starter Kit includes a yarn.lock file that will be used here.
 
 That's it! You should now have everything needed to use the Web Starter Kit.
 
--
+---
 
 You may also want to get used to some of the [commands](commands.md) available.
