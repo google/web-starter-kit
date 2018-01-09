@@ -3,7 +3,7 @@ There are many commands available to help you build and test sites. Here are a f
 ## Watch For Changes & Automatically Refresh Across Devices
 
 ```sh
-$ gulp serve
+$ npm start
 ```
 
 This outputs an IP address you can use to locally test and another that can be used on devices
@@ -14,7 +14,7 @@ caching, so your site will stop being available when the web server stops runnin
 ## Build & Optimize
 
 ```sh
-$ gulp
+$ npm run build
 ```
 
 Build and optimize the current project, ready for deployment.
@@ -29,7 +29,7 @@ no network connectivity.
 ## Serve the Fully Built & Optimized Site
 
 ```sh
-$ gulp serve:dist
+$ npm run serve:dist
 ```
 
 This outputs an IP address you can use to locally test and another that can be used on devices
@@ -55,7 +55,7 @@ Using the `sw-precache`-generated output makes it very difficult to quickly test
 ## Performance Insights
 
 ```sh
-$ gulp pagespeed
+$ npm run pagespeed
 ```
 
 Runs the deployed (public) version of your site against the [PageSpeed Insights](https://developers.google.com/speed/pagespeed/insights/) API to help you stay on top of where you can improve.
