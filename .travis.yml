@@ -1,7 +1,8 @@
 sudo: false
 language: node_js
+# Should match: https://github.com/nodejs/Release#release-schedule
 node_js:
+  - '9'
+  - '8'
   - '6'
-  - '5'
   - '4'
-  - '0.12'
