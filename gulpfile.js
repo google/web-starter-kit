@@ -25,3 +25,4 @@ global.__buildConfig = {
 };
 
 require('./gulp-tasks/html.js');
+require('./gulp-tasks/css.js');

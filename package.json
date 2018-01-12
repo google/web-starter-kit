@@ -1,8 +1,13 @@
 {
   "private": true,
   "devDependencies": {
+    "cssnano": "^3.10.0",
     "gulp": "^4.0.0",
-    "gulp-htmlmin": "^4.0.0"
+    "gulp-htmlmin": "^4.0.0",
+    "gulp-postcss": "^7.0.1",
+    "gulp-sourcemaps": "^2.6.3",
+    "postcss-cssnext": "^3.0.2",
+    "postcss-import": "^11.0.0"
   },
   "engines": {
     "node": ">=4"
