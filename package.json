@@ -22,7 +22,8 @@
     "rollup-stream": "^1.24.1",
     "uglify-es": "^3.3.5",
     "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0"
+    "vinyl-source-stream": "^2.0.0",
+    "workbox-build": "^3.0.0-alpha.5"
   },
   "engines": {
     "node": ">=4"

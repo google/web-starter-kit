@@ -2,14 +2,16 @@ const gulp = require('gulp');
 const fse = require('fs-extra');
 
 const build = (done) => {
-  return gulp.parallel([
+  return gulp.series([
     () => fse.remove(global.__buildConfig.dest),
-    'copy',
-    'css',
-    'html',
-    'images',
-    'sass',
-    'scripts',
+    gulp.parallel([
+      'copy',
+      'css',
+      'html',
+      'images',
+      'sass',
+      'scripts',
+    ]),
     'serviceWorker',
   ])(done);
 };
