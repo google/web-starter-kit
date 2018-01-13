@@ -1,18 +1,30 @@
 {
   "private": true,
+  "scripts": {
+    "test": "gulp"
+  },
   "devDependencies": {
     "cssnano": "^3.10.0",
+    "fs-extra": "^5.0.0",
+    "glob": "^7.1.2",
     "gulp": "^4.0.0",
     "gulp-htmlmin": "^4.0.0",
+    "gulp-imagemin": "^4.1.0",
     "gulp-postcss": "^7.0.1",
+    "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.3",
+    "imagemin-mozjpeg": "^7.0.0",
+    "imagemin-pngquant": "^5.0.1",
     "postcss-cssnext": "^3.0.2",
-    "postcss-import": "^11.0.0"
+    "postcss-import": "^11.0.0",
+    "rollup": "^0.54.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "rollup-stream": "^1.24.1",
+    "uglify-es": "^3.3.5",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
   },
   "engines": {
     "node": ">=4"
-  },
-  "scripts": {
-    "test": "gulp"
   }
 }

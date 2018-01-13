@@ -17,6 +17,7 @@
 @import './variables/dimens.css';
 
 html, body {
+  display: flex;
   font-family: 'Roboto', 'Helvetica', sans-serif;
   margin: 0;
   padding: calc(var(--padding) * 2);

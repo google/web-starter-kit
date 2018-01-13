@@ -26,3 +26,9 @@ global.__buildConfig = {
 
 require('./gulp-tasks/html.js');
 require('./gulp-tasks/css.js');
+require('./gulp-tasks/copy.js');
+require('./gulp-tasks/images.js');
+require('./gulp-tasks/sass.js');
+require('./gulp-tasks/scripts.js');
+require('./gulp-tasks/build.js');
+require('./gulp-tasks/serviceWorker.js');

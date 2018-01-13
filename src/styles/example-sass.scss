@@ -1,0 +1,8 @@
+$font-stack:    Helvetica, sans-serif;
+$primary-color: #333;
+
+body {
+  display: flex;
+  font: 100% $font-stack;
+  color: $primary-color;
+}

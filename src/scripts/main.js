@@ -17,4 +17,6 @@
  *
  */
 
+import * as example from './example.js';
 
+console.log(example.version);
