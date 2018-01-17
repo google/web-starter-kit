@@ -1,4 +1,2 @@
-node_modules
-dist/
-.tmp
-app.yaml
+node_modules/
+build/
