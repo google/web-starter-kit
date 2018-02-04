@@ -17,6 +17,6 @@
  *
  */
 
-import * as example from './example.js';
+import {registerSW} from './register-service-worker';
 
-console.log(example.version);
+registerSW();

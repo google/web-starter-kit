@@ -4,11 +4,12 @@ const gulpSass = require('gulp-sass');
 
 const postcssConfig = require('./utils/postcssConfig');
 
+const extensions = [
+  'sass',
+  'scss',
+];
+
 const sass = () => {
-  const extensions = [
-    'sass',
-    'scss',
-  ];
   return gulp.src(`${global.__buildConfig.src}/**/*.{${extensions.join(',')}}`)
   .pipe(sourcemaps.init())
   .pipe(
@@ -22,4 +23,8 @@ const sass = () => {
   .pipe(gulp.dest(global.__buildConfig.dest));
 };
 
-gulp.task(sass);
+module.exports = {
+  task: sass,
+  build: sass,
+  watchGlobs: `${global.__buildConfig.src}/**/*.{${extensions.join(',')}}`
+}

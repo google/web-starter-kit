@@ -10,4 +10,6 @@ const serviceWorker = async () => {
   });
 };
 
-gulp.task(serviceWorker);
+module.exports = {
+  task: serviceWorker,
+};

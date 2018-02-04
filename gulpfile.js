@@ -16,19 +16,49 @@
  *  limitations under the License
  *
  */
-
+const gulp = require('gulp');
 const path = require('path');
+const fse = require('fs-extra');
+const getTaskFilepaths = require('./gulp-tasks/utils/get-task-filepaths');
 
 global.__buildConfig = {
   src: path.join(__dirname, 'src'),
   dest: path.join(__dirname, 'build'),
+  serverName: 'Web Starter Kit Server',
 };
 
-require('./gulp-tasks/html.js');
-require('./gulp-tasks/css.js');
-require('./gulp-tasks/copy.js');
-require('./gulp-tasks/images.js');
-require('./gulp-tasks/sass.js');
-require('./gulp-tasks/scripts.js');
-require('./gulp-tasks/build.js');
-require('./gulp-tasks/serviceWorker.js');
+const loadTasks = () => {
+  const taskFiles = getTaskFilepaths();
+  for (const taskFilepath of taskFiles) {
+    const {task} = require(taskFilepath);
+    if (task) {
+      gulp.task(task);
+    }
+  }
+};
+
+loadTasks();
+
+gulp.task('dev', (done) => {
+  return gulp.series([
+    'build',
+    'serviceWorker',
+    gulp.parallel([
+      'watch',
+      'serve',
+    ]),
+  ])(done);
+});
+
+gulp.task('prod', (done) => {
+  process.env.NODE_ENV = 'production';
+
+  return gulp.series([
+    'build',
+    'serviceWorker',
+    gulp.parallel([
+      'watch',
+      'serve',
+    ]),
+  ])(done);
+});

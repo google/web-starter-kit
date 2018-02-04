@@ -11,4 +11,8 @@ const css = () => {
   .pipe(gulp.dest(global.__buildConfig.dest));
 };
 
-gulp.task(css);
+module.exports = {
+  task: css,
+  build: css,
+  watchGlobs: `${global.__buildConfig.src}/**/*.css`
+};

@@ -2,6 +2,7 @@ const path = require('path');
 const gulp = require('gulp');
 const rollup = require('rollup');
 const rollupStream = require('rollup-stream');
+const replacePlugin = require('rollup-plugin-replace');
 const uglifyPlugin = require('rollup-plugin-uglify');
 const esMinify = require('uglify-es').minify;
 const source = require('vinyl-source-stream');
@@ -19,6 +20,9 @@ const processScript = (scriptPath, relativePath) => {
       sourcemap: true,
     },
     plugins: [
+      replacePlugin({
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      }),
       uglifyPlugin({}, esMinify),
     ],
   })
@@ -31,7 +35,7 @@ const processScript = (scriptPath, relativePath) => {
   .pipe(gulp.dest(global.__buildConfig.dest));
 };
 
-const scripts = (done) => {
+const javascript = (done) => {
   // If you want to restrict which javascript files are built with rollup you
   // can alter this regex to match specific file(s) or directories of files.
   return glob('**/*.js', {
@@ -61,4 +65,8 @@ const scripts = (done) => {
   });
 };
 
-gulp.task(scripts);
+module.exports = {
+  task: javascript,
+  build: javascript,
+  watchGlobs: `${global.__buildConfig.src}/**/*.js`
+};

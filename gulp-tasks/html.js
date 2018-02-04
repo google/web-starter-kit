@@ -14,4 +14,8 @@ const html = () => {
   .pipe(gulp.dest(global.__buildConfig.dest));
 };
 
-gulp.task(html);
+module.exports = {
+  task: html,
+  build: html,
+  watchGlobs: `${global.__buildConfig.src}/**/*.html`
+};

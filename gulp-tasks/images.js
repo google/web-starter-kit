@@ -3,14 +3,15 @@ const imagemin = require('gulp-imagemin');
 const mozjpeg = require('imagemin-mozjpeg');
 const pngquant = require('imagemin-pngquant');
 
+const extensions = [
+  'jpeg',
+  'jpg',
+  'png',
+  'gif',
+  'svg',
+];
+
 const images = () => {
-  const extensions = [
-    'jpeg',
-    'jpg',
-    'png',
-    'gif',
-    'svg',
-  ];
   return gulp.src(`${global.__buildConfig.src}/**/*.{${extensions.join(',')}}`)
   .pipe(imagemin([
     imagemin.gifsicle(),
@@ -25,4 +26,8 @@ const images = () => {
   .pipe(gulp.dest(global.__buildConfig.dest));
 };
 
-gulp.task(images);
+module.exports = {
+  task: images,
+  build: images,
+  watchGlobs: `${global.__buildConfig.src}/**/*.{${extensions.join(',')}}`
+};
