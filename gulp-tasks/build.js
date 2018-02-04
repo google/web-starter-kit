@@ -7,7 +7,7 @@ const cleanDestDir = () =>  {
   return fse.remove(global.__buildConfig.dest);
 };
 
-const build = (done) => {
+const build = () => {
   const buildTasks = [];
   const taskFiles = getTaskFilepaths();
   for (const taskFilepath of taskFiles) {
@@ -20,9 +20,7 @@ const build = (done) => {
   return gulp.series([
     cleanDestDir,
     gulp.parallel(buildTasks),
-    // How do we add this on the end as a final step automatically?
-    // 'serviceWorker',
-  ])(done);
+  ])();
 };
 
 module.exports = {
