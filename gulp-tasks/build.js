@@ -7,7 +7,7 @@ const cleanDestDir = () =>  {
   return fse.remove(global.__buildConfig.dest);
 };
 
-const build = () => {
+const build = (done) => {
   const buildTasks = [];
   const taskFiles = getTaskFilepaths();
   for (const taskFilepath of taskFiles) {
@@ -20,7 +20,7 @@ const build = () => {
   return gulp.series([
     cleanDestDir,
     gulp.parallel(buildTasks),
-  ])();
+  ])(done);
 };
 
 module.exports = {

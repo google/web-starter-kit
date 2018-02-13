@@ -14,8 +14,6 @@
     "gulp-postcss": "^7.0.1",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.3",
-    "imagemin-mozjpeg": "^7.0.0",
-    "imagemin-pngquant": "^5.0.1",
     "postcss-cssnext": "^3.0.2",
     "postcss-import": "^11.0.0",
     "rollup": "^0.54.0",

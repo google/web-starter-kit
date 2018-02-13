@@ -24,7 +24,6 @@ const getTaskFilepaths = require('./gulp-tasks/utils/get-task-filepaths');
 global.__buildConfig = {
   src: path.join(__dirname, 'src'),
   dest: path.join(__dirname, 'build'),
-  serverName: 'Web Starter Kit Server',
 };
 
 const loadTasks = () => {
