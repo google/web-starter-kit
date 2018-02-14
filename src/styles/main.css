@@ -15,10 +15,46 @@
  */
 
 @import './variables/dimens.css';
+@import './variables/colors.css';
 
 html, body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
   margin: 0;
-  padding: calc(var(--padding) * 2);
+  padding: 0;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.wsk-logo__slim {
+  font-weight: 300;
+}
+
+header {
+  text-align: center;
+  color: var(--header-text-color);
+  background-color: var(--header-bg-color);
+  padding: calc(var(--padding) * 6);
+}
+
+header h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+
+header h3 {
+  font-weight: 300;
+}
+
+.header__logo {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
