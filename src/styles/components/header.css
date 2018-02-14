@@ -14,32 +14,26 @@
  * limitations under the License.
  */
 
-/* Custom Font */
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import '../variables/dimens.css';
+@import '../variables/colors.css';
 
-@import './variables/dimens.css';
-@import './variables/colors.css';
+header {
+  text-align: center;
+  color: var(--header-text-color);
+  background-color: var(--header-bg-color);
+  padding: calc(var(--padding) * 6);
+}
 
-@import './components/header.css';
-
-html, body {
-  font-family: 'Roboto', 'Helvetica', sans-serif;
+header h1 {
+  font-size: 2rem;
   margin: 0;
-  padding: 0;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-.wsk-logo__slim {
+header h3 {
   font-weight: 300;
 }
 
-main {
-  max-width: 800px;
+.header__logo {
+  max-width: 400px;
   margin: 0 auto;
-  text-align: center;
-  padding: 0 var(--padding);
 }

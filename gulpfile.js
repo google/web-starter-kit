@@ -41,7 +41,6 @@ loadTasks();
 gulp.task('dev', (done) => {
   return gulp.series([
     'build',
-    'serviceWorker',
     gulp.parallel([
       'watch',
       'serve',

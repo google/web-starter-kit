@@ -1,6 +1,6 @@
 {
   "name": "Web Starter Kit",
-  "short_name": "WSK",
+  "short_name": "Starter Kit",
   "icons": [
     {
       "src": "images/app-icons/home-icon-192x192.png",
@@ -15,6 +15,6 @@
   ],
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#3E4EB8",
-  "theme_color": "#2F3BA2"
+  "background_color": "#ffbd06",
+  "theme_color": "#ffbd06"
 }

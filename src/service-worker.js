@@ -4,6 +4,9 @@ importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.0.0-beta.0/
 // `gulp serviceWorker` task.
 workbox.precaching.precacheAndRoute([])
 
+workbox.skipWaiting();
+workbox.clientsClaim();
+
 // Cache Google Fonts
 workbox.routing.registerRoute(
   /https:\/\/fonts.(?:googleapis|gstatic)\.com.*$/,

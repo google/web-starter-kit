@@ -8,19 +8,26 @@ const cleanDestDir = () =>  {
 };
 
 const build = (done) => {
-  const buildTasks = [];
+  const parallelTasks = [];
   const taskFiles = getTaskFilepaths();
   for (const taskFilepath of taskFiles) {
     const {build} = require(taskFilepath);
     if (build) {
-      buildTasks.push(build);
+      parallelTasks.push(build);
     }
   }
 
-  return gulp.series([
+  const buildTasks = [
     cleanDestDir,
-    gulp.parallel(buildTasks),
-  ])(done);
+    gulp.parallel(parallelTasks),
+  ];
+
+  // If there is a serviceWorker task, run it.
+  if (gulp.registry().tasks().serviceWorker) {
+    buildTasks.push('serviceWorker');
+  }
+
+  return gulp.series(buildTasks)(done);
 };
 
 module.exports = {

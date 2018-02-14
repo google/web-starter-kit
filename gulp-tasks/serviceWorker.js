@@ -12,4 +12,5 @@ const serviceWorker = async () => {
 
 module.exports = {
   task: serviceWorker,
+  watchGlobs: `${global.__buildConfig.dest}/**/*.*`
 };
