@@ -16,7 +16,6 @@ const images = () => {
 };
 
 module.exports = {
-  task: images,
   build: images,
   watchGlobs: `${global.__buildConfig.src}/**/*.{${extensions.join(',')}}`
 };

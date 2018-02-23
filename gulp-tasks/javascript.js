@@ -66,7 +66,6 @@ const javascript = (done) => {
 };
 
 module.exports = {
-  task: javascript,
   build: javascript,
   watchGlobs: `${global.__buildConfig.src}/**/*.js`
 };

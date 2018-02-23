@@ -11,7 +11,6 @@ const copy = () => {
 }
 
 module.exports = {
-  task: copy,
   build: copy,
   watchGlobs: `${global.__buildConfig.src}/**/*.{${extensions.join(',')}}`
 };

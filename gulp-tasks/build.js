@@ -9,23 +9,24 @@ const cleanDestDir = () =>  {
 
 const build = (done) => {
   const parallelTasks = [];
+  const postBuildTasks = [];
   const taskFiles = getTaskFilepaths();
   for (const taskFilepath of taskFiles) {
     const {build} = require(taskFilepath);
     if (build) {
-      parallelTasks.push(build);
+      if (build.name !== 'serviceWorker') {
+        parallelTasks.push(build);
+      } else {
+        postBuildTasks.push(build);
+      }
     }
   }
 
   const buildTasks = [
     cleanDestDir,
     gulp.parallel(parallelTasks),
+    gulp.parallel(postBuildTasks),
   ];
-
-  // If there is a serviceWorker task, run it.
-  if (gulp.registry().tasks().serviceWorker) {
-    buildTasks.push('serviceWorker');
-  }
 
   return gulp.series(buildTasks)(done);
 };

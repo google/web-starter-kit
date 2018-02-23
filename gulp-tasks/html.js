@@ -15,7 +15,6 @@ const html = () => {
 };
 
 module.exports = {
-  task: html,
   build: html,
   watchGlobs: `${global.__buildConfig.src}/**/*.html`
 };

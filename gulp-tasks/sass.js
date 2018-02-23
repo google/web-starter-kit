@@ -24,7 +24,6 @@ const sass = () => {
 };
 
 module.exports = {
-  task: sass,
   build: sass,
   watchGlobs: `${global.__buildConfig.src}/**/*.{${extensions.join(',')}}`
 }
