@@ -3,7 +3,7 @@ const serveStatic = require('serve-static');
 const http = require('http');
 const path = require('path');
 
-const PORT = 5000;
+const PREFERRED_PORT = 5000;
 
 const serveViaStatic = () => {
   const serve = serveStatic(global.__buildConfig.dest);
@@ -15,8 +15,20 @@ const serveViaStatic = () => {
     });
   });
 
-  httpServer.listen(PORT, () => {
-    console.log(`Serving at http://localhost:${PORT}`);
+  httpServer.on('error', (err) => {
+    if (err.code === 'EADDRINUSE' && err.port === PREFERRED_PORT) {
+      console.log(`Oops. Looks like port ${PREFERRED_PORT} is in use, so ` +
+        `we'll attempt to run the server on a random port.`);
+      httpServer.listen(0, 'localhost');
+      return;
+    }
+
+    throw err;
+  });
+
+  httpServer.listen(PREFERRED_PORT, 'localhost', () => {
+    const address = httpServer.address();
+    console.log(`Serving @ http://${address.address}:${address.port}`, );
   });
 };
 
@@ -35,8 +47,7 @@ const serveViaBrowserSync = () => {
     notify: false,
     // Stop browser sync from logging file events
     logFileChanges: false,
-    // Force port to match dev and prod tasks,
-    port: PORT,
+    port: PREFERRED_PORT,
   });
 };
 
