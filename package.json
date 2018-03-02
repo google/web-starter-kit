@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "test": "gulp"
+
   },
   "devDependencies": {
     "browser-sync": "^2.23.6",
