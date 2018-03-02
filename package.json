@@ -30,6 +30,6 @@
     "workbox-build": "^3.0.0-alpha.5"
   },
   "engines": {
-    "node": ">=4"
+    "node": ">=8"
   }
 }
