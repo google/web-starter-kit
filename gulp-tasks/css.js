@@ -3,7 +3,7 @@ const sourcemaps = require('gulp-sourcemaps');
 
 const postcssConfig = require('./utils/postcssConfig');
 
-const css = () => {
+function css() {
   return gulp.src(`${global.__buildConfig.src}/**/*.css`)
   .pipe(sourcemaps.init())
   .pipe(postcssConfig())

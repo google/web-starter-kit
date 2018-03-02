@@ -10,6 +10,6 @@ async function serviceWorker() {
 }
 
 module.exports = {
-  build: serviceWorker,
+  // build: serviceWorker,
   watchGlobs: `${global.__buildConfig.dest}/**/*.*`,
 };

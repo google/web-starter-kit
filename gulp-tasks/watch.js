@@ -2,7 +2,7 @@ const gulp = require('gulp');
 
 const getTaskFilepaths = require('./utils/get-task-filepaths');
 
-const watch = (done) => {
+function watch(done) {
   const taskFiles = getTaskFilepaths();
   for (const taskFilepath of taskFiles) {
     const {watchGlobs, build} = require(taskFilepath);
@@ -10,7 +10,7 @@ const watch = (done) => {
       gulp.watch(watchGlobs, build);
     }
   }
-};
+}
 
 module.exports = {
   task: watch,

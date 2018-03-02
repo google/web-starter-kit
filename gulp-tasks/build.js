@@ -25,7 +25,8 @@ function build(done) {
   const buildTasks = [
     cleanDestDir,
     gulp.parallel(parallelTasks),
-    gulp.parallel(postBuildTasks),
+    // TODO This causes infinte loop
+    // gulp.parallel(postBuildTasks),
   ];
 
   return gulp.series(buildTasks)(done);

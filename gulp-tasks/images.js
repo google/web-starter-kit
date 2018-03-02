@@ -9,7 +9,7 @@ const extensions = [
   'svg',
 ];
 
-const images = () => {
+function images() {
   return gulp.src(`${global.__buildConfig.src}/**/*.{${extensions.join(',')}}`)
   .pipe(imagemin())
   .pipe(gulp.dest(global.__buildConfig.dest));

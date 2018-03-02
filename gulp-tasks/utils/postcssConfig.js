@@ -3,7 +3,7 @@ const cssimport = require('postcss-import');
 const cssnext = require('postcss-cssnext');
 const cssnano = require('cssnano');
 
-module.exports = () => {
+module.exports = function() {
   return postcss([
     cssimport(),
     cssnext({

@@ -1,6 +1,6 @@
 const glob = require('glob');
 
-module.exports = (...args) => {
+module.exports = function(...args) {
   return new Promise((resolve, reject) => {
     glob(...args, (err, files) => {
       if (err) {

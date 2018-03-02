@@ -11,7 +11,7 @@ const sourcemaps = require('gulp-sourcemaps');
 
 const glob = require('./utils/glob-promise');
 
-const processScript = (scriptPath, relativePath) => {
+function processScript(scriptPath, relativePath) {
   return rollupStream({
     rollup,
     input: scriptPath,
@@ -33,9 +33,9 @@ const processScript = (scriptPath, relativePath) => {
   .pipe(sourcemaps.init({loadMaps: true}))
   .pipe(sourcemaps.write('.'))
   .pipe(gulp.dest(global.__buildConfig.dest));
-};
+}
 
-const javascript = (done) => {
+function javascript(done) {
   // If you want to restrict which javascript files are built with rollup you
   // can alter this regex to match specific file(s) or directories of files.
   return glob('**/*.js', {
@@ -63,7 +63,7 @@ const javascript = (done) => {
     // streams to finish.
     return gulp.parallel(scriptFunctions)(done);
   });
-};
+}
 
 module.exports = {
   build: javascript,
