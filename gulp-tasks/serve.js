@@ -28,7 +28,7 @@ const serveViaStatic = () => {
 
   httpServer.listen(PREFERRED_PORT, 'localhost', () => {
     const address = httpServer.address();
-    console.log(`Serving @ http://${address.address}:${address.port}`, );
+    console.log(`Serving @ http://${address.address}:${address.port}`);
   });
 };
 
