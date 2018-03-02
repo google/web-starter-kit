@@ -5,12 +5,12 @@ const path = require('path');
 
 const PREFERRED_PORT = 5000;
 
-const serveViaStatic = () => {
+function serveViaStatic() {
   const serve = serveStatic(global.__buildConfig.dest);
 
   const httpServer = http.createServer((req, res) => {
     serve(req, res, () => {
-      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      res.writeHead(404, {'Content-Type': 'text/plain'});
       res.end('Not Found.');
     });
   });
@@ -30,9 +30,9 @@ const serveViaStatic = () => {
     const address = httpServer.address();
     console.log(`Serving @ http://${address.address}:${address.port}`);
   });
-};
+}
 
-const serveViaBrowserSync = () => {
+function serveViaBrowserSync() {
   const server = browserSync.create();
 
   server.watch(path.posix.join(global.__buildConfig.dest, '**', '*'))
@@ -49,9 +49,9 @@ const serveViaBrowserSync = () => {
     logFileChanges: false,
     port: PREFERRED_PORT,
   });
-};
+}
 
-const serve = () => {
+function serve() {
   if (process.env.NODE_ENV === 'production') {
     return serveViaStatic();
   } else {

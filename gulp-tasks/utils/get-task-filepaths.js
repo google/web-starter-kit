@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 
-module.exports = () => {
+module.exports = function() {
   const tasksDirectory = path.join(__dirname, '..');
   const taskFileNames = fs.readdirSync(tasksDirectory);
   const fullPaths = [];
@@ -12,7 +12,7 @@ module.exports = () => {
       continue;
     }
 
-    fullPaths.push(path.join(tasksDirectory, taskFileName))
+    fullPaths.push(path.join(tasksDirectory, taskFileName));
   }
   return fullPaths;
-}
+};

@@ -1,8 +1,10 @@
+/* global workbox */
+/* eslint-env serviceworker */
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.0.0-beta.0/workbox-sw.js');
 
 // The final service worker will have this array added by the
 // `gulp serviceWorker` task.
-workbox.precaching.precacheAndRoute([])
+workbox.precaching.precacheAndRoute([]);
 
 workbox.skipWaiting();
 workbox.clientsClaim();
@@ -17,7 +19,7 @@ workbox.routing.registerRoute(
         maxEntries: 30,
       }),
     ],
-  }),
+  })
 );
 
 // Cache any additional CSS and JS files.
@@ -25,7 +27,7 @@ workbox.routing.registerRoute(
   /\.(?:js|css)$/,
   workbox.strategies.staleWhileRevalidate({
     cacheName: 'static-resources',
-  }),
+  })
 );
 
 // Cache Images.
@@ -39,6 +41,6 @@ workbox.routing.registerRoute(
         maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
       }),
     ],
-  }),
+  })
 );
 

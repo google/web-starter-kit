@@ -21,7 +21,7 @@ const processScript = (scriptPath, relativePath) => {
     },
     plugins: [
       replacePlugin({
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       }),
       uglifyPlugin({}, esMinify),
     ],
@@ -67,5 +67,5 @@ const javascript = (done) => {
 
 module.exports = {
   build: javascript,
-  watchGlobs: `${global.__buildConfig.src}/**/*.js`
+  watchGlobs: `${global.__buildConfig.src}/**/*.js`,
 };

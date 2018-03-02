@@ -13,5 +13,5 @@ const css = () => {
 
 module.exports = {
   build: css,
-  watchGlobs: `${global.__buildConfig.src}/**/*.css`
+  watchGlobs: `${global.__buildConfig.src}/**/*.css`,
 };

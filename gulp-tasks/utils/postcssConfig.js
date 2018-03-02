@@ -11,8 +11,8 @@ module.exports = () => {
         customProperties: {
           // Allows both fallback and CSS variables to be used
           preserve: true,
-        }
-      }
+        },
+      },
     }),
     cssnano({
       autoprefixer: false,

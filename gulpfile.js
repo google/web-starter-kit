@@ -18,7 +18,6 @@
  */
 const gulp = require('gulp');
 const path = require('path');
-const fse = require('fs-extra');
 const getTaskFilepaths = require('./gulp-tasks/utils/get-task-filepaths');
 
 global.__buildConfig = {

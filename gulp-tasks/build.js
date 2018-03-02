@@ -3,11 +3,11 @@ const fse = require('fs-extra');
 
 const getTaskFilepaths = require('./utils/get-task-filepaths');
 
-const cleanDestDir = () =>  {
+function cleanDestDir() {
   return fse.remove(global.__buildConfig.dest);
-};
+}
 
-const build = (done) => {
+function build(done) {
   const parallelTasks = [];
   const postBuildTasks = [];
   const taskFiles = getTaskFilepaths();
@@ -29,7 +29,7 @@ const build = (done) => {
   ];
 
   return gulp.series(buildTasks)(done);
-};
+}
 
 module.exports = {
   task: build,

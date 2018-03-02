@@ -1,4 +1,4 @@
-export const registerSW = async () => {
+export async function registerSW() {
   if (!navigator.serviceWorker) {
     return;
   }
@@ -16,4 +16,4 @@ export const registerSW = async () => {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/service-worker.js');
   });
-};
+}

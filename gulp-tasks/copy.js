@@ -2,15 +2,15 @@ const gulp = require('gulp');
 
 const extensions = [
   'json',
-  'ico'
+  'ico',
 ];
 
-const copy = () => {
+function copy() {
   return gulp.src(`${global.__buildConfig.src}/**/*.{${extensions.join(',')}}`)
   .pipe(gulp.dest(global.__buildConfig.dest));
 }
 
 module.exports = {
   build: copy,
-  watchGlobs: `${global.__buildConfig.src}/**/*.{${extensions.join(',')}}`
+  watchGlobs: `${global.__buildConfig.src}/**/*.{${extensions.join(',')}}`,
 };

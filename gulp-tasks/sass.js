@@ -9,21 +9,21 @@ const extensions = [
   'scss',
 ];
 
-const sass = () => {
+function sass() {
   return gulp.src(`${global.__buildConfig.src}/**/*.{${extensions.join(',')}}`)
   .pipe(sourcemaps.init())
   .pipe(
     gulpSass({
-      precision: 10
+      precision: 10,
     })
     .on('error', gulpSass.logError)
   )
   .pipe(postcssConfig())
   .pipe(sourcemaps.write())
   .pipe(gulp.dest(global.__buildConfig.dest));
-};
+}
 
 module.exports = {
   build: sass,
-  watchGlobs: `${global.__buildConfig.src}/**/*.{${extensions.join(',')}}`
-}
+  watchGlobs: `${global.__buildConfig.src}/**/*.{${extensions.join(',')}}`,
+};

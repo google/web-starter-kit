@@ -16,5 +16,5 @@ const html = () => {
 
 module.exports = {
   build: html,
-  watchGlobs: `${global.__buildConfig.src}/**/*.html`
+  watchGlobs: `${global.__buildConfig.src}/**/*.html`,
 };
