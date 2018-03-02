@@ -15,6 +15,6 @@ module.exports = {
   build: serviceWorker,
   watchGlobs: [
     `${global.__buildConfig.dest}/**/*.*`,
-    `!${global.__buildConfig.dest}/${SW_FILENAME}`
+    `!${global.__buildConfig.dest}/${SW_FILENAME}`,
   ],
 };

@@ -9,7 +9,7 @@ function css() {
   .pipe(postcssConfig())
   .pipe(sourcemaps.write('.'))
   .pipe(gulp.dest(global.__buildConfig.dest));
-};
+}
 
 module.exports = {
   build: css,
