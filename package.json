@@ -11,6 +11,7 @@
     "gulp-babel": "^6.1.2",
     "gulp-cache": "^0.4.5",
     "gulp-concat": "^2.6.0",
+    "gulp-clean-css": "^3.9.4",
     "gulp-cssnano": "^2.1.2",
     "gulp-eslint": "^1.1.1",
     "gulp-htmlmin": "^2.0.0",
