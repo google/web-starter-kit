@@ -25,12 +25,15 @@ html, body {
   padding: 0;
 }
 .mdl-demo .mdl-layout__header-row {
-  padding-left: 40px;
+  padding-left: 0px;
 }
 .mdl-demo .mdl-layout.is-small-screen .mdl-layout__header-row h3 {
   font-size: inherit;
+
+
 }
 .mdl-demo .mdl-layout__tab-bar-button {
+
   display: none;
 }
 .mdl-demo .mdl-layout.is-small-screen .mdl-layout__tab-bar .mdl-button {
@@ -41,6 +44,7 @@ html, body {
   overflow: visible;
 }
 .mdl-demo .mdl-layout__tab-bar-container {
+  padding-top: 50px;
   height: 64px;
 }
 .mdl-demo .mdl-layout__tab-bar {
@@ -158,6 +162,7 @@ html, body {
   border-radius: 32px;
   margin: 8px 0;
 }
+
 .mdl-demo section.section--footer .section__circle--big {
   width: 100px;
   height: 100px;
