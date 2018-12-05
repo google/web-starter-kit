@@ -1,0 +1,91 @@
+@import "../typography/typography";
+@import "../palette/palette";
+@import "../shadow/shadow";
+@import "../animation/animation";
+@import "../ripple/ripple";
+
+// Default Button Colors
+$default-btn-bg-color: #fff;
+$default-btn-text-color: #000;
+$default-btn-outline-color: nth($secondaryPalette, 5);
+$default-btn-hover-bg-color: nth($secondaryPalette, 3);
+$default-btn-focus-bg-color: nth($secondaryPalette, 3);
+$default-btn-active-bg-color: nth($secondaryPalette, 4);
+
+// Colored Button Colors
+$colored-btn-bg-color: nth($primaryPalette, 6);
+$colored-btn-text-color: #fff;
+$colored-btn-hover-bg-color: nth($primaryPalette, 8);
+$colored-btn-focus-color: nth($primaryPalette, 12);
+$colored-btn-active-bg-color: nth($primaryPalette, 13);
+
+// Ripple Color for colored buttons.
+$color-ripple-bg-color: white;
+
+// Disabled Button Colors
+$disabled-btn-bg-color: nth($disabledPalette, 3);
+$disabled-btn-text-color: nth($disabledPalette, 5);
+
+.PaperButton {
+  background   : $default-btn-bg-color;
+  border       : none;
+  border-radius: 2px;
+  color        : $default-btn-text-color;
+  display      : block;
+  min-width    : 124px;
+  outline-color: $default-btn-outline-color;
+  padding      : 0.8em 1.6em;
+  position     : relative;
+  @include typo-button();
+  overflow     : hidden;
+  @include shadow-z1();
+  will-change: box-shadow, transform;
+  transition: box-shadow 0.2s ease-out;
+}
+
+.PaperButton--colored {
+  background: $colored-btn-bg-color;
+  color     : $colored-btn-text-color;
+}
+.PaperButton--colored .Ripple {
+  background: $color-ripple-bg-color;
+}
+.PaperButton[disabled] {
+  background-color: $disabled-btn-bg-color;
+  color           : $disabled-btn-text-color;
+  cursor          : auto;
+}
+.PaperButton:hover {
+  background-color: $default-btn-hover-bg-color;
+}
+.PaperButton--colored:hover {
+  background-color: $colored-btn-hover-bg-color;
+}
+.PaperButton:focus {
+  outline: none;
+  @include shadow-z3();
+  background-color: $default-btn-focus-bg-color;
+  transition: box-shadow 0.2s ease-in;
+}
+.PaperButton::-moz-focus-inner {
+  border: 0;
+}
+.PaperButton--colored:focus {
+  background-color: $colored-btn-focus-color;
+}
+.PaperButton:active {
+  background-color: $default-btn-active-bg-color;
+}
+.PaperButton--colored:active {
+  background-color: $colored-btn-active-bg-color;
+}
+.PaperButton .PaperButton-rippleContainer {
+  display: block;
+  height: 100%;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
