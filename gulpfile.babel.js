@@ -38,7 +38,6 @@ const $ = gulpLoadPlugins(),
   src = `${__dirname}/app`,
   dist = `${__dirname}/dist`;
 
-
 // Lint JavaScript
 let lintTask = () =>
   gulp.src(['app/scripts/**/*.js', '!node_modules/**']).
@@ -105,26 +104,43 @@ gulp.task('styles', stylesTask);
 // Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
 // to enable ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
 // `.babelrc` file.
-let scriptsTask = () =>
-  gulp.src([
-      // Note: Since we are not using useref in the scripts build pipeline,
-      //       you need to explicitly list your scripts here in the right order
-      //       to be correctly concatenated
-      './app/scripts/main.js',
-      // Other scripts
+let scriptsTask = gulp.parallel(
+  () =>
+    gulp.src([
+        // Note: Since we are not using useref in the scripts build pipeline,
+        //       you need to explicitly list your scripts here in the right order
+        //       to be correctly concatenated
+        './app/scripts/main.js',
+        // Other scripts
+      ]).
+      pipe($.newer('.tmp/scripts')).
+      pipe($.sourcemaps.init()).
+      pipe($.babel()).
+      pipe($.sourcemaps.write()).
+      pipe(gulp.dest('.tmp/scripts')).
+      pipe($.concat('main.min.js')).
+      pipe($.uglify())
+      // Output files
+      .pipe($.size({title: 'scripts'})).
+      pipe($.sourcemaps.write('.')).
+      pipe(gulp.dest('dist/scripts')).
+      pipe(gulp.dest('.tmp/scripts')),
+  () => gulp.src([
+      'app/scripts/sw/*.js',
     ]).
     pipe($.newer('.tmp/scripts')).
     pipe($.sourcemaps.init()).
     pipe($.babel()).
     pipe($.sourcemaps.write()).
     pipe(gulp.dest('.tmp/scripts')).
-    pipe($.concat('main.min.js')).
+    pipe($.concat('sw.min.js')).
     pipe($.uglify())
     // Output files
     .pipe($.size({title: 'scripts'})).
     pipe($.sourcemaps.write('.')).
     pipe(gulp.dest('dist/scripts')).
-    pipe(gulp.dest('.tmp/scripts'));
+    pipe(gulp.dest('.tmp/scripts')),
+);
 gulp.task('scripts', scriptsTask);
 
 // Scan your HTML for assets & optimize them
@@ -190,30 +206,26 @@ let generateSwTask = () => {
   return workboxBuild.injectManifest({
     globDirectory: dist,
     globPatterns: [
-      '**/*.{html,js}'
+      '**/*.{html,js}',
     ],
     swDest: `${dist}/service-worker.js`,
-    swSrc: `${src}/service-worker.js`
+    swSrc: `${src}/service-worker.js`,
   });
 };
-let copySwScripts = () => {
-  return gulp.src(['app/scripts/sw/*']).pipe(gulp.dest('dist/scripts/sw'));
-};
-let workBoxInServiceWorker = gulp.series(copySwScripts, () => {
+let workBoxInServiceWorker = () => {
   const rootDir = 'dist';
   const filepath = path.join(rootDir, 'service-worker.js');
 
   return workboxBuild.generateSW({
     swDest: filepath,
     importWorkboxFrom: 'local',
-    skipWaiting: true,
     clientsClaim: true,
     navigationPreload: true,
     globDirectory: '.',
     runtimeCaching: [
       {
         urlPattern: ({event}) => event.request.mode === 'navigate',
-        handler: 'NetworkOnly',
+        handler: 'StaleWhileRevalidate',
       },
       {
         // Match any same-origin request that contains 'api'.
@@ -268,24 +280,21 @@ let workBoxInServiceWorker = gulp.series(copySwScripts, () => {
           },
         },
       }],
-    importScripts: ['app/scripts/sw/*'],
+    importScripts: [
+      '/scripts/sw.min.js',
+    ],
     cacheId: manifest.short_name || 'web-starter-kit',
     offlineGoogleAnalytics: true,
     cleanupOutdatedCaches: true,
     globPatterns: [
       // Add/remove glob patterns to match your directory setup.
-      `${rootDir}/images/**/*`,
-      `${rootDir}/scripts/**/*.js`,
-      `${rootDir}/styles/**/*.css`,
-      `${rootDir}/*.{html,json}`,
+      '/images/**/*',
+      '/scripts/**/*.js',
+      '/styles/**/*.css',
+      '/*.{html,json}',
     ],
-    modifyURLPrefix: {
-      // Remove a '/dist' prefix from the URLs:
-      '/dist': '',
-    },
   }, generateSwTask);
-});
-gulp.task('copy-sw-scripts', copySwScripts);
+};
 gulp.task('service-worker', workBoxInServiceWorker);
 
 // Build production files, the default task
