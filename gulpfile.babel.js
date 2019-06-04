@@ -206,7 +206,7 @@ let generateSwTask = () => {
   return workboxBuild.injectManifest({
     globDirectory: dist,
     globPatterns: [
-      '**/*.{html,js}',
+      '**/*.{html,js,css}',
     ],
     swDest: `${dist}/service-worker.js`,
     swSrc: `${src}/service-worker.js`,
@@ -217,57 +217,21 @@ let workBoxInServiceWorker = () => {
   const filepath = path.join(rootDir, 'service-worker.js');
 
   return workboxBuild.generateSW({
+    globDirectory: "dist/",
+    globPatterns: [
+      "**/*.{html,ico,txt,svg,png,json,webapp,js,css,mjs}"
+    ],
     swDest: filepath,
     importWorkboxFrom: 'local',
     clientsClaim: true,
     navigationPreload: true,
-    globDirectory: '.',
     runtimeCaching: [
       {
         urlPattern: ({event}) => event.request.mode === 'navigate',
         handler: 'StaleWhileRevalidate',
-      },
-      {
-        // Match any same-origin request that contains 'api'.
-        urlPattern: new RegExp(/.*\.(?:edenpass)\.com$/),
-        // Apply a network-first strategy.
-        handler: 'StaleWhileRevalidate',
         options: {
-          // Fall back to the cache after 10 seconds. NetworkFirst only
-          // networkTimeoutSeconds: 10,
-          // Use a custom cache name for this route.
-          cacheName: 'edenpass',
-          // Configure custom cache expiration.
-          expiration: {
-            maxEntries: 5,
-            maxAgeSeconds: (24 * 60 * 60),
-          },
-          // Configure background sync.
-          backgroundSync: {
-            name: 'edenpass-sync',
-            options: {
-              maxRetentionTime: 60 * 60,
-            },
-          },
-          // Configure which responses are considered cacheable.
           cacheableResponse: {
             statuses: [0, 200],
-            headers: {'x-test': 'true'},
-          },
-          // Configure the broadcast cache update plugin.
-          broadcastUpdate: {
-            channelName: 'edenpass-channel',
-          },
-          // Add in any additional plugin logic you need.
-          plugins: [
-            // {cacheDidUpdate: () => /* custom plugin code */},
-          ],
-          // matchOptions and fetchOptions are used to configure the handler.
-          fetchOptions: {
-            mode: 'no-cors',
-          },
-          matchOptions: {
-            ignoreSearch: true,
           },
         },
       },
@@ -279,20 +243,23 @@ let workBoxInServiceWorker = () => {
             statuses: [0, 200],
           },
         },
-      }],
+      },
+      {
+        urlPattern: new RegExp(/https:\/\/code\.getmdl\.io$/),
+        handler: 'StaleWhileRevalidate',
+        options: {
+          cacheableResponse: {
+            statuses: [0, 200],
+          },
+        },
+      }
+      ],
     importScripts: [
       '/scripts/sw.min.js',
     ],
     cacheId: manifest.short_name || 'web-starter-kit',
     offlineGoogleAnalytics: true,
     cleanupOutdatedCaches: true,
-    globPatterns: [
-      // Add/remove glob patterns to match your directory setup.
-      '/images/**/*',
-      '/scripts/**/*.js',
-      '/styles/**/*.css',
-      '/*.{html,json}',
-    ],
   }, generateSwTask);
 };
 gulp.task('service-worker', workBoxInServiceWorker);
