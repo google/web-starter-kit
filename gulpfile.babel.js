@@ -24,16 +24,20 @@
 // You can read more about the new JavaScript features here:
 // https://babeljs.io/docs/learn-es2015/
 
+import path from 'path';
 import gulp from 'gulp';
 import del from 'del';
 import browserSync from 'browser-sync';
 import workboxBuild from 'workbox-build';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import {output as pagespeed} from 'psi';
-import pkg from './package.json';
+import manifest from './app/manifest';
 
-const $ = gulpLoadPlugins();
-const reload = browserSync.reload;
+const $ = gulpLoadPlugins(),
+  reload = browserSync.reload,
+  src = `${__dirname}/app`,
+  dist = `${__dirname}/dist`;
+
 
 // Lint JavaScript
 let lintTask = () =>
@@ -79,9 +83,9 @@ let stylesTask = () => {
 
   // For best performance, don't add Sass partials to `gulp.src`
   return gulp.src([
-    'app/styles/**/*.scss',
-    'app/styles/**/*.css',
-  ]).
+      'app/styles/**/*.scss',
+      'app/styles/**/*.css',
+    ]).
     pipe($.newer('.tmp/styles')).
     pipe($.sourcemaps.init()).
     pipe($.sass({
@@ -103,12 +107,12 @@ gulp.task('styles', stylesTask);
 // `.babelrc` file.
 let scriptsTask = () =>
   gulp.src([
-    // Note: Since we are not using useref in the scripts build pipeline,
-    //       you need to explicitly list your scripts here in the right order
-    //       to be correctly concatenated
-    './app/scripts/main.js',
-    // Other scripts
-  ]).
+      // Note: Since we are not using useref in the scripts build pipeline,
+      //       you need to explicitly list your scripts here in the right order
+      //       to be correctly concatenated
+      './app/scripts/main.js',
+      // Other scripts
+    ]).
     pipe($.newer('.tmp/scripts')).
     pipe($.sourcemaps.init()).
     pipe($.babel()).
@@ -170,8 +174,9 @@ let serverTask = () => {
   });
 
   gulp.watch(['app/**/*.html'], reload);
-  gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
-  gulp.watch(['app/scripts/**/*.js'], ['lint', 'scripts', reload]);
+  gulp.watch(['app/styles/**/*.{scss,css}'], gulp.series(stylesTask, reload));
+  gulp.watch(['app/scripts/**/*.js'],
+    gulp.series(lintTask, scriptsTask, reload));
   gulp.watch(['app/images/**/*'], reload);
 };
 gulp.task('server', gulp.series(scriptsTask, stylesTask, serverTask));
@@ -182,34 +187,111 @@ gulp.task('server', gulp.series(scriptsTask, stylesTask, serverTask));
 // local resources. This should only be done for the 'dist' directory, to allow
 // live reload to work as expected when serving from the 'app' directory.
 let generateSwTask = () => {
-  const rootDir = 'dist';
   return workboxBuild.injectManifest({
-    globDirectory: rootDir,
+    globDirectory: dist,
     globPatterns: [
-      // Add/remove glob patterns to match your directory setup.
-      // `images/**/*`,
-      `scripts/**/*.js`,
-      `styles/**/*.css`,
-      `*.{html,json}`,
+      '**/*.{html,js}'
     ],
-    swDest: `${rootDir}/sw.js`,
-    swSrc: `app/scripts/sw/sw.js`,
-  }).then(({warnings}) => {
-    // In case there are any warnings from workbox-build, log them.
-    for (const warning of warnings) {
-      console.warn(warning);
-    }
-    console.info('Service worker generation completed.');
-  }).catch((error) => {
-    console.warn('Service worker generation failed:', error);
+    swDest: `${dist}/service-worker.js`,
+    swSrc: `${src}/service-worker.js`
   });
 };
-gulp.task('generate-service-worker', generateSwTask);
+let copySwScripts = () => {
+  return gulp.src(['app/scripts/sw/*']).pipe(gulp.dest('dist/scripts/sw'));
+};
+let workBoxInServiceWorker = gulp.series(copySwScripts, () => {
+  const rootDir = 'dist';
+  const filepath = path.join(rootDir, 'service-worker.js');
+
+  return workboxBuild.generateSW({
+    swDest: filepath,
+    importWorkboxFrom: 'local',
+    skipWaiting: true,
+    clientsClaim: true,
+    navigationPreload: true,
+    globDirectory: '.',
+    runtimeCaching: [
+      {
+        urlPattern: ({event}) => event.request.mode === 'navigate',
+        handler: 'NetworkOnly',
+      },
+      {
+        // Match any same-origin request that contains 'api'.
+        urlPattern: new RegExp(/.*\.(?:edenpass)\.com$/),
+        // Apply a network-first strategy.
+        handler: 'StaleWhileRevalidate',
+        options: {
+          // Fall back to the cache after 10 seconds. NetworkFirst only
+          // networkTimeoutSeconds: 10,
+          // Use a custom cache name for this route.
+          cacheName: 'edenpass',
+          // Configure custom cache expiration.
+          expiration: {
+            maxEntries: 5,
+            maxAgeSeconds: (24 * 60 * 60),
+          },
+          // Configure background sync.
+          backgroundSync: {
+            name: 'edenpass-sync',
+            options: {
+              maxRetentionTime: 60 * 60,
+            },
+          },
+          // Configure which responses are considered cacheable.
+          cacheableResponse: {
+            statuses: [0, 200],
+            headers: {'x-test': 'true'},
+          },
+          // Configure the broadcast cache update plugin.
+          broadcastUpdate: {
+            channelName: 'edenpass-channel',
+          },
+          // Add in any additional plugin logic you need.
+          plugins: [
+            // {cacheDidUpdate: () => /* custom plugin code */},
+          ],
+          // matchOptions and fetchOptions are used to configure the handler.
+          fetchOptions: {
+            mode: 'no-cors',
+          },
+          matchOptions: {
+            ignoreSearch: true,
+          },
+        },
+      },
+      {
+        urlPattern: new RegExp(/\.(?:googleapis|gstatic)\.com$/),
+        handler: 'StaleWhileRevalidate',
+        options: {
+          cacheableResponse: {
+            statuses: [0, 200],
+          },
+        },
+      }],
+    importScripts: ['app/scripts/sw/*'],
+    cacheId: manifest.short_name || 'web-starter-kit',
+    offlineGoogleAnalytics: true,
+    cleanupOutdatedCaches: true,
+    globPatterns: [
+      // Add/remove glob patterns to match your directory setup.
+      `${rootDir}/images/**/*`,
+      `${rootDir}/scripts/**/*.js`,
+      `${rootDir}/styles/**/*.css`,
+      `${rootDir}/*.{html,json}`,
+    ],
+    modifyURLPrefix: {
+      // Remove a '/dist' prefix from the URLs:
+      '/dist': '',
+    },
+  }, generateSwTask);
+});
+gulp.task('copy-sw-scripts', copySwScripts);
+gulp.task('service-worker', workBoxInServiceWorker);
 
 // Build production files, the default task
 let defaultTask = gulp.series(cleanTask, stylesTask,
   gulp.parallel(htmlTask, imagesTask, lintTask, scriptsTask, copyTask),
-  generateSwTask);
+  workBoxInServiceWorker);
 gulp.task('default', defaultTask);
 
 // Build and serve the output from the dist build
