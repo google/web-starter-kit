@@ -255,7 +255,7 @@ let workBoxInServiceWorker = () => {
       }
       ],
     importScripts: [
-      '/scripts/sw.min.js',
+      'scripts/sw.min.js',
     ],
     cacheId: manifest.short_name || 'web-starter-kit',
     offlineGoogleAnalytics: true,
