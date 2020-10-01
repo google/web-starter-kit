@@ -33,7 +33,7 @@
 
     <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
     <!--
-    <link rel="canonical" href="http://www.example.com/">
+          <link rel="canonical" href="http://www.example.com/">
     -->
 
     <!-- Material Design icons -->
@@ -41,20 +41,28 @@
 
 
     <!-- Material Design Lite page styles:
-    You can choose other color schemes from the CDN, more info here http://www.getmdl.io/customize/index.html
-    Format: material.color1-color2.min.css, some examples:
-    material.red-teal.min.css
-    material.blue-orange.min.css
-    material.purple-indigo.min.css
+         You can choose other color schemes from the CDN, more info here http://www.getmdl.io/customize/index.html
+         Format: material.color1-color2.min.css, some examples:
+         material.red-teal.min.css
+         material.blue-orange.min.css
+         material.purple-indigo.min.css
     -->
+    
+    <!--CSS file attached-->
+    
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.indigo-pink.min.css">
 
     <!-- Your styles -->
     <link rel="stylesheet" href="styles/main.css">
   </head>
+  
+  <!--body of the page starts from here-->
+  
   <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <!--header of the page-->
       <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+        
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         </div>
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
@@ -63,6 +71,7 @@
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         </div>
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+          <!--navigation menu-->
           <a href="#overview" class="mdl-layout__tab is-active">Overview</a>
           <a href="#features" class="mdl-layout__tab">Features</a>
           <a href="#features" class="mdl-layout__tab">Details</a>
@@ -73,13 +82,19 @@
             <span class="visuallyhidden">Add</span>
           </button>
         </div>
+        
       </header>
+      
       <main class="mdl-layout__content">
+        
         <div class="mdl-layout__tab-panel is-active" id="overview">
+          
           <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+            
             <header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white">
               <i class="material-icons">play_circle_filled</i>
             </header>
+            
             <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
               <div class="mdl-card__supporting-text">
                 <h4>Features</h4>
@@ -97,7 +112,9 @@
               <li class="mdl-menu__item" disabled>Ipsum</li>
               <li class="mdl-menu__item">Dolor</li>
             </ul>
+            
           </section>
+          
           <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
             <div class="mdl-card mdl-cell mdl-cell--12-col">
               <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
@@ -128,15 +145,18 @@
                 <a href="#" class="mdl-button">Read our features</a>
               </div>
             </div>
+            
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn2">
               <i class="material-icons">more_vert</i>
             </button>
+            
             <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn2">
               <li class="mdl-menu__item">Lorem</li>
               <li class="mdl-menu__item" disabled>Ipsum</li>
               <li class="mdl-menu__item">Dolor</li>
             </ul>
           </section>
+          
           <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
             <div class="mdl-card mdl-cell mdl-cell--12-col">
               <div class="mdl-card__supporting-text">
@@ -147,15 +167,18 @@
                 <a href="#" class="mdl-button">Read our features</a>
               </div>
             </div>
+            
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn3">
               <i class="material-icons">more_vert</i>
             </button>
+            
             <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn3">
               <li class="mdl-menu__item">Lorem</li>
               <li class="mdl-menu__item" disabled>Ipsum</li>
               <li class="mdl-menu__item">Dolor</li>
             </ul>
           </section>
+          
           <section class="section--footer mdl-color--white mdl-grid">
             <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
               <div class="section__circle-container__circle mdl-color--accent section__circle--big"></div>
@@ -172,7 +195,9 @@
               Qui sint ut et qui nisi cupidatat. Reprehenderit nostrud proident officia exercitation anim et pariatur ex.
             </div>
           </section>
+          
         </div>
+        
         <div class="mdl-layout__tab-panel" id="features">
           <section class="section--center mdl-grid mdl-grid--no-spacing">
             <div class="mdl-cell mdl-cell--12-col">
@@ -228,6 +253,7 @@
             </div>
           </section>
         </div>
+        <!--footer of the page-->
         <footer class="mdl-mega-footer">
           <div class="mdl-mega-footer--middle-section">
             <div class="mdl-mega-footer--drop-down-section">
@@ -240,6 +266,7 @@
                 <li><a href="#">Updates</a></li>
               </ul>
             </div>
+            
             <div class="mdl-mega-footer--drop-down-section">
               <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
               <h1 class="mdl-mega-footer--heading">Details</h1>
@@ -249,6 +276,7 @@
                 <li><a href="#">Resources</a></li>
               </ul>
             </div>
+            
             <div class="mdl-mega-footer--drop-down-section">
               <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
               <h1 class="mdl-mega-footer--heading">Technology</h1>
@@ -260,6 +288,7 @@
                 <li><a href="#">Contracts</a></li>
               </ul>
             </div>
+            
             <div class="mdl-mega-footer--drop-down-section">
               <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
               <h1 class="mdl-mega-footer--heading">FAQ</h1>
@@ -269,7 +298,9 @@
                 <li><a href="#">Contact us</a></li>
               </ul>
             </div>
+            
           </div>
+          
           <div class="mdl-mega-footer--bottom-section">
             <div class="mdl-logo">
               More Information
@@ -280,12 +311,16 @@
               <li><a href="#">Privacy and Terms</a></li>
             </ul>
           </div>
+          
         </footer>
+        
       </main>
+      
     </div>
 
     <script src="https://code.getmdl.io/1.2.1/material.min.js"></script>
     <!-- build:js scripts/main.min.js -->
+    
     <script src="scripts/main.js"></script>
     <!-- endbuild -->
 
@@ -299,5 +334,8 @@
       ga('send', 'pageview');
     </script>
     <!-- Built with love using Web Starter Kit -->
+    
   </body>
+  <!--body ends here-->
+  
 </html>
