@@ -21,7 +21,7 @@
 
 ## Quickstart
 
-[Download](https://github.com/google/web-starter-kit/releases/latest) the kit or clone this repository and build on what is included in the `app` directory.
+[Download  File](https://github.com/google/web-starter-kit/releases/latest) the kit or clone this repository and build on what is included in the `app` directory.
 
 There are two HTML starting points, from which you can choose:
 
@@ -44,17 +44,17 @@ At present, we officially aim to support the last two versions of the following 
 * Firefox
 * Safari
 * Opera
-* Internet Explorer 9+
-
+* Internet Explorer 
+* Microsoft Edge 8+
 This is not to say that Web Starter Kit cannot be used in browsers older than those reflected, but merely that our focus will be on ensuring our layouts work great in the above.
 
 ## Troubleshooting
 
-If you find yourself running into issues during installation or running the tools, please check our [Troubleshooting](https://github.com/google/web-starter-kit/wiki/Troubleshooting) guide and then open an [issue](https://github.com/google/web-starter-kit/issues). We would be happy to discuss how they can be solved.
+If you find yourself running into issues during installation or running the tools, Please Check our [Troubleshooting](https://github.com/google/web-starter-kit/wiki/Troubleshooting) guide and then open an [issue](https://github.com/google/web-starter-kit/issues). We would be happy to discuss how they can be solved.
 
 ## A Boilerplate-only Option
 
-If you would prefer not to use any of our tooling, delete the following files from the project: `package.json`, `gulpfile.babel.js` and `.travis.yml`. You can now safely use the boilerplate with an alternative build-system or no build-system at all if you choose.
+If you would prefer not to use any of our tooling, Delete the following files from the project: `package.json`, `gulpfile.babel.js` and `.travis.yml`. You can now safely use the boilerplate with an alternative build-system or no build-system at all if you choose.
 
 ## Docs and Recipes
 
