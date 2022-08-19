@@ -39,10 +39,10 @@ const reload = browserSync.reload;
 
 // Lint JavaScript
 gulp.task('lint', () =>
-  gulp.src('app/scripts/**/*.js')
+  gulp.src(['app/scripts/**/*.js','!node_modules/**'])
     .pipe($.eslint())
     .pipe($.eslint.format())
-    .pipe($.if(!browserSync.active, $.eslint.failOnError()))
+    .pipe($.if(!browserSync.active, $.eslint.failAfterError()))
 );
 
 // Optimize images
@@ -98,11 +98,12 @@ gulp.task('styles', () => {
     .pipe($.if('*.css', $.cssnano()))
     .pipe($.size({title: 'styles'}))
     .pipe($.sourcemaps.write('./'))
-    .pipe(gulp.dest('dist/styles'));
+    .pipe(gulp.dest('dist/styles'))
+    .pipe(gulp.dest('.tmp/styles'));
 });
 
 // Concatenate and minify JavaScript. Optionally transpiles ES2015 code to ES5.
-// to enables ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
+// to enable ES2015 support remove the line `"only": "gulpfile.babel.js",` in the
 // `.babelrc` file.
 gulp.task('scripts', () =>
     gulp.src([
@@ -123,24 +124,16 @@ gulp.task('scripts', () =>
       .pipe($.size({title: 'scripts'}))
       .pipe($.sourcemaps.write('.'))
       .pipe(gulp.dest('dist/scripts'))
+      .pipe(gulp.dest('.tmp/scripts'))
 );
 
 // Scan your HTML for assets & optimize them
 gulp.task('html', () => {
   return gulp.src('app/**/*.html')
-    .pipe($.useref({searchPath: '{.tmp,app}'}))
-    // Remove any unused CSS
-    .pipe($.if('*.css', $.uncss({
-      html: [
-        'app/index.html'
-      ],
-      // CSS Selectors for UnCSS to ignore
-      ignore: []
-    })))
-
-    // Concatenate and minify styles
-    // In case you are still using useref build blocks
-    .pipe($.if('*.css', $.cssnano()))
+    .pipe($.useref({
+      searchPath: '{.tmp,app}',
+      noAssets: true
+    }))
 
     // Minify any HTML
     .pipe($.if('*.html', $.htmlmin({
@@ -191,7 +184,7 @@ gulp.task('serve', ['scripts', 'styles'], () => {
 
   gulp.watch(['app/**/*.html'], reload);
   gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
-  gulp.watch(['app/scripts/**/*.js'], ['lint', 'scripts']);
+  gulp.watch(['app/scripts/**/*.js'], ['lint', 'scripts', reload]);
   gulp.watch(['app/images/**/*'], reload);
 });
 
@@ -263,7 +256,9 @@ gulp.task('generate-service-worker', ['copy-sw-scripts'], () => {
       `${rootDir}/*.{html,json}`
     ],
     // Translates a static file path to the relative URL that it's served from.
-    stripPrefix: path.join(rootDir, path.sep)
+    // This is '/' rather than path.sep because the paths returned from
+    // glob always use '/'.
+    stripPrefix: rootDir + '/'
   });
 });
 
